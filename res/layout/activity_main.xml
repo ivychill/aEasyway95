@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<com.baidu.mapapi.MapView android:id="@+id/bmapsView"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:clickable="true" />
+
+	<Button
+	    android:id="@+id/button1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:text="测试" />
+
+	<Button
+	    android:id="@+id/button2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginLeft="14dp"
+	    android:layout_toRightOf="@+id/button1"
+	    android:text="Login" />
+
+	<Button
+	    android:id="@+id/button3"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:text="Setting" />
+
+</RelativeLayout>

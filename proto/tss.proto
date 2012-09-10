@@ -1,0 +1,158 @@
+package com.luyun.easyway95.shared;
+
+option java_package = "com.luyun.easyway95.shared";
+option java_outer_classname = "TSSProtos";
+
+message Coordinate {
+    required double lng = 1;
+    required double lat= 2;
+}
+
+message Location {
+    required double lng = 1;
+    required double lat = 2;
+    optional string name = 3;
+    optional string adt = 11;	//additive information, e.g. ... 路口.
+}
+
+message Segment {
+    required Coordinate start = 1;
+    required Coordinate end = 2;
+    optional string road = 3;
+}
+
+message Route {
+    required int64 identity = 1;
+    repeated Segment segments = 2;
+}
+
+enum Direction {
+    UNKNOWN = 0;
+    EAST = 1; NORTHEAST = 2;
+    NORTH = 3; NORTHWEST = 4;
+    WEST = 5; SOUTHWEST = 6; 
+    SOUTH = 7; SOUTHEAST = 8;
+}
+
+message TrafficProbe {
+    optional Segment segment = 1;
+    optional Coordinate location = 2;
+    optional int64 timestamp = 3;
+    required Direction direction = 4;
+    required int32 speed = 5;
+    optional int32 acceleration = 6;
+}
+
+message SegmentTraffic {
+    required Segment segment = 1;
+    optional int64 timestamp = 3;
+    required Direction direction = 4;
+    required int32 speed = 5;
+    optional string details = 11;
+}
+
+message RoadTraffic {
+    required string road = 1;
+    optional int64 timestamp = 2;
+    repeated SegmentTraffic segment_traffics = 3;
+    optional string href = 12;
+    optional string desc = 11;
+}
+
+message CityTraffic {
+    optional string city = 1;
+    optional int64 timestamp = 2;
+    repeated RoadTraffic road_traffics = 3;
+}
+
+//订阅记录的操作类型
+enum OprType {
+    SUB_CREATE = 0X01;
+    SUB_DELETE = 0X02;
+    SUB_UPDATE = 0X03;
+}
+
+//订阅的发布类型
+enum PubType {
+    PUB_ONCE = 0X01; //预留，目前不用
+    PUB_EVENT = 0X02; //
+    PUB_TIMER = 0X03; //
+}
+
+//发起订阅的消息结构
+message TrafficSub {
+    required string city = 1;
+    required Route route = 2;
+    required OprType opr_type = 3;
+    required PubType pub_type = 4;
+    optional int32 expires = 5 [default = 30]; //minute; 0 = never
+}
+
+message DeviceReport {
+    required string device_id = 1;
+    required bytes device_token = 2;
+    required string device_name = 3;
+    required string device_model = 4;
+    required string device_os_version = 5;
+}
+
+// 错误代码说明
+// 0: sucess //unused indeed
+// 0xABC. A:level:1.FATAL 2.ERROR 3.WARN 4.INFO 9.general
+//        B:type:0.gerneral 1.version 2.msg_dir 3.msg_type 5.timeout 6.user_token
+//        C:No.:0.general
+// 目前仅用到:
+// 0x111:版本不兼容，必须升级
+// 0x311:版本号过低，建议升级
+// 0x220:消息方向错
+// 0x230:消息类型错
+// 0x350:超时
+// 0x900:相当于其它
+// 客户端显示给客户的信息，请自行定义。
+enum ErrCode {
+    VERSION_IMCOMPATIBLE = 0x111;
+    VERSION_LOW = 0x311;
+    MSG_DIR_ERROR = 0x220;
+    MSG_TYPE_ERROR = 0x230;
+    TIMEOUT = 0x350;
+    OTHERS = 0x900;
+}
+
+enum MsgDir {
+    CLIENT2TSS = 1; 
+    TSS2CLIENT = 2;
+}
+
+enum MsgType {
+    VOID = 0X01;
+    ERR_CODE = 0x02;		//message ErrCode
+    TRAFFIC_SUB  = 0x04;	//message TrafficSub
+    TRAFFIC_REPORT = 0x05;	//message TrafficProbe
+    DEVICE_REPORT = 0x06;	//message DeviceReport
+    CITY_TRAFFIC_PUB = 0x13;	//message CityTraffic
+}
+
+message Package {
+    required int32 version = 1; //only value 1 supported till 2012-08-30, 2012-12-30 hopehully
+    //required TermType term_type = 2;
+    required MsgDir msg_dir = 3;
+    required MsgType msg_type = 4;
+    required int32 msg_id = 5;
+    required int64 timestamp = 6;
+    //optional int32 expires = 7 [default = 30]; //minute
+    optional bytes user_token = 8;
+
+    extensions 128 to 255;
+
+    optional ErrCode err_code = 0x11;
+    optional DeviceReport device_report = 0x13;
+
+    optional TrafficSub traffic_sub = 0x24;
+
+
+    optional SegmentTraffic segment_traffic = 0x31;
+    optional RoadTraffic road_traffic = 0x32;
+    optional CityTraffic city_traffic = 0x33;
+
+    optional TrafficProbe traffic_probe = 0x41;
+}
