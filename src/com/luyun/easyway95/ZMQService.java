@@ -29,7 +29,7 @@ public class ZMQService extends Service {
 	//private ZMQQueue mzqDev;          //pipe for production
 	
 	private ZMQThread mztIO;
-	private String TAG = "ZMQService";
+	private static String TAG = "ZMQService";
 	
 	private Handler mTriggerHdl;
 	

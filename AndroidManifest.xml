@@ -30,7 +30,8 @@
             android:name=".SettingActivity" >
         </activity>
 	<service android:name="com.luyun.easyway95.ZMQService" />
-    </application>
+	<service android:name="com.luyun.easyway95.TTSService" />
+	</application>
 	
 	<!-- ************************************* -->
 	<!--      定位相关权限      -->

@@ -31,9 +31,12 @@ import android.support.v4.app.NavUtils;
 
 public class MainActivity extends MapActivity {
 	BMapManager mBMapMan = null; 
-	final String TAG = "MainActivity";
+	final static String TAG = "MainActivity";
 	private ZMQService mzService;
     private boolean mIsBound;
+    
+    private static boolean mbSynthetizeOngoing = false;
+    
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -163,7 +166,26 @@ public class MainActivity extends MapActivity {
         	}
         });
 
-    }
+        Button btnXunfei1 = (Button)findViewById(R.id.button4);
+        btnXunfei1.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start TTS service
+        		TTSThread t = new TTSThread("江西一高校新生霸气姓名“操日本”"); 
+        		t.start();
+        	}
+        });
+
+        Button btnXunfei2 = (Button)findViewById(R.id.button5);
+        btnXunfei2.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start TTS service
+        		TTSThread t = new TTSThread("家长们：大家好!今天下午放学后，需要把把印制的教室板报文字贴到板报上，有时间的家长请今天下午放学后到教室帮忙，谢谢大家支持！"); 
+        		t.start();
+        	}
+        });
+}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -199,13 +221,14 @@ public class MainActivity extends MapActivity {
 	    super.onResume();
 	}    
     
-	public Handler handler = new Handler() {
+	public static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			/* //first two from location update
-			if (msg.what == Constants.FIRST_LOCATION) {
+			if (msg.what == Constants.SYNTHESIZE_DONE) {
 				//mMapController.animateTo(mLocationOverlay.getMyLocation());
+				mbSynthetizeOngoing = false;
 				return;
 			}
+			/* //first two from location update
 			else if (msg.what == Constants.REOCODER_RESULT) {
 				//addMarker(mTrackeeLngX, mTrackeeLatY);
 				return;
@@ -239,4 +262,27 @@ public class MainActivity extends MapActivity {
 			}
 		}
     };
+    
+    public class TTSThread extends Thread {
+		private String msTTS;
+    	public TTSThread(String s) {
+			msTTS = s;
+		}
+    	
+    	@Override
+		public void run() {
+	        Log.d(TAG, "In TTSThead::running"); 
+	        while (mbSynthetizeOngoing) {
+	        	try {
+	        		Thread.sleep(500);
+	        	} catch (Exception e) {
+	        		
+	        	}
+	        }
+	        mbSynthetizeOngoing = true;
+	        Intent i = new Intent(MainActivity.this, TTSService.class);
+    		i.putExtra("text", msTTS);
+    		startService(i);
+		}
+    }
 }

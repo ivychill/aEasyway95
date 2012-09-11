@@ -15,6 +15,9 @@ public class Constants {
 	public static final int REOCODER_RESULT=3000;//地理编码结果
 	public static final int DIALOG_LAYER=4000;
 	public static final int POISEARCH_NEXT=5000;
+	
+	public static final int SYNTHESIZE_ONGOING=5500;	
+	public static final int SYNTHESIZE_DONE=5501;	
 
 	public static final int WAITING_TRACKEE_LOC=5500;
 	public static final int GOT_TRACKEE_LOC=5501;
@@ -34,4 +37,5 @@ public class Constants {
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	
+	
 }
