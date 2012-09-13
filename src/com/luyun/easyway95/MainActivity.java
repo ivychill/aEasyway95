@@ -33,6 +33,7 @@ public class MainActivity extends MapActivity {
 	BMapManager mBMapMan = null; 
 	final static String TAG = "MainActivity";
 	private ZMQService mzService;
+	private TTSService mtService;
     private boolean mIsBound;
     
     private static boolean mbSynthetizeOngoing = false;
@@ -45,7 +46,7 @@ public class MainActivity extends MapActivity {
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
         	mzService = ((ZMQService.LocalBinder)service).getService();
-            mzService.registerHandler(handler);
+            //mzService.registerHandler(handler);
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -80,6 +81,8 @@ public class MainActivity extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		
+		((Easyway95App)getApplication()).setMainActivity(this);
 
 		setContentView(R.layout.activity_main);
         mBMapMan = new BMapManager(getApplication());
@@ -221,7 +224,7 @@ public class MainActivity extends MapActivity {
 	    super.onResume();
 	}    
     
-	public static Handler handler = new Handler() {
+	public Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg.what == Constants.SYNTHESIZE_DONE) {
 				//mMapController.animateTo(mLocationOverlay.getMyLocation());
@@ -257,11 +260,16 @@ public class MainActivity extends MapActivity {
             	Log.i(TAG, "get message from server.");
             	com.luyun.easyway95.shared.TSSProtos.Package pkg  = com.luyun.easyway95.shared.TSSProtos.Package.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
             	Log.i(TAG, pkg.toString());
+            	MainActivity.this.onMsg(pkg);
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
 			}
 		}
     };
+    
+    private void onMsg(com.luyun.easyway95.shared.TSSProtos.Package msg) {
+    	Log.d(TAG, "in onMsg");
+    }
     
     public class TTSThread extends Thread {
 		private String msTTS;
@@ -283,6 +291,7 @@ public class MainActivity extends MapActivity {
 	        Intent i = new Intent(MainActivity.this, TTSService.class);
     		i.putExtra("text", msTTS);
     		startService(i);
+    		//mtService.onPlayBegin();
 		}
     }
 }

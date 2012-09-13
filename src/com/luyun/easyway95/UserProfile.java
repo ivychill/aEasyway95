@@ -1,8 +1,6 @@
 package com.luyun.easyway95;
 
 import org.json.JSONObject;
-import org.restlet.resource.ClientResource;
-import org.restlet.resource.Get;
 
 public class UserProfile {
 	private String msUserName;

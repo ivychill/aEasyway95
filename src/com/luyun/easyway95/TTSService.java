@@ -4,8 +4,11 @@ import com.iflytek.speech.SpeechError;
 import com.iflytek.speech.SynthesizerPlayer;
 import com.iflytek.speech.SynthesizerPlayerListener;
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Binder;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
@@ -18,6 +21,12 @@ public class TTSService extends IntentService implements SynthesizerPlayerListen
 		super("TTSService");
 	}
 	
+    public class LocalBinder extends Binder {
+        TTSService getService() {
+            return TTSService.this;
+        }
+    }
+    
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -86,10 +95,7 @@ public class TTSService extends IntentService implements SynthesizerPlayerListen
 	@Override
 	public void onEnd(SpeechError arg0) {
 		Log.d(TAG, "in onEnd");
-        // The PendingIntent to launch our activity
-        //PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-        //        new Intent(getApplicationContext(), MainActivity.class), 0);
-        //((MainActivity)getApplicationContext()).handler.sendMessage(msg);
-        MainActivity.handler.sendMessage(Message.obtain(MainActivity.handler, Constants.SYNTHESIZE_DONE));
+		MainActivity mainActivity = (MainActivity)((Easyway95App)getApplication()).getMainActivity();
+		((MainActivity)mainActivity).handler.sendMessage(Message.obtain(((MainActivity)mainActivity).handler, Constants.SYNTHESIZE_DONE));
 	}
 }

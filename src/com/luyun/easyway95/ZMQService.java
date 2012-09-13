@@ -33,13 +33,15 @@ public class ZMQService extends Service {
 	
 	private Handler mTriggerHdl;
 	
-	public void registerHandler(Handler hdl) {
-		mTriggerHdl = hdl;
-	}
+	//public void registerHandler(Handler hdl) {
+	//	mTriggerHdl = hdl;
+	//}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		mTriggerHdl = ((MainActivity)((Easyway95App)getApplication()).getMainActivity()).handler;
+		
 		mzcContextInproc = ZMQ.context(1);
 		mztIO = new ZMQThread();
 		mztIO.start();
