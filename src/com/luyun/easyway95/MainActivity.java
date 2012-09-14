@@ -2,12 +2,14 @@ package com.luyun.easyway95;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.LocationListener;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -26,16 +28,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class MainActivity extends MapActivity {
-	BMapManager mBMapMan = null; 
+	//BMapManager mBMapMan = null; 
 	final static String TAG = "MainActivity";
 	private ZMQService mzService;
 	private TTSService mtService;
     private boolean mIsBound;
-    
+    private MapHelper mMapHelper;
+    MapView mMapView;
+
+	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
+	TrafficSubscriber mTrafficSubscriber;
+
     private static boolean mbSynthetizeOngoing = false;
     
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -83,13 +91,22 @@ public class MainActivity extends MapActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		
 		((Easyway95App)getApplication()).setMainActivity(this);
+		mMapHelper = new MapHelper(this);
 
 		setContentView(R.layout.activity_main);
-        mBMapMan = new BMapManager(getApplication());
-        mBMapMan.init("513CBE299AB953DDFAEBC4A608F1F6557C30D685", null);
-        super.initMapActivity(mBMapMan);
+        //mBMapMan = new BMapManager(getApplication());
+        //mBMapMan.init("513CBE299AB953DDFAEBC4A608F1F6557C30D685", null);
+        //super.initMapActivity(mBMapMan);
          
-        MapView mMapView = (MapView) findViewById(R.id.bmapsView);
+		Easyway95App app = (Easyway95App)this.getApplication();
+		if (app.mBMapMan == null) {
+			app.mBMapMan = new BMapManager(getApplication());
+			app.mBMapMan.init(app.mStrKey, new Easyway95App.MyGeneralListener());
+		}
+		app.mBMapMan.start();
+        super.initMapActivity(app.mBMapMan);
+        
+		mMapView = (MapView) findViewById(R.id.bmapsView);
         mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
@@ -98,6 +115,22 @@ public class MainActivity extends MapActivity {
         mMapController.setCenter(point);  //设置地图中心点
         mMapController.setZoom(18);    //设置地图zoom级别
         
+        // 注册定位事件
+        mLocationListener = new LocationListener(){
+
+			@Override
+			public void onLocationChanged(Location location) {
+				if(location != null){
+					String strLog = String.format("您当前的位置:\r\n" +
+							"纬度:%f\r\n" +
+							"经度:%f",
+							location.getLongitude(), location.getLatitude());
+					Log.d(TAG, strLog);
+					mMapHelper.onLocationChanged(location);
+				}
+			}
+        };
+
         //startService(new Intent(MainActivity.this,
         //		ZMQService.class));
         doBindService();
@@ -188,6 +221,17 @@ public class MainActivity extends MapActivity {
         		t.start();
         	}
         });
+        
+        Button btnDrivingReq = (Button)findViewById(R.id.button6);
+        btnDrivingReq.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start request driving routes
+        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
+        		GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
+        		mMapHelper.requestDrivingRoutes(startPoint, endPoint);
+        	}
+        });
 }
 
     @Override
@@ -203,23 +247,29 @@ public class MainActivity extends MapActivity {
 	@Override
 	protected void onDestroy() {
 	    super.onDestroy();
-	    if (mBMapMan != null) {
-	        mBMapMan.destroy();
-	        mBMapMan = null;
-	    }
+		//Easyway95App app = (Easyway95App)this.getApplication();
+	    //if (app.mBMapMan != null) {
+	    //    app.mBMapMan.destroy();
+	    //    app.mBMapMan = null;
+	    //}
 	    doUnbindService();
 	}
 	@Override
 	protected void onPause() {
-	    if (mBMapMan != null) {
-	        mBMapMan.stop();
+		Easyway95App app = (Easyway95App)this.getApplication();
+		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
+	    if (app.mBMapMan != null) {
+	        app.mBMapMan.stop();
 	    }
 	    super.onPause();
 	}
 	@Override
 	protected void onResume() {
-	    if (mBMapMan != null) {
-	        mBMapMan.start();
+		Easyway95App app = (Easyway95App)this.getApplication();
+		// 注册Listener
+        app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
+	    if (app.mBMapMan != null) {
+	        app.mBMapMan.start();
 	    }
 	    super.onResume();
 	}    
@@ -260,16 +310,12 @@ public class MainActivity extends MapActivity {
             	Log.i(TAG, "get message from server.");
             	com.luyun.easyway95.shared.TSSProtos.Package pkg  = com.luyun.easyway95.shared.TSSProtos.Package.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
             	Log.i(TAG, pkg.toString());
-            	MainActivity.this.onMsg(pkg);
+            	mMapHelper.onMsg(pkg);
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
 			}
 		}
     };
-    
-    private void onMsg(com.luyun.easyway95.shared.TSSProtos.Package msg) {
-    	Log.d(TAG, "in onMsg");
-    }
     
     public class TTSThread extends Thread {
 		private String msTTS;
@@ -280,7 +326,9 @@ public class MainActivity extends MapActivity {
     	@Override
 		public void run() {
 	        Log.d(TAG, "In TTSThead::running"); 
-	        while (mbSynthetizeOngoing) {
+	        int waitingTimes = 0; //waiting upto 15 seconds
+	        while (mbSynthetizeOngoing && waitingTimes < 30) {
+	        	waitingTimes ++;
 	        	try {
 	        		Thread.sleep(500);
 	        	} catch (Exception e) {
@@ -291,7 +339,6 @@ public class MainActivity extends MapActivity {
 	        Intent i = new Intent(MainActivity.this, TTSService.class);
     		i.putExtra("text", msTTS);
     		startService(i);
-    		//mtService.onPlayBegin();
 		}
     }
 }
