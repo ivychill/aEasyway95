@@ -15,17 +15,26 @@ import org.restlet.util.Series;
 import org.restlet.data.*;
 import org.restlet.ext.json.JsonRepresentation;
 
+import com.baidu.mapapi.GeoPoint;
+
 import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
+import android.widget.TabHost;
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends TabActivity {
 	// VERBOSE debug log is complied in but stripped at runtime
 	private static final String TAG = "SettingActivity";
 	private String msAuthToken;
@@ -33,13 +42,14 @@ public class SettingActivity extends Activity {
 	private boolean mbTokenLogon = false;
 	private boolean mbSessionLogon = false;
 	private UserProfile mUserProfile;
+	private TabHost myTabhost;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		
-		setContentView(R.layout.setting);
+		//setContentView(R.layout.setting);
 		msAuthToken = retrieveAuthToken();
 		msSessionId = retrieveSessionToken();
 		Log.d(TAG, "kkkk");
@@ -54,8 +64,34 @@ public class SettingActivity extends Activity {
 	        resURL = Constants.USERS_PROFILE_URL;
 		}
 		Log.d(TAG, "ffff");
+        myTabhost=this.getTabHost();       
+        LayoutInflater.from(this).inflate(R.layout.setting, myTabhost.getTabContentView(), true);
+        myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
+        
+        myTabhost.addTab(myTabhost.newTabSpec("Ahead")
+                .setIndicator("途径路况",
+                        getResources().getDrawable(R.drawable.arrowlogov2))
+                        .setContent(R.id.linearLayout_blue));
+        myTabhost.addTab(myTabhost.newTabSpec("More")
+                .setIndicator("可能还关注",
+                        getResources().getDrawable(R.drawable.traffic_btn_v3))
+                        .setContent(R.id.linearLayout_green));      
+        myTabhost.addTab(myTabhost.newTabSpec("Setting")
+                .setIndicator("设置",
+                        getResources().getDrawable(R.drawable.homesettinglogo))
+                        .setContent(R.id.setting_layout));
+
+        Button btnSethome = (Button)findViewById(R.id.sethome);
+        btnSethome.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start login activity
+        		startActivity(new Intent(SettingActivity.this, PoiSearch.class));
+        	}
+        });
+        
 		if (mbTokenLogon || mbSessionLogon) {
-	        Button btn = (Button)findViewById(R.id.button1);
+	        Button btn = (Button)findViewById(R.id.login);
 	        btn.setText("已登录");
 	        
 	        //ClientResource cr = new ClientResource(Constants.USERS_PROFILE_URL);

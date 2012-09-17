@@ -1,5 +1,7 @@
 package com.luyun.easyway95;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.location.Location;
@@ -20,14 +22,17 @@ public class MapHelper {
 	BMapManager mBMapMan;
 	
 	private MainActivity mainActivity;
-	private Location mCurrentLocation;
+	public Location mCurrentLocation;
 	private SegmentTraffic mCurrentSegTraffic; //traffic received from tss, used to update view of traffic list and update "traffic line??"
+	private TrafficSubscriber mTrafficSubscriber;
 	
 	//private DrivingRoutes;
 	
 	public MapHelper(MainActivity act) {
 		mainActivity = act;
 		mBMapMan = ((Easyway95App)mainActivity.getApplication()).mBMapMan;
+		mCurrentLocation = new Location("深圳");
+		mTrafficSubscriber = new TrafficSubscriber(mainActivity);
 	}
 	
 	SegmentTraffic getSegTraffic() {
@@ -64,16 +69,15 @@ public class MapHelper {
 		//update marker
 		//request a new driving route to baidu in case off road
 		//popup a prompt when distance between current location with traffic < 2KM
+    	mCurrentLocation = location;
 
     }
     
     public void requestDrivingRoutes(GeoPoint startPoint, GeoPoint endPoint) {
 		//Log.d(TAG, "enter onClick");
 		MKPlanNode start = new MKPlanNode();
-		//start.pt = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
 		start.pt = startPoint;
 		MKPlanNode end = new MKPlanNode();
-		//end.pt = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
 		end.pt = endPoint;
 		// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 		MKSearch mMKSearch = new MKSearch();
@@ -86,13 +90,26 @@ public class MapHelper {
 			    }
 			    RouteOverlay routeOverlay = new RouteOverlay(mainActivity, mainActivity.mMapView);
 			    // 此处仅展示一个方案作为示例
-				Log.d(TAG, "route plan number" + result.getNumPlan());
-				Log.d(TAG, "route number" + result.getPlan(0).getNumRoutes());
+				//Log.d(TAG, "route plan number " + result.getNumPlan());
+				//Log.d(TAG, "route number " + result.getPlan(0).getNumRoutes());
 				MKRoute route = result.getPlan(0).getRoute(0);
 				routeOverlay.setData(route);
 				mainActivity.mMapView.getOverlays().add(routeOverlay);
+				mainActivity.mMapView.invalidate();  //刷新地图
 			    
-			    //mainActivity.mTrafficSubscriber.SubTraffic(route);
+			    Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
+
+			    Iterator<ArrayList<GeoPoint>> itr = route.getArrayPoints().iterator();
+		    	int index = 0;
+			    while(itr.hasNext())
+			    {
+			    	ArrayList<GeoPoint> arrayPoint = itr.next();
+			    	Log.d(TAG, "ArrayList<GeoPoint> index..." + index++);
+			    	Log.d(TAG, "ArrayList<GeoPoint> size..." + arrayPoint.size());
+			    	Log.d(TAG, "ArrayList<GeoPoint> ..." + arrayPoint.toString());
+			    }
+
+			    mTrafficSubscriber.SubTraffic(route);
 			}
 	    });
 		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);

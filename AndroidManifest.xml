@@ -30,7 +30,10 @@
         <activity
             android:name=".SettingActivity" >
         </activity>
-	<service android:name="com.luyun.easyway95.ZMQService" />
+        <activity
+            android:name=".PoiSearch" >
+        </activity>
+        	<service android:name="com.luyun.easyway95.ZMQService" />
 	<service android:name="com.luyun.easyway95.TTSService" />
 	</application>
 	

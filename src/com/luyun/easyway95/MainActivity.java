@@ -6,6 +6,7 @@ import com.baidu.mapapi.LocationListener;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
+import com.baidu.mapapi.MyLocationOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos;
 
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
@@ -41,8 +43,9 @@ public class MainActivity extends MapActivity {
     private MapHelper mMapHelper;
     MapView mMapView;
 
+	MyLocationOverlay mLocationOverlay = null;	//定位图层
 	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
-	TrafficSubscriber mTrafficSubscriber;
+	//TrafficSubscriber mTrafficSubscriber;
 
     private static boolean mbSynthetizeOngoing = false;
     
@@ -107,13 +110,18 @@ public class MainActivity extends MapActivity {
         super.initMapActivity(app.mBMapMan);
         
 		mMapView = (MapView) findViewById(R.id.bmapsView);
-        mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
+        //mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
+        //设置在缩放动画过程中也显示overlay,默认为不绘制
+        mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
         GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
                 (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
         mMapController.setCenter(point);  //设置地图中心点
-        mMapController.setZoom(18);    //设置地图zoom级别
+        mMapController.setZoom(13);    //设置地图zoom级别
+		// 添加定位图层
+        mLocationOverlay = new MyLocationOverlay(this, mMapView);
+		mMapView.getOverlays().add(mLocationOverlay);
         
         // 注册定位事件
         mLocationListener = new LocationListener(){
@@ -193,14 +201,14 @@ public class MainActivity extends MapActivity {
         	}
         });
 
-        Button btnSetting = (Button)findViewById(R.id.button3);
+        /*Button btnSetting = (Button)findViewById(R.id.button3);
         btnSetting.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		//start login activity
         		startActivity(new Intent(MainActivity.this, SettingActivity.class));
         	}
-        });
+        });*/
 
         Button btnXunfei1 = (Button)findViewById(R.id.button4);
         btnXunfei1.setOnClickListener(new OnClickListener() {
@@ -232,8 +240,31 @@ public class MainActivity extends MapActivity {
         		mMapHelper.requestDrivingRoutes(startPoint, endPoint);
         	}
         });
-}
+        
+        ImageButton btnReset = (ImageButton)findViewById(R.id.imageButton1);
+        btnReset.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//reset map view (animate to current location)
+        		Log.d(TAG, "click resetting button.("+getCurrLocation().toString()+")");
+        		GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
+        		mMapView.getController().animateTo(currPosition);
+        	}
+        });
+        ImageButton btnSetting = (ImageButton)findViewById(R.id.imageButton3);
+        btnSetting.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//reset map view (animate to current location)
+        		startActivity(new Intent(MainActivity.this, SettingActivity.class));
+        	}
+        });
+    }
 
+    public Location getCurrLocation() {
+    	return mMapHelper.mCurrentLocation;
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -256,6 +287,8 @@ public class MainActivity extends MapActivity {
 	}
 	@Override
 	protected void onPause() {
+		mLocationOverlay.disableMyLocation();
+        mLocationOverlay.disableCompass(); // 关闭指南针
 		Easyway95App app = (Easyway95App)this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
 	    if (app.mBMapMan != null) {
@@ -268,6 +301,8 @@ public class MainActivity extends MapActivity {
 		Easyway95App app = (Easyway95App)this.getApplication();
 		// 注册Listener
         app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
+        mLocationOverlay.enableMyLocation();
+        mLocationOverlay.enableCompass(); // 打开指南针
 	    if (app.mBMapMan != null) {
 	        app.mBMapMan.start();
 	    }
@@ -340,5 +375,9 @@ public class MainActivity extends MapActivity {
     		i.putExtra("text", msTTS);
     		startService(i);
 		}
+    }
+    
+    public void sendMsgToSvr(byte[] data) {
+        mzService.sendMsgToSvr(data);	
     }
 }
