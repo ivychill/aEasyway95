@@ -8,56 +8,56 @@ public final class TSSProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public enum Direction
+  public enum LYDirection
       implements com.google.protobuf.ProtocolMessageEnum {
-    UNKNOWN(0, 0),
-    EAST(1, 1),
-    NORTHEAST(2, 2),
-    NORTH(3, 3),
-    NORTHWEST(4, 4),
-    WEST(5, 5),
-    SOUTHWEST(6, 6),
-    SOUTH(7, 7),
-    SOUTHEAST(8, 8),
+    LY_UNKNOWN(0, 0),
+    LY_EAST(1, 1),
+    LY_NORTHEAST(2, 2),
+    LY_NORTH(3, 3),
+    LY_NORTHWEST(4, 4),
+    LY_WEST(5, 5),
+    LY_SOUTHWEST(6, 6),
+    LY_SOUTH(7, 7),
+    LY_SOUTHEAST(8, 8),
     ;
     
-    public static final int UNKNOWN_VALUE = 0;
-    public static final int EAST_VALUE = 1;
-    public static final int NORTHEAST_VALUE = 2;
-    public static final int NORTH_VALUE = 3;
-    public static final int NORTHWEST_VALUE = 4;
-    public static final int WEST_VALUE = 5;
-    public static final int SOUTHWEST_VALUE = 6;
-    public static final int SOUTH_VALUE = 7;
-    public static final int SOUTHEAST_VALUE = 8;
+    public static final int LY_UNKNOWN_VALUE = 0;
+    public static final int LY_EAST_VALUE = 1;
+    public static final int LY_NORTHEAST_VALUE = 2;
+    public static final int LY_NORTH_VALUE = 3;
+    public static final int LY_NORTHWEST_VALUE = 4;
+    public static final int LY_WEST_VALUE = 5;
+    public static final int LY_SOUTHWEST_VALUE = 6;
+    public static final int LY_SOUTH_VALUE = 7;
+    public static final int LY_SOUTHEAST_VALUE = 8;
     
     
     public final int getNumber() { return value; }
     
-    public static Direction valueOf(int value) {
+    public static LYDirection valueOf(int value) {
       switch (value) {
-        case 0: return UNKNOWN;
-        case 1: return EAST;
-        case 2: return NORTHEAST;
-        case 3: return NORTH;
-        case 4: return NORTHWEST;
-        case 5: return WEST;
-        case 6: return SOUTHWEST;
-        case 7: return SOUTH;
-        case 8: return SOUTHEAST;
+        case 0: return LY_UNKNOWN;
+        case 1: return LY_EAST;
+        case 2: return LY_NORTHEAST;
+        case 3: return LY_NORTH;
+        case 4: return LY_NORTHWEST;
+        case 5: return LY_WEST;
+        case 6: return LY_SOUTHWEST;
+        case 7: return LY_SOUTH;
+        case 8: return LY_SOUTHEAST;
         default: return null;
       }
     }
     
-    public static com.google.protobuf.Internal.EnumLiteMap<Direction>
+    public static com.google.protobuf.Internal.EnumLiteMap<LYDirection>
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static com.google.protobuf.Internal.EnumLiteMap<Direction>
+    private static com.google.protobuf.Internal.EnumLiteMap<LYDirection>
         internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Direction>() {
-            public Direction findValueByNumber(int number) {
-              return Direction.valueOf(number);
+          new com.google.protobuf.Internal.EnumLiteMap<LYDirection>() {
+            public LYDirection findValueByNumber(int number) {
+              return LYDirection.valueOf(number);
             }
           };
     
@@ -74,11 +74,11 @@ public final class TSSProtos {
       return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(0);
     }
     
-    private static final Direction[] VALUES = {
-      UNKNOWN, EAST, NORTHEAST, NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH, SOUTHEAST, 
+    private static final LYDirection[] VALUES = {
+      LY_UNKNOWN, LY_EAST, LY_NORTHEAST, LY_NORTH, LY_NORTHWEST, LY_WEST, LY_SOUTHWEST, LY_SOUTH, LY_SOUTHEAST, 
     };
     
-    public static Direction valueOf(
+    public static LYDirection valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -90,46 +90,58 @@ public final class TSSProtos {
     private final int index;
     private final int value;
     
-    private Direction(int index, int value) {
+    private LYDirection(int index, int value) {
       this.index = index;
       this.value = value;
     }
     
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.Direction)
+    // @@protoc_insertion_point(enum_scope:tss.LYDirection)
   }
   
-  public enum OprType
+  public enum LYRetCode
       implements com.google.protobuf.ProtocolMessageEnum {
-    SUB_CREATE(0, 1),
-    SUB_DELETE(1, 2),
-    SUB_UPDATE(2, 3),
+    LY_SUCCESS(0, 0),
+    LY_VERSION_IMCOMPATIBLE(1, 273),
+    LY_VERSION_LOW(2, 291),
+    LY_PARTY_ERROR(3, 553),
+    LY_MSG_TYPE_ERROR(4, 914),
+    LY_TIMEOUT(5, 1171),
+    LY_OTHER_ERROR(6, 2457),
     ;
     
-    public static final int SUB_CREATE_VALUE = 1;
-    public static final int SUB_DELETE_VALUE = 2;
-    public static final int SUB_UPDATE_VALUE = 3;
+    public static final int LY_SUCCESS_VALUE = 0;
+    public static final int LY_VERSION_IMCOMPATIBLE_VALUE = 273;
+    public static final int LY_VERSION_LOW_VALUE = 291;
+    public static final int LY_PARTY_ERROR_VALUE = 553;
+    public static final int LY_MSG_TYPE_ERROR_VALUE = 914;
+    public static final int LY_TIMEOUT_VALUE = 1171;
+    public static final int LY_OTHER_ERROR_VALUE = 2457;
     
     
     public final int getNumber() { return value; }
     
-    public static OprType valueOf(int value) {
+    public static LYRetCode valueOf(int value) {
       switch (value) {
-        case 1: return SUB_CREATE;
-        case 2: return SUB_DELETE;
-        case 3: return SUB_UPDATE;
+        case 0: return LY_SUCCESS;
+        case 273: return LY_VERSION_IMCOMPATIBLE;
+        case 291: return LY_VERSION_LOW;
+        case 553: return LY_PARTY_ERROR;
+        case 914: return LY_MSG_TYPE_ERROR;
+        case 1171: return LY_TIMEOUT;
+        case 2457: return LY_OTHER_ERROR;
         default: return null;
       }
     }
     
-    public static com.google.protobuf.Internal.EnumLiteMap<OprType>
+    public static com.google.protobuf.Internal.EnumLiteMap<LYRetCode>
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static com.google.protobuf.Internal.EnumLiteMap<OprType>
+    private static com.google.protobuf.Internal.EnumLiteMap<LYRetCode>
         internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<OprType>() {
-            public OprType findValueByNumber(int number) {
-              return OprType.valueOf(number);
+          new com.google.protobuf.Internal.EnumLiteMap<LYRetCode>() {
+            public LYRetCode findValueByNumber(int number) {
+              return LYRetCode.valueOf(number);
             }
           };
     
@@ -146,11 +158,11 @@ public final class TSSProtos {
       return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(1);
     }
     
-    private static final OprType[] VALUES = {
-      SUB_CREATE, SUB_DELETE, SUB_UPDATE, 
+    private static final LYRetCode[] VALUES = {
+      LY_SUCCESS, LY_VERSION_IMCOMPATIBLE, LY_VERSION_LOW, LY_PARTY_ERROR, LY_MSG_TYPE_ERROR, LY_TIMEOUT, LY_OTHER_ERROR, 
     };
     
-    public static OprType valueOf(
+    public static LYRetCode valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -162,46 +174,43 @@ public final class TSSProtos {
     private final int index;
     private final int value;
     
-    private OprType(int index, int value) {
+    private LYRetCode(int index, int value) {
       this.index = index;
       this.value = value;
     }
     
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.OprType)
+    // @@protoc_insertion_point(enum_scope:tss.LYRetCode)
   }
   
-  public enum PubType
+  public enum LYParty
       implements com.google.protobuf.ProtocolMessageEnum {
-    PUB_ONCE(0, 1),
-    PUB_EVENT(1, 2),
-    PUB_TIMER(2, 3),
+    LY_CLIENT(0, 1),
+    LY_TSS(1, 2),
     ;
     
-    public static final int PUB_ONCE_VALUE = 1;
-    public static final int PUB_EVENT_VALUE = 2;
-    public static final int PUB_TIMER_VALUE = 3;
+    public static final int LY_CLIENT_VALUE = 1;
+    public static final int LY_TSS_VALUE = 2;
     
     
     public final int getNumber() { return value; }
     
-    public static PubType valueOf(int value) {
+    public static LYParty valueOf(int value) {
       switch (value) {
-        case 1: return PUB_ONCE;
-        case 2: return PUB_EVENT;
-        case 3: return PUB_TIMER;
+        case 1: return LY_CLIENT;
+        case 2: return LY_TSS;
         default: return null;
       }
     }
     
-    public static com.google.protobuf.Internal.EnumLiteMap<PubType>
+    public static com.google.protobuf.Internal.EnumLiteMap<LYParty>
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static com.google.protobuf.Internal.EnumLiteMap<PubType>
+    private static com.google.protobuf.Internal.EnumLiteMap<LYParty>
         internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<PubType>() {
-            public PubType findValueByNumber(int number) {
-              return PubType.valueOf(number);
+          new com.google.protobuf.Internal.EnumLiteMap<LYParty>() {
+            public LYParty findValueByNumber(int number) {
+              return LYParty.valueOf(number);
             }
           };
     
@@ -218,11 +227,11 @@ public final class TSSProtos {
       return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(2);
     }
     
-    private static final PubType[] VALUES = {
-      PUB_ONCE, PUB_EVENT, PUB_TIMER, 
+    private static final LYParty[] VALUES = {
+      LY_CLIENT, LY_TSS, 
     };
     
-    public static PubType valueOf(
+    public static LYParty valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -234,55 +243,55 @@ public final class TSSProtos {
     private final int index;
     private final int value;
     
-    private PubType(int index, int value) {
+    private LYParty(int index, int value) {
       this.index = index;
       this.value = value;
     }
     
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.PubType)
+    // @@protoc_insertion_point(enum_scope:tss.LYParty)
   }
   
-  public enum ErrCode
+  public enum LYMsgType
       implements com.google.protobuf.ProtocolMessageEnum {
-    VERSION_IMCOMPATIBLE(0, 273),
-    VERSION_LOW(1, 785),
-    MSG_DIR_ERROR(2, 544),
-    MSG_TYPE_ERROR(3, 560),
-    TIMEOUT(4, 848),
-    OTHERS(5, 2304),
+    LY_VOID(0, 1),
+    LY_RET_CODE(1, 2),
+    LY_TRAFFIC_SUB(2, 4),
+    LY_TRAFFIC_REPORT(3, 5),
+    LY_DEVICE_REPORT(4, 6),
+    LY_TRAFFIC_PUB(5, 19),
     ;
     
-    public static final int VERSION_IMCOMPATIBLE_VALUE = 273;
-    public static final int VERSION_LOW_VALUE = 785;
-    public static final int MSG_DIR_ERROR_VALUE = 544;
-    public static final int MSG_TYPE_ERROR_VALUE = 560;
-    public static final int TIMEOUT_VALUE = 848;
-    public static final int OTHERS_VALUE = 2304;
+    public static final int LY_VOID_VALUE = 1;
+    public static final int LY_RET_CODE_VALUE = 2;
+    public static final int LY_TRAFFIC_SUB_VALUE = 4;
+    public static final int LY_TRAFFIC_REPORT_VALUE = 5;
+    public static final int LY_DEVICE_REPORT_VALUE = 6;
+    public static final int LY_TRAFFIC_PUB_VALUE = 19;
     
     
     public final int getNumber() { return value; }
     
-    public static ErrCode valueOf(int value) {
+    public static LYMsgType valueOf(int value) {
       switch (value) {
-        case 273: return VERSION_IMCOMPATIBLE;
-        case 785: return VERSION_LOW;
-        case 544: return MSG_DIR_ERROR;
-        case 560: return MSG_TYPE_ERROR;
-        case 848: return TIMEOUT;
-        case 2304: return OTHERS;
+        case 1: return LY_VOID;
+        case 2: return LY_RET_CODE;
+        case 4: return LY_TRAFFIC_SUB;
+        case 5: return LY_TRAFFIC_REPORT;
+        case 6: return LY_DEVICE_REPORT;
+        case 19: return LY_TRAFFIC_PUB;
         default: return null;
       }
     }
     
-    public static com.google.protobuf.Internal.EnumLiteMap<ErrCode>
+    public static com.google.protobuf.Internal.EnumLiteMap<LYMsgType>
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static com.google.protobuf.Internal.EnumLiteMap<ErrCode>
+    private static com.google.protobuf.Internal.EnumLiteMap<LYMsgType>
         internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ErrCode>() {
-            public ErrCode findValueByNumber(int number) {
-              return ErrCode.valueOf(number);
+          new com.google.protobuf.Internal.EnumLiteMap<LYMsgType>() {
+            public LYMsgType findValueByNumber(int number) {
+              return LYMsgType.valueOf(number);
             }
           };
     
@@ -299,11 +308,11 @@ public final class TSSProtos {
       return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(3);
     }
     
-    private static final ErrCode[] VALUES = {
-      VERSION_IMCOMPATIBLE, VERSION_LOW, MSG_DIR_ERROR, MSG_TYPE_ERROR, TIMEOUT, OTHERS, 
+    private static final LYMsgType[] VALUES = {
+      LY_VOID, LY_RET_CODE, LY_TRAFFIC_SUB, LY_TRAFFIC_REPORT, LY_DEVICE_REPORT, LY_TRAFFIC_PUB, 
     };
     
-    public static ErrCode valueOf(
+    public static LYMsgType valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -315,165 +324,15 @@ public final class TSSProtos {
     private final int index;
     private final int value;
     
-    private ErrCode(int index, int value) {
+    private LYMsgType(int index, int value) {
       this.index = index;
       this.value = value;
     }
     
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.ErrCode)
+    // @@protoc_insertion_point(enum_scope:tss.LYMsgType)
   }
   
-  public enum MsgDir
-      implements com.google.protobuf.ProtocolMessageEnum {
-    CLIENT2TSS(0, 1),
-    TSS2CLIENT(1, 2),
-    ;
-    
-    public static final int CLIENT2TSS_VALUE = 1;
-    public static final int TSS2CLIENT_VALUE = 2;
-    
-    
-    public final int getNumber() { return value; }
-    
-    public static MsgDir valueOf(int value) {
-      switch (value) {
-        case 1: return CLIENT2TSS;
-        case 2: return TSS2CLIENT;
-        default: return null;
-      }
-    }
-    
-    public static com.google.protobuf.Internal.EnumLiteMap<MsgDir>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static com.google.protobuf.Internal.EnumLiteMap<MsgDir>
-        internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MsgDir>() {
-            public MsgDir findValueByNumber(int number) {
-              return MsgDir.valueOf(number);
-            }
-          };
-    
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(index);
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(4);
-    }
-    
-    private static final MsgDir[] VALUES = {
-      CLIENT2TSS, TSS2CLIENT, 
-    };
-    
-    public static MsgDir valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-    
-    private final int index;
-    private final int value;
-    
-    private MsgDir(int index, int value) {
-      this.index = index;
-      this.value = value;
-    }
-    
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.MsgDir)
-  }
-  
-  public enum MsgType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    VOID(0, 1),
-    ERR_CODE(1, 2),
-    TRAFFIC_SUB(2, 4),
-    TRAFFIC_REPORT(3, 5),
-    DEVICE_REPORT(4, 6),
-    CITY_TRAFFIC_PUB(5, 19),
-    ;
-    
-    public static final int VOID_VALUE = 1;
-    public static final int ERR_CODE_VALUE = 2;
-    public static final int TRAFFIC_SUB_VALUE = 4;
-    public static final int TRAFFIC_REPORT_VALUE = 5;
-    public static final int DEVICE_REPORT_VALUE = 6;
-    public static final int CITY_TRAFFIC_PUB_VALUE = 19;
-    
-    
-    public final int getNumber() { return value; }
-    
-    public static MsgType valueOf(int value) {
-      switch (value) {
-        case 1: return VOID;
-        case 2: return ERR_CODE;
-        case 4: return TRAFFIC_SUB;
-        case 5: return TRAFFIC_REPORT;
-        case 6: return DEVICE_REPORT;
-        case 19: return CITY_TRAFFIC_PUB;
-        default: return null;
-      }
-    }
-    
-    public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static com.google.protobuf.Internal.EnumLiteMap<MsgType>
-        internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
-            public MsgType findValueByNumber(int number) {
-              return MsgType.valueOf(number);
-            }
-          };
-    
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(index);
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(5);
-    }
-    
-    private static final MsgType[] VALUES = {
-      VOID, ERR_CODE, TRAFFIC_SUB, TRAFFIC_REPORT, DEVICE_REPORT, CITY_TRAFFIC_PUB, 
-    };
-    
-    public static MsgType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-    
-    private final int index;
-    private final int value;
-    
-    private MsgType(int index, int value) {
-      this.index = index;
-      this.value = value;
-    }
-    
-    // @@protoc_insertion_point(enum_scope:com.luyun.easyway95.shared.MsgType)
-  }
-  
-  public interface CoordinateOrBuilder
+  public interface LYCoordinateOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required double lng = 1;
@@ -484,32 +343,32 @@ public final class TSSProtos {
     boolean hasLat();
     double getLat();
   }
-  public static final class Coordinate extends
+  public static final class LYCoordinate extends
       com.google.protobuf.GeneratedMessage
-      implements CoordinateOrBuilder {
-    // Use Coordinate.newBuilder() to construct.
-    private Coordinate(Builder builder) {
+      implements LYCoordinateOrBuilder {
+    // Use LYCoordinate.newBuilder() to construct.
+    private LYCoordinate(Builder builder) {
       super(builder);
     }
-    private Coordinate(boolean noInit) {}
+    private LYCoordinate(boolean noInit) {}
     
-    private static final Coordinate defaultInstance;
-    public static Coordinate getDefaultInstance() {
+    private static final LYCoordinate defaultInstance;
+    public static LYCoordinate getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Coordinate getDefaultInstanceForType() {
+    public LYCoordinate getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Coordinate_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCoordinate_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Coordinate_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCoordinate_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -592,41 +451,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -635,7 +494,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -646,12 +505,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Coordinate parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCoordinate parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -661,7 +520,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.Coordinate prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYCoordinate prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -674,18 +533,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Coordinate_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCoordinate_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Coordinate_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCoordinate_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -717,24 +576,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Coordinate.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate build() {
-        com.luyun.easyway95.shared.TSSProtos.Coordinate result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate build() {
+        com.luyun.easyway95.shared.TSSProtos.LYCoordinate result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.Coordinate buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.Coordinate result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYCoordinate result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -742,8 +601,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.Coordinate result = new com.luyun.easyway95.shared.TSSProtos.Coordinate(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYCoordinate result = new com.luyun.easyway95.shared.TSSProtos.LYCoordinate(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -760,16 +619,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.Coordinate) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.Coordinate)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYCoordinate) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYCoordinate)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.Coordinate other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYCoordinate other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) return this;
         if (other.hasLng()) {
           setLng(other.getLng());
         }
@@ -873,18 +732,18 @@ public final class TSSProtos {
         return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.Coordinate)
+      // @@protoc_insertion_point(builder_scope:tss.LYCoordinate)
     }
     
     static {
-      defaultInstance = new Coordinate(true);
+      defaultInstance = new LYCoordinate(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.Coordinate)
+    // @@protoc_insertion_point(class_scope:tss.LYCoordinate)
   }
   
-  public interface LocationOrBuilder
+  public interface LYLocationOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required double lng = 1;
@@ -903,32 +762,32 @@ public final class TSSProtos {
     boolean hasAdt();
     String getAdt();
   }
-  public static final class Location extends
+  public static final class LYLocation extends
       com.google.protobuf.GeneratedMessage
-      implements LocationOrBuilder {
-    // Use Location.newBuilder() to construct.
-    private Location(Builder builder) {
+      implements LYLocationOrBuilder {
+    // Use LYLocation.newBuilder() to construct.
+    private LYLocation(Builder builder) {
       super(builder);
     }
-    private Location(boolean noInit) {}
+    private LYLocation(boolean noInit) {}
     
-    private static final Location defaultInstance;
-    public static Location getDefaultInstance() {
+    private static final LYLocation defaultInstance;
+    public static LYLocation getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Location getDefaultInstanceForType() {
+    public LYLocation getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Location_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYLocation_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Location_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYLocation_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -1091,41 +950,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -1134,7 +993,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1145,12 +1004,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Location parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYLocation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1160,7 +1019,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.Location prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYLocation prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -1173,18 +1032,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYLocationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Location_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYLocation_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Location_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYLocation_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.Location.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYLocation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1220,24 +1079,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Location.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYLocation.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Location getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYLocation getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYLocation.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Location build() {
-        com.luyun.easyway95.shared.TSSProtos.Location result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYLocation build() {
+        com.luyun.easyway95.shared.TSSProtos.LYLocation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.Location buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYLocation buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.Location result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYLocation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -1245,8 +1104,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Location buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.Location result = new com.luyun.easyway95.shared.TSSProtos.Location(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYLocation buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYLocation result = new com.luyun.easyway95.shared.TSSProtos.LYLocation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1271,16 +1130,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.Location) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.Location)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYLocation) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYLocation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.Location other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYLocation other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYLocation.getDefaultInstance()) return this;
         if (other.hasLng()) {
           setLng(other.getLng());
         }
@@ -1472,86 +1331,86 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.Location)
+      // @@protoc_insertion_point(builder_scope:tss.LYLocation)
     }
     
     static {
-      defaultInstance = new Location(true);
+      defaultInstance = new LYLocation(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.Location)
+    // @@protoc_insertion_point(class_scope:tss.LYLocation)
   }
   
-  public interface SegmentOrBuilder
+  public interface LYSegmentOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required .com.luyun.easyway95.shared.Coordinate start = 1;
+    // required .tss.LYCoordinate start = 1;
     boolean hasStart();
-    com.luyun.easyway95.shared.TSSProtos.Coordinate getStart();
-    com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getStartOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinate getStart();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getStartOrBuilder();
     
-    // required .com.luyun.easyway95.shared.Coordinate end = 2;
+    // required .tss.LYCoordinate end = 2;
     boolean hasEnd();
-    com.luyun.easyway95.shared.TSSProtos.Coordinate getEnd();
-    com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getEndOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinate getEnd();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getEndOrBuilder();
     
     // optional string road = 3;
     boolean hasRoad();
     String getRoad();
   }
-  public static final class Segment extends
+  public static final class LYSegment extends
       com.google.protobuf.GeneratedMessage
-      implements SegmentOrBuilder {
-    // Use Segment.newBuilder() to construct.
-    private Segment(Builder builder) {
+      implements LYSegmentOrBuilder {
+    // Use LYSegment.newBuilder() to construct.
+    private LYSegment(Builder builder) {
       super(builder);
     }
-    private Segment(boolean noInit) {}
+    private LYSegment(boolean noInit) {}
     
-    private static final Segment defaultInstance;
-    public static Segment getDefaultInstance() {
+    private static final LYSegment defaultInstance;
+    public static LYSegment getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Segment getDefaultInstanceForType() {
+    public LYSegment getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Segment_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegment_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Segment_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegment_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // required .com.luyun.easyway95.shared.Coordinate start = 1;
+    // required .tss.LYCoordinate start = 1;
     public static final int START_FIELD_NUMBER = 1;
-    private com.luyun.easyway95.shared.TSSProtos.Coordinate start_;
+    private com.luyun.easyway95.shared.TSSProtos.LYCoordinate start_;
     public boolean hasStart() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Coordinate getStart() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getStart() {
       return start_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getStartOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getStartOrBuilder() {
       return start_;
     }
     
-    // required .com.luyun.easyway95.shared.Coordinate end = 2;
+    // required .tss.LYCoordinate end = 2;
     public static final int END_FIELD_NUMBER = 2;
-    private com.luyun.easyway95.shared.TSSProtos.Coordinate end_;
+    private com.luyun.easyway95.shared.TSSProtos.LYCoordinate end_;
     public boolean hasEnd() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Coordinate getEnd() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getEnd() {
       return end_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getEndOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getEndOrBuilder() {
       return end_;
     }
     
@@ -1588,8 +1447,8 @@ public final class TSSProtos {
     }
     
     private void initFields() {
-      start_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
-      end_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      start_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
+      end_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       road_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -1662,41 +1521,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -1705,7 +1564,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1716,12 +1575,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Segment parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegment parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1731,7 +1590,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.Segment prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYSegment prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -1744,18 +1603,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Segment_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegment_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Segment_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegment_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1777,13 +1636,13 @@ public final class TSSProtos {
       public Builder clear() {
         super.clear();
         if (startBuilder_ == null) {
-          start_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          start_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
         } else {
           startBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (endBuilder_ == null) {
-          end_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          end_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
         } else {
           endBuilder_.clear();
         }
@@ -1799,24 +1658,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Segment.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYSegment.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Segment getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Segment build() {
-        com.luyun.easyway95.shared.TSSProtos.Segment result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment build() {
+        com.luyun.easyway95.shared.TSSProtos.LYSegment result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.Segment buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYSegment buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.Segment result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYSegment result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -1824,8 +1683,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Segment buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.Segment result = new com.luyun.easyway95.shared.TSSProtos.Segment(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYSegment result = new com.luyun.easyway95.shared.TSSProtos.LYSegment(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1854,16 +1713,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.Segment) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.Segment)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYSegment) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYSegment)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.Segment other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYSegment other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance()) return this;
         if (other.hasStart()) {
           mergeStart(other.getStart());
         }
@@ -1921,7 +1780,7 @@ public final class TSSProtos {
               break;
             }
             case 10: {
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder();
               if (hasStart()) {
                 subBuilder.mergeFrom(getStart());
               }
@@ -1930,7 +1789,7 @@ public final class TSSProtos {
               break;
             }
             case 18: {
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder();
               if (hasEnd()) {
                 subBuilder.mergeFrom(getEnd());
               }
@@ -1949,21 +1808,21 @@ public final class TSSProtos {
       
       private int bitField0_;
       
-      // required .com.luyun.easyway95.shared.Coordinate start = 1;
-      private com.luyun.easyway95.shared.TSSProtos.Coordinate start_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      // required .tss.LYCoordinate start = 1;
+      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate start_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> startBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> startBuilder_;
       public boolean hasStart() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate getStart() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getStart() {
         if (startBuilder_ == null) {
           return start_;
         } else {
           return startBuilder_.getMessage();
         }
       }
-      public Builder setStart(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder setStart(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (startBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1977,7 +1836,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setStart(
-          com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder builderForValue) {
         if (startBuilder_ == null) {
           start_ = builderForValue.build();
           onChanged();
@@ -1987,12 +1846,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeStart(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder mergeStart(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (startBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              start_ != com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance()) {
+              start_ != com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) {
             start_ =
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder(start_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder(start_).mergeFrom(value).buildPartial();
           } else {
             start_ = value;
           }
@@ -2005,7 +1864,7 @@ public final class TSSProtos {
       }
       public Builder clearStart() {
         if (startBuilder_ == null) {
-          start_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          start_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
           onChanged();
         } else {
           startBuilder_.clear();
@@ -2013,12 +1872,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder getStartBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder getStartBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getStartFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getStartOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getStartOrBuilder() {
         if (startBuilder_ != null) {
           return startBuilder_.getMessageOrBuilder();
         } else {
@@ -2026,11 +1885,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> 
           getStartFieldBuilder() {
         if (startBuilder_ == null) {
           startBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder>(
                   start_,
                   getParentForChildren(),
                   isClean());
@@ -2039,21 +1898,21 @@ public final class TSSProtos {
         return startBuilder_;
       }
       
-      // required .com.luyun.easyway95.shared.Coordinate end = 2;
-      private com.luyun.easyway95.shared.TSSProtos.Coordinate end_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      // required .tss.LYCoordinate end = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate end_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> endBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> endBuilder_;
       public boolean hasEnd() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate getEnd() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getEnd() {
         if (endBuilder_ == null) {
           return end_;
         } else {
           return endBuilder_.getMessage();
         }
       }
-      public Builder setEnd(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder setEnd(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (endBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2067,7 +1926,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setEnd(
-          com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder builderForValue) {
         if (endBuilder_ == null) {
           end_ = builderForValue.build();
           onChanged();
@@ -2077,12 +1936,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeEnd(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder mergeEnd(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (endBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              end_ != com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance()) {
+              end_ != com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) {
             end_ =
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder(end_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder(end_).mergeFrom(value).buildPartial();
           } else {
             end_ = value;
           }
@@ -2095,7 +1954,7 @@ public final class TSSProtos {
       }
       public Builder clearEnd() {
         if (endBuilder_ == null) {
-          end_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          end_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
           onChanged();
         } else {
           endBuilder_.clear();
@@ -2103,12 +1962,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder getEndBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder getEndBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getEndFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getEndOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getEndOrBuilder() {
         if (endBuilder_ != null) {
           return endBuilder_.getMessageOrBuilder();
         } else {
@@ -2116,11 +1975,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> 
           getEndFieldBuilder() {
         if (endBuilder_ == null) {
           endBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder>(
                   end_,
                   getParentForChildren(),
                   isClean());
@@ -2165,96 +2024,96 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.Segment)
+      // @@protoc_insertion_point(builder_scope:tss.LYSegment)
     }
     
     static {
-      defaultInstance = new Segment(true);
+      defaultInstance = new LYSegment(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.Segment)
+    // @@protoc_insertion_point(class_scope:tss.LYSegment)
   }
   
-  public interface RouteOrBuilder
+  public interface LYRouteOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required int64 identity = 1;
+    // required int32 identity = 1;
     boolean hasIdentity();
-    long getIdentity();
+    int getIdentity();
     
-    // repeated .com.luyun.easyway95.shared.Segment segments = 2;
-    java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment> 
+    // repeated .tss.LYSegment segments = 2;
+    java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment> 
         getSegmentsList();
-    com.luyun.easyway95.shared.TSSProtos.Segment getSegments(int index);
+    com.luyun.easyway95.shared.TSSProtos.LYSegment getSegments(int index);
     int getSegmentsCount();
-    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
         getSegmentsOrBuilderList();
-    com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentsOrBuilder(
+    com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentsOrBuilder(
         int index);
   }
-  public static final class Route extends
+  public static final class LYRoute extends
       com.google.protobuf.GeneratedMessage
-      implements RouteOrBuilder {
-    // Use Route.newBuilder() to construct.
-    private Route(Builder builder) {
+      implements LYRouteOrBuilder {
+    // Use LYRoute.newBuilder() to construct.
+    private LYRoute(Builder builder) {
       super(builder);
     }
-    private Route(boolean noInit) {}
+    private LYRoute(boolean noInit) {}
     
-    private static final Route defaultInstance;
-    public static Route getDefaultInstance() {
+    private static final LYRoute defaultInstance;
+    public static LYRoute getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Route getDefaultInstanceForType() {
+    public LYRoute getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Route_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoute_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Route_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoute_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // required int64 identity = 1;
+    // required int32 identity = 1;
     public static final int IDENTITY_FIELD_NUMBER = 1;
-    private long identity_;
+    private int identity_;
     public boolean hasIdentity() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public long getIdentity() {
+    public int getIdentity() {
       return identity_;
     }
     
-    // repeated .com.luyun.easyway95.shared.Segment segments = 2;
+    // repeated .tss.LYSegment segments = 2;
     public static final int SEGMENTS_FIELD_NUMBER = 2;
-    private java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment> segments_;
-    public java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment> getSegmentsList() {
+    private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment> segments_;
+    public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment> getSegmentsList() {
       return segments_;
     }
-    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
         getSegmentsOrBuilderList() {
       return segments_;
     }
     public int getSegmentsCount() {
       return segments_.size();
     }
-    public com.luyun.easyway95.shared.TSSProtos.Segment getSegments(int index) {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegments(int index) {
       return segments_.get(index);
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentsOrBuilder(
+    public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentsOrBuilder(
         int index) {
       return segments_.get(index);
     }
     
     private void initFields() {
-      identity_ = 0L;
+      identity_ = 0;
       segments_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -2280,7 +2139,7 @@ public final class TSSProtos {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt64(1, identity_);
+        output.writeInt32(1, identity_);
       }
       for (int i = 0; i < segments_.size(); i++) {
         output.writeMessage(2, segments_.get(i));
@@ -2296,7 +2155,7 @@ public final class TSSProtos {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, identity_);
+          .computeInt32Size(1, identity_);
       }
       for (int i = 0; i < segments_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -2314,41 +2173,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -2357,7 +2216,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2368,12 +2227,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Route parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoute parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2383,7 +2242,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.Route prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYRoute prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -2396,18 +2255,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Route_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoute_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Route_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoute_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.Route.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2427,7 +2286,7 @@ public final class TSSProtos {
       
       public Builder clear() {
         super.clear();
-        identity_ = 0L;
+        identity_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         if (segmentsBuilder_ == null) {
           segments_ = java.util.Collections.emptyList();
@@ -2444,24 +2303,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Route.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYRoute.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Route getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYRoute getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Route build() {
-        com.luyun.easyway95.shared.TSSProtos.Route result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYRoute build() {
+        com.luyun.easyway95.shared.TSSProtos.LYRoute result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.Route buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYRoute buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.Route result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYRoute result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -2469,8 +2328,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Route buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.Route result = new com.luyun.easyway95.shared.TSSProtos.Route(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYRoute buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYRoute result = new com.luyun.easyway95.shared.TSSProtos.LYRoute(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2492,16 +2351,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.Route) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.Route)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYRoute) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYRoute)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.Route other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYRoute other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance()) return this;
         if (other.hasIdentity()) {
           setIdentity(other.getIdentity());
         }
@@ -2574,11 +2433,11 @@ public final class TSSProtos {
             }
             case 8: {
               bitField0_ |= 0x00000001;
-              identity_ = input.readInt64();
+              identity_ = input.readInt32();
               break;
             }
             case 18: {
-              com.luyun.easyway95.shared.TSSProtos.Segment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addSegments(subBuilder.buildPartial());
               break;
@@ -2589,15 +2448,15 @@ public final class TSSProtos {
       
       private int bitField0_;
       
-      // required int64 identity = 1;
-      private long identity_ ;
+      // required int32 identity = 1;
+      private int identity_ ;
       public boolean hasIdentity() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public long getIdentity() {
+      public int getIdentity() {
         return identity_;
       }
-      public Builder setIdentity(long value) {
+      public Builder setIdentity(int value) {
         bitField0_ |= 0x00000001;
         identity_ = value;
         onChanged();
@@ -2605,25 +2464,25 @@ public final class TSSProtos {
       }
       public Builder clearIdentity() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        identity_ = 0L;
+        identity_ = 0;
         onChanged();
         return this;
       }
       
-      // repeated .com.luyun.easyway95.shared.Segment segments = 2;
-      private java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment> segments_ =
+      // repeated .tss.LYSegment segments = 2;
+      private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment> segments_ =
         java.util.Collections.emptyList();
       private void ensureSegmentsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          segments_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.Segment>(segments_);
+          segments_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.LYSegment>(segments_);
           bitField0_ |= 0x00000002;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> segmentsBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> segmentsBuilder_;
       
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment> getSegmentsList() {
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment> getSegmentsList() {
         if (segmentsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(segments_);
         } else {
@@ -2637,7 +2496,7 @@ public final class TSSProtos {
           return segmentsBuilder_.getCount();
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment getSegments(int index) {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegments(int index) {
         if (segmentsBuilder_ == null) {
           return segments_.get(index);
         } else {
@@ -2645,7 +2504,7 @@ public final class TSSProtos {
         }
       }
       public Builder setSegments(
-          int index, com.luyun.easyway95.shared.TSSProtos.Segment value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2659,7 +2518,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setSegments(
-          int index, com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
         if (segmentsBuilder_ == null) {
           ensureSegmentsIsMutable();
           segments_.set(index, builderForValue.build());
@@ -2669,7 +2528,7 @@ public final class TSSProtos {
         }
         return this;
       }
-      public Builder addSegments(com.luyun.easyway95.shared.TSSProtos.Segment value) {
+      public Builder addSegments(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2683,7 +2542,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegments(
-          int index, com.luyun.easyway95.shared.TSSProtos.Segment value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2697,7 +2556,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegments(
-          com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
         if (segmentsBuilder_ == null) {
           ensureSegmentsIsMutable();
           segments_.add(builderForValue.build());
@@ -2708,7 +2567,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegments(
-          int index, com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
         if (segmentsBuilder_ == null) {
           ensureSegmentsIsMutable();
           segments_.add(index, builderForValue.build());
@@ -2719,7 +2578,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addAllSegments(
-          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.Segment> values) {
+          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.LYSegment> values) {
         if (segmentsBuilder_ == null) {
           ensureSegmentsIsMutable();
           super.addAll(values, segments_);
@@ -2749,18 +2608,18 @@ public final class TSSProtos {
         }
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder getSegmentsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder getSegmentsBuilder(
           int index) {
         return getSegmentsFieldBuilder().getBuilder(index);
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentsOrBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentsOrBuilder(
           int index) {
         if (segmentsBuilder_ == null) {
           return segments_.get(index);  } else {
           return segmentsBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
            getSegmentsOrBuilderList() {
         if (segmentsBuilder_ != null) {
           return segmentsBuilder_.getMessageOrBuilderList();
@@ -2768,25 +2627,25 @@ public final class TSSProtos {
           return java.util.Collections.unmodifiableList(segments_);
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder addSegmentsBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder addSegmentsBuilder() {
         return getSegmentsFieldBuilder().addBuilder(
-            com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance());
+            com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance());
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder addSegmentsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder addSegmentsBuilder(
           int index) {
         return getSegmentsFieldBuilder().addBuilder(
-            index, com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance());
+            index, com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance());
       }
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.Segment.Builder> 
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder> 
            getSegmentsBuilderList() {
         return getSegmentsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
           getSegmentsFieldBuilder() {
         if (segmentsBuilder_ == null) {
           segmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder>(
                   segments_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
@@ -2796,37 +2655,37 @@ public final class TSSProtos {
         return segmentsBuilder_;
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.Route)
+      // @@protoc_insertion_point(builder_scope:tss.LYRoute)
     }
     
     static {
-      defaultInstance = new Route(true);
+      defaultInstance = new LYRoute(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.Route)
+    // @@protoc_insertion_point(class_scope:tss.LYRoute)
   }
   
-  public interface TrafficProbeOrBuilder
+  public interface LYTrafficReportOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // optional .com.luyun.easyway95.shared.Segment segment = 1;
+    // optional .tss.LYSegment segment = 1;
     boolean hasSegment();
-    com.luyun.easyway95.shared.TSSProtos.Segment getSegment();
-    com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment();
+    com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder();
     
-    // optional .com.luyun.easyway95.shared.Coordinate location = 2;
+    // optional .tss.LYCoordinate location = 2;
     boolean hasLocation();
-    com.luyun.easyway95.shared.TSSProtos.Coordinate getLocation();
-    com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getLocationOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder();
     
     // optional int64 timestamp = 3;
     boolean hasTimestamp();
     long getTimestamp();
     
-    // required .com.luyun.easyway95.shared.Direction direction = 4;
+    // required .tss.LYDirection direction = 4;
     boolean hasDirection();
-    com.luyun.easyway95.shared.TSSProtos.Direction getDirection();
+    com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection();
     
     // required int32 speed = 5;
     boolean hasSpeed();
@@ -2836,58 +2695,58 @@ public final class TSSProtos {
     boolean hasAcceleration();
     int getAcceleration();
   }
-  public static final class TrafficProbe extends
+  public static final class LYTrafficReport extends
       com.google.protobuf.GeneratedMessage
-      implements TrafficProbeOrBuilder {
-    // Use TrafficProbe.newBuilder() to construct.
-    private TrafficProbe(Builder builder) {
+      implements LYTrafficReportOrBuilder {
+    // Use LYTrafficReport.newBuilder() to construct.
+    private LYTrafficReport(Builder builder) {
       super(builder);
     }
-    private TrafficProbe(boolean noInit) {}
+    private LYTrafficReport(boolean noInit) {}
     
-    private static final TrafficProbe defaultInstance;
-    public static TrafficProbe getDefaultInstance() {
+    private static final LYTrafficReport defaultInstance;
+    public static LYTrafficReport getDefaultInstance() {
       return defaultInstance;
     }
     
-    public TrafficProbe getDefaultInstanceForType() {
+    public LYTrafficReport getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficProbe_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficProbe_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // optional .com.luyun.easyway95.shared.Segment segment = 1;
+    // optional .tss.LYSegment segment = 1;
     public static final int SEGMENT_FIELD_NUMBER = 1;
-    private com.luyun.easyway95.shared.TSSProtos.Segment segment_;
+    private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_;
     public boolean hasSegment() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
       return segment_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
       return segment_;
     }
     
-    // optional .com.luyun.easyway95.shared.Coordinate location = 2;
+    // optional .tss.LYCoordinate location = 2;
     public static final int LOCATION_FIELD_NUMBER = 2;
-    private com.luyun.easyway95.shared.TSSProtos.Coordinate location_;
+    private com.luyun.easyway95.shared.TSSProtos.LYCoordinate location_;
     public boolean hasLocation() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Coordinate getLocation() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation() {
       return location_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getLocationOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder() {
       return location_;
     }
     
@@ -2901,13 +2760,13 @@ public final class TSSProtos {
       return timestamp_;
     }
     
-    // required .com.luyun.easyway95.shared.Direction direction = 4;
+    // required .tss.LYDirection direction = 4;
     public static final int DIRECTION_FIELD_NUMBER = 4;
-    private com.luyun.easyway95.shared.TSSProtos.Direction direction_;
+    private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_;
     public boolean hasDirection() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Direction getDirection() {
+    public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
       return direction_;
     }
     
@@ -2932,10 +2791,10 @@ public final class TSSProtos {
     }
     
     private void initFields() {
-      segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
-      location_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
+      location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       timestamp_ = 0L;
-      direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+      direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
       speed_ = 0;
       acceleration_ = 0;
     }
@@ -3034,41 +2893,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -3077,7 +2936,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3088,12 +2947,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficProbe parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3103,7 +2962,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.TrafficProbe prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -3116,18 +2975,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficProbe_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficProbe_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.TrafficProbe.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3149,20 +3008,20 @@ public final class TSSProtos {
       public Builder clear() {
         super.clear();
         if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
         } else {
           segmentBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
         } else {
           locationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         timestamp_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
         bitField0_ = (bitField0_ & ~0x00000008);
         speed_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -3177,24 +3036,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbe getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbe build() {
-        com.luyun.easyway95.shared.TSSProtos.TrafficProbe result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport build() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.TrafficProbe buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.TrafficProbe result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -3202,8 +3061,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbe buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.TrafficProbe result = new com.luyun.easyway95.shared.TSSProtos.TrafficProbe(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = new com.luyun.easyway95.shared.TSSProtos.LYTrafficReport(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3244,16 +3103,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.TrafficProbe) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.TrafficProbe)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYTrafficReport) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYTrafficReport)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.TrafficProbe other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance()) return this;
         if (other.hasSegment()) {
           mergeSegment(other.getSegment());
         }
@@ -3324,7 +3183,7 @@ public final class TSSProtos {
               break;
             }
             case 10: {
-              com.luyun.easyway95.shared.TSSProtos.Segment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder();
               if (hasSegment()) {
                 subBuilder.mergeFrom(getSegment());
               }
@@ -3333,7 +3192,7 @@ public final class TSSProtos {
               break;
             }
             case 18: {
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder();
               if (hasLocation()) {
                 subBuilder.mergeFrom(getLocation());
               }
@@ -3348,7 +3207,7 @@ public final class TSSProtos {
             }
             case 32: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.Direction value = com.luyun.easyway95.shared.TSSProtos.Direction.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYDirection value = com.luyun.easyway95.shared.TSSProtos.LYDirection.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
@@ -3373,21 +3232,21 @@ public final class TSSProtos {
       
       private int bitField0_;
       
-      // optional .com.luyun.easyway95.shared.Segment segment = 1;
-      private com.luyun.easyway95.shared.TSSProtos.Segment segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+      // optional .tss.LYSegment segment = 1;
+      private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> segmentBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> segmentBuilder_;
       public boolean hasSegment() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
         if (segmentBuilder_ == null) {
           return segment_;
         } else {
           return segmentBuilder_.getMessage();
         }
       }
-      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
+      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3401,7 +3260,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setSegment(
-          com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
         if (segmentBuilder_ == null) {
           segment_ = builderForValue.build();
           onChanged();
@@ -3411,12 +3270,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
+      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              segment_ != com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance()) {
+              segment_ != com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance()) {
             segment_ =
-              com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder(segment_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder(segment_).mergeFrom(value).buildPartial();
           } else {
             segment_ = value;
           }
@@ -3429,7 +3288,7 @@ public final class TSSProtos {
       }
       public Builder clearSegment() {
         if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
           onChanged();
         } else {
           segmentBuilder_.clear();
@@ -3437,12 +3296,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder getSegmentBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder getSegmentBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getSegmentFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
         if (segmentBuilder_ != null) {
           return segmentBuilder_.getMessageOrBuilder();
         } else {
@@ -3450,11 +3309,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
           getSegmentFieldBuilder() {
         if (segmentBuilder_ == null) {
           segmentBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder>(
                   segment_,
                   getParentForChildren(),
                   isClean());
@@ -3463,21 +3322,21 @@ public final class TSSProtos {
         return segmentBuilder_;
       }
       
-      // optional .com.luyun.easyway95.shared.Coordinate location = 2;
-      private com.luyun.easyway95.shared.TSSProtos.Coordinate location_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+      // optional .tss.LYCoordinate location = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> locationBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> locationBuilder_;
       public boolean hasLocation() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate getLocation() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation() {
         if (locationBuilder_ == null) {
           return location_;
         } else {
           return locationBuilder_.getMessage();
         }
       }
-      public Builder setLocation(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder setLocation(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (locationBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3491,7 +3350,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setLocation(
-          com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder builderForValue) {
         if (locationBuilder_ == null) {
           location_ = builderForValue.build();
           onChanged();
@@ -3501,12 +3360,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeLocation(com.luyun.easyway95.shared.TSSProtos.Coordinate value) {
+      public Builder mergeLocation(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
         if (locationBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              location_ != com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance()) {
+              location_ != com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) {
             location_ =
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder(location_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder(location_).mergeFrom(value).buildPartial();
           } else {
             location_ = value;
           }
@@ -3519,7 +3378,7 @@ public final class TSSProtos {
       }
       public Builder clearLocation() {
         if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.Coordinate.getDefaultInstance();
+          location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
           onChanged();
         } else {
           locationBuilder_.clear();
@@ -3527,12 +3386,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder getLocationBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder getLocationBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getLocationFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder getLocationOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder() {
         if (locationBuilder_ != null) {
           return locationBuilder_.getMessageOrBuilder();
         } else {
@@ -3540,11 +3399,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> 
           getLocationFieldBuilder() {
         if (locationBuilder_ == null) {
           locationBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Coordinate, com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder, com.luyun.easyway95.shared.TSSProtos.CoordinateOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder>(
                   location_,
                   getParentForChildren(),
                   isClean());
@@ -3574,15 +3433,15 @@ public final class TSSProtos {
         return this;
       }
       
-      // required .com.luyun.easyway95.shared.Direction direction = 4;
-      private com.luyun.easyway95.shared.TSSProtos.Direction direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+      // required .tss.LYDirection direction = 4;
+      private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
       public boolean hasDirection() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Direction getDirection() {
+      public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
         return direction_;
       }
-      public Builder setDirection(com.luyun.easyway95.shared.TSSProtos.Direction value) {
+      public Builder setDirection(com.luyun.easyway95.shared.TSSProtos.LYDirection value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -3593,7 +3452,7 @@ public final class TSSProtos {
       }
       public Builder clearDirection() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
         onChanged();
         return this;
       }
@@ -3640,32 +3499,32 @@ public final class TSSProtos {
         return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.TrafficProbe)
+      // @@protoc_insertion_point(builder_scope:tss.LYTrafficReport)
     }
     
     static {
-      defaultInstance = new TrafficProbe(true);
+      defaultInstance = new LYTrafficReport(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.TrafficProbe)
+    // @@protoc_insertion_point(class_scope:tss.LYTrafficReport)
   }
   
-  public interface SegmentTrafficOrBuilder
+  public interface LYSegmentTrafficOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required .com.luyun.easyway95.shared.Segment segment = 1;
+    // required .tss.LYSegment segment = 1;
     boolean hasSegment();
-    com.luyun.easyway95.shared.TSSProtos.Segment getSegment();
-    com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment();
+    com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder();
     
     // optional int64 timestamp = 3;
     boolean hasTimestamp();
     long getTimestamp();
     
-    // required .com.luyun.easyway95.shared.Direction direction = 4;
+    // required .tss.LYDirection direction = 4;
     boolean hasDirection();
-    com.luyun.easyway95.shared.TSSProtos.Direction getDirection();
+    com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection();
     
     // required int32 speed = 5;
     boolean hasSpeed();
@@ -3675,45 +3534,45 @@ public final class TSSProtos {
     boolean hasDetails();
     String getDetails();
   }
-  public static final class SegmentTraffic extends
+  public static final class LYSegmentTraffic extends
       com.google.protobuf.GeneratedMessage
-      implements SegmentTrafficOrBuilder {
-    // Use SegmentTraffic.newBuilder() to construct.
-    private SegmentTraffic(Builder builder) {
+      implements LYSegmentTrafficOrBuilder {
+    // Use LYSegmentTraffic.newBuilder() to construct.
+    private LYSegmentTraffic(Builder builder) {
       super(builder);
     }
-    private SegmentTraffic(boolean noInit) {}
+    private LYSegmentTraffic(boolean noInit) {}
     
-    private static final SegmentTraffic defaultInstance;
-    public static SegmentTraffic getDefaultInstance() {
+    private static final LYSegmentTraffic defaultInstance;
+    public static LYSegmentTraffic getDefaultInstance() {
       return defaultInstance;
     }
     
-    public SegmentTraffic getDefaultInstanceForType() {
+    public LYSegmentTraffic getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_SegmentTraffic_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegmentTraffic_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_SegmentTraffic_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegmentTraffic_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // required .com.luyun.easyway95.shared.Segment segment = 1;
+    // required .tss.LYSegment segment = 1;
     public static final int SEGMENT_FIELD_NUMBER = 1;
-    private com.luyun.easyway95.shared.TSSProtos.Segment segment_;
+    private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_;
     public boolean hasSegment() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
       return segment_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
       return segment_;
     }
     
@@ -3727,13 +3586,13 @@ public final class TSSProtos {
       return timestamp_;
     }
     
-    // required .com.luyun.easyway95.shared.Direction direction = 4;
+    // required .tss.LYDirection direction = 4;
     public static final int DIRECTION_FIELD_NUMBER = 4;
-    private com.luyun.easyway95.shared.TSSProtos.Direction direction_;
+    private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_;
     public boolean hasDirection() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Direction getDirection() {
+    public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
       return direction_;
     }
     
@@ -3780,9 +3639,9 @@ public final class TSSProtos {
     }
     
     private void initFields() {
-      segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+      segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
       timestamp_ = 0L;
-      direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+      direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
       speed_ = 0;
       details_ = "";
     }
@@ -3870,41 +3729,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -3913,7 +3772,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3924,12 +3783,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.SegmentTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3939,7 +3798,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.SegmentTraffic prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -3952,18 +3811,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_SegmentTraffic_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegmentTraffic_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_SegmentTraffic_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSegmentTraffic_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3984,14 +3843,14 @@ public final class TSSProtos {
       public Builder clear() {
         super.clear();
         if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
         } else {
           segmentBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         timestamp_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000002);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
         bitField0_ = (bitField0_ & ~0x00000004);
         speed_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -4006,24 +3865,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic build() {
-        com.luyun.easyway95.shared.TSSProtos.SegmentTraffic result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic build() {
+        com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.SegmentTraffic buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.SegmentTraffic result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -4031,8 +3890,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.SegmentTraffic result = new com.luyun.easyway95.shared.TSSProtos.SegmentTraffic(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic result = new com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -4065,16 +3924,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.SegmentTraffic) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.SegmentTraffic)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.SegmentTraffic other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.getDefaultInstance()) return this;
         if (other.hasSegment()) {
           mergeSegment(other.getSegment());
         }
@@ -4138,7 +3997,7 @@ public final class TSSProtos {
               break;
             }
             case 10: {
-              com.luyun.easyway95.shared.TSSProtos.Segment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder();
               if (hasSegment()) {
                 subBuilder.mergeFrom(getSegment());
               }
@@ -4153,7 +4012,7 @@ public final class TSSProtos {
             }
             case 32: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.Direction value = com.luyun.easyway95.shared.TSSProtos.Direction.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYDirection value = com.luyun.easyway95.shared.TSSProtos.LYDirection.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
@@ -4178,21 +4037,21 @@ public final class TSSProtos {
       
       private int bitField0_;
       
-      // required .com.luyun.easyway95.shared.Segment segment = 1;
-      private com.luyun.easyway95.shared.TSSProtos.Segment segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+      // required .tss.LYSegment segment = 1;
+      private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> segmentBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> segmentBuilder_;
       public boolean hasSegment() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
         if (segmentBuilder_ == null) {
           return segment_;
         } else {
           return segmentBuilder_.getMessage();
         }
       }
-      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
+      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4206,7 +4065,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setSegment(
-          com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
         if (segmentBuilder_ == null) {
           segment_ = builderForValue.build();
           onChanged();
@@ -4216,12 +4075,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
+      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
         if (segmentBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              segment_ != com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance()) {
+              segment_ != com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance()) {
             segment_ =
-              com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder(segment_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder(segment_).mergeFrom(value).buildPartial();
           } else {
             segment_ = value;
           }
@@ -4234,7 +4093,7 @@ public final class TSSProtos {
       }
       public Builder clearSegment() {
         if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
+          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
           onChanged();
         } else {
           segmentBuilder_.clear();
@@ -4242,12 +4101,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder getSegmentBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder getSegmentBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getSegmentFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
         if (segmentBuilder_ != null) {
           return segmentBuilder_.getMessageOrBuilder();
         } else {
@@ -4255,11 +4114,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
           getSegmentFieldBuilder() {
         if (segmentBuilder_ == null) {
           segmentBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder>(
                   segment_,
                   getParentForChildren(),
                   isClean());
@@ -4289,15 +4148,15 @@ public final class TSSProtos {
         return this;
       }
       
-      // required .com.luyun.easyway95.shared.Direction direction = 4;
-      private com.luyun.easyway95.shared.TSSProtos.Direction direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+      // required .tss.LYDirection direction = 4;
+      private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
       public boolean hasDirection() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Direction getDirection() {
+      public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
         return direction_;
       }
-      public Builder setDirection(com.luyun.easyway95.shared.TSSProtos.Direction value) {
+      public Builder setDirection(com.luyun.easyway95.shared.TSSProtos.LYDirection value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -4308,7 +4167,7 @@ public final class TSSProtos {
       }
       public Builder clearDirection() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.Direction.UNKNOWN;
+        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
         onChanged();
         return this;
       }
@@ -4370,18 +4229,18 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.SegmentTraffic)
+      // @@protoc_insertion_point(builder_scope:tss.LYSegmentTraffic)
     }
     
     static {
-      defaultInstance = new SegmentTraffic(true);
+      defaultInstance = new LYSegmentTraffic(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.SegmentTraffic)
+    // @@protoc_insertion_point(class_scope:tss.LYSegmentTraffic)
   }
   
-  public interface RoadTrafficOrBuilder
+  public interface LYRoadTrafficOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required string road = 1;
@@ -4392,14 +4251,14 @@ public final class TSSProtos {
     boolean hasTimestamp();
     long getTimestamp();
     
-    // repeated .com.luyun.easyway95.shared.SegmentTraffic segment_traffics = 3;
-    java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> 
+    // repeated .tss.LYSegmentTraffic segment_traffics = 3;
+    java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> 
         getSegmentTrafficsList();
-    com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffics(int index);
+    com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic getSegmentTraffics(int index);
     int getSegmentTrafficsCount();
-    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> 
+    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder> 
         getSegmentTrafficsOrBuilderList();
-    com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
+    com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
         int index);
     
     // optional string href = 12;
@@ -4410,32 +4269,32 @@ public final class TSSProtos {
     boolean hasDesc();
     String getDesc();
   }
-  public static final class RoadTraffic extends
+  public static final class LYRoadTraffic extends
       com.google.protobuf.GeneratedMessage
-      implements RoadTrafficOrBuilder {
-    // Use RoadTraffic.newBuilder() to construct.
-    private RoadTraffic(Builder builder) {
+      implements LYRoadTrafficOrBuilder {
+    // Use LYRoadTraffic.newBuilder() to construct.
+    private LYRoadTraffic(Builder builder) {
       super(builder);
     }
-    private RoadTraffic(boolean noInit) {}
+    private LYRoadTraffic(boolean noInit) {}
     
-    private static final RoadTraffic defaultInstance;
-    public static RoadTraffic getDefaultInstance() {
+    private static final LYRoadTraffic defaultInstance;
+    public static LYRoadTraffic getDefaultInstance() {
       return defaultInstance;
     }
     
-    public RoadTraffic getDefaultInstanceForType() {
+    public LYRoadTraffic getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_RoadTraffic_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoadTraffic_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_RoadTraffic_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoadTraffic_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -4481,23 +4340,23 @@ public final class TSSProtos {
       return timestamp_;
     }
     
-    // repeated .com.luyun.easyway95.shared.SegmentTraffic segment_traffics = 3;
+    // repeated .tss.LYSegmentTraffic segment_traffics = 3;
     public static final int SEGMENT_TRAFFICS_FIELD_NUMBER = 3;
-    private java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> segmentTraffics_;
-    public java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> getSegmentTrafficsList() {
+    private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> segmentTraffics_;
+    public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> getSegmentTrafficsList() {
       return segmentTraffics_;
     }
-    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> 
+    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder> 
         getSegmentTrafficsOrBuilderList() {
       return segmentTraffics_;
     }
     public int getSegmentTrafficsCount() {
       return segmentTraffics_.size();
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffics(int index) {
+    public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic getSegmentTraffics(int index) {
       return segmentTraffics_.get(index);
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
+    public com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
         int index) {
       return segmentTraffics_.get(index);
     }
@@ -4651,41 +4510,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -4694,7 +4553,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4705,12 +4564,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.RoadTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4720,7 +4579,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.RoadTraffic prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -4733,18 +4592,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_RoadTraffic_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoadTraffic_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_RoadTraffic_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYRoadTraffic_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.RoadTraffic.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4787,24 +4646,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic build() {
-        com.luyun.easyway95.shared.TSSProtos.RoadTraffic result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic build() {
+        com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.RoadTraffic buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.RoadTraffic result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -4812,8 +4671,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.RoadTraffic result = new com.luyun.easyway95.shared.TSSProtos.RoadTraffic(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic result = new com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -4847,16 +4706,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.RoadTraffic) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.RoadTraffic)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.RoadTraffic other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.getDefaultInstance()) return this;
         if (other.hasRoad()) {
           setRoad(other.getRoad());
         }
@@ -4947,7 +4806,7 @@ public final class TSSProtos {
               break;
             }
             case 26: {
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addSegmentTraffics(subBuilder.buildPartial());
               break;
@@ -5025,20 +4884,20 @@ public final class TSSProtos {
         return this;
       }
       
-      // repeated .com.luyun.easyway95.shared.SegmentTraffic segment_traffics = 3;
-      private java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> segmentTraffics_ =
+      // repeated .tss.LYSegmentTraffic segment_traffics = 3;
+      private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> segmentTraffics_ =
         java.util.Collections.emptyList();
       private void ensureSegmentTrafficsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          segmentTraffics_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic>(segmentTraffics_);
+          segmentTraffics_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic>(segmentTraffics_);
           bitField0_ |= 0x00000004;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> segmentTrafficsBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder> segmentTrafficsBuilder_;
       
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> getSegmentTrafficsList() {
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> getSegmentTrafficsList() {
         if (segmentTrafficsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(segmentTraffics_);
         } else {
@@ -5052,7 +4911,7 @@ public final class TSSProtos {
           return segmentTrafficsBuilder_.getCount();
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffics(int index) {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic getSegmentTraffics(int index) {
         if (segmentTrafficsBuilder_ == null) {
           return segmentTraffics_.get(index);
         } else {
@@ -5060,7 +4919,7 @@ public final class TSSProtos {
         }
       }
       public Builder setSegmentTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic value) {
         if (segmentTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5074,7 +4933,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setSegmentTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder builderForValue) {
         if (segmentTrafficsBuilder_ == null) {
           ensureSegmentTrafficsIsMutable();
           segmentTraffics_.set(index, builderForValue.build());
@@ -5084,7 +4943,7 @@ public final class TSSProtos {
         }
         return this;
       }
-      public Builder addSegmentTraffics(com.luyun.easyway95.shared.TSSProtos.SegmentTraffic value) {
+      public Builder addSegmentTraffics(com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic value) {
         if (segmentTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5098,7 +4957,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegmentTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic value) {
         if (segmentTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5112,7 +4971,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegmentTraffics(
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder builderForValue) {
         if (segmentTrafficsBuilder_ == null) {
           ensureSegmentTrafficsIsMutable();
           segmentTraffics_.add(builderForValue.build());
@@ -5123,7 +4982,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addSegmentTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder builderForValue) {
         if (segmentTrafficsBuilder_ == null) {
           ensureSegmentTrafficsIsMutable();
           segmentTraffics_.add(index, builderForValue.build());
@@ -5134,7 +4993,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addAllSegmentTraffics(
-          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.SegmentTraffic> values) {
+          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic> values) {
         if (segmentTrafficsBuilder_ == null) {
           ensureSegmentTrafficsIsMutable();
           super.addAll(values, segmentTraffics_);
@@ -5164,18 +5023,18 @@ public final class TSSProtos {
         }
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder getSegmentTrafficsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder getSegmentTrafficsBuilder(
           int index) {
         return getSegmentTrafficsFieldBuilder().getBuilder(index);
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
           int index) {
         if (segmentTrafficsBuilder_ == null) {
           return segmentTraffics_.get(index);  } else {
           return segmentTrafficsBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> 
+      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder> 
            getSegmentTrafficsOrBuilderList() {
         if (segmentTrafficsBuilder_ != null) {
           return segmentTrafficsBuilder_.getMessageOrBuilderList();
@@ -5183,25 +5042,25 @@ public final class TSSProtos {
           return java.util.Collections.unmodifiableList(segmentTraffics_);
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder addSegmentTrafficsBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder addSegmentTrafficsBuilder() {
         return getSegmentTrafficsFieldBuilder().addBuilder(
-            com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance());
+            com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.getDefaultInstance());
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder addSegmentTrafficsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder addSegmentTrafficsBuilder(
           int index) {
         return getSegmentTrafficsFieldBuilder().addBuilder(
-            index, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance());
+            index, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.getDefaultInstance());
       }
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder> 
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder> 
            getSegmentTrafficsBuilderList() {
         return getSegmentTrafficsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder> 
           getSegmentTrafficsFieldBuilder() {
         if (segmentTrafficsBuilder_ == null) {
           segmentTrafficsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic, com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder>(
                   segmentTraffics_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
@@ -5283,18 +5142,18 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.RoadTraffic)
+      // @@protoc_insertion_point(builder_scope:tss.LYRoadTraffic)
     }
     
     static {
-      defaultInstance = new RoadTraffic(true);
+      defaultInstance = new LYRoadTraffic(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.RoadTraffic)
+    // @@protoc_insertion_point(class_scope:tss.LYRoadTraffic)
   }
   
-  public interface CityTrafficOrBuilder
+  public interface LYCityTrafficOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // optional string city = 1;
@@ -5305,42 +5164,42 @@ public final class TSSProtos {
     boolean hasTimestamp();
     long getTimestamp();
     
-    // repeated .com.luyun.easyway95.shared.RoadTraffic road_traffics = 3;
-    java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic> 
+    // repeated .tss.LYRoadTraffic road_traffics = 3;
+    java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> 
         getRoadTrafficsList();
-    com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffics(int index);
+    com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic getRoadTraffics(int index);
     int getRoadTrafficsCount();
-    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> 
+    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder> 
         getRoadTrafficsOrBuilderList();
-    com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficsOrBuilder(
+    com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder getRoadTrafficsOrBuilder(
         int index);
   }
-  public static final class CityTraffic extends
+  public static final class LYCityTraffic extends
       com.google.protobuf.GeneratedMessage
-      implements CityTrafficOrBuilder {
-    // Use CityTraffic.newBuilder() to construct.
-    private CityTraffic(Builder builder) {
+      implements LYCityTrafficOrBuilder {
+    // Use LYCityTraffic.newBuilder() to construct.
+    private LYCityTraffic(Builder builder) {
       super(builder);
     }
-    private CityTraffic(boolean noInit) {}
+    private LYCityTraffic(boolean noInit) {}
     
-    private static final CityTraffic defaultInstance;
-    public static CityTraffic getDefaultInstance() {
+    private static final LYCityTraffic defaultInstance;
+    public static LYCityTraffic getDefaultInstance() {
       return defaultInstance;
     }
     
-    public CityTraffic getDefaultInstanceForType() {
+    public LYCityTraffic getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_CityTraffic_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCityTraffic_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_CityTraffic_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCityTraffic_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -5386,23 +5245,23 @@ public final class TSSProtos {
       return timestamp_;
     }
     
-    // repeated .com.luyun.easyway95.shared.RoadTraffic road_traffics = 3;
+    // repeated .tss.LYRoadTraffic road_traffics = 3;
     public static final int ROAD_TRAFFICS_FIELD_NUMBER = 3;
-    private java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic> roadTraffics_;
-    public java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic> getRoadTrafficsList() {
+    private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> roadTraffics_;
+    public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> getRoadTrafficsList() {
       return roadTraffics_;
     }
-    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> 
+    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder> 
         getRoadTrafficsOrBuilderList() {
       return roadTraffics_;
     }
     public int getRoadTrafficsCount() {
       return roadTraffics_.size();
     }
-    public com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffics(int index) {
+    public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic getRoadTraffics(int index) {
       return roadTraffics_.get(index);
     }
-    public com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficsOrBuilder(
+    public com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder getRoadTrafficsOrBuilder(
         int index) {
       return roadTraffics_.get(index);
     }
@@ -5472,41 +5331,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -5515,7 +5374,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -5526,12 +5385,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.CityTraffic parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYCityTraffic parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -5541,7 +5400,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.CityTraffic prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYCityTraffic prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -5554,18 +5413,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_CityTraffic_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCityTraffic_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_CityTraffic_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCityTraffic_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.CityTraffic.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5604,24 +5463,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.CityTraffic getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.CityTraffic build() {
-        com.luyun.easyway95.shared.TSSProtos.CityTraffic result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic build() {
+        com.luyun.easyway95.shared.TSSProtos.LYCityTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.CityTraffic buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYCityTraffic buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.CityTraffic result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYCityTraffic result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -5629,8 +5488,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.CityTraffic buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.CityTraffic result = new com.luyun.easyway95.shared.TSSProtos.CityTraffic(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYCityTraffic result = new com.luyun.easyway95.shared.TSSProtos.LYCityTraffic(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -5656,16 +5515,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.CityTraffic) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.CityTraffic)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYCityTraffic) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYCityTraffic)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.CityTraffic other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYCityTraffic other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance()) return this;
         if (other.hasCity()) {
           setCity(other.getCity());
         }
@@ -5746,7 +5605,7 @@ public final class TSSProtos {
               break;
             }
             case 26: {
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addRoadTraffics(subBuilder.buildPartial());
               break;
@@ -5814,20 +5673,20 @@ public final class TSSProtos {
         return this;
       }
       
-      // repeated .com.luyun.easyway95.shared.RoadTraffic road_traffics = 3;
-      private java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic> roadTraffics_ =
+      // repeated .tss.LYRoadTraffic road_traffics = 3;
+      private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> roadTraffics_ =
         java.util.Collections.emptyList();
       private void ensureRoadTrafficsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          roadTraffics_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.RoadTraffic>(roadTraffics_);
+          roadTraffics_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic>(roadTraffics_);
           bitField0_ |= 0x00000004;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> roadTrafficsBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder> roadTrafficsBuilder_;
       
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic> getRoadTrafficsList() {
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> getRoadTrafficsList() {
         if (roadTrafficsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(roadTraffics_);
         } else {
@@ -5841,7 +5700,7 @@ public final class TSSProtos {
           return roadTrafficsBuilder_.getCount();
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffics(int index) {
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic getRoadTraffics(int index) {
         if (roadTrafficsBuilder_ == null) {
           return roadTraffics_.get(index);
         } else {
@@ -5849,7 +5708,7 @@ public final class TSSProtos {
         }
       }
       public Builder setRoadTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.RoadTraffic value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic value) {
         if (roadTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5863,7 +5722,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setRoadTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder builderForValue) {
         if (roadTrafficsBuilder_ == null) {
           ensureRoadTrafficsIsMutable();
           roadTraffics_.set(index, builderForValue.build());
@@ -5873,7 +5732,7 @@ public final class TSSProtos {
         }
         return this;
       }
-      public Builder addRoadTraffics(com.luyun.easyway95.shared.TSSProtos.RoadTraffic value) {
+      public Builder addRoadTraffics(com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic value) {
         if (roadTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5887,7 +5746,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addRoadTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.RoadTraffic value) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic value) {
         if (roadTrafficsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5901,7 +5760,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addRoadTraffics(
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder builderForValue) {
         if (roadTrafficsBuilder_ == null) {
           ensureRoadTrafficsIsMutable();
           roadTraffics_.add(builderForValue.build());
@@ -5912,7 +5771,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addRoadTraffics(
-          int index, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder builderForValue) {
+          int index, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder builderForValue) {
         if (roadTrafficsBuilder_ == null) {
           ensureRoadTrafficsIsMutable();
           roadTraffics_.add(index, builderForValue.build());
@@ -5923,7 +5782,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder addAllRoadTraffics(
-          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.RoadTraffic> values) {
+          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic> values) {
         if (roadTrafficsBuilder_ == null) {
           ensureRoadTrafficsIsMutable();
           super.addAll(values, roadTraffics_);
@@ -5953,18 +5812,18 @@ public final class TSSProtos {
         }
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder getRoadTrafficsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder getRoadTrafficsBuilder(
           int index) {
         return getRoadTrafficsFieldBuilder().getBuilder(index);
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficsOrBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder getRoadTrafficsOrBuilder(
           int index) {
         if (roadTrafficsBuilder_ == null) {
           return roadTraffics_.get(index);  } else {
           return roadTrafficsBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> 
+      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder> 
            getRoadTrafficsOrBuilderList() {
         if (roadTrafficsBuilder_ != null) {
           return roadTrafficsBuilder_.getMessageOrBuilderList();
@@ -5972,25 +5831,25 @@ public final class TSSProtos {
           return java.util.Collections.unmodifiableList(roadTraffics_);
         }
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder addRoadTrafficsBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder addRoadTrafficsBuilder() {
         return getRoadTrafficsFieldBuilder().addBuilder(
-            com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance());
+            com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.getDefaultInstance());
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder addRoadTrafficsBuilder(
+      public com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder addRoadTrafficsBuilder(
           int index) {
         return getRoadTrafficsFieldBuilder().addBuilder(
-            index, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance());
+            index, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.getDefaultInstance());
       }
-      public java.util.List<com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder> 
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder> 
            getRoadTrafficsBuilderList() {
         return getRoadTrafficsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder> 
           getRoadTrafficsFieldBuilder() {
         if (roadTrafficsBuilder_ == null) {
           roadTrafficsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic, com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYRoadTrafficOrBuilder>(
                   roadTraffics_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
@@ -6000,67 +5859,934 @@ public final class TSSProtos {
         return roadTrafficsBuilder_;
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.CityTraffic)
+      // @@protoc_insertion_point(builder_scope:tss.LYCityTraffic)
     }
     
     static {
-      defaultInstance = new CityTraffic(true);
+      defaultInstance = new LYCityTraffic(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.CityTraffic)
+    // @@protoc_insertion_point(class_scope:tss.LYCityTraffic)
   }
   
-  public interface TrafficSubOrBuilder
+  public interface LYCrontabOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required .tss.LYCrontab.LYCronType cron_type = 1;
+    boolean hasCronType();
+    com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType getCronType();
+    
+    // optional int64 minute = 2;
+    boolean hasMinute();
+    long getMinute();
+    
+    // optional int64 hour = 3;
+    boolean hasHour();
+    long getHour();
+    
+    // optional int32 dom = 4;
+    boolean hasDom();
+    int getDom();
+    
+    // optional int32 month = 5;
+    boolean hasMonth();
+    int getMonth();
+    
+    // optional int32 dow = 6;
+    boolean hasDow();
+    int getDow();
+  }
+  public static final class LYCrontab extends
+      com.google.protobuf.GeneratedMessage
+      implements LYCrontabOrBuilder {
+    // Use LYCrontab.newBuilder() to construct.
+    private LYCrontab(Builder builder) {
+      super(builder);
+    }
+    private LYCrontab(boolean noInit) {}
+    
+    private static final LYCrontab defaultInstance;
+    public static LYCrontab getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYCrontab getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCrontab_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCrontab_fieldAccessorTable;
+    }
+    
+    public enum LYCronType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      LY_REP_MINUTE(0, 1),
+      LY_REP_HOUR(1, 2),
+      LY_REP_DOM(2, 4),
+      LY_REP_MONTH(3, 8),
+      LY_REP_DOW(4, 16),
+      ;
+      
+      public static final int LY_REP_MINUTE_VALUE = 1;
+      public static final int LY_REP_HOUR_VALUE = 2;
+      public static final int LY_REP_DOM_VALUE = 4;
+      public static final int LY_REP_MONTH_VALUE = 8;
+      public static final int LY_REP_DOW_VALUE = 16;
+      
+      
+      public final int getNumber() { return value; }
+      
+      public static LYCronType valueOf(int value) {
+        switch (value) {
+          case 1: return LY_REP_MINUTE;
+          case 2: return LY_REP_HOUR;
+          case 4: return LY_REP_DOM;
+          case 8: return LY_REP_MONTH;
+          case 16: return LY_REP_DOW;
+          default: return null;
+        }
+      }
+      
+      public static com.google.protobuf.Internal.EnumLiteMap<LYCronType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<LYCronType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<LYCronType>() {
+              public LYCronType findValueByNumber(int number) {
+                return LYCronType.valueOf(number);
+              }
+            };
+      
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDescriptor().getEnumTypes().get(0);
+      }
+      
+      private static final LYCronType[] VALUES = {
+        LY_REP_MINUTE, LY_REP_HOUR, LY_REP_DOM, LY_REP_MONTH, LY_REP_DOW, 
+      };
+      
+      public static LYCronType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+      
+      private final int index;
+      private final int value;
+      
+      private LYCronType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+      
+      // @@protoc_insertion_point(enum_scope:tss.LYCrontab.LYCronType)
+    }
+    
+    private int bitField0_;
+    // required .tss.LYCrontab.LYCronType cron_type = 1;
+    public static final int CRON_TYPE_FIELD_NUMBER = 1;
+    private com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType cronType_;
+    public boolean hasCronType() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType getCronType() {
+      return cronType_;
+    }
+    
+    // optional int64 minute = 2;
+    public static final int MINUTE_FIELD_NUMBER = 2;
+    private long minute_;
+    public boolean hasMinute() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public long getMinute() {
+      return minute_;
+    }
+    
+    // optional int64 hour = 3;
+    public static final int HOUR_FIELD_NUMBER = 3;
+    private long hour_;
+    public boolean hasHour() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public long getHour() {
+      return hour_;
+    }
+    
+    // optional int32 dom = 4;
+    public static final int DOM_FIELD_NUMBER = 4;
+    private int dom_;
+    public boolean hasDom() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getDom() {
+      return dom_;
+    }
+    
+    // optional int32 month = 5;
+    public static final int MONTH_FIELD_NUMBER = 5;
+    private int month_;
+    public boolean hasMonth() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public int getMonth() {
+      return month_;
+    }
+    
+    // optional int32 dow = 6;
+    public static final int DOW_FIELD_NUMBER = 6;
+    private int dow_;
+    public boolean hasDow() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public int getDow() {
+      return dow_;
+    }
+    
+    private void initFields() {
+      cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
+      minute_ = 0L;
+      hour_ = 0L;
+      dom_ = 0;
+      month_ = 0;
+      dow_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasCronType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, cronType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt64(2, minute_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt64(3, hour_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, dom_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, month_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt32(6, dow_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, cronType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, minute_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, hour_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, dom_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, month_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, dow_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCrontab parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYCrontab prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCrontab_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCrontab_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYCrontab.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        minute_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        hour_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        dom_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        month_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        dow_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab build() {
+        com.luyun.easyway95.shared.TSSProtos.LYCrontab result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYCrontab buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYCrontab result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYCrontab result = new com.luyun.easyway95.shared.TSSProtos.LYCrontab(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.cronType_ = cronType_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.minute_ = minute_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.hour_ = hour_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.dom_ = dom_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.month_ = month_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.dow_ = dow_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYCrontab) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYCrontab)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYCrontab other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance()) return this;
+        if (other.hasCronType()) {
+          setCronType(other.getCronType());
+        }
+        if (other.hasMinute()) {
+          setMinute(other.getMinute());
+        }
+        if (other.hasHour()) {
+          setHour(other.getHour());
+        }
+        if (other.hasDom()) {
+          setDom(other.getDom());
+        }
+        if (other.hasMonth()) {
+          setMonth(other.getMonth());
+        }
+        if (other.hasDow()) {
+          setDow(other.getDow());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasCronType()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType value = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                cronType_ = value;
+              }
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              minute_ = input.readInt64();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              hour_ = input.readInt64();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              dom_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              month_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              dow_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required .tss.LYCrontab.LYCronType cron_type = 1;
+      private com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
+      public boolean hasCronType() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType getCronType() {
+        return cronType_;
+      }
+      public Builder setCronType(com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        cronType_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearCronType() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
+        onChanged();
+        return this;
+      }
+      
+      // optional int64 minute = 2;
+      private long minute_ ;
+      public boolean hasMinute() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public long getMinute() {
+        return minute_;
+      }
+      public Builder setMinute(long value) {
+        bitField0_ |= 0x00000002;
+        minute_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearMinute() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        minute_ = 0L;
+        onChanged();
+        return this;
+      }
+      
+      // optional int64 hour = 3;
+      private long hour_ ;
+      public boolean hasHour() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public long getHour() {
+        return hour_;
+      }
+      public Builder setHour(long value) {
+        bitField0_ |= 0x00000004;
+        hour_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearHour() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        hour_ = 0L;
+        onChanged();
+        return this;
+      }
+      
+      // optional int32 dom = 4;
+      private int dom_ ;
+      public boolean hasDom() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public int getDom() {
+        return dom_;
+      }
+      public Builder setDom(int value) {
+        bitField0_ |= 0x00000008;
+        dom_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDom() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        dom_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // optional int32 month = 5;
+      private int month_ ;
+      public boolean hasMonth() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public int getMonth() {
+        return month_;
+      }
+      public Builder setMonth(int value) {
+        bitField0_ |= 0x00000010;
+        month_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearMonth() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        month_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // optional int32 dow = 6;
+      private int dow_ ;
+      public boolean hasDow() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public int getDow() {
+        return dow_;
+      }
+      public Builder setDow(int value) {
+        bitField0_ |= 0x00000020;
+        dow_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDow() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        dow_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYCrontab)
+    }
+    
+    static {
+      defaultInstance = new LYCrontab(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYCrontab)
+  }
+  
+  public interface LYTrafficSubOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required string city = 1;
     boolean hasCity();
     String getCity();
     
-    // required .com.luyun.easyway95.shared.Route route = 2;
+    // required .tss.LYRoute route = 2;
     boolean hasRoute();
-    com.luyun.easyway95.shared.TSSProtos.Route getRoute();
-    com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYRoute getRoute();
+    com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder getRouteOrBuilder();
     
-    // required .com.luyun.easyway95.shared.OprType opr_type = 3;
+    // required .tss.LYTrafficSub.LYOprType opr_type = 3;
     boolean hasOprType();
-    com.luyun.easyway95.shared.TSSProtos.OprType getOprType();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType getOprType();
     
-    // required .com.luyun.easyway95.shared.PubType pub_type = 4;
+    // required .tss.LYTrafficSub.LYPubType pub_type = 4;
     boolean hasPubType();
-    com.luyun.easyway95.shared.TSSProtos.PubType getPubType();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType getPubType();
     
     // optional int32 expires = 5 [default = 30];
     boolean hasExpires();
     int getExpires();
+    
+    // optional .tss.LYCrontab cron_tab = 6;
+    boolean hasCronTab();
+    com.luyun.easyway95.shared.TSSProtos.LYCrontab getCronTab();
+    com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder getCronTabOrBuilder();
   }
-  public static final class TrafficSub extends
+  public static final class LYTrafficSub extends
       com.google.protobuf.GeneratedMessage
-      implements TrafficSubOrBuilder {
-    // Use TrafficSub.newBuilder() to construct.
-    private TrafficSub(Builder builder) {
+      implements LYTrafficSubOrBuilder {
+    // Use LYTrafficSub.newBuilder() to construct.
+    private LYTrafficSub(Builder builder) {
       super(builder);
     }
-    private TrafficSub(boolean noInit) {}
+    private LYTrafficSub(boolean noInit) {}
     
-    private static final TrafficSub defaultInstance;
-    public static TrafficSub getDefaultInstance() {
+    private static final LYTrafficSub defaultInstance;
+    public static LYTrafficSub getDefaultInstance() {
       return defaultInstance;
     }
     
-    public TrafficSub getDefaultInstanceForType() {
+    public LYTrafficSub getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficSub_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficSub_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficSub_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficSub_fieldAccessorTable;
+    }
+    
+    public enum LYOprType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      LY_SUB_CREATE(0, 1),
+      LY_SUB_DELETE(1, 2),
+      LY_SUB_UPDATE(2, 3),
+      ;
+      
+      public static final int LY_SUB_CREATE_VALUE = 1;
+      public static final int LY_SUB_DELETE_VALUE = 2;
+      public static final int LY_SUB_UPDATE_VALUE = 3;
+      
+      
+      public final int getNumber() { return value; }
+      
+      public static LYOprType valueOf(int value) {
+        switch (value) {
+          case 1: return LY_SUB_CREATE;
+          case 2: return LY_SUB_DELETE;
+          case 3: return LY_SUB_UPDATE;
+          default: return null;
+        }
+      }
+      
+      public static com.google.protobuf.Internal.EnumLiteMap<LYOprType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<LYOprType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<LYOprType>() {
+              public LYOprType findValueByNumber(int number) {
+                return LYOprType.valueOf(number);
+              }
+            };
+      
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDescriptor().getEnumTypes().get(0);
+      }
+      
+      private static final LYOprType[] VALUES = {
+        LY_SUB_CREATE, LY_SUB_DELETE, LY_SUB_UPDATE, 
+      };
+      
+      public static LYOprType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+      
+      private final int index;
+      private final int value;
+      
+      private LYOprType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+      
+      // @@protoc_insertion_point(enum_scope:tss.LYTrafficSub.LYOprType)
+    }
+    
+    public enum LYPubType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      LY_PUB_ADHOC(0, 1),
+      LY_PUB_EVENT(1, 2),
+      LY_PUB_CRON(2, 3),
+      ;
+      
+      public static final int LY_PUB_ADHOC_VALUE = 1;
+      public static final int LY_PUB_EVENT_VALUE = 2;
+      public static final int LY_PUB_CRON_VALUE = 3;
+      
+      
+      public final int getNumber() { return value; }
+      
+      public static LYPubType valueOf(int value) {
+        switch (value) {
+          case 1: return LY_PUB_ADHOC;
+          case 2: return LY_PUB_EVENT;
+          case 3: return LY_PUB_CRON;
+          default: return null;
+        }
+      }
+      
+      public static com.google.protobuf.Internal.EnumLiteMap<LYPubType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<LYPubType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<LYPubType>() {
+              public LYPubType findValueByNumber(int number) {
+                return LYPubType.valueOf(number);
+              }
+            };
+      
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDescriptor().getEnumTypes().get(1);
+      }
+      
+      private static final LYPubType[] VALUES = {
+        LY_PUB_ADHOC, LY_PUB_EVENT, LY_PUB_CRON, 
+      };
+      
+      public static LYPubType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+      
+      private final int index;
+      private final int value;
+      
+      private LYPubType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+      
+      // @@protoc_insertion_point(enum_scope:tss.LYTrafficSub.LYPubType)
     }
     
     private int bitField0_;
@@ -6096,36 +6822,36 @@ public final class TSSProtos {
       }
     }
     
-    // required .com.luyun.easyway95.shared.Route route = 2;
+    // required .tss.LYRoute route = 2;
     public static final int ROUTE_FIELD_NUMBER = 2;
-    private com.luyun.easyway95.shared.TSSProtos.Route route_;
+    private com.luyun.easyway95.shared.TSSProtos.LYRoute route_;
     public boolean hasRoute() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Route getRoute() {
+    public com.luyun.easyway95.shared.TSSProtos.LYRoute getRoute() {
       return route_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder() {
+    public com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder getRouteOrBuilder() {
       return route_;
     }
     
-    // required .com.luyun.easyway95.shared.OprType opr_type = 3;
+    // required .tss.LYTrafficSub.LYOprType opr_type = 3;
     public static final int OPR_TYPE_FIELD_NUMBER = 3;
-    private com.luyun.easyway95.shared.TSSProtos.OprType oprType_;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType oprType_;
     public boolean hasOprType() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public com.luyun.easyway95.shared.TSSProtos.OprType getOprType() {
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType getOprType() {
       return oprType_;
     }
     
-    // required .com.luyun.easyway95.shared.PubType pub_type = 4;
+    // required .tss.LYTrafficSub.LYPubType pub_type = 4;
     public static final int PUB_TYPE_FIELD_NUMBER = 4;
-    private com.luyun.easyway95.shared.TSSProtos.PubType pubType_;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType pubType_;
     public boolean hasPubType() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-    public com.luyun.easyway95.shared.TSSProtos.PubType getPubType() {
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType getPubType() {
       return pubType_;
     }
     
@@ -6139,12 +6865,26 @@ public final class TSSProtos {
       return expires_;
     }
     
+    // optional .tss.LYCrontab cron_tab = 6;
+    public static final int CRON_TAB_FIELD_NUMBER = 6;
+    private com.luyun.easyway95.shared.TSSProtos.LYCrontab cronTab_;
+    public boolean hasCronTab() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCrontab getCronTab() {
+      return cronTab_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder getCronTabOrBuilder() {
+      return cronTab_;
+    }
+    
     private void initFields() {
       city_ = "";
-      route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
-      oprType_ = com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE;
-      pubType_ = com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE;
+      route_ = com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance();
+      oprType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE;
+      pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_ADHOC;
       expires_ = 30;
+      cronTab_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -6171,6 +6911,12 @@ public final class TSSProtos {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (hasCronTab()) {
+        if (!getCronTab().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -6192,6 +6938,9 @@ public final class TSSProtos {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt32(5, expires_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeMessage(6, cronTab_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -6222,6 +6971,10 @@ public final class TSSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, expires_);
       }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, cronTab_);
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
@@ -6234,41 +6987,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -6277,7 +7030,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6288,12 +7041,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.TrafficSub parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficSub parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6303,7 +7056,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.TrafficSub prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -6316,18 +7069,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficSub_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficSub_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_TrafficSub_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficSub_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.TrafficSub.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6339,6 +7092,7 @@ public final class TSSProtos {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getRouteFieldBuilder();
+          getCronTabFieldBuilder();
         }
       }
       private static Builder create() {
@@ -6350,17 +7104,23 @@ public final class TSSProtos {
         city_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         if (routeBuilder_ == null) {
-          route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
+          route_ = com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance();
         } else {
           routeBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
-        oprType_ = com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE;
+        oprType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE;
         bitField0_ = (bitField0_ & ~0x00000004);
-        pubType_ = com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE;
+        pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_ADHOC;
         bitField0_ = (bitField0_ & ~0x00000008);
         expires_ = 30;
         bitField0_ = (bitField0_ & ~0x00000010);
+        if (cronTabBuilder_ == null) {
+          cronTab_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance();
+        } else {
+          cronTabBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -6370,24 +7130,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSub getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSub build() {
-        com.luyun.easyway95.shared.TSSProtos.TrafficSub result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub build() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficSub result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.TrafficSub buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.TrafficSub result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficSub result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -6395,8 +7155,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSub buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.TrafficSub result = new com.luyun.easyway95.shared.TSSProtos.TrafficSub(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficSub result = new com.luyun.easyway95.shared.TSSProtos.LYTrafficSub(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -6423,22 +7183,30 @@ public final class TSSProtos {
           to_bitField0_ |= 0x00000010;
         }
         result.expires_ = expires_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        if (cronTabBuilder_ == null) {
+          result.cronTab_ = cronTab_;
+        } else {
+          result.cronTab_ = cronTabBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.TrafficSub) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.TrafficSub)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYTrafficSub) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYTrafficSub)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.TrafficSub other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance()) return this;
         if (other.hasCity()) {
           setCity(other.getCity());
         }
@@ -6453,6 +7221,9 @@ public final class TSSProtos {
         }
         if (other.hasExpires()) {
           setExpires(other.getExpires());
+        }
+        if (other.hasCronTab()) {
+          mergeCronTab(other.getCronTab());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -6478,6 +7249,12 @@ public final class TSSProtos {
         if (!getRoute().isInitialized()) {
           
           return false;
+        }
+        if (hasCronTab()) {
+          if (!getCronTab().isInitialized()) {
+            
+            return false;
+          }
         }
         return true;
       }
@@ -6511,7 +7288,7 @@ public final class TSSProtos {
               break;
             }
             case 18: {
-              com.luyun.easyway95.shared.TSSProtos.Route.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Route.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder();
               if (hasRoute()) {
                 subBuilder.mergeFrom(getRoute());
               }
@@ -6521,7 +7298,7 @@ public final class TSSProtos {
             }
             case 24: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.OprType value = com.luyun.easyway95.shared.TSSProtos.OprType.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType value = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
@@ -6532,7 +7309,7 @@ public final class TSSProtos {
             }
             case 32: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.PubType value = com.luyun.easyway95.shared.TSSProtos.PubType.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType value = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
@@ -6544,6 +7321,15 @@ public final class TSSProtos {
             case 40: {
               bitField0_ |= 0x00000010;
               expires_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCrontab.newBuilder();
+              if (hasCronTab()) {
+                subBuilder.mergeFrom(getCronTab());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setCronTab(subBuilder.buildPartial());
               break;
             }
           }
@@ -6588,21 +7374,21 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // required .com.luyun.easyway95.shared.Route route = 2;
-      private com.luyun.easyway95.shared.TSSProtos.Route route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
+      // required .tss.LYRoute route = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYRoute route_ = com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder> routeBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYRoute, com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder, com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder> routeBuilder_;
       public boolean hasRoute() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public com.luyun.easyway95.shared.TSSProtos.Route getRoute() {
+      public com.luyun.easyway95.shared.TSSProtos.LYRoute getRoute() {
         if (routeBuilder_ == null) {
           return route_;
         } else {
           return routeBuilder_.getMessage();
         }
       }
-      public Builder setRoute(com.luyun.easyway95.shared.TSSProtos.Route value) {
+      public Builder setRoute(com.luyun.easyway95.shared.TSSProtos.LYRoute value) {
         if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6616,7 +7402,7 @@ public final class TSSProtos {
         return this;
       }
       public Builder setRoute(
-          com.luyun.easyway95.shared.TSSProtos.Route.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder builderForValue) {
         if (routeBuilder_ == null) {
           route_ = builderForValue.build();
           onChanged();
@@ -6626,12 +7412,12 @@ public final class TSSProtos {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeRoute(com.luyun.easyway95.shared.TSSProtos.Route value) {
+      public Builder mergeRoute(com.luyun.easyway95.shared.TSSProtos.LYRoute value) {
         if (routeBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              route_ != com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance()) {
+              route_ != com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance()) {
             route_ =
-              com.luyun.easyway95.shared.TSSProtos.Route.newBuilder(route_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder(route_).mergeFrom(value).buildPartial();
           } else {
             route_ = value;
           }
@@ -6644,7 +7430,7 @@ public final class TSSProtos {
       }
       public Builder clearRoute() {
         if (routeBuilder_ == null) {
-          route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
+          route_ = com.luyun.easyway95.shared.TSSProtos.LYRoute.getDefaultInstance();
           onChanged();
         } else {
           routeBuilder_.clear();
@@ -6652,12 +7438,12 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.Route.Builder getRouteBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder getRouteBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getRouteFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder getRouteOrBuilder() {
         if (routeBuilder_ != null) {
           return routeBuilder_.getMessageOrBuilder();
         } else {
@@ -6665,11 +7451,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYRoute, com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder, com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder> 
           getRouteFieldBuilder() {
         if (routeBuilder_ == null) {
           routeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYRoute, com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder, com.luyun.easyway95.shared.TSSProtos.LYRouteOrBuilder>(
                   route_,
                   getParentForChildren(),
                   isClean());
@@ -6678,15 +7464,15 @@ public final class TSSProtos {
         return routeBuilder_;
       }
       
-      // required .com.luyun.easyway95.shared.OprType opr_type = 3;
-      private com.luyun.easyway95.shared.TSSProtos.OprType oprType_ = com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE;
+      // required .tss.LYTrafficSub.LYOprType opr_type = 3;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType oprType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE;
       public boolean hasOprType() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public com.luyun.easyway95.shared.TSSProtos.OprType getOprType() {
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType getOprType() {
         return oprType_;
       }
-      public Builder setOprType(com.luyun.easyway95.shared.TSSProtos.OprType value) {
+      public Builder setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -6697,20 +7483,20 @@ public final class TSSProtos {
       }
       public Builder clearOprType() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        oprType_ = com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE;
+        oprType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE;
         onChanged();
         return this;
       }
       
-      // required .com.luyun.easyway95.shared.PubType pub_type = 4;
-      private com.luyun.easyway95.shared.TSSProtos.PubType pubType_ = com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE;
+      // required .tss.LYTrafficSub.LYPubType pub_type = 4;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_ADHOC;
       public boolean hasPubType() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public com.luyun.easyway95.shared.TSSProtos.PubType getPubType() {
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType getPubType() {
         return pubType_;
       }
-      public Builder setPubType(com.luyun.easyway95.shared.TSSProtos.PubType value) {
+      public Builder setPubType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -6721,7 +7507,7 @@ public final class TSSProtos {
       }
       public Builder clearPubType() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        pubType_ = com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE;
+        pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_ADHOC;
         onChanged();
         return this;
       }
@@ -6747,18 +7533,613 @@ public final class TSSProtos {
         return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.TrafficSub)
+      // optional .tss.LYCrontab cron_tab = 6;
+      private com.luyun.easyway95.shared.TSSProtos.LYCrontab cronTab_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCrontab, com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder, com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder> cronTabBuilder_;
+      public boolean hasCronTab() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab getCronTab() {
+        if (cronTabBuilder_ == null) {
+          return cronTab_;
+        } else {
+          return cronTabBuilder_.getMessage();
+        }
+      }
+      public Builder setCronTab(com.luyun.easyway95.shared.TSSProtos.LYCrontab value) {
+        if (cronTabBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          cronTab_ = value;
+          onChanged();
+        } else {
+          cronTabBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder setCronTab(
+          com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder builderForValue) {
+        if (cronTabBuilder_ == null) {
+          cronTab_ = builderForValue.build();
+          onChanged();
+        } else {
+          cronTabBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder mergeCronTab(com.luyun.easyway95.shared.TSSProtos.LYCrontab value) {
+        if (cronTabBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+              cronTab_ != com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance()) {
+            cronTab_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab.newBuilder(cronTab_).mergeFrom(value).buildPartial();
+          } else {
+            cronTab_ = value;
+          }
+          onChanged();
+        } else {
+          cronTabBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      public Builder clearCronTab() {
+        if (cronTabBuilder_ == null) {
+          cronTab_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.getDefaultInstance();
+          onChanged();
+        } else {
+          cronTabBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder getCronTabBuilder() {
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return getCronTabFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder getCronTabOrBuilder() {
+        if (cronTabBuilder_ != null) {
+          return cronTabBuilder_.getMessageOrBuilder();
+        } else {
+          return cronTab_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCrontab, com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder, com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder> 
+          getCronTabFieldBuilder() {
+        if (cronTabBuilder_ == null) {
+          cronTabBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab, com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder, com.luyun.easyway95.shared.TSSProtos.LYCrontabOrBuilder>(
+                  cronTab_,
+                  getParentForChildren(),
+                  isClean());
+          cronTab_ = null;
+        }
+        return cronTabBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYTrafficSub)
     }
     
     static {
-      defaultInstance = new TrafficSub(true);
+      defaultInstance = new LYTrafficSub(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.TrafficSub)
+    // @@protoc_insertion_point(class_scope:tss.LYTrafficSub)
   }
   
-  public interface DeviceReportOrBuilder
+  public interface LYTrafficPubOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required int32 route_id = 1;
+    boolean hasRouteId();
+    int getRouteId();
+    
+    // required .tss.LYCityTraffic city_traffic = 2;
+    boolean hasCityTraffic();
+    com.luyun.easyway95.shared.TSSProtos.LYCityTraffic getCityTraffic();
+    com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder getCityTrafficOrBuilder();
+  }
+  public static final class LYTrafficPub extends
+      com.google.protobuf.GeneratedMessage
+      implements LYTrafficPubOrBuilder {
+    // Use LYTrafficPub.newBuilder() to construct.
+    private LYTrafficPub(Builder builder) {
+      super(builder);
+    }
+    private LYTrafficPub(boolean noInit) {}
+    
+    private static final LYTrafficPub defaultInstance;
+    public static LYTrafficPub getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYTrafficPub getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficPub_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficPub_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required int32 route_id = 1;
+    public static final int ROUTE_ID_FIELD_NUMBER = 1;
+    private int routeId_;
+    public boolean hasRouteId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public int getRouteId() {
+      return routeId_;
+    }
+    
+    // required .tss.LYCityTraffic city_traffic = 2;
+    public static final int CITY_TRAFFIC_FIELD_NUMBER = 2;
+    private com.luyun.easyway95.shared.TSSProtos.LYCityTraffic cityTraffic_;
+    public boolean hasCityTraffic() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic getCityTraffic() {
+      return cityTraffic_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder getCityTrafficOrBuilder() {
+      return cityTraffic_;
+    }
+    
+    private void initFields() {
+      routeId_ = 0;
+      cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasRouteId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasCityTraffic()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getCityTraffic().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, routeId_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, cityTraffic_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, routeId_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, cityTraffic_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficPub parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficPub_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficPub_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getCityTrafficFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        routeId_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (cityTrafficBuilder_ == null) {
+          cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
+        } else {
+          cityTrafficBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub build() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficPub result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficPub result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficPub result = new com.luyun.easyway95.shared.TSSProtos.LYTrafficPub(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.routeId_ = routeId_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (cityTrafficBuilder_ == null) {
+          result.cityTraffic_ = cityTraffic_;
+        } else {
+          result.cityTraffic_ = cityTrafficBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYTrafficPub) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYTrafficPub)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance()) return this;
+        if (other.hasRouteId()) {
+          setRouteId(other.getRouteId());
+        }
+        if (other.hasCityTraffic()) {
+          mergeCityTraffic(other.getCityTraffic());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasRouteId()) {
+          
+          return false;
+        }
+        if (!hasCityTraffic()) {
+          
+          return false;
+        }
+        if (!getCityTraffic().isInitialized()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              routeId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.newBuilder();
+              if (hasCityTraffic()) {
+                subBuilder.mergeFrom(getCityTraffic());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setCityTraffic(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required int32 route_id = 1;
+      private int routeId_ ;
+      public boolean hasRouteId() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public int getRouteId() {
+        return routeId_;
+      }
+      public Builder setRouteId(int value) {
+        bitField0_ |= 0x00000001;
+        routeId_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearRouteId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        routeId_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // required .tss.LYCityTraffic city_traffic = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYCityTraffic cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCityTraffic, com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder> cityTrafficBuilder_;
+      public boolean hasCityTraffic() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic getCityTraffic() {
+        if (cityTrafficBuilder_ == null) {
+          return cityTraffic_;
+        } else {
+          return cityTrafficBuilder_.getMessage();
+        }
+      }
+      public Builder setCityTraffic(com.luyun.easyway95.shared.TSSProtos.LYCityTraffic value) {
+        if (cityTrafficBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          cityTraffic_ = value;
+          onChanged();
+        } else {
+          cityTrafficBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder setCityTraffic(
+          com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder builderForValue) {
+        if (cityTrafficBuilder_ == null) {
+          cityTraffic_ = builderForValue.build();
+          onChanged();
+        } else {
+          cityTrafficBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder mergeCityTraffic(com.luyun.easyway95.shared.TSSProtos.LYCityTraffic value) {
+        if (cityTrafficBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              cityTraffic_ != com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance()) {
+            cityTraffic_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.newBuilder(cityTraffic_).mergeFrom(value).buildPartial();
+          } else {
+            cityTraffic_ = value;
+          }
+          onChanged();
+        } else {
+          cityTrafficBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder clearCityTraffic() {
+        if (cityTrafficBuilder_ == null) {
+          cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
+          onChanged();
+        } else {
+          cityTrafficBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder getCityTrafficBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getCityTrafficFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder getCityTrafficOrBuilder() {
+        if (cityTrafficBuilder_ != null) {
+          return cityTrafficBuilder_.getMessageOrBuilder();
+        } else {
+          return cityTraffic_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCityTraffic, com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder> 
+          getCityTrafficFieldBuilder() {
+        if (cityTrafficBuilder_ == null) {
+          cityTrafficBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCityTraffic, com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder>(
+                  cityTraffic_,
+                  getParentForChildren(),
+                  isClean());
+          cityTraffic_ = null;
+        }
+        return cityTrafficBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYTrafficPub)
+    }
+    
+    static {
+      defaultInstance = new LYTrafficPub(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYTrafficPub)
+  }
+  
+  public interface LYDeviceReportOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
     // required string device_id = 1;
@@ -6781,32 +8162,32 @@ public final class TSSProtos {
     boolean hasDeviceOsVersion();
     String getDeviceOsVersion();
   }
-  public static final class DeviceReport extends
+  public static final class LYDeviceReport extends
       com.google.protobuf.GeneratedMessage
-      implements DeviceReportOrBuilder {
-    // Use DeviceReport.newBuilder() to construct.
-    private DeviceReport(Builder builder) {
+      implements LYDeviceReportOrBuilder {
+    // Use LYDeviceReport.newBuilder() to construct.
+    private LYDeviceReport(Builder builder) {
       super(builder);
     }
-    private DeviceReport(boolean noInit) {}
+    private LYDeviceReport(boolean noInit) {}
     
-    private static final DeviceReport defaultInstance;
-    public static DeviceReport getDefaultInstance() {
+    private static final LYDeviceReport defaultInstance;
+    public static LYDeviceReport getDefaultInstance() {
       return defaultInstance;
     }
     
-    public DeviceReport getDefaultInstanceForType() {
+    public LYDeviceReport getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_DeviceReport_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYDeviceReport_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_DeviceReport_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYDeviceReport_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -7043,41 +8424,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -7086,7 +8467,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7097,12 +8478,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.DeviceReport parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYDeviceReport parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7112,7 +8493,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.DeviceReport prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYDeviceReport prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -7125,18 +8506,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder {
+       implements com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_DeviceReport_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYDeviceReport_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_DeviceReport_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYDeviceReport_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.DeviceReport.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7174,24 +8555,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReport getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReport build() {
-        com.luyun.easyway95.shared.TSSProtos.DeviceReport result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport build() {
+        com.luyun.easyway95.shared.TSSProtos.LYDeviceReport result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.DeviceReport buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYDeviceReport buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.DeviceReport result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYDeviceReport result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -7199,8 +8580,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReport buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.DeviceReport result = new com.luyun.easyway95.shared.TSSProtos.DeviceReport(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYDeviceReport result = new com.luyun.easyway95.shared.TSSProtos.LYDeviceReport(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7229,16 +8610,16 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.DeviceReport) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.DeviceReport)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYDeviceReport) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYDeviceReport)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.DeviceReport other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYDeviceReport other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance()) return this;
         if (other.hasDeviceId()) {
           setDeviceId(other.getDeviceId());
         }
@@ -7504,32 +8885,24 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.DeviceReport)
+      // @@protoc_insertion_point(builder_scope:tss.LYDeviceReport)
     }
     
     static {
-      defaultInstance = new DeviceReport(true);
+      defaultInstance = new LYDeviceReport(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.DeviceReport)
+    // @@protoc_insertion_point(class_scope:tss.LYDeviceReport)
   }
   
-  public interface PackageOrBuilder extends
+  public interface LYMsgOnAirOrBuilder extends
       com.google.protobuf.GeneratedMessage.
-          ExtendableMessageOrBuilder<Package> {
+          ExtendableMessageOrBuilder<LYMsgOnAir> {
     
     // required int32 version = 1;
     boolean hasVersion();
     int getVersion();
-    
-    // required .com.luyun.easyway95.shared.MsgDir msg_dir = 3;
-    boolean hasMsgDir();
-    com.luyun.easyway95.shared.TSSProtos.MsgDir getMsgDir();
-    
-    // required .com.luyun.easyway95.shared.MsgType msg_type = 4;
-    boolean hasMsgType();
-    com.luyun.easyway95.shared.TSSProtos.MsgType getMsgType();
     
     // required int32 msg_id = 5;
     boolean hasMsgId();
@@ -7539,89 +8912,68 @@ public final class TSSProtos {
     boolean hasTimestamp();
     long getTimestamp();
     
-    // optional int32 expires = 7 [default = 30];
-    boolean hasExpires();
-    int getExpires();
+    // required .tss.LYParty from_party = 2;
+    boolean hasFromParty();
+    com.luyun.easyway95.shared.TSSProtos.LYParty getFromParty();
     
-    // optional bytes user_token = 8;
-    boolean hasUserToken();
-    com.google.protobuf.ByteString getUserToken();
+    // required .tss.LYParty to_party = 3;
+    boolean hasToParty();
+    com.luyun.easyway95.shared.TSSProtos.LYParty getToParty();
     
-    // optional .com.luyun.easyway95.shared.ErrCode err_code = 17;
-    boolean hasErrCode();
-    com.luyun.easyway95.shared.TSSProtos.ErrCode getErrCode();
+    // required .tss.LYMsgType msg_type = 4;
+    boolean hasMsgType();
+    com.luyun.easyway95.shared.TSSProtos.LYMsgType getMsgType();
     
-    // optional .com.luyun.easyway95.shared.DeviceReport device_report = 19;
+    // optional .tss.LYRetCode ret_code = 17;
+    boolean hasRetCode();
+    com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode();
+    
+    // optional .tss.LYDeviceReport device_report = 19;
     boolean hasDeviceReport();
-    com.luyun.easyway95.shared.TSSProtos.DeviceReport getDeviceReport();
-    com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder getDeviceReportOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDeviceReport();
+    com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder getDeviceReportOrBuilder();
     
-    // optional .com.luyun.easyway95.shared.Location location = 33;
-    boolean hasLocation();
-    com.luyun.easyway95.shared.TSSProtos.Location getLocation();
-    com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder getLocationOrBuilder();
-    
-    // optional .com.luyun.easyway95.shared.Segment segment = 34;
-    boolean hasSegment();
-    com.luyun.easyway95.shared.TSSProtos.Segment getSegment();
-    com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder();
-    
-    // optional .com.luyun.easyway95.shared.Route route = 35;
-    boolean hasRoute();
-    com.luyun.easyway95.shared.TSSProtos.Route getRoute();
-    com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder();
-    
-    // optional .com.luyun.easyway95.shared.TrafficSub traffic_sub = 36;
+    // optional .tss.LYTrafficSub traffic_sub = 36;
     boolean hasTrafficSub();
-    com.luyun.easyway95.shared.TSSProtos.TrafficSub getTrafficSub();
-    com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder getTrafficSubOrBuilder();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getTrafficSub();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder getTrafficSubOrBuilder();
     
-    // optional .com.luyun.easyway95.shared.SegmentTraffic segment_traffic = 49;
-    boolean hasSegmentTraffic();
-    com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffic();
-    com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficOrBuilder();
+    // optional .tss.LYTrafficPub traffic_pub = 51;
+    boolean hasTrafficPub();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getTrafficPub();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder getTrafficPubOrBuilder();
     
-    // optional .com.luyun.easyway95.shared.RoadTraffic road_traffic = 50;
-    boolean hasRoadTraffic();
-    com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffic();
-    com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficOrBuilder();
-    
-    // optional .com.luyun.easyway95.shared.CityTraffic city_traffic = 51;
-    boolean hasCityTraffic();
-    com.luyun.easyway95.shared.TSSProtos.CityTraffic getCityTraffic();
-    com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder getCityTrafficOrBuilder();
-    
-    // optional .com.luyun.easyway95.shared.TrafficProbe traffic_probe = 65;
-    boolean hasTrafficProbe();
-    com.luyun.easyway95.shared.TSSProtos.TrafficProbe getTrafficProbe();
-    com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder getTrafficProbeOrBuilder();
+    // optional .tss.LYTrafficReport traffic_report = 65;
+    boolean hasTrafficReport();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getTrafficReport();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder getTrafficReportOrBuilder();
   }
-  public static final class Package extends
+  public static final class LYMsgOnAir extends
       com.google.protobuf.GeneratedMessage.ExtendableMessage<
-        Package> implements PackageOrBuilder {
-    // Use Package.newBuilder() to construct.
-    private Package(Builder builder) {
+        LYMsgOnAir> implements LYMsgOnAirOrBuilder {
+    // Use LYMsgOnAir.newBuilder() to construct.
+    private LYMsgOnAir(Builder builder) {
       super(builder);
     }
-    private Package(boolean noInit) {}
+    private LYMsgOnAir(boolean noInit) {}
     
-    private static final Package defaultInstance;
-    public static Package getDefaultInstance() {
+    private static final LYMsgOnAir defaultInstance;
+    public static LYMsgOnAir getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Package getDefaultInstanceForType() {
+    public LYMsgOnAir getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Package_descriptor;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYMsgOnAir_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Package_fieldAccessorTable;
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYMsgOnAir_fieldAccessorTable;
     }
     
     private int bitField0_;
@@ -7635,31 +8987,11 @@ public final class TSSProtos {
       return version_;
     }
     
-    // required .com.luyun.easyway95.shared.MsgDir msg_dir = 3;
-    public static final int MSG_DIR_FIELD_NUMBER = 3;
-    private com.luyun.easyway95.shared.TSSProtos.MsgDir msgDir_;
-    public boolean hasMsgDir() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.MsgDir getMsgDir() {
-      return msgDir_;
-    }
-    
-    // required .com.luyun.easyway95.shared.MsgType msg_type = 4;
-    public static final int MSG_TYPE_FIELD_NUMBER = 4;
-    private com.luyun.easyway95.shared.TSSProtos.MsgType msgType_;
-    public boolean hasMsgType() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.MsgType getMsgType() {
-      return msgType_;
-    }
-    
     // required int32 msg_id = 5;
     public static final int MSG_ID_FIELD_NUMBER = 5;
     private int msgId_;
     public boolean hasMsgId() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     public int getMsgId() {
       return msgId_;
@@ -7669,177 +9001,116 @@ public final class TSSProtos {
     public static final int TIMESTAMP_FIELD_NUMBER = 6;
     private long timestamp_;
     public boolean hasTimestamp() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     public long getTimestamp() {
       return timestamp_;
     }
     
-    // optional int32 expires = 7 [default = 30];
-    public static final int EXPIRES_FIELD_NUMBER = 7;
-    private int expires_;
-    public boolean hasExpires() {
+    // required .tss.LYParty from_party = 2;
+    public static final int FROM_PARTY_FIELD_NUMBER = 2;
+    private com.luyun.easyway95.shared.TSSProtos.LYParty fromParty_;
+    public boolean hasFromParty() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYParty getFromParty() {
+      return fromParty_;
+    }
+    
+    // required .tss.LYParty to_party = 3;
+    public static final int TO_PARTY_FIELD_NUMBER = 3;
+    private com.luyun.easyway95.shared.TSSProtos.LYParty toParty_;
+    public boolean hasToParty() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYParty getToParty() {
+      return toParty_;
+    }
+    
+    // required .tss.LYMsgType msg_type = 4;
+    public static final int MSG_TYPE_FIELD_NUMBER = 4;
+    private com.luyun.easyway95.shared.TSSProtos.LYMsgType msgType_;
+    public boolean hasMsgType() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
-    public int getExpires() {
-      return expires_;
+    public com.luyun.easyway95.shared.TSSProtos.LYMsgType getMsgType() {
+      return msgType_;
     }
     
-    // optional bytes user_token = 8;
-    public static final int USER_TOKEN_FIELD_NUMBER = 8;
-    private com.google.protobuf.ByteString userToken_;
-    public boolean hasUserToken() {
+    // optional .tss.LYRetCode ret_code = 17;
+    public static final int RET_CODE_FIELD_NUMBER = 17;
+    private com.luyun.easyway95.shared.TSSProtos.LYRetCode retCode_;
+    public boolean hasRetCode() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
-    public com.google.protobuf.ByteString getUserToken() {
-      return userToken_;
+    public com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode() {
+      return retCode_;
     }
     
-    // optional .com.luyun.easyway95.shared.ErrCode err_code = 17;
-    public static final int ERR_CODE_FIELD_NUMBER = 17;
-    private com.luyun.easyway95.shared.TSSProtos.ErrCode errCode_;
-    public boolean hasErrCode() {
+    // optional .tss.LYDeviceReport device_report = 19;
+    public static final int DEVICE_REPORT_FIELD_NUMBER = 19;
+    private com.luyun.easyway95.shared.TSSProtos.LYDeviceReport deviceReport_;
+    public boolean hasDeviceReport() {
       return ((bitField0_ & 0x00000080) == 0x00000080);
     }
-    public com.luyun.easyway95.shared.TSSProtos.ErrCode getErrCode() {
-      return errCode_;
+    public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDeviceReport() {
+      return deviceReport_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder getDeviceReportOrBuilder() {
+      return deviceReport_;
     }
     
-    // optional .com.luyun.easyway95.shared.DeviceReport device_report = 19;
-    public static final int DEVICE_REPORT_FIELD_NUMBER = 19;
-    private com.luyun.easyway95.shared.TSSProtos.DeviceReport deviceReport_;
-    public boolean hasDeviceReport() {
+    // optional .tss.LYTrafficSub traffic_sub = 36;
+    public static final int TRAFFIC_SUB_FIELD_NUMBER = 36;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub trafficSub_;
+    public boolean hasTrafficSub() {
       return ((bitField0_ & 0x00000100) == 0x00000100);
     }
-    public com.luyun.easyway95.shared.TSSProtos.DeviceReport getDeviceReport() {
-      return deviceReport_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getTrafficSub() {
+      return trafficSub_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder getDeviceReportOrBuilder() {
-      return deviceReport_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder getTrafficSubOrBuilder() {
+      return trafficSub_;
     }
     
-    // optional .com.luyun.easyway95.shared.Location location = 33;
-    public static final int LOCATION_FIELD_NUMBER = 33;
-    private com.luyun.easyway95.shared.TSSProtos.Location location_;
-    public boolean hasLocation() {
+    // optional .tss.LYTrafficPub traffic_pub = 51;
+    public static final int TRAFFIC_PUB_FIELD_NUMBER = 51;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub trafficPub_;
+    public boolean hasTrafficPub() {
       return ((bitField0_ & 0x00000200) == 0x00000200);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Location getLocation() {
-      return location_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getTrafficPub() {
+      return trafficPub_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder getLocationOrBuilder() {
-      return location_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder getTrafficPubOrBuilder() {
+      return trafficPub_;
     }
     
-    // optional .com.luyun.easyway95.shared.Segment segment = 34;
-    public static final int SEGMENT_FIELD_NUMBER = 34;
-    private com.luyun.easyway95.shared.TSSProtos.Segment segment_;
-    public boolean hasSegment() {
+    // optional .tss.LYTrafficReport traffic_report = 65;
+    public static final int TRAFFIC_REPORT_FIELD_NUMBER = 65;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport trafficReport_;
+    public boolean hasTrafficReport() {
       return ((bitField0_ & 0x00000400) == 0x00000400);
     }
-    public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
-      return segment_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getTrafficReport() {
+      return trafficReport_;
     }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
-      return segment_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.Route route = 35;
-    public static final int ROUTE_FIELD_NUMBER = 35;
-    private com.luyun.easyway95.shared.TSSProtos.Route route_;
-    public boolean hasRoute() {
-      return ((bitField0_ & 0x00000800) == 0x00000800);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.Route getRoute() {
-      return route_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder() {
-      return route_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.TrafficSub traffic_sub = 36;
-    public static final int TRAFFIC_SUB_FIELD_NUMBER = 36;
-    private com.luyun.easyway95.shared.TSSProtos.TrafficSub trafficSub_;
-    public boolean hasTrafficSub() {
-      return ((bitField0_ & 0x00001000) == 0x00001000);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.TrafficSub getTrafficSub() {
-      return trafficSub_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder getTrafficSubOrBuilder() {
-      return trafficSub_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.SegmentTraffic segment_traffic = 49;
-    public static final int SEGMENT_TRAFFIC_FIELD_NUMBER = 49;
-    private com.luyun.easyway95.shared.TSSProtos.SegmentTraffic segmentTraffic_;
-    public boolean hasSegmentTraffic() {
-      return ((bitField0_ & 0x00002000) == 0x00002000);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffic() {
-      return segmentTraffic_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficOrBuilder() {
-      return segmentTraffic_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.RoadTraffic road_traffic = 50;
-    public static final int ROAD_TRAFFIC_FIELD_NUMBER = 50;
-    private com.luyun.easyway95.shared.TSSProtos.RoadTraffic roadTraffic_;
-    public boolean hasRoadTraffic() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffic() {
-      return roadTraffic_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficOrBuilder() {
-      return roadTraffic_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.CityTraffic city_traffic = 51;
-    public static final int CITY_TRAFFIC_FIELD_NUMBER = 51;
-    private com.luyun.easyway95.shared.TSSProtos.CityTraffic cityTraffic_;
-    public boolean hasCityTraffic() {
-      return ((bitField0_ & 0x00008000) == 0x00008000);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.CityTraffic getCityTraffic() {
-      return cityTraffic_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder getCityTrafficOrBuilder() {
-      return cityTraffic_;
-    }
-    
-    // optional .com.luyun.easyway95.shared.TrafficProbe traffic_probe = 65;
-    public static final int TRAFFIC_PROBE_FIELD_NUMBER = 65;
-    private com.luyun.easyway95.shared.TSSProtos.TrafficProbe trafficProbe_;
-    public boolean hasTrafficProbe() {
-      return ((bitField0_ & 0x00010000) == 0x00010000);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.TrafficProbe getTrafficProbe() {
-      return trafficProbe_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder getTrafficProbeOrBuilder() {
-      return trafficProbe_;
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder getTrafficReportOrBuilder() {
+      return trafficReport_;
     }
     
     private void initFields() {
       version_ = 0;
-      msgDir_ = com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS;
-      msgType_ = com.luyun.easyway95.shared.TSSProtos.MsgType.VOID;
       msgId_ = 0;
       timestamp_ = 0L;
-      expires_ = 30;
-      userToken_ = com.google.protobuf.ByteString.EMPTY;
-      errCode_ = com.luyun.easyway95.shared.TSSProtos.ErrCode.VERSION_IMCOMPATIBLE;
-      deviceReport_ = com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance();
-      location_ = com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance();
-      segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
-      route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
-      trafficSub_ = com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance();
-      segmentTraffic_ = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance();
-      roadTraffic_ = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance();
-      cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance();
-      trafficProbe_ = com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance();
+      fromParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+      toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+      msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+      retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+      deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
+      trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
+      trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
+      trafficReport_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -7847,14 +9118,6 @@ public final class TSSProtos {
       if (isInitialized != -1) return isInitialized == 1;
       
       if (!hasVersion()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasMsgDir()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasMsgType()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -7866,26 +9129,20 @@ public final class TSSProtos {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasFromParty()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasToParty()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMsgType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       if (hasDeviceReport()) {
         if (!getDeviceReport().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasLocation()) {
-        if (!getLocation().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasSegment()) {
-        if (!getSegment().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasRoute()) {
-        if (!getRoute().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -7896,26 +9153,14 @@ public final class TSSProtos {
           return false;
         }
       }
-      if (hasSegmentTraffic()) {
-        if (!getSegmentTraffic().isInitialized()) {
+      if (hasTrafficPub()) {
+        if (!getTrafficPub().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
       }
-      if (hasRoadTraffic()) {
-        if (!getRoadTraffic().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasCityTraffic()) {
-        if (!getCityTraffic().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasTrafficProbe()) {
-        if (!getTrafficProbe().isInitialized()) {
+      if (hasTrafficReport()) {
+        if (!getTrafficReport().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -7932,58 +9177,40 @@ public final class TSSProtos {
                         throws java.io.IOException {
       getSerializedSize();
       com.google.protobuf.GeneratedMessage
-        .ExtendableMessage<com.luyun.easyway95.shared.TSSProtos.Package>.ExtensionWriter extensionWriter =
+        .ExtendableMessage<com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir>.ExtensionWriter extensionWriter =
           newExtensionWriter();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, version_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeEnum(3, msgDir_.getNumber());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeEnum(4, msgType_.getNumber());
-      }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt32(5, msgId_);
+        output.writeEnum(2, fromParty_.getNumber());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt64(6, timestamp_);
+        output.writeEnum(3, toParty_.getNumber());
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeInt32(7, expires_);
+        output.writeEnum(4, msgType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(5, msgId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt64(6, timestamp_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeBytes(8, userToken_);
+        output.writeEnum(17, retCode_.getNumber());
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeEnum(17, errCode_.getNumber());
-      }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         output.writeMessage(19, deviceReport_);
       }
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeMessage(33, location_);
-      }
-      if (((bitField0_ & 0x00000400) == 0x00000400)) {
-        output.writeMessage(34, segment_);
-      }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
-        output.writeMessage(35, route_);
-      }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         output.writeMessage(36, trafficSub_);
       }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        output.writeMessage(49, segmentTraffic_);
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeMessage(51, trafficPub_);
       }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        output.writeMessage(50, roadTraffic_);
-      }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
-        output.writeMessage(51, cityTraffic_);
-      }
-      if (((bitField0_ & 0x00010000) == 0x00010000)) {
-        output.writeMessage(65, trafficProbe_);
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeMessage(65, trafficReport_);
       }
       extensionWriter.writeUntil(256, output);
       getUnknownFields().writeTo(output);
@@ -7999,69 +9226,45 @@ public final class TSSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, version_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, msgDir_.getNumber());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, msgType_.getNumber());
-      }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, msgId_);
+          .computeEnumSize(2, fromParty_.getNumber());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(6, timestamp_);
+          .computeEnumSize(3, toParty_.getNumber());
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(7, expires_);
+          .computeEnumSize(4, msgType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, msgId_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, timestamp_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(8, userToken_);
+          .computeEnumSize(17, retCode_.getNumber());
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(17, errCode_.getNumber());
+          .computeMessageSize(19, deviceReport_);
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(19, deviceReport_);
+          .computeMessageSize(36, trafficSub_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(33, location_);
+          .computeMessageSize(51, trafficPub_);
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(34, segment_);
-      }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(35, route_);
-      }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(36, trafficSub_);
-      }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(49, segmentTraffic_);
-      }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(50, roadTraffic_);
-      }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(51, cityTraffic_);
-      }
-      if (((bitField0_ & 0x00010000) == 0x00010000)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(65, trafficProbe_);
+          .computeMessageSize(65, trafficReport_);
       }
       size += extensionsSerializedSize();
       size += getUnknownFields().getSerializedSize();
@@ -8076,41 +9279,41 @@ public final class TSSProtos {
       return super.writeReplace();
     }
     
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(byte[] data)
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseDelimitedFrom(java.io.InputStream input)
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -8119,7 +9322,7 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseDelimitedFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -8130,12 +9333,12 @@ public final class TSSProtos {
         return null;
       }
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static com.luyun.easyway95.shared.TSSProtos.Package parseFrom(
+    public static com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -8145,7 +9348,7 @@ public final class TSSProtos {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.Package prototype) {
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -8158,18 +9361,18 @@ public final class TSSProtos {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.ExtendableBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Package, Builder> implements com.luyun.easyway95.shared.TSSProtos.PackageOrBuilder {
+          com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir, Builder> implements com.luyun.easyway95.shared.TSSProtos.LYMsgOnAirOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Package_descriptor;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYMsgOnAir_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_com_luyun_easyway95_shared_Package_fieldAccessorTable;
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYMsgOnAir_fieldAccessorTable;
       }
       
-      // Construct using com.luyun.easyway95.shared.TSSProtos.Package.newBuilder()
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8181,14 +9384,9 @@ public final class TSSProtos {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getDeviceReportFieldBuilder();
-          getLocationFieldBuilder();
-          getSegmentFieldBuilder();
-          getRouteFieldBuilder();
           getTrafficSubFieldBuilder();
-          getSegmentTrafficFieldBuilder();
-          getRoadTrafficFieldBuilder();
-          getCityTrafficFieldBuilder();
-          getTrafficProbeFieldBuilder();
+          getTrafficPubFieldBuilder();
+          getTrafficReportFieldBuilder();
         }
       }
       private static Builder create() {
@@ -8199,74 +9397,42 @@ public final class TSSProtos {
         super.clear();
         version_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        msgDir_ = com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        msgType_ = com.luyun.easyway95.shared.TSSProtos.MsgType.VOID;
-        bitField0_ = (bitField0_ & ~0x00000004);
         msgId_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         timestamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        fromParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
         bitField0_ = (bitField0_ & ~0x00000010);
-        expires_ = 30;
+        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
         bitField0_ = (bitField0_ & ~0x00000020);
-        userToken_ = com.google.protobuf.ByteString.EMPTY;
+        retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
         bitField0_ = (bitField0_ & ~0x00000040);
-        errCode_ = com.luyun.easyway95.shared.TSSProtos.ErrCode.VERSION_IMCOMPATIBLE;
-        bitField0_ = (bitField0_ & ~0x00000080);
         if (deviceReportBuilder_ == null) {
-          deviceReport_ = com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance();
+          deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
         } else {
           deviceReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
-        if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance();
-        } else {
-          locationBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000200);
-        if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
-        } else {
-          segmentBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000400);
-        if (routeBuilder_ == null) {
-          route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
-        } else {
-          routeBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000800);
+        bitField0_ = (bitField0_ & ~0x00000080);
         if (trafficSubBuilder_ == null) {
-          trafficSub_ = com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance();
+          trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
         } else {
           trafficSubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00001000);
-        if (segmentTrafficBuilder_ == null) {
-          segmentTraffic_ = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance();
+        bitField0_ = (bitField0_ & ~0x00000100);
+        if (trafficPubBuilder_ == null) {
+          trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
         } else {
-          segmentTrafficBuilder_.clear();
+          trafficPubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
-        if (roadTrafficBuilder_ == null) {
-          roadTraffic_ = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance();
+        bitField0_ = (bitField0_ & ~0x00000200);
+        if (trafficReportBuilder_ == null) {
+          trafficReport_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
         } else {
-          roadTrafficBuilder_.clear();
+          trafficReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
-        if (cityTrafficBuilder_ == null) {
-          cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance();
-        } else {
-          cityTrafficBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00008000);
-        if (trafficProbeBuilder_ == null) {
-          trafficProbe_ = com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance();
-        } else {
-          trafficProbeBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00010000);
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
       
@@ -8276,24 +9442,24 @@ public final class TSSProtos {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Package.getDescriptor();
+        return com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.getDescriptor();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Package getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.Package.getDefaultInstance();
+      public com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.getDefaultInstance();
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Package build() {
-        com.luyun.easyway95.shared.TSSProtos.Package result = buildPartial();
+      public com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir build() {
+        com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private com.luyun.easyway95.shared.TSSProtos.Package buildParsed()
+      private com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.Package result = buildPartial();
+        com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -8301,8 +9467,8 @@ public final class TSSProtos {
         return result;
       }
       
-      public com.luyun.easyway95.shared.TSSProtos.Package buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.Package result = new com.luyun.easyway95.shared.TSSProtos.Package(this);
+      public com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir result = new com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -8312,102 +9478,58 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.msgDir_ = msgDir_;
+        result.msgId_ = msgId_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.msgType_ = msgType_;
+        result.timestamp_ = timestamp_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.msgId_ = msgId_;
+        result.fromParty_ = fromParty_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.timestamp_ = timestamp_;
+        result.toParty_ = toParty_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.expires_ = expires_;
+        result.msgType_ = msgType_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.userToken_ = userToken_;
+        result.retCode_ = retCode_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
-        }
-        result.errCode_ = errCode_;
-        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
-          to_bitField0_ |= 0x00000100;
         }
         if (deviceReportBuilder_ == null) {
           result.deviceReport_ = deviceReport_;
         } else {
           result.deviceReport_ = deviceReportBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
-          to_bitField0_ |= 0x00000200;
-        }
-        if (locationBuilder_ == null) {
-          result.location_ = location_;
-        } else {
-          result.location_ = locationBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
-          to_bitField0_ |= 0x00000400;
-        }
-        if (segmentBuilder_ == null) {
-          result.segment_ = segment_;
-        } else {
-          result.segment_ = segmentBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
-          to_bitField0_ |= 0x00000800;
-        }
-        if (routeBuilder_ == null) {
-          result.route_ = route_;
-        } else {
-          result.route_ = routeBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
-          to_bitField0_ |= 0x00001000;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
         }
         if (trafficSubBuilder_ == null) {
           result.trafficSub_ = trafficSub_;
         } else {
           result.trafficSub_ = trafficSubBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
-          to_bitField0_ |= 0x00002000;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
         }
-        if (segmentTrafficBuilder_ == null) {
-          result.segmentTraffic_ = segmentTraffic_;
+        if (trafficPubBuilder_ == null) {
+          result.trafficPub_ = trafficPub_;
         } else {
-          result.segmentTraffic_ = segmentTrafficBuilder_.build();
+          result.trafficPub_ = trafficPubBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
-          to_bitField0_ |= 0x00004000;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
         }
-        if (roadTrafficBuilder_ == null) {
-          result.roadTraffic_ = roadTraffic_;
+        if (trafficReportBuilder_ == null) {
+          result.trafficReport_ = trafficReport_;
         } else {
-          result.roadTraffic_ = roadTrafficBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
-          to_bitField0_ |= 0x00008000;
-        }
-        if (cityTrafficBuilder_ == null) {
-          result.cityTraffic_ = cityTraffic_;
-        } else {
-          result.cityTraffic_ = cityTrafficBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
-          to_bitField0_ |= 0x00010000;
-        }
-        if (trafficProbeBuilder_ == null) {
-          result.trafficProbe_ = trafficProbe_;
-        } else {
-          result.trafficProbe_ = trafficProbeBuilder_.build();
+          result.trafficReport_ = trafficReportBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -8415,24 +9537,18 @@ public final class TSSProtos {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.Package) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.Package)other);
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.Package other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.Package.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.getDefaultInstance()) return this;
         if (other.hasVersion()) {
           setVersion(other.getVersion());
-        }
-        if (other.hasMsgDir()) {
-          setMsgDir(other.getMsgDir());
-        }
-        if (other.hasMsgType()) {
-          setMsgType(other.getMsgType());
         }
         if (other.hasMsgId()) {
           setMsgId(other.getMsgId());
@@ -8440,41 +9556,29 @@ public final class TSSProtos {
         if (other.hasTimestamp()) {
           setTimestamp(other.getTimestamp());
         }
-        if (other.hasExpires()) {
-          setExpires(other.getExpires());
+        if (other.hasFromParty()) {
+          setFromParty(other.getFromParty());
         }
-        if (other.hasUserToken()) {
-          setUserToken(other.getUserToken());
+        if (other.hasToParty()) {
+          setToParty(other.getToParty());
         }
-        if (other.hasErrCode()) {
-          setErrCode(other.getErrCode());
+        if (other.hasMsgType()) {
+          setMsgType(other.getMsgType());
+        }
+        if (other.hasRetCode()) {
+          setRetCode(other.getRetCode());
         }
         if (other.hasDeviceReport()) {
           mergeDeviceReport(other.getDeviceReport());
         }
-        if (other.hasLocation()) {
-          mergeLocation(other.getLocation());
-        }
-        if (other.hasSegment()) {
-          mergeSegment(other.getSegment());
-        }
-        if (other.hasRoute()) {
-          mergeRoute(other.getRoute());
-        }
         if (other.hasTrafficSub()) {
           mergeTrafficSub(other.getTrafficSub());
         }
-        if (other.hasSegmentTraffic()) {
-          mergeSegmentTraffic(other.getSegmentTraffic());
+        if (other.hasTrafficPub()) {
+          mergeTrafficPub(other.getTrafficPub());
         }
-        if (other.hasRoadTraffic()) {
-          mergeRoadTraffic(other.getRoadTraffic());
-        }
-        if (other.hasCityTraffic()) {
-          mergeCityTraffic(other.getCityTraffic());
-        }
-        if (other.hasTrafficProbe()) {
-          mergeTrafficProbe(other.getTrafficProbe());
+        if (other.hasTrafficReport()) {
+          mergeTrafficReport(other.getTrafficReport());
         }
         this.mergeExtensionFields(other);
         this.mergeUnknownFields(other.getUnknownFields());
@@ -8486,14 +9590,6 @@ public final class TSSProtos {
           
           return false;
         }
-        if (!hasMsgDir()) {
-          
-          return false;
-        }
-        if (!hasMsgType()) {
-          
-          return false;
-        }
         if (!hasMsgId()) {
           
           return false;
@@ -8502,26 +9598,20 @@ public final class TSSProtos {
           
           return false;
         }
+        if (!hasFromParty()) {
+          
+          return false;
+        }
+        if (!hasToParty()) {
+          
+          return false;
+        }
+        if (!hasMsgType()) {
+          
+          return false;
+        }
         if (hasDeviceReport()) {
           if (!getDeviceReport().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasLocation()) {
-          if (!getLocation().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasSegment()) {
-          if (!getSegment().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasRoute()) {
-          if (!getRoute().isInitialized()) {
             
             return false;
           }
@@ -8532,26 +9622,14 @@ public final class TSSProtos {
             return false;
           }
         }
-        if (hasSegmentTraffic()) {
-          if (!getSegmentTraffic().isInitialized()) {
+        if (hasTrafficPub()) {
+          if (!getTrafficPub().isInitialized()) {
             
             return false;
           }
         }
-        if (hasRoadTraffic()) {
-          if (!getRoadTraffic().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasCityTraffic()) {
-          if (!getCityTraffic().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasTrafficProbe()) {
-          if (!getTrafficProbe().isInitialized()) {
+        if (hasTrafficReport()) {
+          if (!getTrafficReport().isInitialized()) {
             
             return false;
           }
@@ -8591,61 +9669,62 @@ public final class TSSProtos {
               version_ = input.readInt32();
               break;
             }
+            case 16: {
+              int rawValue = input.readEnum();
+              com.luyun.easyway95.shared.TSSProtos.LYParty value = com.luyun.easyway95.shared.TSSProtos.LYParty.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(2, rawValue);
+              } else {
+                bitField0_ |= 0x00000008;
+                fromParty_ = value;
+              }
+              break;
+            }
             case 24: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.MsgDir value = com.luyun.easyway95.shared.TSSProtos.MsgDir.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYParty value = com.luyun.easyway95.shared.TSSProtos.LYParty.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
-                bitField0_ |= 0x00000002;
-                msgDir_ = value;
+                bitField0_ |= 0x00000010;
+                toParty_ = value;
               }
               break;
             }
             case 32: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.MsgType value = com.luyun.easyway95.shared.TSSProtos.MsgType.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYMsgType value = com.luyun.easyway95.shared.TSSProtos.LYMsgType.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
-                bitField0_ |= 0x00000004;
+                bitField0_ |= 0x00000020;
                 msgType_ = value;
               }
               break;
             }
             case 40: {
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000002;
               msgId_ = input.readInt32();
               break;
             }
             case 48: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000004;
               timestamp_ = input.readInt64();
-              break;
-            }
-            case 56: {
-              bitField0_ |= 0x00000020;
-              expires_ = input.readInt32();
-              break;
-            }
-            case 66: {
-              bitField0_ |= 0x00000040;
-              userToken_ = input.readBytes();
               break;
             }
             case 136: {
               int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.ErrCode value = com.luyun.easyway95.shared.TSSProtos.ErrCode.valueOf(rawValue);
+              com.luyun.easyway95.shared.TSSProtos.LYRetCode value = com.luyun.easyway95.shared.TSSProtos.LYRetCode.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(17, rawValue);
               } else {
-                bitField0_ |= 0x00000080;
-                errCode_ = value;
+                bitField0_ |= 0x00000040;
+                retCode_ = value;
               }
               break;
             }
             case 154: {
-              com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.DeviceReport.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.newBuilder();
               if (hasDeviceReport()) {
                 subBuilder.mergeFrom(getDeviceReport());
               }
@@ -8653,35 +9732,8 @@ public final class TSSProtos {
               setDeviceReport(subBuilder.buildPartial());
               break;
             }
-            case 266: {
-              com.luyun.easyway95.shared.TSSProtos.Location.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Location.newBuilder();
-              if (hasLocation()) {
-                subBuilder.mergeFrom(getLocation());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLocation(subBuilder.buildPartial());
-              break;
-            }
-            case 274: {
-              com.luyun.easyway95.shared.TSSProtos.Segment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder();
-              if (hasSegment()) {
-                subBuilder.mergeFrom(getSegment());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setSegment(subBuilder.buildPartial());
-              break;
-            }
-            case 282: {
-              com.luyun.easyway95.shared.TSSProtos.Route.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.Route.newBuilder();
-              if (hasRoute()) {
-                subBuilder.mergeFrom(getRoute());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setRoute(subBuilder.buildPartial());
-              break;
-            }
             case 290: {
-              com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.TrafficSub.newBuilder();
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder();
               if (hasTrafficSub()) {
                 subBuilder.mergeFrom(getTrafficSub());
               }
@@ -8689,40 +9741,22 @@ public final class TSSProtos {
               setTrafficSub(subBuilder.buildPartial());
               break;
             }
-            case 394: {
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.newBuilder();
-              if (hasSegmentTraffic()) {
-                subBuilder.mergeFrom(getSegmentTraffic());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setSegmentTraffic(subBuilder.buildPartial());
-              break;
-            }
-            case 402: {
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.newBuilder();
-              if (hasRoadTraffic()) {
-                subBuilder.mergeFrom(getRoadTraffic());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setRoadTraffic(subBuilder.buildPartial());
-              break;
-            }
             case 410: {
-              com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.CityTraffic.newBuilder();
-              if (hasCityTraffic()) {
-                subBuilder.mergeFrom(getCityTraffic());
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.newBuilder();
+              if (hasTrafficPub()) {
+                subBuilder.mergeFrom(getTrafficPub());
               }
               input.readMessage(subBuilder, extensionRegistry);
-              setCityTraffic(subBuilder.buildPartial());
+              setTrafficPub(subBuilder.buildPartial());
               break;
             }
             case 522: {
-              com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.TrafficProbe.newBuilder();
-              if (hasTrafficProbe()) {
-                subBuilder.mergeFrom(getTrafficProbe());
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder();
+              if (hasTrafficReport()) {
+                subBuilder.mergeFrom(getTrafficReport());
               }
               input.readMessage(subBuilder, extensionRegistry);
-              setTrafficProbe(subBuilder.buildPartial());
+              setTrafficReport(subBuilder.buildPartial());
               break;
             }
           }
@@ -8752,70 +9786,22 @@ public final class TSSProtos {
         return this;
       }
       
-      // required .com.luyun.easyway95.shared.MsgDir msg_dir = 3;
-      private com.luyun.easyway95.shared.TSSProtos.MsgDir msgDir_ = com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS;
-      public boolean hasMsgDir() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.MsgDir getMsgDir() {
-        return msgDir_;
-      }
-      public Builder setMsgDir(com.luyun.easyway95.shared.TSSProtos.MsgDir value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        msgDir_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearMsgDir() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        msgDir_ = com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS;
-        onChanged();
-        return this;
-      }
-      
-      // required .com.luyun.easyway95.shared.MsgType msg_type = 4;
-      private com.luyun.easyway95.shared.TSSProtos.MsgType msgType_ = com.luyun.easyway95.shared.TSSProtos.MsgType.VOID;
-      public boolean hasMsgType() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.MsgType getMsgType() {
-        return msgType_;
-      }
-      public Builder setMsgType(com.luyun.easyway95.shared.TSSProtos.MsgType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        msgType_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearMsgType() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        msgType_ = com.luyun.easyway95.shared.TSSProtos.MsgType.VOID;
-        onChanged();
-        return this;
-      }
-      
       // required int32 msg_id = 5;
       private int msgId_ ;
       public boolean hasMsgId() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       public int getMsgId() {
         return msgId_;
       }
       public Builder setMsgId(int value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000002;
         msgId_ = value;
         onChanged();
         return this;
       }
       public Builder clearMsgId() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         msgId_ = 0;
         onChanged();
         return this;
@@ -8824,108 +9810,135 @@ public final class TSSProtos {
       // required int64 timestamp = 6;
       private long timestamp_ ;
       public boolean hasTimestamp() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       public long getTimestamp() {
         return timestamp_;
       }
       public Builder setTimestamp(long value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000004;
         timestamp_ = value;
         onChanged();
         return this;
       }
       public Builder clearTimestamp() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000004);
         timestamp_ = 0L;
         onChanged();
         return this;
       }
       
-      // optional int32 expires = 7 [default = 30];
-      private int expires_ = 30;
-      public boolean hasExpires() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+      // required .tss.LYParty from_party = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYParty fromParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+      public boolean hasFromParty() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public int getExpires() {
-        return expires_;
+      public com.luyun.easyway95.shared.TSSProtos.LYParty getFromParty() {
+        return fromParty_;
       }
-      public Builder setExpires(int value) {
-        bitField0_ |= 0x00000020;
-        expires_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearExpires() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        expires_ = 30;
-        onChanged();
-        return this;
-      }
-      
-      // optional bytes user_token = 8;
-      private com.google.protobuf.ByteString userToken_ = com.google.protobuf.ByteString.EMPTY;
-      public boolean hasUserToken() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
-      }
-      public com.google.protobuf.ByteString getUserToken() {
-        return userToken_;
-      }
-      public Builder setUserToken(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000040;
-        userToken_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearUserToken() {
-        bitField0_ = (bitField0_ & ~0x00000040);
-        userToken_ = getDefaultInstance().getUserToken();
-        onChanged();
-        return this;
-      }
-      
-      // optional .com.luyun.easyway95.shared.ErrCode err_code = 17;
-      private com.luyun.easyway95.shared.TSSProtos.ErrCode errCode_ = com.luyun.easyway95.shared.TSSProtos.ErrCode.VERSION_IMCOMPATIBLE;
-      public boolean hasErrCode() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.ErrCode getErrCode() {
-        return errCode_;
-      }
-      public Builder setErrCode(com.luyun.easyway95.shared.TSSProtos.ErrCode value) {
+      public Builder setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000080;
-        errCode_ = value;
+        bitField0_ |= 0x00000008;
+        fromParty_ = value;
         onChanged();
         return this;
       }
-      public Builder clearErrCode() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        errCode_ = com.luyun.easyway95.shared.TSSProtos.ErrCode.VERSION_IMCOMPATIBLE;
+      public Builder clearFromParty() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        fromParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
         onChanged();
         return this;
       }
       
-      // optional .com.luyun.easyway95.shared.DeviceReport device_report = 19;
-      private com.luyun.easyway95.shared.TSSProtos.DeviceReport deviceReport_ = com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.DeviceReport, com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder> deviceReportBuilder_;
-      public boolean hasDeviceReport() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+      // required .tss.LYParty to_party = 3;
+      private com.luyun.easyway95.shared.TSSProtos.LYParty toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+      public boolean hasToParty() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReport getDeviceReport() {
+      public com.luyun.easyway95.shared.TSSProtos.LYParty getToParty() {
+        return toParty_;
+      }
+      public Builder setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000010;
+        toParty_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearToParty() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
+        onChanged();
+        return this;
+      }
+      
+      // required .tss.LYMsgType msg_type = 4;
+      private com.luyun.easyway95.shared.TSSProtos.LYMsgType msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+      public boolean hasMsgType() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYMsgType getMsgType() {
+        return msgType_;
+      }
+      public Builder setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000020;
+        msgType_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearMsgType() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+        onChanged();
+        return this;
+      }
+      
+      // optional .tss.LYRetCode ret_code = 17;
+      private com.luyun.easyway95.shared.TSSProtos.LYRetCode retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+      public boolean hasRetCode() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode() {
+        return retCode_;
+      }
+      public Builder setRetCode(com.luyun.easyway95.shared.TSSProtos.LYRetCode value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000040;
+        retCode_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearRetCode() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+        onChanged();
+        return this;
+      }
+      
+      // optional .tss.LYDeviceReport device_report = 19;
+      private com.luyun.easyway95.shared.TSSProtos.LYDeviceReport deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYDeviceReport, com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder> deviceReportBuilder_;
+      public boolean hasDeviceReport() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDeviceReport() {
         if (deviceReportBuilder_ == null) {
           return deviceReport_;
         } else {
           return deviceReportBuilder_.getMessage();
         }
       }
-      public Builder setDeviceReport(com.luyun.easyway95.shared.TSSProtos.DeviceReport value) {
+      public Builder setDeviceReport(com.luyun.easyway95.shared.TSSProtos.LYDeviceReport value) {
         if (deviceReportBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -8935,26 +9948,26 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000080;
         return this;
       }
       public Builder setDeviceReport(
-          com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder builderForValue) {
         if (deviceReportBuilder_ == null) {
           deviceReport_ = builderForValue.build();
           onChanged();
         } else {
           deviceReportBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000080;
         return this;
       }
-      public Builder mergeDeviceReport(com.luyun.easyway95.shared.TSSProtos.DeviceReport value) {
+      public Builder mergeDeviceReport(com.luyun.easyway95.shared.TSSProtos.LYDeviceReport value) {
         if (deviceReportBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) == 0x00000100) &&
-              deviceReport_ != com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance()) {
+          if (((bitField0_ & 0x00000080) == 0x00000080) &&
+              deviceReport_ != com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance()) {
             deviceReport_ =
-              com.luyun.easyway95.shared.TSSProtos.DeviceReport.newBuilder(deviceReport_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.newBuilder(deviceReport_).mergeFrom(value).buildPartial();
           } else {
             deviceReport_ = value;
           }
@@ -8962,25 +9975,25 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000080;
         return this;
       }
       public Builder clearDeviceReport() {
         if (deviceReportBuilder_ == null) {
-          deviceReport_ = com.luyun.easyway95.shared.TSSProtos.DeviceReport.getDefaultInstance();
+          deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
           onChanged();
         } else {
           deviceReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000080);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder getDeviceReportBuilder() {
-        bitField0_ |= 0x00000100;
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder getDeviceReportBuilder() {
+        bitField0_ |= 0x00000080;
         onChanged();
         return getDeviceReportFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder getDeviceReportOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder getDeviceReportOrBuilder() {
         if (deviceReportBuilder_ != null) {
           return deviceReportBuilder_.getMessageOrBuilder();
         } else {
@@ -8988,11 +10001,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.DeviceReport, com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYDeviceReport, com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder> 
           getDeviceReportFieldBuilder() {
         if (deviceReportBuilder_ == null) {
           deviceReportBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.DeviceReport, com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.DeviceReportOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYDeviceReport, com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder>(
                   deviceReport_,
                   getParentForChildren(),
                   isClean());
@@ -9001,291 +10014,21 @@ public final class TSSProtos {
         return deviceReportBuilder_;
       }
       
-      // optional .com.luyun.easyway95.shared.Location location = 33;
-      private com.luyun.easyway95.shared.TSSProtos.Location location_ = com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance();
+      // optional .tss.LYTrafficSub traffic_sub = 36;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Location, com.luyun.easyway95.shared.TSSProtos.Location.Builder, com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder> locationBuilder_;
-      public boolean hasLocation() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Location getLocation() {
-        if (locationBuilder_ == null) {
-          return location_;
-        } else {
-          return locationBuilder_.getMessage();
-        }
-      }
-      public Builder setLocation(com.luyun.easyway95.shared.TSSProtos.Location value) {
-        if (locationBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          location_ = value;
-          onChanged();
-        } else {
-          locationBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000200;
-        return this;
-      }
-      public Builder setLocation(
-          com.luyun.easyway95.shared.TSSProtos.Location.Builder builderForValue) {
-        if (locationBuilder_ == null) {
-          location_ = builderForValue.build();
-          onChanged();
-        } else {
-          locationBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000200;
-        return this;
-      }
-      public Builder mergeLocation(com.luyun.easyway95.shared.TSSProtos.Location value) {
-        if (locationBuilder_ == null) {
-          if (((bitField0_ & 0x00000200) == 0x00000200) &&
-              location_ != com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance()) {
-            location_ =
-              com.luyun.easyway95.shared.TSSProtos.Location.newBuilder(location_).mergeFrom(value).buildPartial();
-          } else {
-            location_ = value;
-          }
-          onChanged();
-        } else {
-          locationBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000200;
-        return this;
-      }
-      public Builder clearLocation() {
-        if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.Location.getDefaultInstance();
-          onChanged();
-        } else {
-          locationBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000200);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Location.Builder getLocationBuilder() {
-        bitField0_ |= 0x00000200;
-        onChanged();
-        return getLocationFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder getLocationOrBuilder() {
-        if (locationBuilder_ != null) {
-          return locationBuilder_.getMessageOrBuilder();
-        } else {
-          return location_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Location, com.luyun.easyway95.shared.TSSProtos.Location.Builder, com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder> 
-          getLocationFieldBuilder() {
-        if (locationBuilder_ == null) {
-          locationBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Location, com.luyun.easyway95.shared.TSSProtos.Location.Builder, com.luyun.easyway95.shared.TSSProtos.LocationOrBuilder>(
-                  location_,
-                  getParentForChildren(),
-                  isClean());
-          location_ = null;
-        }
-        return locationBuilder_;
-      }
-      
-      // optional .com.luyun.easyway95.shared.Segment segment = 34;
-      private com.luyun.easyway95.shared.TSSProtos.Segment segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> segmentBuilder_;
-      public boolean hasSegment() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Segment getSegment() {
-        if (segmentBuilder_ == null) {
-          return segment_;
-        } else {
-          return segmentBuilder_.getMessage();
-        }
-      }
-      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
-        if (segmentBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          segment_ = value;
-          onChanged();
-        } else {
-          segmentBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000400;
-        return this;
-      }
-      public Builder setSegment(
-          com.luyun.easyway95.shared.TSSProtos.Segment.Builder builderForValue) {
-        if (segmentBuilder_ == null) {
-          segment_ = builderForValue.build();
-          onChanged();
-        } else {
-          segmentBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000400;
-        return this;
-      }
-      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.Segment value) {
-        if (segmentBuilder_ == null) {
-          if (((bitField0_ & 0x00000400) == 0x00000400) &&
-              segment_ != com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance()) {
-            segment_ =
-              com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder(segment_).mergeFrom(value).buildPartial();
-          } else {
-            segment_ = value;
-          }
-          onChanged();
-        } else {
-          segmentBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000400;
-        return this;
-      }
-      public Builder clearSegment() {
-        if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.Segment.getDefaultInstance();
-          onChanged();
-        } else {
-          segmentBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000400);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Segment.Builder getSegmentBuilder() {
-        bitField0_ |= 0x00000400;
-        onChanged();
-        return getSegmentFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder getSegmentOrBuilder() {
-        if (segmentBuilder_ != null) {
-          return segmentBuilder_.getMessageOrBuilder();
-        } else {
-          return segment_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder> 
-          getSegmentFieldBuilder() {
-        if (segmentBuilder_ == null) {
-          segmentBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Segment, com.luyun.easyway95.shared.TSSProtos.Segment.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentOrBuilder>(
-                  segment_,
-                  getParentForChildren(),
-                  isClean());
-          segment_ = null;
-        }
-        return segmentBuilder_;
-      }
-      
-      // optional .com.luyun.easyway95.shared.Route route = 35;
-      private com.luyun.easyway95.shared.TSSProtos.Route route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder> routeBuilder_;
-      public boolean hasRoute() {
-        return ((bitField0_ & 0x00000800) == 0x00000800);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Route getRoute() {
-        if (routeBuilder_ == null) {
-          return route_;
-        } else {
-          return routeBuilder_.getMessage();
-        }
-      }
-      public Builder setRoute(com.luyun.easyway95.shared.TSSProtos.Route value) {
-        if (routeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          route_ = value;
-          onChanged();
-        } else {
-          routeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000800;
-        return this;
-      }
-      public Builder setRoute(
-          com.luyun.easyway95.shared.TSSProtos.Route.Builder builderForValue) {
-        if (routeBuilder_ == null) {
-          route_ = builderForValue.build();
-          onChanged();
-        } else {
-          routeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000800;
-        return this;
-      }
-      public Builder mergeRoute(com.luyun.easyway95.shared.TSSProtos.Route value) {
-        if (routeBuilder_ == null) {
-          if (((bitField0_ & 0x00000800) == 0x00000800) &&
-              route_ != com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance()) {
-            route_ =
-              com.luyun.easyway95.shared.TSSProtos.Route.newBuilder(route_).mergeFrom(value).buildPartial();
-          } else {
-            route_ = value;
-          }
-          onChanged();
-        } else {
-          routeBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000800;
-        return this;
-      }
-      public Builder clearRoute() {
-        if (routeBuilder_ == null) {
-          route_ = com.luyun.easyway95.shared.TSSProtos.Route.getDefaultInstance();
-          onChanged();
-        } else {
-          routeBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000800);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.Route.Builder getRouteBuilder() {
-        bitField0_ |= 0x00000800;
-        onChanged();
-        return getRouteFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder getRouteOrBuilder() {
-        if (routeBuilder_ != null) {
-          return routeBuilder_.getMessageOrBuilder();
-        } else {
-          return route_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder> 
-          getRouteFieldBuilder() {
-        if (routeBuilder_ == null) {
-          routeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.Route, com.luyun.easyway95.shared.TSSProtos.Route.Builder, com.luyun.easyway95.shared.TSSProtos.RouteOrBuilder>(
-                  route_,
-                  getParentForChildren(),
-                  isClean());
-          route_ = null;
-        }
-        return routeBuilder_;
-      }
-      
-      // optional .com.luyun.easyway95.shared.TrafficSub traffic_sub = 36;
-      private com.luyun.easyway95.shared.TSSProtos.TrafficSub trafficSub_ = com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.TrafficSub, com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder> trafficSubBuilder_;
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficSub, com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder> trafficSubBuilder_;
       public boolean hasTrafficSub() {
-        return ((bitField0_ & 0x00001000) == 0x00001000);
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSub getTrafficSub() {
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getTrafficSub() {
         if (trafficSubBuilder_ == null) {
           return trafficSub_;
         } else {
           return trafficSubBuilder_.getMessage();
         }
       }
-      public Builder setTrafficSub(com.luyun.easyway95.shared.TSSProtos.TrafficSub value) {
+      public Builder setTrafficSub(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub value) {
         if (trafficSubBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -9295,26 +10038,26 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00000100;
         return this;
       }
       public Builder setTrafficSub(
-          com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder builderForValue) {
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder builderForValue) {
         if (trafficSubBuilder_ == null) {
           trafficSub_ = builderForValue.build();
           onChanged();
         } else {
           trafficSubBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00000100;
         return this;
       }
-      public Builder mergeTrafficSub(com.luyun.easyway95.shared.TSSProtos.TrafficSub value) {
+      public Builder mergeTrafficSub(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub value) {
         if (trafficSubBuilder_ == null) {
-          if (((bitField0_ & 0x00001000) == 0x00001000) &&
-              trafficSub_ != com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance()) {
+          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+              trafficSub_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance()) {
             trafficSub_ =
-              com.luyun.easyway95.shared.TSSProtos.TrafficSub.newBuilder(trafficSub_).mergeFrom(value).buildPartial();
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder(trafficSub_).mergeFrom(value).buildPartial();
           } else {
             trafficSub_ = value;
           }
@@ -9322,25 +10065,25 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00000100;
         return this;
       }
       public Builder clearTrafficSub() {
         if (trafficSubBuilder_ == null) {
-          trafficSub_ = com.luyun.easyway95.shared.TSSProtos.TrafficSub.getDefaultInstance();
+          trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
           onChanged();
         } else {
           trafficSubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00001000);
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder getTrafficSubBuilder() {
-        bitField0_ |= 0x00001000;
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder getTrafficSubBuilder() {
+        bitField0_ |= 0x00000100;
         onChanged();
         return getTrafficSubFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder getTrafficSubOrBuilder() {
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder getTrafficSubOrBuilder() {
         if (trafficSubBuilder_ != null) {
           return trafficSubBuilder_.getMessageOrBuilder();
         } else {
@@ -9348,11 +10091,11 @@ public final class TSSProtos {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.TrafficSub, com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder> 
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficSub, com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder> 
           getTrafficSubFieldBuilder() {
         if (trafficSubBuilder_ == null) {
           trafficSubBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.TrafficSub, com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficSubOrBuilder>(
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub, com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder>(
                   trafficSub_,
                   getParentForChildren(),
                   isClean());
@@ -9361,432 +10104,262 @@ public final class TSSProtos {
         return trafficSubBuilder_;
       }
       
-      // optional .com.luyun.easyway95.shared.SegmentTraffic segment_traffic = 49;
-      private com.luyun.easyway95.shared.TSSProtos.SegmentTraffic segmentTraffic_ = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance();
+      // optional .tss.LYTrafficPub traffic_pub = 51;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> segmentTrafficBuilder_;
-      public boolean hasSegmentTraffic() {
-        return ((bitField0_ & 0x00002000) == 0x00002000);
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficPub, com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder> trafficPubBuilder_;
+      public boolean hasTrafficPub() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic getSegmentTraffic() {
-        if (segmentTrafficBuilder_ == null) {
-          return segmentTraffic_;
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getTrafficPub() {
+        if (trafficPubBuilder_ == null) {
+          return trafficPub_;
         } else {
-          return segmentTrafficBuilder_.getMessage();
+          return trafficPubBuilder_.getMessage();
         }
       }
-      public Builder setSegmentTraffic(com.luyun.easyway95.shared.TSSProtos.SegmentTraffic value) {
-        if (segmentTrafficBuilder_ == null) {
+      public Builder setTrafficPub(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub value) {
+        if (trafficPubBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          segmentTraffic_ = value;
+          trafficPub_ = value;
           onChanged();
         } else {
-          segmentTrafficBuilder_.setMessage(value);
+          trafficPubBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00000200;
         return this;
       }
-      public Builder setSegmentTraffic(
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder builderForValue) {
-        if (segmentTrafficBuilder_ == null) {
-          segmentTraffic_ = builderForValue.build();
+      public Builder setTrafficPub(
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder builderForValue) {
+        if (trafficPubBuilder_ == null) {
+          trafficPub_ = builderForValue.build();
           onChanged();
         } else {
-          segmentTrafficBuilder_.setMessage(builderForValue.build());
+          trafficPubBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00000200;
         return this;
       }
-      public Builder mergeSegmentTraffic(com.luyun.easyway95.shared.TSSProtos.SegmentTraffic value) {
-        if (segmentTrafficBuilder_ == null) {
-          if (((bitField0_ & 0x00002000) == 0x00002000) &&
-              segmentTraffic_ != com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance()) {
-            segmentTraffic_ =
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.newBuilder(segmentTraffic_).mergeFrom(value).buildPartial();
+      public Builder mergeTrafficPub(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub value) {
+        if (trafficPubBuilder_ == null) {
+          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+              trafficPub_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance()) {
+            trafficPub_ =
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.newBuilder(trafficPub_).mergeFrom(value).buildPartial();
           } else {
-            segmentTraffic_ = value;
+            trafficPub_ = value;
           }
           onChanged();
         } else {
-          segmentTrafficBuilder_.mergeFrom(value);
+          trafficPubBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00000200;
         return this;
       }
-      public Builder clearSegmentTraffic() {
-        if (segmentTrafficBuilder_ == null) {
-          segmentTraffic_ = com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.getDefaultInstance();
+      public Builder clearTrafficPub() {
+        if (trafficPubBuilder_ == null) {
+          trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
           onChanged();
         } else {
-          segmentTrafficBuilder_.clear();
+          trafficPubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00000200);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder getSegmentTrafficBuilder() {
-        bitField0_ |= 0x00002000;
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder getTrafficPubBuilder() {
+        bitField0_ |= 0x00000200;
         onChanged();
-        return getSegmentTrafficFieldBuilder().getBuilder();
+        return getTrafficPubFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder getSegmentTrafficOrBuilder() {
-        if (segmentTrafficBuilder_ != null) {
-          return segmentTrafficBuilder_.getMessageOrBuilder();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder getTrafficPubOrBuilder() {
+        if (trafficPubBuilder_ != null) {
+          return trafficPubBuilder_.getMessageOrBuilder();
         } else {
-          return segmentTraffic_;
+          return trafficPub_;
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder> 
-          getSegmentTrafficFieldBuilder() {
-        if (segmentTrafficBuilder_ == null) {
-          segmentTrafficBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic, com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.SegmentTrafficOrBuilder>(
-                  segmentTraffic_,
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficPub, com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder> 
+          getTrafficPubFieldBuilder() {
+        if (trafficPubBuilder_ == null) {
+          trafficPubBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub, com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder>(
+                  trafficPub_,
                   getParentForChildren(),
                   isClean());
-          segmentTraffic_ = null;
+          trafficPub_ = null;
         }
-        return segmentTrafficBuilder_;
+        return trafficPubBuilder_;
       }
       
-      // optional .com.luyun.easyway95.shared.RoadTraffic road_traffic = 50;
-      private com.luyun.easyway95.shared.TSSProtos.RoadTraffic roadTraffic_ = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance();
+      // optional .tss.LYTrafficReport traffic_report = 65;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport trafficReport_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> roadTrafficBuilder_;
-      public boolean hasRoadTraffic() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficReport, com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder> trafficReportBuilder_;
+      public boolean hasTrafficReport() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic getRoadTraffic() {
-        if (roadTrafficBuilder_ == null) {
-          return roadTraffic_;
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getTrafficReport() {
+        if (trafficReportBuilder_ == null) {
+          return trafficReport_;
         } else {
-          return roadTrafficBuilder_.getMessage();
+          return trafficReportBuilder_.getMessage();
         }
       }
-      public Builder setRoadTraffic(com.luyun.easyway95.shared.TSSProtos.RoadTraffic value) {
-        if (roadTrafficBuilder_ == null) {
+      public Builder setTrafficReport(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport value) {
+        if (trafficReportBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          roadTraffic_ = value;
+          trafficReport_ = value;
           onChanged();
         } else {
-          roadTrafficBuilder_.setMessage(value);
+          trafficReportBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00000400;
         return this;
       }
-      public Builder setRoadTraffic(
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder builderForValue) {
-        if (roadTrafficBuilder_ == null) {
-          roadTraffic_ = builderForValue.build();
+      public Builder setTrafficReport(
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder builderForValue) {
+        if (trafficReportBuilder_ == null) {
+          trafficReport_ = builderForValue.build();
           onChanged();
         } else {
-          roadTrafficBuilder_.setMessage(builderForValue.build());
+          trafficReportBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00000400;
         return this;
       }
-      public Builder mergeRoadTraffic(com.luyun.easyway95.shared.TSSProtos.RoadTraffic value) {
-        if (roadTrafficBuilder_ == null) {
-          if (((bitField0_ & 0x00004000) == 0x00004000) &&
-              roadTraffic_ != com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance()) {
-            roadTraffic_ =
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic.newBuilder(roadTraffic_).mergeFrom(value).buildPartial();
+      public Builder mergeTrafficReport(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport value) {
+        if (trafficReportBuilder_ == null) {
+          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+              trafficReport_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance()) {
+            trafficReport_ =
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder(trafficReport_).mergeFrom(value).buildPartial();
           } else {
-            roadTraffic_ = value;
+            trafficReport_ = value;
           }
           onChanged();
         } else {
-          roadTrafficBuilder_.mergeFrom(value);
+          trafficReportBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00000400;
         return this;
       }
-      public Builder clearRoadTraffic() {
-        if (roadTrafficBuilder_ == null) {
-          roadTraffic_ = com.luyun.easyway95.shared.TSSProtos.RoadTraffic.getDefaultInstance();
+      public Builder clearTrafficReport() {
+        if (trafficReportBuilder_ == null) {
+          trafficReport_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
           onChanged();
         } else {
-          roadTrafficBuilder_.clear();
+          trafficReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder getRoadTrafficBuilder() {
-        bitField0_ |= 0x00004000;
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder getTrafficReportBuilder() {
+        bitField0_ |= 0x00000400;
         onChanged();
-        return getRoadTrafficFieldBuilder().getBuilder();
+        return getTrafficReportFieldBuilder().getBuilder();
       }
-      public com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder getRoadTrafficOrBuilder() {
-        if (roadTrafficBuilder_ != null) {
-          return roadTrafficBuilder_.getMessageOrBuilder();
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder getTrafficReportOrBuilder() {
+        if (trafficReportBuilder_ != null) {
+          return trafficReportBuilder_.getMessageOrBuilder();
         } else {
-          return roadTraffic_;
+          return trafficReport_;
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder> 
-          getRoadTrafficFieldBuilder() {
-        if (roadTrafficBuilder_ == null) {
-          roadTrafficBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic, com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.RoadTrafficOrBuilder>(
-                  roadTraffic_,
+          com.luyun.easyway95.shared.TSSProtos.LYTrafficReport, com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder> 
+          getTrafficReportFieldBuilder() {
+        if (trafficReportBuilder_ == null) {
+          trafficReportBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport, com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder>(
+                  trafficReport_,
                   getParentForChildren(),
                   isClean());
-          roadTraffic_ = null;
+          trafficReport_ = null;
         }
-        return roadTrafficBuilder_;
+        return trafficReportBuilder_;
       }
       
-      // optional .com.luyun.easyway95.shared.CityTraffic city_traffic = 51;
-      private com.luyun.easyway95.shared.TSSProtos.CityTraffic cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.CityTraffic, com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder> cityTrafficBuilder_;
-      public boolean hasCityTraffic() {
-        return ((bitField0_ & 0x00008000) == 0x00008000);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.CityTraffic getCityTraffic() {
-        if (cityTrafficBuilder_ == null) {
-          return cityTraffic_;
-        } else {
-          return cityTrafficBuilder_.getMessage();
-        }
-      }
-      public Builder setCityTraffic(com.luyun.easyway95.shared.TSSProtos.CityTraffic value) {
-        if (cityTrafficBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          cityTraffic_ = value;
-          onChanged();
-        } else {
-          cityTrafficBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00008000;
-        return this;
-      }
-      public Builder setCityTraffic(
-          com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder builderForValue) {
-        if (cityTrafficBuilder_ == null) {
-          cityTraffic_ = builderForValue.build();
-          onChanged();
-        } else {
-          cityTrafficBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00008000;
-        return this;
-      }
-      public Builder mergeCityTraffic(com.luyun.easyway95.shared.TSSProtos.CityTraffic value) {
-        if (cityTrafficBuilder_ == null) {
-          if (((bitField0_ & 0x00008000) == 0x00008000) &&
-              cityTraffic_ != com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance()) {
-            cityTraffic_ =
-              com.luyun.easyway95.shared.TSSProtos.CityTraffic.newBuilder(cityTraffic_).mergeFrom(value).buildPartial();
-          } else {
-            cityTraffic_ = value;
-          }
-          onChanged();
-        } else {
-          cityTrafficBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00008000;
-        return this;
-      }
-      public Builder clearCityTraffic() {
-        if (cityTrafficBuilder_ == null) {
-          cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.CityTraffic.getDefaultInstance();
-          onChanged();
-        } else {
-          cityTrafficBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00008000);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder getCityTrafficBuilder() {
-        bitField0_ |= 0x00008000;
-        onChanged();
-        return getCityTrafficFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder getCityTrafficOrBuilder() {
-        if (cityTrafficBuilder_ != null) {
-          return cityTrafficBuilder_.getMessageOrBuilder();
-        } else {
-          return cityTraffic_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.CityTraffic, com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder> 
-          getCityTrafficFieldBuilder() {
-        if (cityTrafficBuilder_ == null) {
-          cityTrafficBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.CityTraffic, com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder, com.luyun.easyway95.shared.TSSProtos.CityTrafficOrBuilder>(
-                  cityTraffic_,
-                  getParentForChildren(),
-                  isClean());
-          cityTraffic_ = null;
-        }
-        return cityTrafficBuilder_;
-      }
-      
-      // optional .com.luyun.easyway95.shared.TrafficProbe traffic_probe = 65;
-      private com.luyun.easyway95.shared.TSSProtos.TrafficProbe trafficProbe_ = com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.TrafficProbe, com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder> trafficProbeBuilder_;
-      public boolean hasTrafficProbe() {
-        return ((bitField0_ & 0x00010000) == 0x00010000);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbe getTrafficProbe() {
-        if (trafficProbeBuilder_ == null) {
-          return trafficProbe_;
-        } else {
-          return trafficProbeBuilder_.getMessage();
-        }
-      }
-      public Builder setTrafficProbe(com.luyun.easyway95.shared.TSSProtos.TrafficProbe value) {
-        if (trafficProbeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          trafficProbe_ = value;
-          onChanged();
-        } else {
-          trafficProbeBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00010000;
-        return this;
-      }
-      public Builder setTrafficProbe(
-          com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder builderForValue) {
-        if (trafficProbeBuilder_ == null) {
-          trafficProbe_ = builderForValue.build();
-          onChanged();
-        } else {
-          trafficProbeBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00010000;
-        return this;
-      }
-      public Builder mergeTrafficProbe(com.luyun.easyway95.shared.TSSProtos.TrafficProbe value) {
-        if (trafficProbeBuilder_ == null) {
-          if (((bitField0_ & 0x00010000) == 0x00010000) &&
-              trafficProbe_ != com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance()) {
-            trafficProbe_ =
-              com.luyun.easyway95.shared.TSSProtos.TrafficProbe.newBuilder(trafficProbe_).mergeFrom(value).buildPartial();
-          } else {
-            trafficProbe_ = value;
-          }
-          onChanged();
-        } else {
-          trafficProbeBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00010000;
-        return this;
-      }
-      public Builder clearTrafficProbe() {
-        if (trafficProbeBuilder_ == null) {
-          trafficProbe_ = com.luyun.easyway95.shared.TSSProtos.TrafficProbe.getDefaultInstance();
-          onChanged();
-        } else {
-          trafficProbeBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00010000);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder getTrafficProbeBuilder() {
-        bitField0_ |= 0x00010000;
-        onChanged();
-        return getTrafficProbeFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder getTrafficProbeOrBuilder() {
-        if (trafficProbeBuilder_ != null) {
-          return trafficProbeBuilder_.getMessageOrBuilder();
-        } else {
-          return trafficProbe_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.TrafficProbe, com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder> 
-          getTrafficProbeFieldBuilder() {
-        if (trafficProbeBuilder_ == null) {
-          trafficProbeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.TrafficProbe, com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder, com.luyun.easyway95.shared.TSSProtos.TrafficProbeOrBuilder>(
-                  trafficProbe_,
-                  getParentForChildren(),
-                  isClean());
-          trafficProbe_ = null;
-        }
-        return trafficProbeBuilder_;
-      }
-      
-      // @@protoc_insertion_point(builder_scope:com.luyun.easyway95.shared.Package)
+      // @@protoc_insertion_point(builder_scope:tss.LYMsgOnAir)
     }
     
     static {
-      defaultInstance = new Package(true);
+      defaultInstance = new LYMsgOnAir(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:com.luyun.easyway95.shared.Package)
+    // @@protoc_insertion_point(class_scope:tss.LYMsgOnAir)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_Coordinate_descriptor;
+    internal_static_tss_LYCoordinate_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_Coordinate_fieldAccessorTable;
+      internal_static_tss_LYCoordinate_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_Location_descriptor;
+    internal_static_tss_LYLocation_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_Location_fieldAccessorTable;
+      internal_static_tss_LYLocation_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_Segment_descriptor;
+    internal_static_tss_LYSegment_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_Segment_fieldAccessorTable;
+      internal_static_tss_LYSegment_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_Route_descriptor;
+    internal_static_tss_LYRoute_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_Route_fieldAccessorTable;
+      internal_static_tss_LYRoute_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_TrafficProbe_descriptor;
+    internal_static_tss_LYTrafficReport_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_TrafficProbe_fieldAccessorTable;
+      internal_static_tss_LYTrafficReport_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_SegmentTraffic_descriptor;
+    internal_static_tss_LYSegmentTraffic_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_SegmentTraffic_fieldAccessorTable;
+      internal_static_tss_LYSegmentTraffic_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_RoadTraffic_descriptor;
+    internal_static_tss_LYRoadTraffic_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_RoadTraffic_fieldAccessorTable;
+      internal_static_tss_LYRoadTraffic_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_CityTraffic_descriptor;
+    internal_static_tss_LYCityTraffic_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_CityTraffic_fieldAccessorTable;
+      internal_static_tss_LYCityTraffic_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_TrafficSub_descriptor;
+    internal_static_tss_LYCrontab_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_TrafficSub_fieldAccessorTable;
+      internal_static_tss_LYCrontab_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_DeviceReport_descriptor;
+    internal_static_tss_LYTrafficSub_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_DeviceReport_fieldAccessorTable;
+      internal_static_tss_LYTrafficSub_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_luyun_easyway95_shared_Package_descriptor;
+    internal_static_tss_LYTrafficPub_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_luyun_easyway95_shared_Package_fieldAccessorTable;
+      internal_static_tss_LYTrafficPub_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYDeviceReport_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYDeviceReport_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYMsgOnAir_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYMsgOnAir_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -9796,170 +10369,180 @@ public final class TSSProtos {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017proto/tss.proto\022\032com.luyun.easyway95.s" +
-      "hared\"&\n\nCoordinate\022\013\n\003lng\030\001 \002(\001\022\013\n\003lat\030" +
-      "\002 \002(\001\"?\n\010Location\022\013\n\003lng\030\001 \002(\001\022\013\n\003lat\030\002 " +
-      "\002(\001\022\014\n\004name\030\003 \001(\t\022\013\n\003adt\030\013 \001(\t\"\203\001\n\007Segme" +
-      "nt\0225\n\005start\030\001 \002(\0132&.com.luyun.easyway95." +
-      "shared.Coordinate\0223\n\003end\030\002 \002(\0132&.com.luy" +
-      "un.easyway95.shared.Coordinate\022\014\n\004road\030\003" +
-      " \001(\t\"P\n\005Route\022\020\n\010identity\030\001 \002(\003\0225\n\010segme" +
-      "nts\030\002 \003(\0132#.com.luyun.easyway95.shared.S" +
-      "egment\"\360\001\n\014TrafficProbe\0224\n\007segment\030\001 \001(\013",
-      "2#.com.luyun.easyway95.shared.Segment\0228\n" +
-      "\010location\030\002 \001(\0132&.com.luyun.easyway95.sh" +
-      "ared.Coordinate\022\021\n\ttimestamp\030\003 \001(\003\0228\n\tdi" +
-      "rection\030\004 \002(\0162%.com.luyun.easyway95.shar" +
-      "ed.Direction\022\r\n\005speed\030\005 \002(\005\022\024\n\014accelerat" +
-      "ion\030\006 \001(\005\"\263\001\n\016SegmentTraffic\0224\n\007segment\030" +
-      "\001 \002(\0132#.com.luyun.easyway95.shared.Segme" +
-      "nt\022\021\n\ttimestamp\030\003 \001(\003\0228\n\tdirection\030\004 \002(\016" +
-      "2%.com.luyun.easyway95.shared.Direction\022" +
-      "\r\n\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"\220\001\n\013Road",
-      "Traffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003" +
-      "\022D\n\020segment_traffics\030\003 \003(\0132*.com.luyun.e" +
-      "asyway95.shared.SegmentTraffic\022\014\n\004href\030\014" +
-      " \001(\t\022\014\n\004desc\030\013 \001(\t\"n\n\013CityTraffic\022\014\n\004cit" +
-      "y\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\003\022>\n\rroad_traff" +
-      "ics\030\003 \003(\0132\'.com.luyun.easyway95.shared.R" +
-      "oadTraffic\"\317\001\n\nTrafficSub\022\014\n\004city\030\001 \002(\t\022" +
-      "0\n\005route\030\002 \002(\0132!.com.luyun.easyway95.sha" +
-      "red.Route\0225\n\010opr_type\030\003 \002(\0162#.com.luyun." +
-      "easyway95.shared.OprType\0225\n\010pub_type\030\004 \002",
-      "(\0162#.com.luyun.easyway95.shared.PubType\022" +
-      "\023\n\007expires\030\005 \001(\005:\00230\"}\n\014DeviceReport\022\021\n\t" +
-      "device_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014\022\023\n" +
-      "\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 \002(\t" +
-      "\022\031\n\021device_os_version\030\005 \002(\t\"\263\006\n\007Package\022" +
-      "\017\n\007version\030\001 \002(\005\0223\n\007msg_dir\030\003 \002(\0162\".com." +
-      "luyun.easyway95.shared.MsgDir\0225\n\010msg_typ" +
-      "e\030\004 \002(\0162#.com.luyun.easyway95.shared.Msg" +
-      "Type\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003\022" +
-      "\023\n\007expires\030\007 \001(\005:\00230\022\022\n\nuser_token\030\010 \001(\014",
-      "\0225\n\010err_code\030\021 \001(\0162#.com.luyun.easyway95" +
-      ".shared.ErrCode\022?\n\rdevice_report\030\023 \001(\0132(" +
-      ".com.luyun.easyway95.shared.DeviceReport" +
-      "\0226\n\010location\030! \001(\0132$.com.luyun.easyway95" +
-      ".shared.Location\0224\n\007segment\030\" \001(\0132#.com." +
-      "luyun.easyway95.shared.Segment\0220\n\005route\030" +
-      "# \001(\0132!.com.luyun.easyway95.shared.Route" +
-      "\022;\n\013traffic_sub\030$ \001(\0132&.com.luyun.easywa" +
-      "y95.shared.TrafficSub\022C\n\017segment_traffic" +
-      "\0301 \001(\0132*.com.luyun.easyway95.shared.Segm",
-      "entTraffic\022=\n\014road_traffic\0302 \001(\0132\'.com.l" +
-      "uyun.easyway95.shared.RoadTraffic\022=\n\014cit" +
-      "y_traffic\0303 \001(\0132\'.com.luyun.easyway95.sh" +
-      "ared.CityTraffic\022?\n\rtraffic_probe\030A \001(\0132" +
-      "(.com.luyun.easyway95.shared.TrafficProb" +
-      "e*\006\010\200\001\020\200\002*~\n\tDirection\022\013\n\007UNKNOWN\020\000\022\010\n\004E" +
-      "AST\020\001\022\r\n\tNORTHEAST\020\002\022\t\n\005NORTH\020\003\022\r\n\tNORTH" +
-      "WEST\020\004\022\010\n\004WEST\020\005\022\r\n\tSOUTHWEST\020\006\022\t\n\005SOUTH" +
-      "\020\007\022\r\n\tSOUTHEAST\020\010*9\n\007OprType\022\016\n\nSUB_CREA" +
-      "TE\020\001\022\016\n\nSUB_DELETE\020\002\022\016\n\nSUB_UPDATE\020\003*5\n\007",
-      "PubType\022\014\n\010PUB_ONCE\020\001\022\r\n\tPUB_EVENT\020\002\022\r\n\t" +
-      "PUB_TIMER\020\003*z\n\007ErrCode\022\031\n\024VERSION_IMCOMP" +
-      "ATIBLE\020\221\002\022\020\n\013VERSION_LOW\020\221\006\022\022\n\rMSG_DIR_E" +
-      "RROR\020\240\004\022\023\n\016MSG_TYPE_ERROR\020\260\004\022\014\n\007TIMEOUT\020" +
-      "\320\006\022\013\n\006OTHERS\020\200\022*(\n\006MsgDir\022\016\n\nCLIENT2TSS\020" +
-      "\001\022\016\n\nTSS2CLIENT\020\002*o\n\007MsgType\022\010\n\004VOID\020\001\022\014" +
-      "\n\010ERR_CODE\020\002\022\017\n\013TRAFFIC_SUB\020\004\022\022\n\016TRAFFIC" +
-      "_REPORT\020\005\022\021\n\rDEVICE_REPORT\020\006\022\024\n\020CITY_TRA" +
-      "FFIC_PUB\020\023B\'\n\032com.luyun.easyway95.shared" +
-      "B\tTSSProtos"
+      "\n\017proto/tss.proto\022\003tss\"(\n\014LYCoordinate\022\013" +
+      "\n\003lng\030\001 \002(\001\022\013\n\003lat\030\002 \002(\001\"A\n\nLYLocation\022\013" +
+      "\n\003lng\030\001 \002(\001\022\013\n\003lat\030\002 \002(\001\022\014\n\004name\030\003 \001(\t\022\013" +
+      "\n\003adt\030\013 \001(\t\"[\n\tLYSegment\022 \n\005start\030\001 \002(\0132" +
+      "\021.tss.LYCoordinate\022\036\n\003end\030\002 \002(\0132\021.tss.LY" +
+      "Coordinate\022\014\n\004road\030\003 \001(\t\"=\n\007LYRoute\022\020\n\010i" +
+      "dentity\030\001 \002(\005\022 \n\010segments\030\002 \003(\0132\016.tss.LY" +
+      "Segment\"\264\001\n\017LYTrafficReport\022\037\n\007segment\030\001" +
+      " \001(\0132\016.tss.LYSegment\022#\n\010location\030\002 \001(\0132\021" +
+      ".tss.LYCoordinate\022\021\n\ttimestamp\030\003 \001(\003\022#\n\t",
+      "direction\030\004 \002(\0162\020.tss.LYDirection\022\r\n\005spe" +
+      "ed\030\005 \002(\005\022\024\n\014acceleration\030\006 \001(\005\"\213\001\n\020LYSeg" +
+      "mentTraffic\022\037\n\007segment\030\001 \002(\0132\016.tss.LYSeg" +
+      "ment\022\021\n\ttimestamp\030\003 \001(\003\022#\n\tdirection\030\004 \002" +
+      "(\0162\020.tss.LYDirection\022\r\n\005speed\030\005 \002(\005\022\017\n\007d" +
+      "etails\030\013 \001(\t\"}\n\rLYRoadTraffic\022\014\n\004road\030\001 " +
+      "\002(\t\022\021\n\ttimestamp\030\002 \001(\003\022/\n\020segment_traffi" +
+      "cs\030\003 \003(\0132\025.tss.LYSegmentTraffic\022\014\n\004href\030" +
+      "\014 \001(\t\022\014\n\004desc\030\013 \001(\t\"[\n\rLYCityTraffic\022\014\n\004" +
+      "city\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\003\022)\n\rroad_tr",
+      "affics\030\003 \003(\0132\022.tss.LYRoadTraffic\"\344\001\n\tLYC" +
+      "rontab\022,\n\tcron_type\030\001 \002(\0162\031.tss.LYCronta" +
+      "b.LYCronType\022\016\n\006minute\030\002 \001(\003\022\014\n\004hour\030\003 \001" +
+      "(\003\022\013\n\003dom\030\004 \001(\005\022\r\n\005month\030\005 \001(\005\022\013\n\003dow\030\006 " +
+      "\001(\005\"b\n\nLYCronType\022\021\n\rLY_REP_MINUTE\020\001\022\017\n\013" +
+      "LY_REP_HOUR\020\002\022\016\n\nLY_REP_DOM\020\004\022\020\n\014LY_REP_" +
+      "MONTH\020\010\022\016\n\nLY_REP_DOW\020\020\"\326\002\n\014LYTrafficSub" +
+      "\022\014\n\004city\030\001 \002(\t\022\033\n\005route\030\002 \002(\0132\014.tss.LYRo" +
+      "ute\022-\n\010opr_type\030\003 \002(\0162\033.tss.LYTrafficSub" +
+      ".LYOprType\022-\n\010pub_type\030\004 \002(\0162\033.tss.LYTra",
+      "fficSub.LYPubType\022\023\n\007expires\030\005 \001(\005:\00230\022 " +
+      "\n\010cron_tab\030\006 \001(\0132\016.tss.LYCrontab\"D\n\tLYOp" +
+      "rType\022\021\n\rLY_SUB_CREATE\020\001\022\021\n\rLY_SUB_DELET" +
+      "E\020\002\022\021\n\rLY_SUB_UPDATE\020\003\"@\n\tLYPubType\022\020\n\014L" +
+      "Y_PUB_ADHOC\020\001\022\020\n\014LY_PUB_EVENT\020\002\022\017\n\013LY_PU" +
+      "B_CRON\020\003\"J\n\014LYTrafficPub\022\020\n\010route_id\030\001 \002" +
+      "(\005\022(\n\014city_traffic\030\002 \002(\0132\022.tss.LYCityTra" +
+      "ffic\"\177\n\016LYDeviceReport\022\021\n\tdevice_id\030\001 \002(" +
+      "\t\022\024\n\014device_token\030\002 \002(\014\022\023\n\013device_name\030\003" +
+      " \002(\t\022\024\n\014device_model\030\004 \002(\t\022\031\n\021device_os_",
+      "version\030\005 \002(\t\"\370\002\n\nLYMsgOnAir\022\017\n\007version\030" +
+      "\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003" +
+      "\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to" +
+      "_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_type\030\004" +
+      " \002(\0162\016.tss.LYMsgType\022 \n\010ret_code\030\021 \001(\0162\016" +
+      ".tss.LYRetCode\022*\n\rdevice_report\030\023 \001(\0132\023." +
+      "tss.LYDeviceReport\022&\n\013traffic_sub\030$ \001(\0132" +
+      "\021.tss.LYTrafficSub\022&\n\013traffic_pub\0303 \001(\0132" +
+      "\021.tss.LYTrafficPub\022,\n\016traffic_report\030A \001" +
+      "(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*\233\001\n\013LYD",
+      "irection\022\016\n\nLY_UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n" +
+      "\014LY_NORTHEAST\020\002\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORT" +
+      "HWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014" +
+      "\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHEAST\020\010*\241\001\n\tLYRet" +
+      "Code\022\016\n\nLY_SUCCESS\020\000\022\034\n\027LY_VERSION_IMCOM" +
+      "PATIBLE\020\221\002\022\023\n\016LY_VERSION_LOW\020\243\002\022\023\n\016LY_PA" +
+      "RTY_ERROR\020\251\004\022\026\n\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n\n" +
+      "LY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER_ERROR\020\231\023*$\n\007LY" +
+      "Party\022\r\n\tLY_CLIENT\020\001\022\n\n\006LY_TSS\020\002*~\n\tLYMs" +
+      "gType\022\013\n\007LY_VOID\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016L",
+      "Y_TRAFFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024" +
+      "\n\020LY_DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023" +
+      "B\'\n\032com.luyun.easyway95.sharedB\tTSSProto" +
+      "s"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_com_luyun_easyway95_shared_Coordinate_descriptor =
+          internal_static_tss_LYCoordinate_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_com_luyun_easyway95_shared_Coordinate_fieldAccessorTable = new
+          internal_static_tss_LYCoordinate_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_Coordinate_descriptor,
+              internal_static_tss_LYCoordinate_descriptor,
               new java.lang.String[] { "Lng", "Lat", },
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.class,
-              com.luyun.easyway95.shared.TSSProtos.Coordinate.Builder.class);
-          internal_static_com_luyun_easyway95_shared_Location_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.class,
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder.class);
+          internal_static_tss_LYLocation_descriptor =
             getDescriptor().getMessageTypes().get(1);
-          internal_static_com_luyun_easyway95_shared_Location_fieldAccessorTable = new
+          internal_static_tss_LYLocation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_Location_descriptor,
+              internal_static_tss_LYLocation_descriptor,
               new java.lang.String[] { "Lng", "Lat", "Name", "Adt", },
-              com.luyun.easyway95.shared.TSSProtos.Location.class,
-              com.luyun.easyway95.shared.TSSProtos.Location.Builder.class);
-          internal_static_com_luyun_easyway95_shared_Segment_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYLocation.class,
+              com.luyun.easyway95.shared.TSSProtos.LYLocation.Builder.class);
+          internal_static_tss_LYSegment_descriptor =
             getDescriptor().getMessageTypes().get(2);
-          internal_static_com_luyun_easyway95_shared_Segment_fieldAccessorTable = new
+          internal_static_tss_LYSegment_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_Segment_descriptor,
+              internal_static_tss_LYSegment_descriptor,
               new java.lang.String[] { "Start", "End", "Road", },
-              com.luyun.easyway95.shared.TSSProtos.Segment.class,
-              com.luyun.easyway95.shared.TSSProtos.Segment.Builder.class);
-          internal_static_com_luyun_easyway95_shared_Route_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.class,
+              com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder.class);
+          internal_static_tss_LYRoute_descriptor =
             getDescriptor().getMessageTypes().get(3);
-          internal_static_com_luyun_easyway95_shared_Route_fieldAccessorTable = new
+          internal_static_tss_LYRoute_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_Route_descriptor,
+              internal_static_tss_LYRoute_descriptor,
               new java.lang.String[] { "Identity", "Segments", },
-              com.luyun.easyway95.shared.TSSProtos.Route.class,
-              com.luyun.easyway95.shared.TSSProtos.Route.Builder.class);
-          internal_static_com_luyun_easyway95_shared_TrafficProbe_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYRoute.class,
+              com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder.class);
+          internal_static_tss_LYTrafficReport_descriptor =
             getDescriptor().getMessageTypes().get(4);
-          internal_static_com_luyun_easyway95_shared_TrafficProbe_fieldAccessorTable = new
+          internal_static_tss_LYTrafficReport_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_TrafficProbe_descriptor,
+              internal_static_tss_LYTrafficReport_descriptor,
               new java.lang.String[] { "Segment", "Location", "Timestamp", "Direction", "Speed", "Acceleration", },
-              com.luyun.easyway95.shared.TSSProtos.TrafficProbe.class,
-              com.luyun.easyway95.shared.TSSProtos.TrafficProbe.Builder.class);
-          internal_static_com_luyun_easyway95_shared_SegmentTraffic_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.class,
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder.class);
+          internal_static_tss_LYSegmentTraffic_descriptor =
             getDescriptor().getMessageTypes().get(5);
-          internal_static_com_luyun_easyway95_shared_SegmentTraffic_fieldAccessorTable = new
+          internal_static_tss_LYSegmentTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_SegmentTraffic_descriptor,
+              internal_static_tss_LYSegmentTraffic_descriptor,
               new java.lang.String[] { "Segment", "Timestamp", "Direction", "Speed", "Details", },
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.class,
-              com.luyun.easyway95.shared.TSSProtos.SegmentTraffic.Builder.class);
-          internal_static_com_luyun_easyway95_shared_RoadTraffic_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.class,
+              com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder.class);
+          internal_static_tss_LYRoadTraffic_descriptor =
             getDescriptor().getMessageTypes().get(6);
-          internal_static_com_luyun_easyway95_shared_RoadTraffic_fieldAccessorTable = new
+          internal_static_tss_LYRoadTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_RoadTraffic_descriptor,
+              internal_static_tss_LYRoadTraffic_descriptor,
               new java.lang.String[] { "Road", "Timestamp", "SegmentTraffics", "Href", "Desc", },
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic.class,
-              com.luyun.easyway95.shared.TSSProtos.RoadTraffic.Builder.class);
-          internal_static_com_luyun_easyway95_shared_CityTraffic_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.class,
+              com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder.class);
+          internal_static_tss_LYCityTraffic_descriptor =
             getDescriptor().getMessageTypes().get(7);
-          internal_static_com_luyun_easyway95_shared_CityTraffic_fieldAccessorTable = new
+          internal_static_tss_LYCityTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_CityTraffic_descriptor,
+              internal_static_tss_LYCityTraffic_descriptor,
               new java.lang.String[] { "City", "Timestamp", "RoadTraffics", },
-              com.luyun.easyway95.shared.TSSProtos.CityTraffic.class,
-              com.luyun.easyway95.shared.TSSProtos.CityTraffic.Builder.class);
-          internal_static_com_luyun_easyway95_shared_TrafficSub_descriptor =
+              com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.class,
+              com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder.class);
+          internal_static_tss_LYCrontab_descriptor =
             getDescriptor().getMessageTypes().get(8);
-          internal_static_com_luyun_easyway95_shared_TrafficSub_fieldAccessorTable = new
+          internal_static_tss_LYCrontab_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_TrafficSub_descriptor,
-              new java.lang.String[] { "City", "Route", "OprType", "PubType", "Expires", },
-              com.luyun.easyway95.shared.TSSProtos.TrafficSub.class,
-              com.luyun.easyway95.shared.TSSProtos.TrafficSub.Builder.class);
-          internal_static_com_luyun_easyway95_shared_DeviceReport_descriptor =
+              internal_static_tss_LYCrontab_descriptor,
+              new java.lang.String[] { "CronType", "Minute", "Hour", "Dom", "Month", "Dow", },
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab.class,
+              com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder.class);
+          internal_static_tss_LYTrafficSub_descriptor =
             getDescriptor().getMessageTypes().get(9);
-          internal_static_com_luyun_easyway95_shared_DeviceReport_fieldAccessorTable = new
+          internal_static_tss_LYTrafficSub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_DeviceReport_descriptor,
-              new java.lang.String[] { "DeviceId", "DeviceToken", "DeviceName", "DeviceModel", "DeviceOsVersion", },
-              com.luyun.easyway95.shared.TSSProtos.DeviceReport.class,
-              com.luyun.easyway95.shared.TSSProtos.DeviceReport.Builder.class);
-          internal_static_com_luyun_easyway95_shared_Package_descriptor =
+              internal_static_tss_LYTrafficSub_descriptor,
+              new java.lang.String[] { "City", "Route", "OprType", "PubType", "Expires", "CronTab", },
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.class,
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder.class);
+          internal_static_tss_LYTrafficPub_descriptor =
             getDescriptor().getMessageTypes().get(10);
-          internal_static_com_luyun_easyway95_shared_Package_fieldAccessorTable = new
+          internal_static_tss_LYTrafficPub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_luyun_easyway95_shared_Package_descriptor,
-              new java.lang.String[] { "Version", "MsgDir", "MsgType", "MsgId", "Timestamp", "Expires", "UserToken", "ErrCode", "DeviceReport", "Location", "Segment", "Route", "TrafficSub", "SegmentTraffic", "RoadTraffic", "CityTraffic", "TrafficProbe", },
-              com.luyun.easyway95.shared.TSSProtos.Package.class,
-              com.luyun.easyway95.shared.TSSProtos.Package.Builder.class);
+              internal_static_tss_LYTrafficPub_descriptor,
+              new java.lang.String[] { "RouteId", "CityTraffic", },
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.class,
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder.class);
+          internal_static_tss_LYDeviceReport_descriptor =
+            getDescriptor().getMessageTypes().get(11);
+          internal_static_tss_LYDeviceReport_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYDeviceReport_descriptor,
+              new java.lang.String[] { "DeviceId", "DeviceToken", "DeviceName", "DeviceModel", "DeviceOsVersion", },
+              com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.class,
+              com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder.class);
+          internal_static_tss_LYMsgOnAir_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_tss_LYMsgOnAir_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYMsgOnAir_descriptor,
+              new java.lang.String[] { "Version", "MsgId", "Timestamp", "FromParty", "ToParty", "MsgType", "RetCode", "DeviceReport", "TrafficSub", "TrafficPub", "TrafficReport", },
+              com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.class,
+              com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.Builder.class);
           return null;
         }
       };

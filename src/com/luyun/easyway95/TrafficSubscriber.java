@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MKStep;
+import com.luyun.easyway95.shared.TSSProtos.LYCoordinate;
+import com.luyun.easyway95.shared.TSSProtos.LYRoute;
+import com.luyun.easyway95.shared.TSSProtos.LYSegment;
+import com.luyun.easyway95.shared.TSSProtos.LYTrafficSub;
 
 public class TrafficSubscriber {
 	MainActivity mainActivity;
@@ -16,11 +20,11 @@ public class TrafficSubscriber {
 		mainActivity = activity;
 	}
 	
-	static com.luyun.easyway95.shared.TSSProtos.Route RoadAnalyzer (MKRoute route) {
+	static LYRoute RoadAnalyzer (MKRoute route) {
 		int mNumStep = route.getNumSteps();
 		Log.d(TAG, "mNumStep..." + mNumStep);
-		com.luyun.easyway95.shared.TSSProtos.Route.Builder mRouteBuilder = com.luyun.easyway95.shared.TSSProtos.Route.newBuilder();
-		com.luyun.easyway95.shared.TSSProtos.Coordinate start = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder()
+		com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder mRouteBuilder = com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder();
+		com.luyun.easyway95.shared.TSSProtos.LYCoordinate start = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
 				.setLat(0)
 				.setLng(0)
 				.build();
@@ -42,12 +46,12 @@ public class TrafficSubscriber {
 				nextRoad = match.group(1);
 				//isNextRoad = true;
 				Log.d(TAG, "road..." + nextRoad);
-				com.luyun.easyway95.shared.TSSProtos.Coordinate nextStart = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder()
+				LYCoordinate nextStart = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
 						.setLat(step.getPoint().getLatitudeE6()/1E6)
 						.setLng(step.getPoint().getLongitudeE6()/1E6)
 						.build();
 				if (road.length() != 0) {
-					com.luyun.easyway95.shared.TSSProtos.Segment segment = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder()
+					LYSegment segment = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder()
 							.setRoad(road)
 							.setStart(start)
 							.setEnd(nextStart)
@@ -67,15 +71,16 @@ public class TrafficSubscriber {
 	}
 	
 	void SubTraffic (MKRoute route) {
-	    com.luyun.easyway95.shared.TSSProtos.Route mRoute = RoadAnalyzer (route);
+	    LYRoute mRoute = RoadAnalyzer (route);
 	    Log.d(TAG, mRoute.toString());
-		com.luyun.easyway95.shared.TSSProtos.TrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.TrafficSub.newBuilder()
+	    /*
+		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("…Ó€⁄")
-				.setOprType(com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE)
-				.setPubType(com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE)
+				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYOprType.SUB_CREATE)
+				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.PUB_ONCE)
 				.setRoute(mRoute)
 				.build();
-    	com.luyun.easyway95.shared.TSSProtos.Package pkg = com.luyun.easyway95.shared.TSSProtos.Package.newBuilder()
+    	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
 				.setVersion(1)
 				.setMsgDir(com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS)
 				.setMsgType(com.luyun.easyway95.shared.TSSProtos.MsgType.TRAFFIC_SUB)
@@ -86,5 +91,6 @@ public class TrafficSubscriber {
     	Log.i(TAG, pkg.toString());
     	byte[] data = pkg.toByteArray();
     	mainActivity.sendMsgToSvr(data);
+    	*/
 	}
 }

@@ -3,6 +3,7 @@ package com.luyun.easyway95;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
+import com.baidu.mapapi.MKPoiResult;
 
 import android.app.Activity;
 import android.app.Application;
@@ -10,9 +11,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Easyway95App extends Application {
-	private Activity mainActivity;
+	private MainActivity mainActivity;
+	private SettingActivity settingActivity;
 	
 	static Easyway95App mApp;
+	public MKPoiResult mMKPoiResult;
 	
 	//百度MapAPI的管理类
 	BMapManager mBMapMan = null;
@@ -72,10 +75,16 @@ public class Easyway95App extends Application {
 	}
 
 	
-	public void setMainActivity(Activity act) {
+	public void setMainActivity(MainActivity act) {
 		mainActivity = act;
 	}
-	public Activity getMainActivity() {
+	public MainActivity getMainActivity() {
 		return mainActivity;
+	}
+	public void setSettingActivity(SettingActivity act) {
+		settingActivity = act;
+	}
+	public SettingActivity getSettingActivity() {
+		return settingActivity;
 	}
 }

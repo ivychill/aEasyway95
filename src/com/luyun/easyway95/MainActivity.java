@@ -9,6 +9,7 @@ import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos;
+import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class MainActivity extends MapActivity {
 	private ZMQService mzService;
 	private TTSService mtService;
     private boolean mIsBound;
-    private MapHelper mMapHelper;
+    public MapHelper mMapHelper;
     MapView mMapView;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
@@ -143,55 +144,6 @@ public class MainActivity extends MapActivity {
         //		ZMQService.class));
         doBindService();
         
-        Button btn = (Button)findViewById(R.id.button1);
-        btn.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		com.luyun.easyway95.shared.TSSProtos.Coordinate cor1 = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder()
-        															.setLat(31.325152)
-        															.setLng(120.558957)
-        															.build();
-        		com.luyun.easyway95.shared.TSSProtos.Coordinate cor2 = com.luyun.easyway95.shared.TSSProtos.Coordinate.newBuilder()
-																	.setLat(31.325000)
-																	.setLng(120.559000)
-																	.build();
-        		com.luyun.easyway95.shared.TSSProtos.Segment seg1 = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder()
-        															.setRoad("宝石西路")
-        															.setStart(cor1)
-        															.setEnd(cor2)
-        															.build();
-        		com.luyun.easyway95.shared.TSSProtos.Segment seg2 = com.luyun.easyway95.shared.TSSProtos.Segment.newBuilder()
-																	.setRoad("迎宾南路")
-        															.setStart(cor1)
-        															.setEnd(cor2)
-																	.build();
-        		com.luyun.easyway95.shared.TSSProtos.Route trt = com.luyun.easyway95.shared.TSSProtos.Route.newBuilder()
-        															.setIdentity(1)
-        															.addSegments(seg1)
-        															.addSegments(seg2)
-        															.build();
-        		
-        		com.luyun.easyway95.shared.TSSProtos.TrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.TrafficSub.newBuilder()
-        															.setCity("深圳")
-        															.setOprType(com.luyun.easyway95.shared.TSSProtos.OprType.SUB_CREATE)
-        															.setPubType(com.luyun.easyway95.shared.TSSProtos.PubType.PUB_ONCE)
-        															.setRoute(trt)
-        															.build();
-        		com.luyun.easyway95.shared.TSSProtos.Package pkg = com.luyun.easyway95.shared.TSSProtos.Package.newBuilder()
-        															.setVersion(1)
-        															.setMsgDir(com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS)
-        															.setMsgType(com.luyun.easyway95.shared.TSSProtos.MsgType.TRAFFIC_SUB)
-        															.setMsgId(1000)
-        															.setTimestamp(System.currentTimeMillis()/1000)
-        															.setTrafficSub(tsub)
-        															.build();
-        		Log.i(TAG, pkg.toString());
-        		System.out.println(pkg.toString());
-        		byte[] data = pkg.toByteArray();
-        		mzService.sendMsgToSvr(data);
-        	}
-        });
-        
         Button btnLogin = (Button)findViewById(R.id.button2);
         btnLogin.setOnClickListener(new OnClickListener() {
         	@Override
@@ -241,14 +193,25 @@ public class MainActivity extends MapActivity {
         	}
         });
         
+        Button btnAroundReq = (Button)findViewById(R.id.button7);
+        btnAroundReq.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start request driving routes
+        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
+        		//GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
+        		mMapHelper.requestRoadsAround(startPoint);
+        	}
+        });
+        
         ImageButton btnReset = (ImageButton)findViewById(R.id.imageButton1);
         btnReset.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		Log.d(TAG, "click resetting button.("+getCurrLocation().toString()+")");
-        		GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
-        		mMapView.getController().animateTo(currPosition);
+        		//Log.d(TAG, "click resetting button.("+getCurrLocation().toString()+")");
+        		//GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
+        		mMapView.getController().animateTo(getCurrentLocation());
         	}
         });
         ImageButton btnSetting = (ImageButton)findViewById(R.id.imageButton3);
@@ -261,8 +224,8 @@ public class MainActivity extends MapActivity {
         });
     }
 
-    public Location getCurrLocation() {
-    	return mMapHelper.mCurrentLocation;
+    public GeoPoint getCurrentLocation() {
+    	return mMapHelper.mCurrentPoint;
     }
     
     @Override
@@ -343,9 +306,9 @@ public class MainActivity extends MapActivity {
 			}
             try {
             	Log.i(TAG, "get message from server.");
-            	com.luyun.easyway95.shared.TSSProtos.Package pkg  = com.luyun.easyway95.shared.TSSProtos.Package.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
-            	Log.i(TAG, pkg.toString());
-            	mMapHelper.onMsg(pkg);
+            	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
+            	Log.i(TAG, msgOnAir.toString());
+            	mMapHelper.onMsg(msgOnAir);
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
 			}

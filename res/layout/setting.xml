@@ -10,44 +10,56 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-     	<TextView 
-     	    	android:id="@+id/username"
-     	    	android:text="路云用户11457"
-     		android:layout_width="wrap_content" 
-     		android:layout_height="wrap_content"></TextView>
-     	<Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录" />
-     	<Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登出" />
-     	<TextView 
-     	    	android:id="@+id/homeaddr"
-     	    	android:text="宝安25区前进一路华丰时代广场"
-     		android:layout_width="wrap_content" 
-     		android:layout_height="wrap_content"></TextView>
-     	<Button
-            android:id="@+id/sethome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置" />
-     	<TextView 
-     	    	android:id="@+id/officeaddr"
-     	    	android:text="梅观高速华为出口"
-     		android:layout_width="wrap_content" 
-     		android:layout_height="wrap_content"></TextView>
-     	<Button
-            android:id="@+id/setoffice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置" />
-     			
+	    <LinearLayout
+	        android:id="@+id/setting_layout11"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	     	<Button
+	            android:id="@+id/login"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="登 录" />
+	     	<TextView 
+	     	    	android:id="@+id/username"
+	     	    	android:text="路云用户11457"
+	     		android:layout_width="wrap_content" 
+	     		android:layout_height="wrap_content"></TextView>
+	    </LinearLayout>
+ 	    <LinearLayout
+	        android:id="@+id/setting_layout12"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	     	<Button
+	            android:id="@+id/sethome"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="我的家" />
+ 	        <TextView 
+	     	    	android:id="@+id/homeaddr"
+	     	    	android:text="宝安25区前进一路华丰时代广场"
+	     		android:layout_width="wrap_content" 
+	     		android:layout_height="wrap_content"></TextView>
+	    </LinearLayout>
+ 	    <LinearLayout
+	        android:id="@+id/setting_layout13"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	     	<Button
+	            android:id="@+id/setoffice"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="办公室" />
+ 	        <TextView 
+	     	    	android:id="@+id/officeaddr"
+	     	    	android:text="梅观高速华为出口"
+	     		android:layout_width="wrap_content" 
+	     		android:layout_height="wrap_content"></TextView>
+	    </LinearLayout>
     </LinearLayout>
-
+	    
 
     <LinearLayout
         android:id="@+id/linearLayout_blue"

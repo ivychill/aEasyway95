@@ -16,14 +16,19 @@ import org.restlet.data.*;
 import org.restlet.ext.json.JsonRepresentation;
 
 import com.baidu.mapapi.GeoPoint;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +38,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class SettingActivity extends TabActivity {
 	// VERBOSE debug log is complied in but stripped at runtime
@@ -43,11 +49,17 @@ public class SettingActivity extends TabActivity {
 	private boolean mbSessionLogon = false;
 	private UserProfile mUserProfile;
 	private TabHost myTabhost;
+	private Easyway95App app;
+	private SharedPreferences mSP;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		app = (Easyway95App)this.getApplication();
+		
+		//register to Application
+		app.setSettingActivity(this);
 		
 		//setContentView(R.layout.setting);
 		msAuthToken = retrieveAuthToken();
@@ -70,7 +82,7 @@ public class SettingActivity extends TabActivity {
         
         myTabhost.addTab(myTabhost.newTabSpec("Ahead")
                 .setIndicator("途径路况",
-                        getResources().getDrawable(R.drawable.arrowlogov2))
+                        getResources().getDrawable(R.drawable.traffic_btn_v3))
                         .setContent(R.id.linearLayout_blue));
         myTabhost.addTab(myTabhost.newTabSpec("More")
                 .setIndicator("可能还关注",
@@ -78,21 +90,51 @@ public class SettingActivity extends TabActivity {
                         .setContent(R.id.linearLayout_green));      
         myTabhost.addTab(myTabhost.newTabSpec("Setting")
                 .setIndicator("设置",
-                        getResources().getDrawable(R.drawable.homesettinglogo))
+                        getResources().getDrawable(R.drawable.traffic_btn_v3))
                         .setContent(R.id.setting_layout));
 
+        //query SharedPreferences
+		mSP = getPreferences(MODE_PRIVATE);
+		mUserProfile = new UserProfile(mSP);
+		Log.d(TAG, mUserProfile.toString());
+		//set text views
+		TextView txtUserName = (TextView)findViewById(R.id.username);
+		txtUserName.setText(mUserProfile.getUserName());
+		TextView txtHome = (TextView)findViewById(R.id.homeaddr);
+		txtHome.setText(mUserProfile.getHomeAddr().getName());
+		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
+		txtOffice.setText(mUserProfile.getOfficeAddr().getName());
+		
         Button btnSethome = (Button)findViewById(R.id.sethome);
         btnSethome.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		//start login activity
-        		startActivity(new Intent(SettingActivity.this, PoiSearch.class));
+        		Intent i = new Intent(SettingActivity.this, PoiSearch.class);
+    			TextView txtHome = (TextView)findViewById(R.id.homeaddr);
+    			Log.d(TAG, txtHome.getText().toString());
+           		i.putExtra("search_key", txtHome.getText().toString());
+           		i.putExtra("search_place", "home");
+           	    startActivity(i);
+        	}
+        });
+        Button btnSetoffice = (Button)findViewById(R.id.setoffice);
+        btnSetoffice.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start login activity
+        		Intent i = new Intent(SettingActivity.this, PoiSearch.class);
+    			TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
+    			Log.d(TAG, txtOffice.getText().toString());
+           		i.putExtra("search_key", txtOffice.getText().toString());
+           		i.putExtra("search_place", "office");
+        		startActivity(i);
         	}
         });
         
 		if (mbTokenLogon || mbSessionLogon) {
 	        Button btn = (Button)findViewById(R.id.login);
-	        btn.setText("已登录");
+	        btn.setText("登   出");
 	        
 	        //ClientResource cr = new ClientResource(Constants.USERS_PROFILE_URL);
 	        ClientResource cr = new ClientResource(resURL);
@@ -113,11 +155,15 @@ public class SettingActivity extends TabActivity {
 
 				        // Displays the properties and values.
 			        	try {
-				            JSONObject object = rep.getJsonObject();
-				            if (object != null) {
-				            	Log.d(TAG, object.toString());
-				            	mUserProfile = new UserProfile(object);
-				            	Log.d(TAG, mUserProfile.toString());
+				            JSONObject jsonObject = rep.getJsonObject();
+				            if (jsonObject != null) {
+				            	Log.d(TAG, jsonObject.toString());
+				            	mUserProfile.updateFields(jsonObject);
+				            	mUserProfile.commitPreferences(mSP);
+				            	//update view
+				        		TextView txtUserName = (TextView)findViewById(R.id.username);
+				        		txtUserName.setText(mUserProfile.getUserName());
+				            	//Log.d(TAG, mUserProfile.toString());
 				            }
 			        	}catch(Exception e) {
 			        		e.printStackTrace();
@@ -199,4 +245,28 @@ public class SettingActivity extends TabActivity {
 	private static class State {
 		public boolean mWifiConnection = false;
 	}
+	
+	public Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+            try {
+            	MKPoiInfoHelper mpi = (MKPoiInfoHelper) msg.getData().getSerializable(Constants.POI_SEARCH_RESULT);
+            	Log.d(TAG, "get result from PoiSearch."+mpi.toString());
+            	if (mpi.getSearchPlace().equals("home")) {
+            		//set home addr
+            		mUserProfile.setHomeAddr(mpi);
+             	} else if (mpi.getSearchPlace().equals("office")) {
+            		mUserProfile.setOfficeAddr(mpi);
+             	}
+            	Log.d(TAG, mUserProfile.toString());
+            	mUserProfile.commitPreferences(mSP);
+            	//update view
+        		TextView txtHome = (TextView)findViewById(R.id.homeaddr);
+        		txtHome.setText(mUserProfile.getHomeAddr().getName());
+        		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
+        		txtOffice.setText(mUserProfile.getOfficeAddr().getName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    };
 }

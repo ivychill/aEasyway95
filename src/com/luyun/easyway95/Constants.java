@@ -1,7 +1,6 @@
 package com.luyun.easyway95;
 
 public class Constants {
-	
 	public static final int POISEARCH=1000;
 	
 	public static final int ERROR=1001;
@@ -11,6 +10,8 @@ public class Constants {
 	public static final int ROUTE_END_SEARCH=2001;//路径规划起点搜索
 	public static final int ROUTE_SEARCH_RESULT=2002;//路径规划结果
 	public static final int ROUTE_SEARCH_ERROR=2004;//路径规划起起始点搜索异常	
+	public static final String POI_START_SEARCH="2005";//POI
+	public static final String POI_SEARCH_RESULT="2006";//POI结果
 	
 	public static final int REOCODER_RESULT=3000;//地理编码结果
 	public static final int DIALOG_LAYER=4000;
@@ -38,4 +39,7 @@ public class Constants {
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	
 	
+	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
+	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
+	public static final double DISTANCE_OFF_ROAD=200.0; //标识是否偏离航线,单位M
 }
