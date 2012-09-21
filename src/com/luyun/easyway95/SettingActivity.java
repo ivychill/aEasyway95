@@ -82,15 +82,15 @@ public class SettingActivity extends TabActivity {
         
         myTabhost.addTab(myTabhost.newTabSpec("Ahead")
                 .setIndicator("途径路况",
-                        getResources().getDrawable(R.drawable.traffic_btn_v3))
+                        getResources().getDrawable(R.drawable.trafficbtnlogo))
                         .setContent(R.id.linearLayout_blue));
         myTabhost.addTab(myTabhost.newTabSpec("More")
                 .setIndicator("可能还关注",
-                        getResources().getDrawable(R.drawable.traffic_btn_v3))
+                        getResources().getDrawable(R.drawable.trafficbtnlogo))
                         .setContent(R.id.linearLayout_green));      
         myTabhost.addTab(myTabhost.newTabSpec("Setting")
                 .setIndicator("设置",
-                        getResources().getDrawable(R.drawable.traffic_btn_v3))
+                        getResources().getDrawable(R.drawable.trafficbtnlogo))
                         .setContent(R.id.setting_layout));
 
         //query SharedPreferences

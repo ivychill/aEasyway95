@@ -60,8 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/arrowlogov2"
-        android:src="@drawable/arrowlogov2" />
+        android:background="@drawable/arrowlogo"
+        android:src="@drawable/arrowlogo" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -69,8 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/imageButton1"
-        android:background="@drawable/traffic_btn_v3"
-        android:src="@drawable/traffic_btn_v3" />
+        android:background="@drawable/trafficbtnlogo"
+        android:src="@drawable/trafficbtnlogo" />
 
     <ImageButton
         android:id="@+id/imageButton3"

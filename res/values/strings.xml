@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">Easyway95</string>
+    <string name="app_name">路易95</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">路易95</string>
 	<string
 		name="app_id">4fb78f39</string>
     
