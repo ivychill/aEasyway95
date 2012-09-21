@@ -32,7 +32,7 @@ public class Constants {
 	public static final String USERS_PROFILE_URL="http://www.roadclouding.com/users/profile";	
 	//public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";	
 
-	public static final int TSS_SERVER_PORT=6001; 
+	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
 	public static final String TSS_PRO_HOST="42.121.18.140";	
 	

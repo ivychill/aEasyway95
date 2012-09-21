@@ -8,6 +8,7 @@ import android.util.Log;
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MKStep;
 import com.luyun.easyway95.shared.TSSProtos.LYCoordinate;
+import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYRoute;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficSub;
@@ -73,24 +74,24 @@ public class TrafficSubscriber {
 	void SubTraffic (MKRoute route) {
 	    LYRoute mRoute = RoadAnalyzer (route);
 	    Log.d(TAG, mRoute.toString());
-	    /*
+	    
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("…Ó€⁄")
-				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYOprType.SUB_CREATE)
-				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.PUB_ONCE)
+				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
+				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_EVENT)
 				.setRoute(mRoute)
 				.build();
     	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
 				.setVersion(1)
-				.setMsgDir(com.luyun.easyway95.shared.TSSProtos.MsgDir.CLIENT2TSS)
-				.setMsgType(com.luyun.easyway95.shared.TSSProtos.MsgType.TRAFFIC_SUB)
+				.setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT)
+				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TSS)
+				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_SUB)
 				.setMsgId(1000)
 				.setTimestamp(System.currentTimeMillis()/1000)
 				.setTrafficSub(tsub)
 				.build();
-    	Log.i(TAG, pkg.toString());
-    	byte[] data = pkg.toByteArray();
+    	//Log.i(TAG, msg.toString());
+    	byte[] data = msg.toByteArray();
     	mainActivity.sendMsgToSvr(data);
-    	*/
 	}
 }

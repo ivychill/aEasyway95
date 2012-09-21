@@ -21,6 +21,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
@@ -42,6 +43,8 @@ public class MainActivity extends MapActivity {
 	private TTSService mtService;
     private boolean mIsBound;
     public MapHelper mMapHelper;
+    private GeoPoint mHomeAddr;
+    private GeoPoint mOfficeAddr;
     MapView mMapView;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
@@ -95,6 +98,11 @@ public class MainActivity extends MapActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		
 		((Easyway95App)getApplication()).setMainActivity(this);
+		//初始化家庭和办公室地址
+		SharedPreferences sp = getPreferences(MODE_PRIVATE);
+		UserProfile up = new UserProfile(sp);
+		mHomeAddr = up.getHomeAddr().getPt();
+		mOfficeAddr = up.getOfficeAddr().getPt();
 		mMapHelper = new MapHelper(this);
 
 		setContentView(R.layout.activity_main);
@@ -342,5 +350,13 @@ public class MainActivity extends MapActivity {
     
     public void sendMsgToSvr(byte[] data) {
         mzService.sendMsgToSvr(data);	
+    }
+    
+    public GeoPoint getOfficeAddr() {
+    	return mOfficeAddr;
+    }
+    
+    public GeoPoint getHomeAddr() {
+    	return mHomeAddr;
     }
 }
