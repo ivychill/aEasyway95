@@ -102,28 +102,29 @@ public class ZMQService extends Service {
 	        mzsLifeCycleSvrEnd.bind (strLifeCycle); 
 	        Log.d(TAG, "bound lifecycle.");
 			
-	        /*mzsDevSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
+	        mzsDevSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
 	        String strDevTSS = 
 					"tcp://"
 					+Constants.TSS_DEV_HOST
 					+":"
 					+Constants.TSS_SERVER_PORT;
-	        mzsDevSvrEnd.connect (strDevTSS);*/
+	        mzsDevSvrEnd.connect (strDevTSS);
 	        
+	        /*
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
 	        String strProTSS = 
 					"tcp://"
 					+Constants.TSS_PRO_HOST
 					+":"
 					+Constants.TSS_SERVER_PORT;
-	        mzsProSvrEnd.connect (strProTSS);
+	        mzsProSvrEnd.connect (strProTSS);*/
 	        
 	        //create a separate thread to retrieve data from server
 			//  Initialize poll set
 			ZMQ.Poller items = mzcContextSvrEnd.poller(2);
 			items.register(mzsLifeCycleSvrEnd, ZMQ.Poller.POLLIN);
-			//items.register(mzsDevSvrEnd, ZMQ.Poller.POLLIN);
-			items.register(mzsProSvrEnd, ZMQ.Poller.POLLIN);
+			items.register(mzsDevSvrEnd, ZMQ.Poller.POLLIN);
+			//items.register(mzsProSvrEnd, ZMQ.Poller.POLLIN);
 
 			//  Process messages from both sockets
 			while (true) {
@@ -135,13 +136,14 @@ public class ZMQService extends Service {
 						break; //break the loop 
 					}
 					//mzsDevSvrEnd.send(data, 0);
-					mzsProSvrEnd.send(data, 0);
-					//mzsDevSvrEnd.send(data, 0);
+					//mzsProSvrEnd.send(data, 0);
+					mzsDevSvrEnd.send(data, 0);
 					continue;
 				}
 				if (items.pollin(1)) {
 					Log.i(TAG, "get data from product server");
-					data = mzsProSvrEnd.recv(0);
+					//data = mzsProSvrEnd.recv(0);
+					data = mzsDevSvrEnd.recv(0);
 				}
 				/*if (items.pollin(2)) {
 				Log.i(TAG, "get data from dev server");

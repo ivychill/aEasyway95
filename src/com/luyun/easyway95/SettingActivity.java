@@ -64,7 +64,7 @@ public class SettingActivity extends TabActivity {
 		//setContentView(R.layout.setting);
 		msAuthToken = retrieveAuthToken();
 		msSessionId = retrieveSessionToken();
-		Log.d(TAG, "kkkk");
+		//Log.d(TAG, "kkkk");
 		String resURL = "";
 		if (msAuthToken != null) { //use token
 			Log.d(TAG, msAuthToken);
@@ -75,7 +75,7 @@ public class SettingActivity extends TabActivity {
 			mbSessionLogon = true;
 	        resURL = Constants.USERS_PROFILE_URL;
 		}
-		Log.d(TAG, "ffff");
+		//Log.d(TAG, "ffff");
         myTabhost=this.getTabHost();       
         LayoutInflater.from(this).inflate(R.layout.setting, myTabhost.getTabContentView(), true);
         myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
@@ -94,9 +94,9 @@ public class SettingActivity extends TabActivity {
                         .setContent(R.id.setting_layout));
 
         //query SharedPreferences
-		mSP = getPreferences(MODE_PRIVATE);
+		mSP = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mUserProfile = new UserProfile(mSP);
-		Log.d(TAG, mUserProfile.toString());
+		//Log.d(TAG, mUserProfile.toString());
 		//set text views
 		TextView txtUserName = (TextView)findViewById(R.id.username);
 		txtUserName.setText(mUserProfile.getUserName());

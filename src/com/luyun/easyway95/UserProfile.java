@@ -7,15 +7,12 @@ import java.util.regex.Pattern;
 import org.json.JSONObject;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.MKPoiInfo;
-import com.baidu.mapapi.MKRoute;
-import com.baidu.mapapi.MKStep;
 
-public class UserProfile implements Serializable{
-	private static final String TAG = "UserProfile";
+public class UserProfile {
+	//private static final String TAG = "UserProfile";
 	private String msUserName;
 	private String msUserPassword;
 	private String msNickName;
@@ -96,17 +93,11 @@ public class UserProfile implements Serializable{
 	}
 	
 	public String toString() {
-		String strResult = new String().format("UserName=<%s>, Email=<%s>, Home=<%s>, Office=<%s>", msUserName, msEmail, 
+		String strResult = String.format("UserName=<%s>, Email=<%s>, Home=<%s>, Office=<%s>", msUserName, msEmail, 
 								mHomeAddr.toString(), mOfficeAddr.toString());
 		return strResult;
 	}
 	
-    public class MKStepHelper implements Serializable{
-    	MKStepHelper (MKStep mks) {
-    		
-    	}
-    }
-    
 	public class MKPoiInfoHelper implements Serializable{ // helper for MKPoiInfo to be conveyed on air
 		private String name;
 		private String address;
@@ -120,7 +111,7 @@ public class UserProfile implements Serializable{
 		
 		@Override
 		public String toString() {
-			String foramtedString = new String().format(
+			String foramtedString = String.format(
 					"name=(%s), address=(%s), city=(%s), phoneNum=(%s), postCode=(%s), pt.lat=(%d), pt.lng=(%d), ePoiType=(%d), searchPlace=(%s)", 
 					name, address, city, phoneNum, postCode, pt.getLatitudeE6(), pt.getLongitudeE6(), ePoiType, searchPlace);
 			return foramtedString;
@@ -194,7 +185,7 @@ public class UserProfile implements Serializable{
 				//Log.d(TAG, m.group(1));
 				this.ePoiType = Integer.parseInt(m.group(1));
 			}
-			p = Pattern.compile("pt.lat=\\((\\d*?)\\)", Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
+			p = Pattern.compile("pt\\.lat=\\((\\d*?)\\)", Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
 			m = p.matcher(strMPI);
 			if (m.find()) {
 				//Log.d(TAG, m.group(1));
@@ -203,7 +194,7 @@ public class UserProfile implements Serializable{
 				}
 				this.pt.setLatitudeE6(Integer.parseInt(m.group(1)));
 			}
-			p = Pattern.compile("pt.lng=\\((\\d*?)\\)", Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
+			p = Pattern.compile("pt\\.lng=\\((\\d*?)\\)", Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
 			m = p.matcher(strMPI);
 			if (m.find()) {
 				//Log.d(TAG, m.group(1));

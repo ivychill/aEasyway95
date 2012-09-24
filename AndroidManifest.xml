@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +26,28 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".LoginActivity" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".SettingActivity" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".PoiSearch" >
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ShowTraffics" >
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".TrafficsOfRoute" >
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".TrafficsCaring" >
         </activity>
         	<service android:name="com.luyun.easyway95.ZMQService" />
 	<service android:name="com.luyun.easyway95.TTSService" />

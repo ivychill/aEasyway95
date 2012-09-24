@@ -1,5 +1,13 @@
 package com.luyun.easyway95;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
@@ -8,8 +16,10 @@ import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
 import com.luyun.easyway95.shared.TSSProtos;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
+import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -22,6 +32,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
@@ -30,6 +41,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -46,6 +58,7 @@ public class MainActivity extends MapActivity {
     private GeoPoint mHomeAddr;
     private GeoPoint mOfficeAddr;
     MapView mMapView;
+    Easyway95App app;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
 	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
@@ -73,18 +86,18 @@ public class MainActivity extends MapActivity {
         }
     };
     
-    void doBindService() {
+    void bindZMQService() {
         // Establish a connection with the service.  We use an explicit
         // class name because we want a specific service implementation that
         // we know will be running in our own process (and thus won't be
         // supporting component replacement by other applications).
-        Log.d(TAG, "in doBindService");
+        Log.d(TAG, "in bindZMQService");
     	bindService(new Intent(MainActivity.this, 
                 ZMQService.class), mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
     }
     
-    void doUnbindService() {
+    void unbindService() {
         if (mIsBound) {
             // Detach our existing connection.
             unbindService(mConnection);
@@ -96,21 +109,21 @@ public class MainActivity extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
 		
-		((Easyway95App)getApplication()).setMainActivity(this);
 		//初始化家庭和办公室地址
-		SharedPreferences sp = getPreferences(MODE_PRIVATE);
+		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
+		//Log.d(TAG, up.toString());
 		mHomeAddr = up.getHomeAddr().getPt();
 		mOfficeAddr = up.getOfficeAddr().getPt();
 		mMapHelper = new MapHelper(this);
 
 		setContentView(R.layout.activity_main);
-        //mBMapMan = new BMapManager(getApplication());
-        //mBMapMan.init("513CBE299AB953DDFAEBC4A608F1F6557C30D685", null);
-        //super.initMapActivity(mBMapMan);
          
-		Easyway95App app = (Easyway95App)this.getApplication();
+		app = (Easyway95App)this.getApplication();
+		//注册mainActivity
+		app.setMainActivity(this);
 		if (app.mBMapMan == null) {
 			app.mBMapMan = new BMapManager(getApplication());
 			app.mBMapMan.init(app.mStrKey, new Easyway95App.MyGeneralListener());
@@ -124,35 +137,46 @@ public class MainActivity extends MapActivity {
         mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-        GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
-                (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+        //GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
+        //        (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+        GeoPoint point = null;
+        Date now = new Date();
+        if (now.getHours() <= 12) {
+        	point = mHomeAddr;
+        } else {
+        	point = mOfficeAddr;
+        }
+        if (point == null) {
+        	point = new GeoPoint((int) (22.551541 * 1E6),
+        	        (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+        }
         mMapController.setCenter(point);  //设置地图中心点
-        mMapController.setZoom(13);    //设置地图zoom级别
+        mMapController.setZoom(15);    //设置地图zoom级别
 		// 添加定位图层
         mLocationOverlay = new MyLocationOverlay(this, mMapView);
 		mMapView.getOverlays().add(mLocationOverlay);
         
         // 注册定位事件
         mLocationListener = new LocationListener(){
-
 			@Override
 			public void onLocationChanged(Location location) {
-				if(location != null){
-					String strLog = String.format("您当前的位置:\r\n" +
-							"纬度:%f\r\n" +
-							"经度:%f",
-							location.getLongitude(), location.getLatitude());
-					Log.d(TAG, strLog);
+				if(location != null && app.notTinyMove(location)){
+					//String strLog = String.format("您当前的位置:\r\n" +
+					//		"纬度:%f\r\n" +
+					//		"经度:%f",
+					//		location.getLongitude(), location.getLatitude());
+					//Log.d(TAG, strLog);
 					mMapHelper.onLocationChanged(location);
 				}
 			}
         };
 
-        //startService(new Intent(MainActivity.this,
-        //		ZMQService.class));
-        doBindService();
+        //启动ZMQService、线程
+        bindZMQService();
         
-        Button btnLogin = (Button)findViewById(R.id.button2);
+        /* 
+         * 以下是测试代码，如果放开，需要在layout.activity_main配置相应的资源。
+        btnLogin = (Button)findViewById(R.id.button2);
         btnLogin.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -161,7 +185,7 @@ public class MainActivity extends MapActivity {
         	}
         });
 
-        /*Button btnSetting = (Button)findViewById(R.id.button3);
+        Button btnSetting = (Button)findViewById(R.id.button3);
         btnSetting.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -170,7 +194,7 @@ public class MainActivity extends MapActivity {
         	}
         });*/
 
-        Button btnXunfei1 = (Button)findViewById(R.id.button4);
+        /*Button btnXunfei1 = (Button)findViewById(R.id.button4);
         btnXunfei1.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -211,8 +235,27 @@ public class MainActivity extends MapActivity {
         		mMapHelper.requestRoadsAround(startPoint);
         	}
         });
-        
-        ImageButton btnReset = (ImageButton)findViewById(R.id.imageButton1);
+
+        Button btnLineTest = (Button)findViewById(R.id.linetest);
+        btnLineTest.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start request driving routes
+        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
+        		GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
+        		Drawable marker = getResources().getDrawable(R.drawable.icon95);  //得到需要标在地图上的资源
+        		marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker
+        				.getIntrinsicHeight());   //为maker定义位置和边界
+        		ArrayList<GeoPoint> listPoints = new ArrayList();
+        		listPoints.add(startPoint);
+        		listPoints.add(endPoint);
+        		LineOverlay lines = new LineOverlay(marker, MainActivity.this, listPoints);
+        		mMapView.getOverlays().add(lines); //添加ItemizedOverlay实例到mMapView
+        	}
+        });
+        */
+
+        ImageButton btnReset = (ImageButton)findViewById(R.id.resetbtn);
         btnReset.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -222,12 +265,38 @@ public class MainActivity extends MapActivity {
         		mMapView.getController().animateTo(getCurrentLocation());
         	}
         });
-        ImageButton btnSetting = (ImageButton)findViewById(R.id.imageButton3);
+        ImageButton btnTraffics = (ImageButton)findViewById(R.id.trafficbtn);
+        btnTraffics.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//reset map view (animate to current location)
+        		//Log.d(TAG, "click resetting button.("+getCurrLocation().toString()+")");
+        		//GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
+        		startActivity(new Intent(MainActivity.this, ShowTraffics.class));
+        	}
+        });
+        ImageButton btnSetting = (ImageButton)findViewById(R.id.setting);
         btnSetting.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
         		startActivity(new Intent(MainActivity.this, SettingActivity.class));
+        	}
+        });
+        ImageButton btnGohome = (ImageButton)findViewById(R.id.gohome);
+        btnGohome.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//reset map view (animate to current location)
+        		mMapHelper.requestDrivingRoutes(mHomeAddr, mOfficeAddr);
+        	}
+        });
+        ImageButton btnGooffice = (ImageButton)findViewById(R.id.gooffice);
+        btnGooffice.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//reset map view (animate to current location)
+        		mMapHelper.requestDrivingRoutes(mOfficeAddr, mHomeAddr);
         	}
         });
     }
@@ -254,7 +323,7 @@ public class MainActivity extends MapActivity {
 	    //    app.mBMapMan.destroy();
 	    //    app.mBMapMan = null;
 	    //}
-	    doUnbindService();
+	    unbindService();
 	}
 	@Override
 	protected void onPause() {
@@ -317,6 +386,7 @@ public class MainActivity extends MapActivity {
             	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
             	Log.i(TAG, msgOnAir.toString());
             	mMapHelper.onMsg(msgOnAir);
+            	MainActivity.this.updateTrafficView();
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
 			}
@@ -358,5 +428,32 @@ public class MainActivity extends MapActivity {
     
     public GeoPoint getHomeAddr() {
     	return mHomeAddr;
+    }
+    
+    public void updateTrafficView() {
+    	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+    	
+        Map<String, Object> map = null;
+        MKRouteHelper drivingRoutes = mMapHelper.getDrivingRoutes();
+        Log.d(TAG, "fetching data from driving routes!");
+        if (drivingRoutes == null) {
+        	Log.d(TAG, "no data before request driving routes!");
+        	return;
+        }
+        Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
+        Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();
+        Iterator it = roadTraffics.entrySet().iterator();
+        while (it.hasNext()) {
+        	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
+        	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
+        	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPoints();
+        	if (matchedPoints == null || matchedPoints.size() == 0) continue;
+    		
+        	Drawable marker = getResources().getDrawable(R.drawable.slow_speed);  //得到需要标在地图上的资源
+    		marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker
+    				.getIntrinsicHeight());   //为maker定义位置和边界
+    		LineOverlay lines = new LineOverlay(marker, MainActivity.this, matchedPoints);
+    		mMapView.getOverlays().add(lines); //添加ItemizedOverlay实例到mMapView
+        }
     }
 }

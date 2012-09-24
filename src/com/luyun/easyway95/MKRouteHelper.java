@@ -5,11 +5,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.regex.MatchResult;
 
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.util.Log;
 
@@ -26,6 +29,8 @@ public class MKRouteHelper implements Serializable{
 	
     private ArrayList<ArrayList<GeoPoint>> mAllPoints; //from driving route
     private ArrayList<GeoPoint> mAllPoints2; //one by one
+    private ArrayList<GeoPoint> mMatchedPoints; //前方拥堵点集合，一个排序的列表
+    
     private int mDistance;
     private GeoPoint mEnd;
     private int mIndex;
@@ -58,8 +63,8 @@ public class MKRouteHelper implements Serializable{
     	return mAllPoints;
     }
     
-    public void  matchRouteAndTraffic() {
-    	
+    public Map<String, RoadTrafficHelper>  getRoadsWithTraffic() {
+    	return mRoadsWithTraffic;
     }
     
     ArrayList<GeoPoint> getAllPoints2() { //get all points in one dimentional array
@@ -75,6 +80,7 @@ public class MKRouteHelper implements Serializable{
 		List<LYRoadTraffic> roadTraffics = trafficPub.getCityTraffic().getRoadTrafficsList();
 		if (mRoadsWithTraffic == null || rebuildRoads) {
 			mRoadsWithTraffic = new HashMap<String, RoadTrafficHelper>();
+			mMatchedPoints = new ArrayList<GeoPoint>();
 		}
 		for (int i=0; i<roadTraffics.size(); i++) {
 			String road = roadTraffics.get(i).getRoad();
@@ -89,12 +95,17 @@ public class MKRouteHelper implements Serializable{
 			}
 			rt.build(roadTraffics.get(i));
 			rt.matchRoute();
+			//找出所有的MatchedPoints
+	        ArrayList<GeoPoint> matchedPoints = rt.getMatchedPoints();
+	        if (matchedPoints == null || matchedPoints.size() == 0) continue;
+	        if (mMatchedPoints == null) mMatchedPoints = new ArrayList<GeoPoint>();
+	        mMatchedPoints.addAll(matchedPoints);
 		}
     }
     
     //不直接用proto生成的LYRoadTraffic的理由：1.这个用作容器，收纳LYRoadTraffic信息，需要比较方便的set/get，如果用LYRoadTraffic，会比较麻烦
     //另外，容器需要跟协议的耦合度降低，只在这个容器里处理不同的协议。
-    //同时将原来协议传送的List换成Map的形式
+    //同时将原来协议传送的List换成Map的形式，便于程序处理和效率的考虑
     public class RoadTrafficHelper {
     	//private String road;
     	private Timestamp timestamp; //timestamp when last traffic received
@@ -103,9 +114,38 @@ public class MKRouteHelper implements Serializable{
     	private ArrayList<LYSegmentTraffic> mSegmentTraffic;
     	private ArrayList<GeoPoint> mPointsOfRoute;
     	private ArrayList<GeoPoint> matchedPoints;
+    	private boolean needClearSegment = false;
     	
     	RoadTrafficHelper() {
     		//road = road;
+    	}
+    	
+    	String getDesc() {
+    		return desc;
+    	}
+    	
+    	long getTimestamp() {
+    		return this.timestamp.getTime();
+    	}
+    	
+    	ArrayList<LYSegmentTraffic> getSegments() {
+    		if (needClearSegment == false) return mSegmentTraffic;
+    		Iterator it=mSegmentTraffic.iterator();
+    		while (it.hasNext()) {
+    			LYSegmentTraffic st = (LYSegmentTraffic)it.next();
+    			if (st == null) it.remove();
+    		}
+    		return mSegmentTraffic;
+    	}
+    	
+    	void clearSegment(int i) {
+    		if (i < 0 || i > mSegmentTraffic.size()-1) return; //do nothing
+    		mSegmentTraffic.set(i, null);
+    		needClearSegment = true;
+    	}
+    	
+    	ArrayList<GeoPoint> getMatchedPoints() {
+    		return matchedPoints;
     	}
     	
     	RoadTrafficHelper build(LYRoadTraffic rt) {
@@ -171,6 +211,10 @@ public class MKRouteHelper implements Serializable{
     } 
 
     //返回两点之间的距离，单位为米
+    public static double getDistance(Location loc1, Location loc2) {
+    	return GetDistance(loc1.getLatitude(), loc1.getLongitude(), loc2.getLatitude(), loc2.getLongitude());
+    }
+    
     public static double GetDistance(double lat1, double lng1, double lat2, double lng2)  
     {  
     	double EARTH_RADIUS = 6378.137;

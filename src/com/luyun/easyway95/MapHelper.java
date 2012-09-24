@@ -72,6 +72,10 @@ public class MapHelper {
 		}
 	}
 	
+	MKRouteHelper getDrivingRoutes() {
+		return mDrivingRoutes;
+	}
+	
 	/*SegmentTraffic getSegTraffic() {
 		return null;
 	}
@@ -132,7 +136,6 @@ public class MapHelper {
     			Log.e(TAG, "traffic_pub arrives before driving routes instantiated.");
     			return;
     		}
-    		ArrayList<GeoPoint> matchedPoints = new ArrayList(0);
     		mDrivingRoutes.onTraffic(msg.getTrafficPub(), false);
     		break;
     	default:
@@ -180,7 +183,7 @@ public class MapHelper {
     }
     
     public void requestRoadsAround(GeoPoint currentPoint) {
-    	Log.d(TAG, "in requestRoadsInsight");
+    	Log.d(TAG, "in requestRoadsAround");
         // 初始化搜索模块，注册事件监听
     	MKSearch mkSearch = new MKSearch();
     	mkSearch.init(mBMapMan, new MKSearchListener(){
@@ -250,20 +253,21 @@ public class MapHelper {
 				mDrivingRoutes = new MKRouteHelper(route);
 				
 				routeOverlay.setData(route);
+				mainActivity.mMapView.getOverlays().clear();
 				mainActivity.mMapView.getOverlays().add(routeOverlay);
 				mainActivity.mMapView.invalidate();  //刷新地图
 			    
-			    Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
+			    //Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
 
-			    Iterator<ArrayList<GeoPoint>> itr = route.getArrayPoints().iterator();
-		    	int index = 0;
-			    while(itr.hasNext())
-			    {
-			    	ArrayList<GeoPoint> arrayPoint = itr.next();
-			    	Log.d(TAG, "ArrayList<GeoPoint> index..." + index++);
-			    	Log.d(TAG, "ArrayList<GeoPoint> size..." + arrayPoint.size());
-			    	Log.d(TAG, "ArrayList<GeoPoint> ..." + arrayPoint.toString());
-			    }
+			    //Iterator<ArrayList<GeoPoint>> itr = route.getArrayPoints().iterator();
+		    	//int index = 0;
+			    //while(itr.hasNext())
+			    //{
+			    	//ArrayList<GeoPoint> arrayPoint = itr.next();
+			    	//Log.d(TAG, "ArrayList<GeoPoint> index..." + index++);
+			    	//Log.d(TAG, "ArrayList<GeoPoint> size..." + arrayPoint.size());
+			    	//Log.d(TAG, "ArrayList<GeoPoint> ..." + arrayPoint.toString());
+			    //}
 
 			    mTrafficSubscriber.SubTraffic(route);
 			}

@@ -5,8 +5,8 @@ import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.MKPoiResult;
 
-import android.app.Activity;
 import android.app.Application;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +16,7 @@ public class Easyway95App extends Application {
 	
 	static Easyway95App mApp;
 	public MKPoiResult mMKPoiResult;
+	private Location lastLocation;
 	
 	//百度MapAPI的管理类
 	BMapManager mBMapMan = null;
@@ -86,5 +87,15 @@ public class Easyway95App extends Application {
 	}
 	public SettingActivity getSettingActivity() {
 		return settingActivity;
+	}
+	boolean notTinyMove(Location location) {
+		if (location == null) return false;
+		
+		if (lastLocation == null || MKRouteHelper.getDistance(location, lastLocation)>Constants.MIN_CHK_DISTANCE) {
+			lastLocation = location;
+			return true;
+		}
+		
+		return false;
 	}
 }

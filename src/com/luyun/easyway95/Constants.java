@@ -42,4 +42,9 @@ public class Constants {
 	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
 	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
 	public static final double DISTANCE_OFF_ROAD=200.0; //标识是否偏离航线,单位M
+	public static final double MIN_CHK_DISTANCE=20.0; //标识是否偏离航线,单位M
+	
+	public static final String TRAFFIC_JAM_LVL_HIGH="基本不动"; //<6KM
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="缓行"; //[6km, 15km)
+	public static final String TRAFFIC_JAM_LVL_LOW="爬行"; //[15km, 
 }
