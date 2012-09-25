@@ -34,7 +34,7 @@ public class Constants {
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
-	public static final String TSS_PRO_HOST="42.121.18.140";	
+	public static final String TSS_PRO_HOST="www.roadclouding.com";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	

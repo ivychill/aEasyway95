@@ -80,7 +80,7 @@ public class SettingActivity extends TabActivity {
         LayoutInflater.from(this).inflate(R.layout.setting, myTabhost.getTabContentView(), true);
         myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
         
-        myTabhost.addTab(myTabhost.newTabSpec("Ahead")
+        /*myTabhost.addTab(myTabhost.newTabSpec("Ahead")
                 .setIndicator("途径路况",
                         getResources().getDrawable(R.drawable.trafficbtnlogo))
                         .setContent(R.id.linearLayout_blue));
@@ -88,6 +88,7 @@ public class SettingActivity extends TabActivity {
                 .setIndicator("可能还关注",
                         getResources().getDrawable(R.drawable.trafficbtnlogo))
                         .setContent(R.id.linearLayout_green));      
+                        */
         myTabhost.addTab(myTabhost.newTabSpec("Setting")
                 .setIndicator("设置",
                         getResources().getDrawable(R.drawable.trafficbtnlogo))

@@ -61,37 +61,4 @@
     </LinearLayout>
 	    
 
-    <LinearLayout
-        android:id="@+id/linearLayout_blue"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-        <TextView android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="22px" />
-        <TextView android:id="@+id/info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFFFF"
-            android:textSize="13px" />
-        
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout_green"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="bt3" />
-
-    </LinearLayout>
-
 </FrameLayout>

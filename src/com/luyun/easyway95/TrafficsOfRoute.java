@@ -2,6 +2,7 @@ package com.luyun.easyway95;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -67,8 +68,8 @@ public class TrafficsOfRoute extends ListActivity {
 		mainActivity = app.getMainActivity();
 
         SimpleAdapter adapter = new SimpleAdapter(this, getTrafficsOfRoute(), R.layout.vlist,
-                new String[]{"road","desc"},
-                new int[]{R.id.road,R.id.desc});
+                new String[]{"road","desc", "timestamp"},
+                new int[]{R.id.road,R.id.desc, R.id.timestamp});
         setListAdapter(adapter);
     }
     
@@ -93,10 +94,25 @@ public class TrafficsOfRoute extends ListActivity {
         	
         	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
         	if (segments == null) continue;
+        	Iterator segIt = segments.iterator();
+        	Date now = new Date();
+        	long nowTime = now.getTime()/1000;
         	for (int i=0; i<segments.size(); i++) {
+	        	long time_stamp = segments.get(i).getTimestamp();
+	        	long interval = (now.getTime()/1000 - time_stamp)/60;
+	        	if (interval > 6) {
+	        		rt.clearSegment(i);
+	        		continue;
+	        	}
         		map = new HashMap<String, Object>();
 	        	map.put("road", entry.getKey());
 	        	map.put("desc", segments.get(i).getDetails());
+	        	int speed = segments.get(i).getSpeed();
+	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
+	        	if (speed >= 15) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
+	        	if (speed < 15 && speed >=6) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	        	String formatedStr = String.format("%d∑÷÷”«∞£¨%s", interval, strSpeed);
+	            map.put("timestamp", formatedStr);
 	        	list.add(map);
         	}
         }

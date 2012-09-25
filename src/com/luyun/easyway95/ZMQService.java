@@ -161,8 +161,8 @@ public class ZMQService extends Service {
 			}
 			
 			mzsLifeCycleSvrEnd.close();
-			//mzsDevSvrEnd.close();
-			mzsProSvrEnd.close();
+			mzsDevSvrEnd.close();
+			//mzsProSvrEnd.close();
 			mzcContextSvrEnd.term();
 		}
 	}
