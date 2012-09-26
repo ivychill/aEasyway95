@@ -61,11 +61,11 @@
 
 	    <ImageButton
 	        android:id="@+id/gohome"
-	        android:layout_width="wrap_content"
+	        android:layout_width="wrap_content" 
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="bottom|right"
-	        android:background="@drawable/homesettinglogo"
-	        android:src="@drawable/homesettinglogo" />
+	        android:background="@drawable/homelogo"
+	        android:src="@drawable/homelogo" />
 
 	    <ImageButton
 	        android:id="@+id/gooffice"

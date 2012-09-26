@@ -38,12 +38,14 @@ public class MKRouteHelper implements Serializable{
     private int mRouteType;
     private GeoPoint mStart;
     private ArrayList<MKStep> mAllSteps;
+    private MKRoute mRawRoute;
     
     //用Map保存"路及路况"
     private Map<String, RoadTrafficHelper> mRoadsWithTraffic;
 	//private ArrayList<GeoPoint> matchedPoints;
     
 	MKRouteHelper(MKRoute mkr) {
+		mRawRoute = mkr;
 		mAllPoints = mkr.getArrayPoints();
 		mDistance = mkr.getDistance();
 		mEnd = mkr.getEnd();
@@ -59,6 +61,10 @@ public class MKRouteHelper implements Serializable{
 		buildRoadsFromRoute();
     }
     
+	MKRoute getRawRoute() {
+		return mRawRoute;
+	}
+	
     ArrayList<ArrayList<GeoPoint>> getAllPoints() {
     	return mAllPoints;
     }

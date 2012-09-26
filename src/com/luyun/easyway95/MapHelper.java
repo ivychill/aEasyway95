@@ -244,18 +244,13 @@ public class MapHelper {
 			    if (result == null) {
 			        return;
 			    }
-			    RouteOverlay routeOverlay = new RouteOverlay(mainActivity, mainActivity.mMapView);
 			    // 此处仅展示一个方案作为示例
 				//Log.d(TAG, "route plan number " + result.getNumPlan());
 				//Log.d(TAG, "route number " + result.getPlan(0).getNumRoutes());
 				MKRoute route = result.getPlan(0).getRoute(0);
 				//这里将原来的规划路径覆盖
 				mDrivingRoutes = new MKRouteHelper(route);
-				
-				routeOverlay.setData(route);
-				mainActivity.mMapView.getOverlays().clear();
-				mainActivity.mMapView.getOverlays().add(routeOverlay);
-				mainActivity.mMapView.invalidate();  //刷新地图
+			    mainActivity.updateMapViewByRoute();
 			    
 			    //Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
 

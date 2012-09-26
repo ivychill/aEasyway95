@@ -1,52 +1,42 @@
 package com.luyun.easyway95;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
+import com.baidu.mapapi.RouteOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
-import com.luyun.easyway95.shared.TSSProtos;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
-import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v4.app.NavUtils;
 
 public class MainActivity extends MapActivity {
 	//BMapManager mBMapMan = null; 
@@ -61,8 +51,8 @@ public class MainActivity extends MapActivity {
     Easyway95App app;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
+	RouteOverlay mRouteOverlay = null; //Driving route overlay
 	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
-	//TrafficSubscriber mTrafficSubscriber;
 
     private static boolean mbSynthetizeOngoing = false;
     
@@ -111,7 +101,7 @@ public class MainActivity extends MapActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
 		
-		//初始化家庭和办公室地址
+		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		//Log.d(TAG, up.toString());
@@ -134,14 +124,16 @@ public class MainActivity extends MapActivity {
 		mMapView = (MapView) findViewById(R.id.bmapsView);
         //mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
         //设置在缩放动画过程中也显示overlay,默认为不绘制
-        mMapView.setDrawOverlayWhenZooming(true);
+        //mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
         //GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
         //        (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
         GeoPoint point = null;
-        Date now = new Date();
-        if (now.getHours() <= 12) {
+        Calendar rightNow = Calendar.getInstance();
+        
+        //if (now.getHours() <= 12) {
+        if (rightNow.get(Calendar.HOUR_OF_DAY) <= 12) {
         	point = mHomeAddr;
         } else {
         	point = mOfficeAddr;
@@ -161,11 +153,11 @@ public class MainActivity extends MapActivity {
 			@Override
 			public void onLocationChanged(Location location) {
 				if(location != null && app.notTinyMove(location)){
-					//String strLog = String.format("您当前的位置:\r\n" +
-					//		"纬度:%f\r\n" +
-					//		"经度:%f",
-					//		location.getLongitude(), location.getLatitude());
-					//Log.d(TAG, strLog);
+					String strLog = String.format("您当前的位置:\r\n" +
+							"纬度:%f\r\n" +
+							"经度:%f",
+							location.getLongitude(), location.getLatitude());
+					Log.d(TAG, strLog);
 					mMapHelper.onLocationChanged(location);
 				}
 			}
@@ -260,7 +252,7 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		//Log.d(TAG, "click resetting button.("+getCurrLocation().toString()+")");
+        		Log.d(TAG, "click resetting button.("+getCurrentLocation().toString()+")");
         		//GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
         		mMapView.getController().animateTo(getCurrentLocation());
         	}
@@ -280,7 +272,7 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		startActivity(new Intent(MainActivity.this, SettingActivity.class));
+        		startActivity(new Intent(MainActivity.this, PoiSearch.class));
         	}
         });
         ImageButton btnGohome = (ImageButton)findViewById(R.id.gohome);
@@ -288,7 +280,7 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		mMapHelper.requestDrivingRoutes(mHomeAddr, mOfficeAddr);
+        		mMapHelper.requestDrivingRoutes(mOfficeAddr, mHomeAddr);
         	}
         });
         ImageButton btnGooffice = (ImageButton)findViewById(R.id.gooffice);
@@ -296,7 +288,7 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		mMapHelper.requestDrivingRoutes(mOfficeAddr, mHomeAddr);
+        		mMapHelper.requestDrivingRoutes(mHomeAddr, mOfficeAddr);
         	}
         });
     }
@@ -327,25 +319,28 @@ public class MainActivity extends MapActivity {
 	}
 	@Override
 	protected void onPause() {
-		mLocationOverlay.disableMyLocation();
-        mLocationOverlay.disableCompass(); // 关闭指南针
 		Easyway95App app = (Easyway95App)this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
-	    if (app.mBMapMan != null) {
-	        app.mBMapMan.stop();
-	    }
+		mLocationOverlay.disableMyLocation();
+        mLocationOverlay.disableCompass(); // 关闭指南针
+	    app.mBMapMan.stop();
 	    super.onPause();
 	}
 	@Override
 	protected void onResume() {
+		//初始化家庭和办公室地址，在resume里也要做一次
+		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+		UserProfile up = new UserProfile(sp);
+		//Log.d(TAG, up.toString());
+		mHomeAddr = up.getHomeAddr().getPt();
+		mOfficeAddr = up.getOfficeAddr().getPt();
+		
 		Easyway95App app = (Easyway95App)this.getApplication();
 		// 注册Listener
         app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
         mLocationOverlay.enableMyLocation();
         mLocationOverlay.enableCompass(); // 打开指南针
-	    if (app.mBMapMan != null) {
-	        app.mBMapMan.start();
-	    }
+	    app.mBMapMan.start();
 	    super.onResume();
 	}    
     
@@ -430,11 +425,24 @@ public class MainActivity extends MapActivity {
     	return mHomeAddr;
     }
     
+    public void updateMapViewByRoute() {
+		mMapView.getOverlays().clear();
+		mMapView.getOverlays().add(mLocationOverlay);
+		
+    	MKRouteHelper drivingRoute = mMapHelper.getDrivingRoutes();
+    	if (drivingRoute != null) {
+        	MKRoute route = drivingRoute.getRawRoute();
+        	mRouteOverlay = new RouteOverlay(this, mMapView);
+    	    mRouteOverlay.setData(route);
+    		mMapView.getOverlays().add(mRouteOverlay);
+    	}
+		mMapView.invalidate();  //刷新地图
+    }
+    
     public void updateTrafficView() {
-    	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+    	updateMapViewByRoute();
     	
-        Map<String, Object> map = null;
-        MKRouteHelper drivingRoutes = mMapHelper.getDrivingRoutes();
+    	MKRouteHelper drivingRoutes = mMapHelper.getDrivingRoutes();
         Log.d(TAG, "fetching data from driving routes!");
         if (drivingRoutes == null) {
         	Log.d(TAG, "no data before request driving routes!");
@@ -443,6 +451,7 @@ public class MainActivity extends MapActivity {
         Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
         Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();
         Iterator it = roadTraffics.entrySet().iterator();
+        
         while (it.hasNext()) {
         	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
         	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
@@ -455,5 +464,6 @@ public class MainActivity extends MapActivity {
     		LineOverlay lines = new LineOverlay(marker, MainActivity.this, matchedPoints);
     		mMapView.getOverlays().add(lines); //添加ItemizedOverlay实例到mMapView
         }
+		mMapView.invalidate();  //刷新地图
     }
 }
