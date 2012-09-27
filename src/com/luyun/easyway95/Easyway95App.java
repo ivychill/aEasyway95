@@ -12,11 +12,11 @@ import android.widget.Toast;
 
 public class Easyway95App extends Application {
 	private MainActivity mainActivity;
-	private SettingActivity settingActivity;
 	
 	static Easyway95App mApp;
 	public MKPoiResult mMKPoiResult;
 	private Location lastLocation;
+	private long lastChecked = 0;
 	
 	//百度MapAPI的管理类
 	BMapManager mBMapMan = null;
@@ -82,20 +82,16 @@ public class Easyway95App extends Application {
 	public MainActivity getMainActivity() {
 		return mainActivity;
 	}
-	public void setSettingActivity(SettingActivity act) {
-		settingActivity = act;
-	}
-	public SettingActivity getSettingActivity() {
-		return settingActivity;
-	}
-	boolean notTinyMove(Location location) {
-		if (location == null) return false;
+	boolean isTinyMove(Location location) {
+		if (location == null) return true;
 		
-		if (lastLocation == null || MKRouteHelper.getDistance(location, lastLocation)>Constants.MIN_CHK_DISTANCE) {
+		long timenow = System.currentTimeMillis();
+		if (lastLocation == null || MKRouteHelper.getDistance(location, lastLocation)>Constants.MIN_CHK_DISTANCE || timenow-lastChecked >300*1000) {
 			lastLocation = location;
-			return true;
+			lastChecked = timenow;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 }

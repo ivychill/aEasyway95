@@ -81,7 +81,7 @@ public class TrafficsOfRoute extends ListActivity {
         Log.d(TAG, "fetching data from driving routes!");
         if (drivingRoutes == null) {
         	Log.d(TAG, "no data before request driving routes!");
-        	return null;
+        	return list;
         }
         Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
         Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();
@@ -89,21 +89,23 @@ public class TrafficsOfRoute extends ListActivity {
         while (it.hasNext()) {
         	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
         	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
-        	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPoints();
+        	Map<Integer, ArrayList<GeoPoint>> matchedPoints = rt.getMatchedPoints();
         	if (matchedPoints == null || matchedPoints.size() == 0) continue;
         	
         	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
         	if (segments == null) continue;
         	Iterator segIt = segments.iterator();
-        	Date now = new Date();
-        	long nowTime = now.getTime()/1000;
+        	long nowTime = System.currentTimeMillis()/1000;
         	for (int i=0; i<segments.size(); i++) {
 	        	long time_stamp = segments.get(i).getTimestamp();
-	        	long interval = (now.getTime()/1000 - time_stamp)/60;
+	        	long interval = (nowTime - time_stamp)/60;
 	        	if (interval > 6) {
 	        		rt.clearSegment(i);
 	        		continue;
 	        	}
+	        	//检查是否在matchedPoints的map里
+	        	ArrayList<GeoPoint> tmpPoints = matchedPoints.get(i);
+	        	if (tmpPoints == null) continue; //不在Map里，说明该段无拟合，可能是反方向，也可能是其它路况
         		map = new HashMap<String, Object>();
 	        	map.put("road", entry.getKey());
 	        	map.put("desc", segments.get(i).getDetails());

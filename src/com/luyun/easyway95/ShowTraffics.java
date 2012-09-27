@@ -22,11 +22,11 @@ public class ShowTraffics extends TabActivity {
         LayoutInflater.from(this).inflate(R.layout.showtraffic, myTabhost.getTabContentView(), true);
         myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
         
-        myTabhost.addTab(myTabhost.newTabSpec("Ahead")
+        myTabhost.addTab(myTabhost.newTabSpec("TrafficsOfRoute")
                 .setIndicator("途径路况",
                         getResources().getDrawable(R.drawable.slow_speed))
                         .setContent(new Intent(this, TrafficsOfRoute.class)));
-        myTabhost.addTab(myTabhost.newTabSpec("More")
+        myTabhost.addTab(myTabhost.newTabSpec("TrafficsCaring")
                 .setIndicator("可能还关注",
                         getResources().getDrawable(R.drawable.slow_speed))
                         .setContent(new Intent(this, TrafficsCaring.class)));      

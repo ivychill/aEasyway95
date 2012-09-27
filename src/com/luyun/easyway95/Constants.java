@@ -19,6 +19,8 @@ public class Constants {
 	
 	public static final int SYNTHESIZE_ONGOING=5500;	
 	public static final int SYNTHESIZE_DONE=5501;	
+	public static final int DLG_TIME_OUT=5601;	
+	public static final int RESET_MAP_TIME_OUT=5601;	
 
 	public static final int WAITING_TRACKEE_LOC=5500;
 	public static final int GOT_TRACKEE_LOC=5501;
@@ -34,17 +36,25 @@ public class Constants {
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
-	public static final String TSS_PRO_HOST="www.roadclouding.com";	
+	//public static final String TSS_PRO_HOST="www.roadclouding.com";	
+	public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	
 	
 	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
 	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
-	public static final double DISTANCE_OFF_ROAD=200.0; //标识是否偏离航线,单位M
+	public static final double DISTANCE_OFF_ROAD=180.0; //标识是否偏离航线,单位M
 	public static final double MIN_CHK_DISTANCE=20.0; //标识是否偏离航线,单位M
+	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //用于强制位置更新，单位毫秒，生产环境建议5分钟以上
 	
+	public static final double DOUBLE_1E6 = 1000000.0;
+	
+	public static final String NO_TRAFFIC_AHEAD="前方无拥堵"; //
 	public static final String TRAFFIC_JAM_LVL_HIGH="基本不动"; //<6KM
-	public static final String TRAFFIC_JAM_LVL_MIDDLE="缓行"; //[6km, 15km)
-	public static final String TRAFFIC_JAM_LVL_LOW="爬行"; //[15km, 
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="重度拥堵"; //[6km, 15km)
+	public static final String TRAFFIC_JAM_LVL_LOW="轻度拥堵"; //[15km, 
+	
+	public static final int TRAFFIC_POPUP=0x555;
+	public static final int INTERNET_CONNECTION=0x666;
 }

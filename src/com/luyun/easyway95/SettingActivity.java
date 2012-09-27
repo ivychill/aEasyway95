@@ -1,212 +1,254 @@
 package com.luyun.easyway95;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.Uniform;
-import org.restlet.representation.Representation;
-import org.restlet.resource.ClientResource;
-import org.restlet.util.Series;
-import org.restlet.data.*;
-import org.restlet.ext.json.JsonRepresentation;
-
-import com.baidu.mapapi.GeoPoint;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
-
-import android.app.Activity;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TabHost;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class SettingActivity extends TabActivity {
-	// VERBOSE debug log is complied in but stripped at runtime
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.MKAddrInfo;
+import com.baidu.mapapi.MKBusLineResult;
+import com.baidu.mapapi.MKDrivingRouteResult;
+import com.baidu.mapapi.MKPoiInfo;
+import com.baidu.mapapi.MKPoiResult;
+import com.baidu.mapapi.MKSearch;
+import com.baidu.mapapi.MKSearchListener;
+import com.baidu.mapapi.MKSuggestionResult;
+import com.baidu.mapapi.MKTransitRouteResult;
+import com.baidu.mapapi.MKWalkingRouteResult;
+import com.baidu.mapapi.MapActivity;
+import com.baidu.mapapi.MapView;
+import com.baidu.mapapi.PoiOverlay;
+import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
+
+
+public class SettingActivity extends MapActivity {
 	private static final String TAG = "SettingActivity";
-	private String msAuthToken;
-	private String msSessionId;
-	private boolean mbTokenLogon = false;
-	private boolean mbSessionLogon = false;
-	private UserProfile mUserProfile;
-	private TabHost myTabhost;
-	private Easyway95App app;
-	private SharedPreferences mSP;
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	Easyway95App app;
+	private SharedPreferences mSP;
+	private UserProfile mUserProfile;
+	
+	Button mBtnSearchHome = null;	// 搜索按钮
+	Button mBtnSearchOffice = null;	// 搜索按钮
+	Button mSuggestionSearch = null;  //suggestion搜索
+	ListView mSuggestionList = null;
+	public static String mStrSuggestions[] = {};
+	private String mSearchKey;
+	private String mSearchPlace;
+	
+	MapView mMapView = null;	// 地图View
+	MKSearch mSearch = null;	// 搜索模块，也可去掉地图模块独立使用
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-		app = (Easyway95App)this.getApplication();
-		
-		//register to Application
-		app.setSettingActivity(this);
-		
-		//setContentView(R.layout.setting);
-		msAuthToken = retrieveAuthToken();
-		msSessionId = retrieveSessionToken();
-		//Log.d(TAG, "kkkk");
-		String resURL = "";
-		if (msAuthToken != null) { //use token
-			Log.d(TAG, msAuthToken);
-			mbTokenLogon = true;
-	        resURL = Constants.USERS_PROFILE_URL+"?auth_token="+msAuthToken;
-		}else if (msSessionId != null) {
-			Log.d(TAG, msSessionId);
-			mbSessionLogon = true;
-	        resURL = Constants.USERS_PROFILE_URL;
-		}
-		//Log.d(TAG, "ffff");
-        myTabhost=this.getTabHost();       
-        LayoutInflater.from(this).inflate(R.layout.setting, myTabhost.getTabContentView(), true);
-        myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
+        setContentView(R.layout.poisearch);
         
-        /*myTabhost.addTab(myTabhost.newTabSpec("Ahead")
-                .setIndicator("途径路况",
-                        getResources().getDrawable(R.drawable.trafficbtnlogo))
-                        .setContent(R.id.linearLayout_blue));
-        myTabhost.addTab(myTabhost.newTabSpec("More")
-                .setIndicator("可能还关注",
-                        getResources().getDrawable(R.drawable.trafficbtnlogo))
-                        .setContent(R.id.linearLayout_green));      
-                        */
-        myTabhost.addTab(myTabhost.newTabSpec("Setting")
-                .setIndicator("设置",
-                        getResources().getDrawable(R.drawable.trafficbtnlogo))
-                        .setContent(R.id.setting_layout));
+		app = (Easyway95App)this.getApplication();
+		if (app.mBMapMan == null) {
+			app.mBMapMan = new BMapManager(getApplication());
+			app.mBMapMan.init(app.mStrKey, new Easyway95App.MyGeneralListener());
+		}
+		app.mBMapMan.start();
+        // 如果使用地图SDK，请初始化地图Activity
+        super.initMapActivity(app.mBMapMan);
+        
+        mMapView = (MapView)findViewById(R.id.poi_search_view);
+        mMapView.setBuiltInZoomControls(true);
+        //设置在缩放动画过程中也显示overlay,默认为不绘制
+        mMapView.setDrawOverlayWhenZooming(true);
+        
+        // 初始化搜索模块，注册事件监听
+        mSearch = new MKSearch();
+        mSearch.init(app.mBMapMan, new MKSearchListener(){
+			public void onGetPoiResult(MKPoiResult res, int type, int error) {
+				// 错误号可参考MKEvent中的定义
+				if (error != 0 || res == null) {
+					Toast.makeText(SettingActivity.this, "抱歉，未找到结果", Toast.LENGTH_LONG).show();
+					return;
+				}
 
+			    // 将地图移动到第一个POI中心点
+			    if (res.getCurrentNumPois() > 0) {
+				    // 将poi结果显示到地图上
+					PoiOverlay poiOverlay = new PoiOverlay(SettingActivity.this, mMapView);
+					//poiOverlay.setData(res.getAllPoi());
+					ArrayList<MKPoiInfo> poiResults = new ArrayList(1);
+					poiResults.add(res.getPoi(0));
+					poiOverlay.setData(poiResults);
+				    mMapView.getOverlays().clear();
+				    mMapView.getOverlays().add(poiOverlay);
+				    mMapView.invalidate();
+			    	mMapView.getController().animateTo(res.getPoi(0).pt);
+			    	
+			    	//将结果传回给SettingActivity
+			    	//2012.09.25直接在poisearch中处理搜索结果，故将传递消息功能注释掉
+			        //Message msg = new Message();
+			        //Bundle bdl = new Bundle();
+			        //UserProfile up = new UserProfile();
+			        //MKPoiInfoHelper mpi = up.new MKPoiInfoHelper(res.getPoi(0));
+			        //MKPoiInfoHelper mpi = new UserProfile().setHomeAddr(res.getPoi(0));// 
+			        //mpi.setSearchPlace(mSearchPlace);
+			        //bdl.putSerializable(Constants.POI_SEARCH_RESULT, mpi);
+			        //msg.setData(bdl);
+			        // The PendingIntent to launch our activity
+			        //PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+			        //        new Intent(getApplicationContext(), MainActivity.class), 0);
+			        //((MainActivity)getApplicationContext()).handler.sendMessage(msg);
+			        //app.getSettingActivity().handler.sendMessage(msg);
+			    	
+			        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res.getPoi(0));
+			        if (mSearchPlace.equals("home")) {
+			        	mUserProfile.setHomeAddr(mpi);
+			        } else {
+			        	mUserProfile.setOfficeAddr(mpi);
+			        }
+	            	mUserProfile.commitPreferences(mSP);			    	
+	        		resetTextView();
+			    } else if (res.getCityListNum() > 0) {
+			    	String strInfo = "在";
+			    	for (int i = 0; i < res.getCityListNum(); i++) {
+			    		strInfo += res.getCityListInfo(i).city;
+			    		strInfo += ",";
+			    	}
+			    	strInfo += "找到结果";
+					Toast.makeText(SettingActivity.this, strInfo, Toast.LENGTH_LONG).show();
+			    }
+			}
+			public void onGetDrivingRouteResult(MKDrivingRouteResult res,
+					int error) {
+			}
+			public void onGetTransitRouteResult(MKTransitRouteResult res,
+					int error) {
+			}
+			public void onGetWalkingRouteResult(MKWalkingRouteResult res,
+					int error) {
+			}
+			public void onGetAddrResult(MKAddrInfo res, int error) {
+			}
+			public void onGetBusDetailResult(MKBusLineResult result, int iError) {
+			}
+			@Override
+			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
+				// TODO Auto-generated method stub
+			}
+			
+        });
+        
+        //login
+        Button btnLogin = (Button)findViewById(R.id.login);
+        btnLogin.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		//start login activity
+        		startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+        	}
+        });
+
+        
         //query SharedPreferences
 		mSP = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mUserProfile = new UserProfile(mSP);
-		//Log.d(TAG, mUserProfile.toString());
-		//set text views
-		TextView txtUserName = (TextView)findViewById(R.id.username);
-		txtUserName.setText(mUserProfile.getUserName());
-		TextView txtHome = (TextView)findViewById(R.id.homeaddr);
-		txtHome.setText(mUserProfile.getHomeAddr().getName());
-		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
-		txtOffice.setText(mUserProfile.getOfficeAddr().getName());
+		retrieveAuthToken();
+		retrieveSessionToken();
+		resetTextView();
 		
-        Button btnSethome = (Button)findViewById(R.id.sethome);
-        btnSethome.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start login activity
-        		Intent i = new Intent(SettingActivity.this, PoiSearch.class);
-    			TextView txtHome = (TextView)findViewById(R.id.homeaddr);
-    			Log.d(TAG, txtHome.getText().toString());
-           		i.putExtra("search_key", txtHome.getText().toString());
-           		i.putExtra("search_place", "home");
-           	    startActivity(i);
-        	}
-        });
-        Button btnSetoffice = (Button)findViewById(R.id.setoffice);
-        btnSetoffice.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start login activity
-        		Intent i = new Intent(SettingActivity.this, PoiSearch.class);
-    			TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
-    			Log.d(TAG, txtOffice.getText().toString());
-           		i.putExtra("search_key", txtOffice.getText().toString());
-           		i.putExtra("search_place", "office");
-        		startActivity(i);
-        	}
-        });
-        
-		if (mbTokenLogon || mbSessionLogon) {
-	        Button btn = (Button)findViewById(R.id.login);
-	        btn.setText("登   出");
-	        
-	        //ClientResource cr = new ClientResource(Constants.USERS_PROFILE_URL);
-	        ClientResource cr = new ClientResource(resURL);
-	        if (mbSessionLogon) {
-		        Series<Cookie> cookies = cr.getCookies();
-		        //Cookie ck = cr.getCookies().getFirst("auth_token");
-		        //cookies.add("auth_token", msAuthToken);
-		        cookies.add("_roadclouding_session", msSessionId);
-		        cr.setCookies(cookies);
-		        Log.d(TAG, cookies.toString());
-	        }
-			// Set the callback object invoked when the response is received.
-			cr.setOnResponse(new Uniform() {
-			    public void handle(Request request, Response response) {
-			        // Get the representation as an JsonRepresentation
-			        try {
-			        	JsonRepresentation rep = new JsonRepresentation(response.getEntity());
-
-				        // Displays the properties and values.
-			        	try {
-				            JSONObject jsonObject = rep.getJsonObject();
-				            if (jsonObject != null) {
-				            	Log.d(TAG, jsonObject.toString());
-				            	mUserProfile.updateFields(jsonObject);
-				            	mUserProfile.commitPreferences(mSP);
-				            	//update view
-				        		TextView txtUserName = (TextView)findViewById(R.id.username);
-				        		txtUserName.setText(mUserProfile.getUserName());
-				            	//Log.d(TAG, mUserProfile.toString());
-				            }
-			        	}catch(Exception e) {
-			        		e.printStackTrace();
-			        	}
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
-			    }
-			});
-
-			// Indicates the client preferences and let the server handle
-			// the best representation with content negotiation.
-			cr.get(MediaType.APPLICATION_JSON);
-			//UserProfileResource upr = cr.wrap(UserProfileResource.class);
-			//mUserProfile = upr.retrieve();
-			//Log.d(TAG, cr.get(MediaType.APPLICATION_XHTML).toString());
-			//String strProfile = cr.get(MediaType.APPLICATION_JSON).getText();
-				//JSONTokener jsonParser = new JSONTokener(strProfile);
-				//JSONObject jsonObj = new JSONObject(strProfile).getJSONObject();
-			//Log.d(TAG, mUserProfile.toString());
+        // 设定搜索按钮的响应
+        OnClickListener clickListener = new OnClickListener(){
+			public void onClick(View v) {
+				SearchButtonProcess(v);
+			}
+        };
+        mBtnSearchHome = (Button)findViewById(R.id.search_home);
+        mBtnSearchHome.setOnClickListener(clickListener); 
+        mBtnSearchOffice = (Button)findViewById(R.id.search_office);
+        mBtnSearchOffice.setOnClickListener(clickListener); 
+	}
+	void SearchButtonProcess(View v) {
+		if (mBtnSearchHome.equals(v)) {
+			mSearchPlace = "home";
+			EditText editSearchKey = (EditText)findViewById(R.id.searchkey);
+			mSearch.poiSearchInCity("深圳", 
+					editSearchKey.getText().toString());
 		}
-		
+		if (mBtnSearchOffice.equals(v)) {
+			mSearchPlace = "office";
+			EditText editSearchKey = (EditText)findViewById(R.id.searchkey);
+			mSearch.poiSearchInCity("深圳", 
+					editSearchKey.getText().toString());
+		}
 	}
 
-	/**
-	 * @return boolean return true if the application can access the internet
-	 */
-	private boolean isConnectedToInternet() {
-		ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo info = mConnectivityManager.getActiveNetworkInfo();
-		if (info == null) {
-			return false;
-		} else if (!info.isConnected()) {
-			return false;
-		} else if (info.getType() != ConnectivityManager.TYPE_WIFI) {
-			return false;
-		} 
-		return true;
+	@Override
+	protected void onPause() {
+		Easyway95App app = (Easyway95App)this.getApplication();
+		app.mBMapMan.stop();
+		super.onPause();
+	}
+	@Override
+	protected void onResume() {
+		Easyway95App app = (Easyway95App)this.getApplication();
+		app.mBMapMan.start();
+		super.onResume();
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
+	private void resetTextView() {
+		TextView txtUserName = (TextView)findViewById(R.id.username);
+		String tmpString = mUserProfile.getUserName();
+		if (tmpString != null && tmpString.length() > 0) {
+			txtUserName.setText(tmpString);
+		} else {
+			mUserProfile.getProfileFromSvr();
+		}
+		
+		TextView txtHome = (TextView)findViewById(R.id.homeaddr);
+		tmpString = mUserProfile.getHomeAddr().getName();
+		if (tmpString != null && tmpString.length() > 0)
+			txtHome.setText(tmpString);
+		
+		TextView txtHomeLatLng = (TextView)findViewById(R.id.home_lat_lng);
+		tmpString = mUserProfile.getHomeLatLng();
+		if (tmpString != null && tmpString.length() > 0)
+			txtHomeLatLng.setText(tmpString);
+		
+		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
+		tmpString = mUserProfile.getOfficeAddr().getName();
+		if (tmpString != null && tmpString.length() > 0)
+			txtOffice.setText(tmpString);
+
+		TextView txtOfficeLatLng = (TextView)findViewById(R.id.office_lat_lng);
+		tmpString = mUserProfile.getOfficeLatLng();
+		if (tmpString != null && tmpString.length() > 0)
+			txtOfficeLatLng.setText(tmpString);
+	}
+
 	/** get the stored cookies */
-	private String retrieveAuthToken() {
+	private void retrieveAuthToken() {
 		Log.d(TAG, "in retrieveAuthToken");
 		CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(this);
 	    CookieManager cookieManager = CookieManager.getInstance();
@@ -218,14 +260,14 @@ public class SettingActivity extends TabActivity {
 	    	if (mch.find()) {
 	    		String s0 = mch.group(0);
 	    		String s1 = mch.group(1);
-	    		return s1;
+	    		mUserProfile.setAuthToken(s1);
+	    		return;
 	    	}
 	    }
-	    return null;
 	}
 
 	/** get the stored session tokens cookies */
-	private String retrieveSessionToken() {
+	private void retrieveSessionToken() {
 		CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(this);
 	    CookieManager cookieManager = CookieManager.getInstance();
 	    String cookie = cookieManager.getCookie(Constants.USERS_PROFILE_URL);
@@ -236,38 +278,9 @@ public class SettingActivity extends TabActivity {
 	    	if (mch.find()) {
 	    		String s0 = mch.group(0);
 	    		String s1 = mch.group(1);
-	    		return s1;
+	    		mUserProfile.setSessionId(s1);
+	    		return;
 	    	}
 	    }
-	    return null;
 	}
-	
-	/** The state of this application (preferences....) */
-	private static class State {
-		public boolean mWifiConnection = false;
-	}
-	
-	public Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-            try {
-            	MKPoiInfoHelper mpi = (MKPoiInfoHelper) msg.getData().getSerializable(Constants.POI_SEARCH_RESULT);
-            	Log.d(TAG, "get result from PoiSearch."+mpi.toString());
-            	if (mpi.getSearchPlace().equals("home")) {
-            		//set home addr
-            		mUserProfile.setHomeAddr(mpi);
-             	} else if (mpi.getSearchPlace().equals("office")) {
-            		mUserProfile.setOfficeAddr(mpi);
-             	}
-            	Log.d(TAG, mUserProfile.toString());
-            	mUserProfile.commitPreferences(mSP);
-            	//update view
-        		TextView txtHome = (TextView)findViewById(R.id.homeaddr);
-        		txtHome.setText(mUserProfile.getHomeAddr().getName());
-        		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
-        		txtOffice.setText(mUserProfile.getOfficeAddr().getName());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-    };
 }

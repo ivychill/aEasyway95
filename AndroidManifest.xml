@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".PoiSearch" >
+            android:name=".SettingActivity" >
         </activity>
         <activity
             android:screenOrientation="portrait"

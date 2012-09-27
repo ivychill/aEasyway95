@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
@@ -16,6 +18,7 @@ import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
 import com.baidu.mapapi.RouteOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.luyun.easyway95.MKRouteHelper.GeoPointHelper;
 import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 
@@ -24,6 +27,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +41,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends MapActivity {
@@ -47,8 +53,11 @@ public class MainActivity extends MapActivity {
     public MapHelper mMapHelper;
     private GeoPoint mHomeAddr;
     private GeoPoint mOfficeAddr;
+    private TrafficPoint mTrafficPoint;
+    private ProgressDialog popupDlg;
     MapView mMapView;
     Easyway95App app;
+    private boolean updateViewTimerCreated = false;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
 	RouteOverlay mRouteOverlay = null; //Driving route overlay
@@ -152,13 +161,15 @@ public class MainActivity extends MapActivity {
         mLocationListener = new LocationListener(){
 			@Override
 			public void onLocationChanged(Location location) {
-				if(location != null && app.notTinyMove(location)){
+				if(location != null && !(app.isTinyMove(location))){
+	        		mMapView.getController().animateTo(GeoPointHelper.buildGeoPoint(location));
 					String strLog = String.format("您当前的位置:\r\n" +
 							"纬度:%f\r\n" +
 							"经度:%f",
 							location.getLongitude(), location.getLatitude());
 					Log.d(TAG, strLog);
 					mMapHelper.onLocationChanged(location);
+					resetMapView();
 				}
 			}
         };
@@ -184,9 +195,9 @@ public class MainActivity extends MapActivity {
         		//start login activity
         		startActivity(new Intent(MainActivity.this, SettingActivity.class));
         	}
-        });*/
+        });
 
-        /*Button btnXunfei1 = (Button)findViewById(R.id.button4);
+        Button btnXunfei1 = (Button)findViewById(R.id.button4);
         btnXunfei1.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -201,11 +212,13 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//start TTS service
-        		TTSThread t = new TTSThread("家长们：大家好!今天下午放学后，需要把把印制的教室板报文字贴到板报上，有时间的家长请今天下午放学后到教室帮忙，谢谢大家支持！"); 
+        		TTSThread t = new TTSThread("家长们：大家好!今天下午放学后，需要把印制的教室板报文字贴到板报上，有时间的家长请今天下午放学后到教室帮忙，谢谢大家支持！"); 
         		t.start();
         	}
         });
         
+        */
+        /*
         Button btnDrivingReq = (Button)findViewById(R.id.button6);
         btnDrivingReq.setOnClickListener(new OnClickListener() {
         	@Override
@@ -255,6 +268,7 @@ public class MainActivity extends MapActivity {
         		Log.d(TAG, "click resetting button.("+getCurrentLocation().toString()+")");
         		//GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
         		mMapView.getController().animateTo(getCurrentLocation());
+				resetMapView();
         	}
         });
         ImageButton btnTraffics = (ImageButton)findViewById(R.id.trafficbtn);
@@ -272,7 +286,7 @@ public class MainActivity extends MapActivity {
         	@Override
         	public void onClick(View v) {
         		//reset map view (animate to current location)
-        		startActivity(new Intent(MainActivity.this, PoiSearch.class));
+        		startActivity(new Intent(MainActivity.this, SettingActivity.class));
         	}
         });
         ImageButton btnGohome = (ImageButton)findViewById(R.id.gohome);
@@ -351,6 +365,18 @@ public class MainActivity extends MapActivity {
 				mbSynthetizeOngoing = false;
 				return;
 			}
+			if (msg.what == Constants.DLG_TIME_OUT) {
+				//mMapController.animateTo(mLocationOverlay.getMyLocation());
+				if (popupDlg != null) {
+					popupDlg.dismiss();
+				}
+				return;
+			}
+			if (msg.what == Constants.RESET_MAP_TIME_OUT) {
+				updateViewTimerCreated = false;
+				resetMapView();
+				return;
+			}
 			/* //first two from location update
 			else if (msg.what == Constants.REOCODER_RESULT) {
 				//addMarker(mTrackeeLngX, mTrackeeLatY);
@@ -381,7 +407,7 @@ public class MainActivity extends MapActivity {
             	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
             	Log.i(TAG, msgOnAir.toString());
             	mMapHelper.onMsg(msgOnAir);
-            	MainActivity.this.updateTrafficView();
+            	MainActivity.this.resetMapView();
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
 			}
@@ -397,8 +423,8 @@ public class MainActivity extends MapActivity {
     	@Override
 		public void run() {
 	        Log.d(TAG, "In TTSThead::running"); 
-	        int waitingTimes = 0; //waiting upto 15 seconds
-	        while (mbSynthetizeOngoing && waitingTimes < 30) {
+	        int waitingTimes = 0; //waiting upto 5 seconds
+	        while (mbSynthetizeOngoing && waitingTimes < 10) {
 	        	waitingTimes ++;
 	        	try {
 	        		Thread.sleep(500);
@@ -425,7 +451,20 @@ public class MainActivity extends MapActivity {
     	return mHomeAddr;
     }
     
-    public void updateMapViewByRoute() {
+    public void resetMapView() {
+    	resetMapViewByRoute();
+    	updateTrafficView();
+		
+		if (updateViewTimerCreated) return;
+		updateViewTimerCreated = true;
+    	//创建一个60秒的timer，保证自动刷新，否则界面显示和数据不同步
+		Timer timer = new Timer();
+		LYResetTimerTask timerTask = new LYResetTimerTask();
+		timer.schedule(timerTask, 60000);
+		promptTraffic();
+    }
+    
+    private void resetMapViewByRoute() {
 		mMapView.getOverlays().clear();
 		mMapView.getOverlays().add(mLocationOverlay);
 		
@@ -439,9 +478,7 @@ public class MainActivity extends MapActivity {
 		mMapView.invalidate();  //刷新地图
     }
     
-    public void updateTrafficView() {
-    	updateMapViewByRoute();
-    	
+    private void updateTrafficView() {
     	MKRouteHelper drivingRoutes = mMapHelper.getDrivingRoutes();
         Log.d(TAG, "fetching data from driving routes!");
         if (drivingRoutes == null) {
@@ -455,7 +492,7 @@ public class MainActivity extends MapActivity {
         while (it.hasNext()) {
         	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
         	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
-        	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPoints();
+        	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPointsByList();
         	if (matchedPoints == null || matchedPoints.size() == 0) continue;
     		
         	Drawable marker = getResources().getDrawable(R.drawable.slow_speed);  //得到需要标在地图上的资源
@@ -465,5 +502,70 @@ public class MainActivity extends MapActivity {
     		mMapView.getOverlays().add(lines); //添加ItemizedOverlay实例到mMapView
         }
 		mMapView.invalidate();  //刷新地图
+		//popupTrafficDialg("从东晓路到德贝银饰批发中心，西向"); //弹出模态窗口
+    }
+    
+    public void popupTrafficDialg(String msg) {
+    	showDialog(Constants.TRAFFIC_POPUP);
+        //String msg = "从东晓路到德贝银饰批发中心，西向";
+		TTSThread t = new TTSThread(msg); 
+		t.start();
+    }
+    
+    public void promptTraffic() {
+    	
+    }
+    
+    public void popupTrafficDialog(TrafficPoint tp) {
+        Log.d(TAG, "in popupTrafficDialog");
+    	String msg = Constants.NO_TRAFFIC_AHEAD;
+    	if (tp != null) {
+    		mTrafficPoint = tp;
+    		msg = tp.getDesc();
+    	}
+
+    	showDialog(Constants.TRAFFIC_POPUP);
+		TTSThread t = new TTSThread(msg); 
+		t.start();
+		
+		//创建一个8秒的timer
+		Timer timer = new Timer();
+		LYTimerTask timerTask = new LYTimerTask();
+		timer.schedule(timerTask, 8000);
+    }
+    
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case Constants.TRAFFIC_POPUP: {
+                popupDlg = new ProgressDialog(this);
+                String title = "前方无拥堵";
+                String msg = "";
+                if (mTrafficPoint != null) {
+                	title = mTrafficPoint.getRoad();
+                	msg = mTrafficPoint.getDesc();
+                }
+                popupDlg.setTitle(title);
+                popupDlg.setMessage(msg);
+                popupDlg.setIndeterminate(true);
+                popupDlg.setCancelable(true);
+                return popupDlg;
+            }
+        }
+        return null;
+    }
+    
+    private class LYTimerTask extends TimerTask {
+    	@Override
+    	public void run() {
+    		handler.sendMessage(Message.obtain(handler, Constants.DLG_TIME_OUT));
+    	}
+    }
+    
+    private class LYResetTimerTask extends TimerTask {
+    	@Override
+    	public void run() {
+    		handler.sendMessage(Message.obtain(handler, Constants.RESET_MAP_TIME_OUT));
+    	}
     }
 }

@@ -86,7 +86,7 @@ public class TrafficsCaring extends ListActivity {
         Log.d(TAG, "fetching data from driving routes!");
         if (drivingRoutes == null) {
         	Log.d(TAG, "no data before request driving routes!");
-        	return null;
+        	return list;
         }
         Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
         Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();

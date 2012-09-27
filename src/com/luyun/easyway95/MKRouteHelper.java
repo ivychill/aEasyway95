@@ -38,10 +38,15 @@ public class MKRouteHelper implements Serializable{
     private int mRouteType;
     private GeoPoint mStart;
     private ArrayList<MKStep> mAllSteps;
+    private int stepCursor = -1; //避免每次全部扫描所有的路
     private MKRoute mRawRoute;
     
     //用Map保存"路及路况"
     private Map<String, RoadTrafficHelper> mRoadsWithTraffic;
+    //另外一个Map保存Step index和Road对应关系，便于快速查找该Step和Road的对应关系
+    //之所以不在RoadTrafficHelper里保存Step的列表，理由是显然的，我们关键是需要快速从step index中找到路
+    //还有一种思路是，创建一个MKStepHelper，专门增加一个成员Road，这种方法有点重
+    private Map<Integer, String> mStepsOfRoad;
 	//private ArrayList<GeoPoint> matchedPoints;
     
 	MKRouteHelper(MKRoute mkr) {
@@ -82,6 +87,79 @@ public class MKRouteHelper implements Serializable{
     	return mAllPoints2;
     }
     
+    /*
+     * 根据stepCursor所对应的step，找出路名，然后找出该路所包括的matchPoint
+     * 如果step.getContent()包括”进入“，表示是从一条路切换到另一条路
+     */
+    public TrafficPoint getTrafficPoint(GeoPoint currentPoint) {
+    	if (stepCursor < 0) {
+    		return null;
+    	}
+    	String roadName = null;
+    	//找前方的路上匹配点
+    	for (int i=stepCursor; i<mAllSteps.size();i++) {
+    		roadName = mStepsOfRoad.get(new Integer(i));
+    		if (roadName == null) continue;
+    		RoadTrafficHelper rt = mRoadsWithTraffic.get(roadName);
+    		if (rt == null) continue;
+    		TrafficPoint tp = rt.getTrafficPoint(currentPoint);
+    		if (tp == null) continue;
+    		tp.setRoad(roadName);
+    		return tp;
+    	}
+    	return null;
+    }
+    
+    /*
+     * 根据stepCursor，寻找当前、后面、前面三个step的points去匹配，同时更新stepCursor
+     * 如果不匹配，则从头循环step找出匹配点，同时更新该cursor
+     * 从前方的step中找出路名，然后从路里找出matchedPoints
+     */
+    public boolean isOnRoute(GeoPoint currentPoint) {
+    	int i = 0;
+    	int startIndex = stepCursor>2?stepCursor-3:0;
+    	int endIndex = stepCursor+3<mAllPoints.size()?stepCursor+3:mAllPoints.size();
+    	//首先找最可能的next 3个step
+    	for (i=stepCursor>=0?stepCursor:0; i<endIndex; i++) {
+        	STPointLineDistInfo stPointLineDistInfo = new STPointLineDistInfo();
+        	double distanceOffRoad = 0.0;
+    		distanceOffRoad = getNearestDistanceOfRoad(currentPoint, mAllPoints.get(i), stPointLineDistInfo);
+        	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
+        		//on road
+        		stepCursor = i;
+        		return true;
+        	}
+    	}
+    	//其次往回找最可能的previous 3个step
+    	for (i=startIndex; i<stepCursor; i++) {
+        	STPointLineDistInfo stPointLineDistInfo = new STPointLineDistInfo();
+        	double distanceOffRoad = 0.0;
+    		distanceOffRoad = getNearestDistanceOfRoad(currentPoint, mAllPoints.get(i), stPointLineDistInfo);
+        	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
+        		//on road
+        		stepCursor = i;
+        		return true;
+        	}
+    	}
+    	//不能快速匹配则从头循环查找，是否可以取getAllPoints2()，找出当前点投影在哪一段，然后再计算出stepCursor，不过不一定减少运算量。
+    	for (i=0; i<mAllPoints.size(); i++) {
+        	STPointLineDistInfo stPointLineDistInfo = new STPointLineDistInfo();
+        	double distanceOffRoad = 0.0;
+    		distanceOffRoad = getNearestDistanceOfRoad(currentPoint, mAllPoints.get(i), stPointLineDistInfo);
+        	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
+        		//on road
+        		stepCursor = i;
+        		return true;
+        	}
+    	}
+    	stepCursor = -1; //不在本DrivingRoute上
+    	return false;
+    }
+    
+    ArrayList<GeoPoint> getMatchedPoints() {
+    	return mMatchedPoints;
+    }
+    
     public void onTraffic(LYTrafficPub trafficPub, boolean rebuildRoads) {
 		List<LYRoadTraffic> roadTraffics = trafficPub.getCityTraffic().getRoadTrafficsList();
 		if (mRoadsWithTraffic == null || rebuildRoads) {
@@ -99,16 +177,55 @@ public class MKRouteHelper implements Serializable{
 				}
 				continue;
 			}
-			rt.build(roadTraffics.get(i));
-			rt.matchRoute();
+			//rt.build();
+			rt.matchRoute(roadTraffics.get(i));
 			//找出所有的MatchedPoints
-	        ArrayList<GeoPoint> matchedPoints = rt.getMatchedPoints();
+			ArrayList<GeoPoint> matchedPoints = rt.getMatchedPointsByList();
 	        if (matchedPoints == null || matchedPoints.size() == 0) continue;
 	        if (mMatchedPoints == null) mMatchedPoints = new ArrayList<GeoPoint>();
-	        mMatchedPoints.addAll(matchedPoints);
+            mMatchedPoints.addAll(matchedPoints);
 		}
     }
-    
+
+    /*
+     * 这个函数只在构造时调用一次，创建路作为容器，收纳所有路况
+     * 并创建一个Map，用于快速索引step到路
+     */
+    private void buildRoadsFromRoute() {
+		String road = "";
+    	for (int index = 0; index < mNumSteps; index++){
+			//Log.d(TAG, "step index..." + index);
+			MKStep step = mAllSteps.get(index);
+			//Log.d(TAG, "step content..." + step.getContent());
+			Scanner scanner = new Scanner(step.getContent());
+			scanner.useDelimiter("\\s*-\\s*");
+			String pattern = ".*进入(.*)";
+			if(scanner.hasNext(pattern)) {
+				scanner.next(pattern);
+				MatchResult match = scanner.match();
+				road = match.group(1);
+				RoadTrafficHelper rt = null;
+				if (mRoadsWithTraffic == null) {
+					mRoadsWithTraffic = new HashMap<String, RoadTrafficHelper>();
+				} else {
+					rt = mRoadsWithTraffic.get(road);
+				}
+				if (rt == null) {
+					rt = new RoadTrafficHelper();
+					mRoadsWithTraffic.put(road, rt);
+				}
+				if (index < mNumSteps-2) {
+					rt.addPoints(mAllPoints.get(index));
+				}
+			} 
+			if (road.equals("")) continue; //还没有找到第一条路
+			if (mStepsOfRoad == null) {
+				mStepsOfRoad = new HashMap<Integer, String>();
+			}
+			mStepsOfRoad.put(index, road);
+		}
+    }
+
     //不直接用proto生成的LYRoadTraffic的理由：1.这个用作容器，收纳LYRoadTraffic信息，需要比较方便的set/get，如果用LYRoadTraffic，会比较麻烦
     //另外，容器需要跟协议的耦合度降低，只在这个容器里处理不同的协议。
     //同时将原来协议传送的List换成Map的形式，便于程序处理和效率的考虑
@@ -119,7 +236,7 @@ public class MKRouteHelper implements Serializable{
     	private String desc;
     	private ArrayList<LYSegmentTraffic> mSegmentTraffic;
     	private ArrayList<GeoPoint> mPointsOfRoute;
-    	private ArrayList<GeoPoint> matchedPoints;
+    	private Map<Integer, ArrayList<GeoPoint>> matchedPoints;
     	private boolean needClearSegment = false;
     	
     	RoadTrafficHelper() {
@@ -147,14 +264,38 @@ public class MKRouteHelper implements Serializable{
     	void clearSegment(int i) {
     		if (i < 0 || i > mSegmentTraffic.size()-1) return; //do nothing
     		mSegmentTraffic.set(i, null);
+    		matchedPoints.remove(new Integer(i));
     		needClearSegment = true;
     	}
     	
-    	ArrayList<GeoPoint> getMatchedPoints() {
+    	Map<Integer, ArrayList<GeoPoint>> getMatchedPoints() {
+    		if (matchedPoints == null) return null;
     		return matchedPoints;
+    		
+//    		ArrayList<GeoPoint> listPoints = new ArrayList<GeoPoint>();
+//    		Iterator it = matchedPoints.entrySet().iterator();
+//    		while (it.hasNext()) {
+//            	Map.Entry<Integer, ArrayList<GeoPoint>> entry = (Entry<Integer, ArrayList<GeoPoint>>) it.next();
+//            	ArrayList<GeoPoint> points = entry.getValue();
+//    			listPoints.addAll(points);
+//    		}
+//    		return listPoints;
     	}
     	
-    	RoadTrafficHelper build(LYRoadTraffic rt) {
+    	ArrayList<GeoPoint> getMatchedPointsByList() {
+    		if (matchedPoints == null) return null;
+    		
+    		ArrayList<GeoPoint> listPoints = new ArrayList<GeoPoint>();
+    		Iterator it = matchedPoints.entrySet().iterator();
+    		while (it.hasNext()) {
+            	Map.Entry<Integer, ArrayList<GeoPoint>> entry = (Entry<Integer, ArrayList<GeoPoint>>) it.next();
+            	ArrayList<GeoPoint> points = entry.getValue();
+    			listPoints.addAll(points);
+    		}
+    		return listPoints;
+    	}
+    	
+    	private RoadTrafficHelper build(LYRoadTraffic rt) {
     		this.timestamp = new Timestamp(rt.getTimestamp());
     		this.href = new String(rt.getHref());
     		this.desc = new String(rt.getDesc());
@@ -169,46 +310,55 @@ public class MKRouteHelper implements Serializable{
     		mPointsOfRoute.addAll(points);
     	}
     	
-    	void matchRoute() {
-    		ArrayList<GeoPoint> tmpMatchedPoints = new ArrayList();
-    		matchedPoints = new ArrayList();
+    	/*
+    	 * 匹配后得到如下信息：有哪些拟合后的点：保存在matchedPoints所对应的values里，其键值为segment的索引
+    	 */
+    	void matchRoute(LYRoadTraffic rt) {
+    		this.build(rt);
+    		matchedPoints = new HashMap<Integer, ArrayList<GeoPoint>>();
     		for (int i=0; i<mSegmentTraffic.size(); i++) {
+        		ArrayList<GeoPoint> tmpMatchedPoints = new ArrayList();
     			MatchRoadAndTraffic(mSegmentTraffic.get(i).getSegment(), mPointsOfRoute, tmpMatchedPoints);
-    			matchedPoints.addAll(tmpMatchedPoints);
+    			if (tmpMatchedPoints.size() >0) {
+    				matchedPoints.put(i, tmpMatchedPoints);
+    			}
     		}
     		Log.d(TAG, "matchedPoints="+matchedPoints.size()+","+matchedPoints.toString());
     	}
+    	
+    	/*
+    	 * 非常复杂的算法，是否可以优化？
+    	 * 遍历mSegmentTraffic，因之前已将拟合后的投影点保存在matchedPoints
+    	 * 调用getClosestPoint(pt, tmpPoints)
+    	 */
+    	public TrafficPoint getTrafficPoint(GeoPoint pt) {
+    		if (matchedPoints == null || matchedPoints.size() == 0) return null;
+    		ArrayList<GeoPoint> points = new ArrayList<GeoPoint>();
+    		int indexOfSegment = -1;
+    		GeoPointHelper nextPoint = null;
+    		for (int i=0; i<mSegmentTraffic.size(); i++) {
+    			ArrayList<GeoPoint> tmpPoints = matchedPoints.get(new Integer(i));
+    			if (tmpPoints == null) continue;
+        		//调用一次getNearestDistanceOfRoad，用于判断
+            	double distanceOffRoad = 0.0;
+        		GeoPointHelper tmpPoint = null;
+            	//错误！getNearestDistanceOfRoad是获取点到线的投影距离
+        		tmpPoint = findNextPoint(pt, tmpPoints);
+        		if (tmpPoint == null) continue; //永远不会返回null
+        		if (nextPoint == null || tmpPoint.getDistance() < nextPoint.getDistance()) {
+        			nextPoint = tmpPoint;
+        			indexOfSegment = i;
+        		}
+    		}
+    		if (nextPoint == null || indexOfSegment < 0) return null;
+    		TrafficPoint tp = new TrafficPoint();
+    		tp.setPoint(nextPoint.getPoint());
+    		tp.setDistance(nextPoint.getDistance());
+    		tp.setDesc(mSegmentTraffic.get(indexOfSegment).getDetails());
+    		return tp;
+    	}
     }
     
-    private void buildRoadsFromRoute() {
-		String road = "";
-    	for (int index = 0; index < mNumSteps; index++){
-			Log.d(TAG, "step index..." + index);
-			MKStep step = mAllSteps.get(index);
-			Log.d(TAG, "step content..." + step.getContent());
-			Scanner scanner = new Scanner(step.getContent());
-			scanner.useDelimiter("\\s*-\\s*");
-			String pattern = ".*进入(.*)";
-			if(scanner.hasNext(pattern)) {
-				scanner.next(pattern);
-				MatchResult match = scanner.match();
-				road = match.group(1);
-				RoadTrafficHelper rt = null;
-				if (mRoadsWithTraffic == null) {
-					mRoadsWithTraffic = new HashMap<String, RoadTrafficHelper>();
-				} else {
-					rt = mRoadsWithTraffic.get(road);
-				}
-				if (rt == null) {
-					rt = new RoadTrafficHelper();
-					mRoadsWithTraffic.put(road, rt);
-				}
-				if (index < mNumSteps-2) {
-					rt.addPoints(mAllPoints.get(index));
-				}
-			}
-		}
-    }
     //#Begin.....//路径拟合以及点和路径相关的判断算法
     //弧度计算
     private static double rad(double d)  
@@ -219,6 +369,11 @@ public class MKRouteHelper implements Serializable{
     //返回两点之间的距离，单位为米
     public static double getDistance(Location loc1, Location loc2) {
     	return GetDistance(loc1.getLatitude(), loc1.getLongitude(), loc2.getLatitude(), loc2.getLongitude());
+    }
+    
+    //返回两点之间的距离，单位为米
+    public static double getDistance(GeoPoint p1, GeoPoint p2) {
+    	return GetDistance(p1.getLatitudeE6()/Constants.DOUBLE_1E6, p1.getLongitudeE6()/Constants.DOUBLE_1E6, p2.getLatitudeE6()/Constants.DOUBLE_1E6, p2.getLongitudeE6()/Constants.DOUBLE_1E6);
     }
     
     public static double GetDistance(double lat1, double lng1, double lat2, double lng2)  
@@ -239,10 +394,10 @@ public class MKRouteHelper implements Serializable{
     //返回两点之间的距离，输入是百度的微度 !~_~
     public static double MetersBetweenGeoPoints(GeoPoint geoPoint1, GeoPoint geoPoint2)  
     {  
-    	double lat1 = geoPoint1.getLatitudeE6()/1000000.0;
-    	double lng1 = geoPoint1.getLongitudeE6()/1000000.0;
-    	double lat2 = geoPoint2.getLatitudeE6()/1000000.0;
-    	double lng2 = geoPoint2.getLongitudeE6()/1000000.0;
+    	double lat1 = geoPoint1.getLatitudeE6()/Constants.DOUBLE_1E6;
+    	double lng1 = geoPoint1.getLongitudeE6()/Constants.DOUBLE_1E6;
+    	double lat2 = geoPoint2.getLatitudeE6()/Constants.DOUBLE_1E6;
+    	double lng2 = geoPoint2.getLongitudeE6()/Constants.DOUBLE_1E6;
     	return GetDistance(lat1, lng1, lat2, lng2);
     }  
 
@@ -267,12 +422,12 @@ public class MKRouteHelper implements Serializable{
       RTTGeoPoint p1 = new RTTGeoPoint();
       RTTGeoPoint p2 = new RTTGeoPoint();
       
-      pnt.lat = locPoint.getLatitudeE6()/1000000.0;
-      pnt.lng = locPoint.getLongitudeE6()/1000000.0;
-      p1.lat = lineP1.getLatitudeE6()/1000000.0;
-      p1.lng = lineP1.getLongitudeE6()/1000000.0;
-      p2.lat = lineP2.getLatitudeE6()/1000000.0;
-      p2.lng = lineP2.getLongitudeE6()/1000000.0;
+      pnt.lat = locPoint.getLatitudeE6()/Constants.DOUBLE_1E6;
+      pnt.lng = locPoint.getLongitudeE6()/Constants.DOUBLE_1E6;
+      p1.lat = lineP1.getLatitudeE6()/Constants.DOUBLE_1E6;
+      p1.lng = lineP1.getLongitudeE6()/Constants.DOUBLE_1E6;
+      p2.lat = lineP2.getLatitudeE6()/Constants.DOUBLE_1E6;
+      p2.lng = lineP2.getLongitudeE6()/Constants.DOUBLE_1E6;
 
       a = (p2.lat-p1.lat);
       b = p1.lng-p2.lng;
@@ -284,8 +439,8 @@ public class MKRouteHelper implements Serializable{
       
       if (retproj != null)
       {
-          retproj.setLatitudeE6((int)(dSPtY*1000000.0));
-          retproj.setLongitudeE6((int)(dSPtX*1000000.0));
+          retproj.setLatitudeE6((int)(dSPtY*Constants.DOUBLE_1E6));
+          retproj.setLongitudeE6((int)(dSPtX*Constants.DOUBLE_1E6));
       }
       
       
@@ -349,21 +504,66 @@ public class MKRouteHelper implements Serializable{
 		public void setPointindex(int pointindex) {
 			this.pointindex = pointindex;
 		}
+		public GeoPoint getPoint() {
+			GeoPoint pt = new GeoPoint((int)(projection.lat*1E6), (int)(projection.lng*1E6));
+			return pt;
+		}
     }
     
     //百度的微度到度之间的转换......
     private RTTGeoPoint GeoPoint2RttGeoPoint(GeoPoint point)
     {
     	RTTGeoPoint retPoint = new RTTGeoPoint();
-    	retPoint.lat = point.getLatitudeE6()/1000000.0;
-    	retPoint.lng = point.getLongitudeE6()/1000000.0;
+    	retPoint.lat = point.getLatitudeE6()/Constants.DOUBLE_1E6;
+    	retPoint.lng = point.getLongitudeE6()/Constants.DOUBLE_1E6;
     	return retPoint;
     }
 
     public static class GeoPointHelper {
+    	private GeoPoint point;
+	    private double distance;
+	    private int pointindex;
+		
+		public double getDistance() {
+			return distance;
+		}
+		public void setDistance(double distance) {
+			this.distance = distance;
+		}
+		public int getPointindex() {
+			return pointindex;
+		}
+		public void setPointindex(int pointindex) {
+			this.pointindex = pointindex;
+		}
+    	GeoPointHelper(GeoPoint pt) {
+    		point = pt;
+    	}
+    	public GeoPoint getPoint() {
+    		return point;
+    	}
+    	
     	public static GeoPoint buildGeoPoint(Location loc) {
     		return new GeoPoint((int)(loc.getLatitude()*1E6), (int)(loc.getLongitude()*1E6));
     	}
+    }
+    
+    /*
+     * 返回GeoPointHelper
+     * 2012.09.26 蔡庆丰增加
+     */
+    public GeoPointHelper findNextPoint(GeoPoint pt, java.util.ArrayList<GeoPoint> listPoints) {
+    	GeoPointHelper pointHelper = null;
+    	for (int i=0; i<listPoints.size(); i++) {
+    		GeoPointHelper tmpPointHelper = new GeoPointHelper(listPoints.get(i));
+    		double distance = getDistance(pt, listPoints.get(i));
+    		tmpPointHelper.setDistance(distance);
+    		tmpPointHelper.setPointindex(i);
+    		if (pointHelper == null || tmpPointHelper.getDistance() < pointHelper.getDistance()) {
+    			pointHelper = tmpPointHelper;
+    		}
+    	}
+    	return pointHelper;
     }
     //该方法获取LocationPoint和路径（数组roadPoints给出）的最短距离；输入参数pointCount是数组的size（Java中其实可以不用，还没改）；
     //返回结构该结构用于在判断一个点和路径上的关系的时候，返回最短距离、投影点、以及投影点在路径点数组中对应Index等；必须在调用的函数中实例化
@@ -485,10 +685,10 @@ public class MKRouteHelper implements Serializable{
        {
 //           Log.d(TAG, "没有拟合的矩形");
 //           String strrectinfo = String.format("RectRd P1=%f,%f, P2=%f,%f; Traffic P1=%f,%f, P1=%f,%f", 
-//        		   minRectPoint.getLatitudeE6()/1000000.0, minRectPoint.getLongitudeE6()/1000000.0, 
-//        		   maxRectPoint.getLatitudeE6()/1000000.0, maxRectPoint.getLongitudeE6()/1000000.0,
-//        		   trafficRectPoint1.getLatitudeE6()/1000000.0, trafficRectPoint1.getLongitudeE6()/1000000.0,
-//        		   trafficRectPoint2.getLatitudeE6()/1000000.0, trafficRectPoint2.getLongitudeE6()/1000000.0);
+//        		   minRectPoint.getLatitudeE6()/Constants.DOUBLE_1E6, minRectPoint.getLongitudeE6()/Constants.DOUBLE_1E6, 
+//        		   maxRectPoint.getLatitudeE6()/Constants.DOUBLE_1E6, maxRectPoint.getLongitudeE6()/Constants.DOUBLE_1E6,
+//        		   trafficRectPoint1.getLatitudeE6()/Constants.DOUBLE_1E6, trafficRectPoint1.getLongitudeE6()/Constants.DOUBLE_1E6,
+//        		   trafficRectPoint2.getLatitudeE6()/Constants.DOUBLE_1E6, trafficRectPoint2.getLongitudeE6()/Constants.DOUBLE_1E6);
 //           Log.d(TAG,strrectinfo);
            return false; 
        }
@@ -517,8 +717,8 @@ public class MKRouteHelper implements Serializable{
     	   CommRectP2.setLongitudeE6(lng[2]);
     	   
 //    	   String strLog = String.format("拟合矩形 P1=%f,%f; P2=%f,%f", 
-//    			   CommRectP1.getLongitudeE6()/1000000.0, CommRectP1.getLatitudeE6()/1000000.0,
-//    			   CommRectP2.getLongitudeE6()/1000000.0, CommRectP2.getLatitudeE6()/1000000.0);
+//    			   CommRectP1.getLongitudeE6()/Constants.DOUBLE_1E6, CommRectP1.getLatitudeE6()/Constants.DOUBLE_1E6,
+//    			   CommRectP2.getLongitudeE6()/Constants.DOUBLE_1E6, CommRectP2.getLatitudeE6()/Constants.DOUBLE_1E6);
 //    	   Log.d(TAG,strLog);
 
     	   GeoPoint comPoint1 = new GeoPoint(0,0);
@@ -570,8 +770,8 @@ public class MKRouteHelper implements Serializable{
            {
 //        	   strLog = String.format("距离太短，丢弃；矩形距离=%f\r\n P1=%f,%f; P2=%f,%f", 
 //        			   cmbRange,
-//        			   comPoint1.getLongitudeE6()/1000000.0, comPoint1.getLatitudeE6()/1000000.0,
-//        			   comPoint2.getLongitudeE6()/1000000.0, comPoint2.getLatitudeE6()/1000000.0);
+//        			   comPoint1.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint1.getLatitudeE6()/Constants.DOUBLE_1E6,
+//        			   comPoint2.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint2.getLatitudeE6()/Constants.DOUBLE_1E6);
 //        	   Log.d(TAG,strLog);
                return false;
            }
@@ -579,8 +779,8 @@ public class MKRouteHelper implements Serializable{
            {
         	   
 //        	   strLog = String.format("方向判断，矩形 P1=%f,%f; P2=%f,%f", 
-//        			   comPoint1.getLongitudeE6()/1000000.0, comPoint1.getLatitudeE6()/1000000.0,
-//        			   comPoint2.getLongitudeE6()/1000000.0, comPoint2.getLatitudeE6()/1000000.0);
+//        			   comPoint1.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint1.getLatitudeE6()/Constants.DOUBLE_1E6,
+//        			   comPoint2.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint2.getLatitudeE6()/Constants.DOUBLE_1E6);
 //        	   Log.d(TAG,strLog);
         	   
 		        //判断方向

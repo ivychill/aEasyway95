@@ -160,21 +160,44 @@ public class MapHelper {
     		return;
     	}
     	
-    	STPointLineDistInfo stPointLineDistInfo = mDrivingRoutes.new STPointLineDistInfo();
-    	double distanceOffRoad = 0.0;
-    	if (mDrivingRoutes != null) {
-    		distanceOffRoad = mDrivingRoutes.getNearestDistanceOfRoad(mCurrentPoint, mDrivingRoutes.getAllPoints2(), stPointLineDistInfo);
-    	} else { //use home-office route to check
-        	requestDrivingRoutes(mCurrentPoint, mDestPoint);
-    		return;
-    	}
-    	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
-    		//on road
-    		//从匹配后的拥堵点中找出下一个与当前距离
+    	if (mDrivingRoutes.isOnRoute(mCurrentPoint)) {
+    		Log.d(TAG, "on route");
+    		TrafficPoint nextTrafficPoint = mDrivingRoutes.getTrafficPoint(mCurrentPoint);
+    		//Log.d(TAG, nextTrafficPoint.toString());
+			mainActivity.popupTrafficDialog(nextTrafficPoint);
+			return;
     	} else {
     		//off road
     		requestDrivingRoutes(mCurrentPoint, mDestPoint);
     	}
+//    	STPointLineDistInfo stPointLineDistInfo = mDrivingRoutes.new STPointLineDistInfo();
+//    	double distanceOffRoad = 0.0;
+//    	if (mDrivingRoutes != null) {
+//    		distanceOffRoad = mDrivingRoutes.getNearestDistanceOfRoad(mCurrentPoint, mDrivingRoutes.getAllPoints2(), stPointLineDistInfo);
+//    	} else { //use home-office route to check
+//        	requestDrivingRoutes(mCurrentPoint, mDestPoint);
+//    		return;
+//    	}
+//    	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
+//    		//on road
+//    		//从匹配后的拥堵点中找出下一个与当前距离
+//    		STPointLineDistInfo newSTPointLineDistInfo = mDrivingRoutes.new STPointLineDistInfo();
+//    		Log.d(TAG, stPointLineDistInfo.toString());
+//    		ArrayList<GeoPoint> allMatchedPoints = mDrivingRoutes.getMatchedPoints();
+//    		GeoPoint nextTrafficPoint = null;
+//    		double newDistanceOffRoad = mDrivingRoutes.getNearestDistanceOfRoad(mCurrentPoint, allMatchedPoints, newSTPointLineDistInfo);
+//    		if (Math.abs(newDistanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { //说明现在正在某段拥堵路中间
+//    			if (newSTPointLineDistInfo.getPointindex() < allMatchedPoints.size()) {
+//    				//找出该点所对应的路来,生成需要popup的消息文本
+//    				//mainActivity.popupTrafficDialg();
+//    			}
+//    		} else {
+//    			
+//    		}
+//    	} else {
+//    		//off road
+//    		requestDrivingRoutes(mCurrentPoint, mDestPoint);
+//    	}
     }
     
     public void requestRoadsAround(Location currentLocation) {
@@ -250,7 +273,7 @@ public class MapHelper {
 				MKRoute route = result.getPlan(0).getRoute(0);
 				//这里将原来的规划路径覆盖
 				mDrivingRoutes = new MKRouteHelper(route);
-			    mainActivity.updateMapViewByRoute();
+			    mainActivity.resetMapView();
 			    
 			    //Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
 

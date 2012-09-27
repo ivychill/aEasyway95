@@ -61,7 +61,7 @@ public class TTSService extends IntentService implements SynthesizerPlayerListen
 		int speed = 50;
 		mSynthetizerPlayer.setSpeed(speed);
 
-		int volume = 50;
+		int volume = 80;
 		mSynthetizerPlayer.setVolume(volume);
 
 		mSynthetizerPlayer.playText(text, null,this);
