@@ -8,6 +8,22 @@ public final class TrafficPoint {
 	private GeoPoint point;
 	private double distance;
 	
+	TrafficPoint(TrafficPoint pt) {
+		if (pt == null) {
+			return;
+		}
+		this.road = pt.getRoad();
+		this.desc = pt.getDesc();
+		this.point = pt.getPoint();
+		this.distance = pt.getDistance();
+	}
+	TrafficPoint () {
+		road = null;
+		desc = null;
+		point = null;
+		distance = 0.0;
+	}
+	
 	public void setRoad(String rd) {
 		road = rd;
 	}

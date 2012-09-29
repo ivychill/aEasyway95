@@ -19,8 +19,10 @@ public class Constants {
 	
 	public static final int SYNTHESIZE_ONGOING=5500;	
 	public static final int SYNTHESIZE_DONE=5501;	
-	public static final int DLG_TIME_OUT=5601;	
-	public static final int RESET_MAP_TIME_OUT=5601;	
+	public static final int DLG_TIME_OUT=5601;	//消息
+	public static final int DLG_LAST_DURATION=12000;	//对话框存在的时间
+	public static final int RESET_MAP_TIME_OUT=5701;	
+	public static final int RESET_MAP_INTERVAL=60000;	
 
 	public static final int WAITING_TRACKEE_LOC=5500;
 	public static final int GOT_TRACKEE_LOC=5501;
@@ -37,7 +39,8 @@ public class Constants {
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
 	//public static final String TSS_PRO_HOST="www.roadclouding.com";	
-	public static final String TSS_PRO_HOST="172.16.0.100";	
+	public static final String TSS_PRO_HOST="42.121.99.247";	
+	//public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	

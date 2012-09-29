@@ -800,6 +800,26 @@ public class MKRouteHelper implements Serializable{
 		            	return false;
 		            }
 		            
+	                //如果拥堵路段比较短，在两个直线的端点之间；则需要判断两个投影点和起始端点的距离，通过这个距离来判断先后顺序（方向）
+	                if (stPLDinfoC1.pointindex == stPLDinfoC2.pointindex) 
+	                {
+	                    GeoPoint machedProjPoint1 = new GeoPoint(0, 0);
+	                    machedProjPoint1.setLatitudeE6((int) (stPLDinfoC1.projection.lat*1E6));
+	                    machedProjPoint1.setLongitudeE6((int) (stPLDinfoC1.projection.lng*1E6));
+
+	                    GeoPoint machedProjPoint2 = new GeoPoint(0, 0);
+	                    machedProjPoint2.setLatitudeE6((int) (stPLDinfoC2.projection.lat*1E6));
+	                    machedProjPoint2.setLongitudeE6((int) (stPLDinfoC2.projection.lng*1E6));
+	                    
+	                    double distancM1 = MetersBetweenGeoPoints(machedProjPoint1, roadPoints.get(stPLDinfoC1.pointindex));
+	                    double distancM2 = MetersBetweenGeoPoints(machedProjPoint2, roadPoints.get(stPLDinfoC1.pointindex));
+
+	                    if (distancM1 >= distancM2)
+	                    {
+	                        return false;
+	                    }
+	                }
+		            
 		            //正确拟合，添加拟合路段的坐标点（有序）
 		            GeoPoint firstPrjPoint = new GeoPoint(0,0);
 		            GeoPoint endPrjPoint = new GeoPoint(0,0);

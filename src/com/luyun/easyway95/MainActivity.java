@@ -58,6 +58,9 @@ public class MainActivity extends MapActivity {
     MapView mMapView;
     Easyway95App app;
     private boolean updateViewTimerCreated = false;
+    private Timer mTimer;
+    private LYDlgDismissTimerTask mDlgTimerTask;
+    private LYResetTimerTask mResetTimerTask;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
 	RouteOverlay mRouteOverlay = null; //Driving route overlay
@@ -355,9 +358,23 @@ public class MainActivity extends MapActivity {
         mLocationOverlay.enableMyLocation();
         mLocationOverlay.enableCompass(); // 打开指南针
 	    app.mBMapMan.start();
+	    
+	    //注册一个定时器，以便定期的刷新Map
+	    if (mTimer == null) {
+	    	mTimer = new Timer();
+	    }
+	    setResetTimerTask();
 	    super.onResume();
 	}    
     
+	private void setResetTimerTask() {
+	    if (mResetTimerTask != null) {
+	    	mResetTimerTask.cancel();
+	    } 
+    	mResetTimerTask = new LYResetTimerTask();
+	    mTimer.schedule(mResetTimerTask, Constants.RESET_MAP_INTERVAL);
+	}
+	
 	public Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg.what == Constants.SYNTHESIZE_DONE) {
@@ -403,10 +420,10 @@ public class MainActivity extends MapActivity {
 					break;
 			}
             try {
-            	Log.i(TAG, "get message from server.");
+            	//Log.i(TAG, "get message from server.");
             	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
             	Log.i(TAG, msgOnAir.toString());
-            	mMapHelper.onMsg(msgOnAir);
+             	mMapHelper.onMsg(msgOnAir);
             	MainActivity.this.resetMapView();
 			} catch (InvalidProtocolBufferException e) {
 				e.printStackTrace();
@@ -455,13 +472,14 @@ public class MainActivity extends MapActivity {
     	resetMapViewByRoute();
     	updateTrafficView();
 		
-		if (updateViewTimerCreated) return;
-		updateViewTimerCreated = true;
+//		if (updateViewTimerCreated) return;
+//		updateViewTimerCreated = true;
     	//创建一个60秒的timer，保证自动刷新，否则界面显示和数据不同步
-		Timer timer = new Timer();
-		LYResetTimerTask timerTask = new LYResetTimerTask();
-		timer.schedule(timerTask, 60000);
+//		Timer timer = new Timer();
+//		LYResetTimerTask timerTask = new LYResetTimerTask();
+//		timer.schedule(timerTask, 5000);
 		promptTraffic();
+    	setResetTimerTask();
     }
     
     private void resetMapViewByRoute() {
@@ -513,25 +531,28 @@ public class MainActivity extends MapActivity {
     }
     
     public void promptTraffic() {
-    	
+    	popupTrafficDialog(mTrafficPoint);
     }
     
     public void popupTrafficDialog(TrafficPoint tp) {
         Log.d(TAG, "in popupTrafficDialog");
     	String msg = Constants.NO_TRAFFIC_AHEAD;
-    	if (tp != null) {
-    		mTrafficPoint = tp;
-    		msg = tp.getDesc();
+		mTrafficPoint = new TrafficPoint(tp);
+    	if (tp != null && tp.getRoad() != null) {
+    		msg = tp.getRoad()+tp.getDesc();
     	}
 
-    	showDialog(Constants.TRAFFIC_POPUP);
+    	Log.d(TAG, "msg to be showed:"+msg);
 		TTSThread t = new TTSThread(msg); 
 		t.start();
 		
-		//创建一个8秒的timer
-		Timer timer = new Timer();
-		LYTimerTask timerTask = new LYTimerTask();
-		timer.schedule(timerTask, 8000);
+    	showDialog(Constants.TRAFFIC_POPUP);
+		//创建一个20秒的timer
+    	if (mDlgTimerTask != null) {
+    		mDlgTimerTask = new LYDlgDismissTimerTask();
+    	}
+    	mDlgTimerTask = new LYDlgDismissTimerTask();
+		mTimer.schedule(mDlgTimerTask, Constants.DLG_LAST_DURATION);
     }
     
     @Override
@@ -541,7 +562,8 @@ public class MainActivity extends MapActivity {
                 popupDlg = new ProgressDialog(this);
                 String title = "前方无拥堵";
                 String msg = "";
-                if (mTrafficPoint != null) {
+                if (mTrafficPoint != null && mTrafficPoint.getRoad() != null) {
+                	Log.d(TAG, "no traffic ahead!");
                 	title = mTrafficPoint.getRoad();
                 	msg = mTrafficPoint.getDesc();
                 }
@@ -555,7 +577,7 @@ public class MainActivity extends MapActivity {
         return null;
     }
     
-    private class LYTimerTask extends TimerTask {
+    private class LYDlgDismissTimerTask extends TimerTask {
     	@Override
     	public void run() {
     		handler.sendMessage(Message.obtain(handler, Constants.DLG_TIME_OUT));
