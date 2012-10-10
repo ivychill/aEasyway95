@@ -49,7 +49,7 @@
 	            android:id="@+id/imageView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:src="@drawable/officelogo" />
+	            android:src="@drawable/homelogo" />
 	
 	        <TextView
 	            android:id="@+id/homeaddr"
@@ -84,7 +84,7 @@
 	    	    android:id="@+id/imageView2"
 	    	    android:layout_width="wrap_content"
 	    	    android:layout_height="wrap_content"
-	    	    android:src="@drawable/homelogo" />
+	    	    android:src="@drawable/officelogo" />
 	
 	        <TextView
 		    android:id="@+id/officeaddr"
@@ -136,7 +136,7 @@
 		        android:orientation="horizontal" >
 			<Button
 			    	android:id="@+id/search_home"
-			    	android:text="查找并\n设为家"
+			    	android:text="设为\n家"
 			    	android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 		    	/>

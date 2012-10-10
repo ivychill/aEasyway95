@@ -94,12 +94,11 @@ public class TrafficsOfRoute extends ListActivity {
         	
         	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
         	if (segments == null) continue;
-        	Iterator segIt = segments.iterator();
         	long nowTime = System.currentTimeMillis()/1000;
         	for (int i=0; i<segments.size(); i++) {
 	        	long time_stamp = segments.get(i).getTimestamp();
 	        	long interval = (nowTime - time_stamp)/60;
-	        	if (interval > 6) {
+	        	if (interval > Constants.TRAFFIC_LAST_DURATION) {
 	        		rt.clearSegment(i);
 	        		continue;
 	        	}

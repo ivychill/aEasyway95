@@ -1,6 +1,7 @@
 package com.luyun.easyway95;
 
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.MKPoiResult;

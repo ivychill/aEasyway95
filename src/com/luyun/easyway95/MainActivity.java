@@ -21,6 +21,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.MKRouteHelper.GeoPointHelper;
 import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
+import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class MainActivity extends MapActivity {
 	private ZMQService mzService;
 	private TTSService mtService;
     private boolean mIsBound;
+    private boolean mIsTTSBound;
     public MapHelper mMapHelper;
     private GeoPoint mHomeAddr;
     private GeoPoint mOfficeAddr;
@@ -60,7 +62,10 @@ public class MainActivity extends MapActivity {
     private boolean updateViewTimerCreated = false;
     private Timer mTimer;
     private LYDlgDismissTimerTask mDlgTimerTask;
-    private LYResetTimerTask mResetTimerTask;
+//    private LYResetTimerTask mResetTimerTask;
+    
+    //提示播放声音、弹出对话框时间间隔
+    private long mlLastPrompt = 0;
 
 	MyLocationOverlay mLocationOverlay = null;	//定位图层
 	RouteOverlay mRouteOverlay = null; //Driving route overlay
@@ -68,7 +73,7 @@ public class MainActivity extends MapActivity {
 
     private static boolean mbSynthetizeOngoing = false;
     
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection mConnectionZMQ = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
             // established, giving us the service object we can use to
@@ -88,6 +93,26 @@ public class MainActivity extends MapActivity {
         }
     };
     
+    private ServiceConnection mConnectionTTS = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+        	mtService = ((TTSService.LocalBinder)service).getService();
+            //mzService.registerHandler(handler);
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+        	mtService = null;
+        }
+    };
+    
     void bindZMQService() {
         // Establish a connection with the service.  We use an explicit
         // class name because we want a specific service implementation that
@@ -95,15 +120,30 @@ public class MainActivity extends MapActivity {
         // supporting component replacement by other applications).
         Log.d(TAG, "in bindZMQService");
     	bindService(new Intent(MainActivity.this, 
-                ZMQService.class), mConnection, Context.BIND_AUTO_CREATE);
+                ZMQService.class), mConnectionZMQ, Context.BIND_AUTO_CREATE);
         mIsBound = true;
+    }
+    
+    void bindTTSService() {
+        // Establish a connection with the service.  We use an explicit
+        // class name because we want a specific service implementation that
+        // we know will be running in our own process (and thus won't be
+        // supporting component replacement by other applications).
+        Log.d(TAG, "in bindTTSService");
+    	bindService(new Intent(MainActivity.this, 
+                TTSService.class), mConnectionTTS, Context.BIND_AUTO_CREATE);
+        mIsTTSBound = true;
     }
     
     void unbindService() {
         if (mIsBound) {
             // Detach our existing connection.
-            unbindService(mConnection);
+            unbindService(mConnectionZMQ);
             mIsBound = false;
+        }
+        if (mIsTTSBound) {
+            unbindService(mConnectionTTS);
+            mIsTTSBound = false;
         }
     }
     
@@ -166,11 +206,11 @@ public class MainActivity extends MapActivity {
 			public void onLocationChanged(Location location) {
 				if(location != null && !(app.isTinyMove(location))){
 	        		mMapView.getController().animateTo(GeoPointHelper.buildGeoPoint(location));
-					String strLog = String.format("您当前的位置:\r\n" +
-							"纬度:%f\r\n" +
-							"经度:%f",
-							location.getLongitude(), location.getLatitude());
-					Log.d(TAG, strLog);
+//					String strLog = String.format("您当前的位置:\r\n" +
+//							"纬度:%f\r\n" +
+//							"经度:%f",
+//							location.getLongitude(), location.getLatitude());
+//					Log.d(TAG, strLog);
 					mMapHelper.onLocationChanged(location);
 					resetMapView();
 				}
@@ -179,6 +219,8 @@ public class MainActivity extends MapActivity {
 
         //启动ZMQService、线程
         bindZMQService();
+        //启动TTSService，非独立线程
+        bindTTSService();
         
         /* 
          * 以下是测试代码，如果放开，需要在layout.activity_main配置相应的资源。
@@ -359,29 +401,30 @@ public class MainActivity extends MapActivity {
         mLocationOverlay.enableCompass(); // 打开指南针
 	    app.mBMapMan.start();
 	    
-	    //注册一个定时器，以便定期的刷新Map
+	    //注册一个定时器
 	    if (mTimer == null) {
 	    	mTimer = new Timer();
 	    }
-	    setResetTimerTask();
+	    resetMapView();
+	    //setResetTimerTask();
 	    super.onResume();
 	}    
     
-	private void setResetTimerTask() {
-	    if (mResetTimerTask != null) {
-	    	mResetTimerTask.cancel();
-	    } 
-    	mResetTimerTask = new LYResetTimerTask();
-	    mTimer.schedule(mResetTimerTask, Constants.RESET_MAP_INTERVAL);
-	}
+//	private void setResetTimerTask() {
+//	    if (mResetTimerTask != null) {
+//	    	mResetTimerTask.cancel();
+//	    } 
+//    	mResetTimerTask = new LYResetTimerTask();
+//	    mTimer.schedule(mResetTimerTask, Constants.RESET_MAP_INTERVAL);
+//	}
 	
 	public Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			if (msg.what == Constants.SYNTHESIZE_DONE) {
-				//mMapController.animateTo(mLocationOverlay.getMyLocation());
-				mbSynthetizeOngoing = false;
-				return;
-			}
+//			if (msg.what == Constants.SYNTHESIZE_DONE) {
+//				//mMapController.animateTo(mLocationOverlay.getMyLocation());
+//				mbSynthetizeOngoing = false;
+//				return;
+//			}
 			if (msg.what == Constants.DLG_TIME_OUT) {
 				//mMapController.animateTo(mLocationOverlay.getMyLocation());
 				if (popupDlg != null) {
@@ -431,29 +474,13 @@ public class MainActivity extends MapActivity {
 		}
     };
     
-    public class TTSThread extends Thread {
-		private String msTTS;
-    	public TTSThread(String s) {
-			msTTS = s;
-		}
-    	
-    	@Override
-		public void run() {
-	        Log.d(TAG, "In TTSThead::running"); 
-	        int waitingTimes = 0; //waiting upto 5 seconds
-	        while (mbSynthetizeOngoing && waitingTimes < 10) {
-	        	waitingTimes ++;
-	        	try {
-	        		Thread.sleep(500);
-	        	} catch (Exception e) {
-	        		
-	        	}
-	        }
-	        mbSynthetizeOngoing = true;
-	        Intent i = new Intent(MainActivity.this, TTSService.class);
-    		i.putExtra("text", msTTS);
-    		startService(i);
-		}
+    public void text2Speech(String msg) {
+        Log.d(TAG, "in text2Speech");
+        Bundle bundle = new Bundle();  
+        bundle.putString("ttsmsg", msg);  
+        Intent i = new Intent("ttsmsg");  
+        i.putExtras(bundle);  
+		sendBroadcast(i);  
     }
     
     public void sendMsgToSvr(byte[] data) {
@@ -470,6 +497,7 @@ public class MainActivity extends MapActivity {
     
     public void resetMapView() {
     	resetMapViewByRoute();
+    	updateNextTrafficPoint();
     	updateTrafficView();
 		
 //		if (updateViewTimerCreated) return;
@@ -478,8 +506,13 @@ public class MainActivity extends MapActivity {
 //		Timer timer = new Timer();
 //		LYResetTimerTask timerTask = new LYResetTimerTask();
 //		timer.schedule(timerTask, 5000);
-		promptTraffic();
-    	setResetTimerTask();
+    	
+		long timenow = System.currentTimeMillis();
+    	if (timenow-mlLastPrompt>120*1000) {
+    		promptTraffic();
+    		mlLastPrompt = timenow;
+    	}
+    	//setResetTimerTask();
     }
     
     private void resetMapViewByRoute() {
@@ -523,13 +556,10 @@ public class MainActivity extends MapActivity {
 		//popupTrafficDialg("从东晓路到德贝银饰批发中心，西向"); //弹出模态窗口
     }
     
-    public void popupTrafficDialg(String msg) {
-    	showDialog(Constants.TRAFFIC_POPUP);
-        //String msg = "从东晓路到德贝银饰批发中心，西向";
-		TTSThread t = new TTSThread(msg); 
-		t.start();
+    private void updateNextTrafficPoint() {
+    	mTrafficPoint = mMapHelper.getNextTrafficPoint();
     }
-    
+      
     public void promptTraffic() {
     	popupTrafficDialog(mTrafficPoint);
     }
@@ -539,12 +569,16 @@ public class MainActivity extends MapActivity {
     	String msg = Constants.NO_TRAFFIC_AHEAD;
 		mTrafficPoint = new TrafficPoint(tp);
     	if (tp != null && tp.getRoad() != null) {
-    		msg = tp.getRoad()+tp.getDesc();
+    		double linearDistance = mMapHelper.getLinearDistanceFromHere(tp.getPoint());
+    		String distMsg = mMapHelper.formatDistanceMsg(linearDistance);
+    		msg = tp.getRoad()+tp.getDesc()+"\n"+distMsg;
+    		mTrafficPoint.setDesc(msg);
     	}
 
     	Log.d(TAG, "msg to be showed:"+msg);
-		TTSThread t = new TTSThread(msg); 
-		t.start();
+		//TTSThread t = new TTSThread(msg); 
+		//t.start();
+    	text2Speech(msg);
 		
     	showDialog(Constants.TRAFFIC_POPUP);
 		//创建一个20秒的timer
@@ -560,6 +594,10 @@ public class MainActivity extends MapActivity {
         switch (id) {
             case Constants.TRAFFIC_POPUP: {
                 popupDlg = new ProgressDialog(this);
+                if (mTrafficPoint != null) {
+                	Log.d(TAG, mTrafficPoint.toString());
+                }
+                Log.d(TAG, "onCreateDialog");
                 String title = "前方无拥堵";
                 String msg = "";
                 if (mTrafficPoint != null && mTrafficPoint.getRoad() != null) {
@@ -577,6 +615,31 @@ public class MainActivity extends MapActivity {
         return null;
     }
     
+    @Override
+    protected void onPrepareDialog(int id, Dialog dlg) {
+    	super.onPrepareDialog(id, dlg);
+        switch (id) {
+            case Constants.TRAFFIC_POPUP: {
+                //popupDlg = new ProgressDialog(this);
+                if (mTrafficPoint != null) {
+                	Log.d(TAG, mTrafficPoint.toString());
+                }
+                Log.d(TAG, "onCreateDialog");
+                String title = "前方无拥堵";
+                String msg = "";
+                if (mTrafficPoint != null && mTrafficPoint.getRoad() != null) {
+                	Log.d(TAG, "no traffic ahead!");
+                	title = mTrafficPoint.getRoad();
+                	msg = mTrafficPoint.getDesc();
+                }
+                popupDlg.setTitle(title);
+                popupDlg.setMessage(msg);
+                popupDlg.setIndeterminate(true);
+                popupDlg.setCancelable(true);
+            }
+        }
+    }
+    
     private class LYDlgDismissTimerTask extends TimerTask {
     	@Override
     	public void run() {
@@ -584,10 +647,10 @@ public class MainActivity extends MapActivity {
     	}
     }
     
-    private class LYResetTimerTask extends TimerTask {
-    	@Override
-    	public void run() {
-    		handler.sendMessage(Message.obtain(handler, Constants.RESET_MAP_TIME_OUT));
-    	}
-    }
+//    private class LYResetTimerTask extends TimerTask {
+//    	@Override
+//    	public void run() {
+//    		handler.sendMessage(Message.obtain(handler, Constants.RESET_MAP_TIME_OUT));
+//    	}
+//    }
 }

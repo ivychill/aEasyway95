@@ -38,8 +38,8 @@ public class Constants {
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
-	//public static final String TSS_PRO_HOST="www.roadclouding.com";	
-	public static final String TSS_PRO_HOST="42.121.99.247";	
+	public static final String TSS_PRO_HOST="www.roadclouding.com";	
+	//public static final String TSS_PRO_HOST="42.121.99.247";	
 	//public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
@@ -50,6 +50,7 @@ public class Constants {
 	public static final double DISTANCE_OFF_ROAD=180.0; //标识是否偏离航线,单位M
 	public static final double MIN_CHK_DISTANCE=20.0; //标识是否偏离航线,单位M
 	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //用于强制位置更新，单位毫秒，生产环境建议5分钟以上
+	public static final int TRAFFIC_LAST_DURATION=10; //路况保活的的时间，单位分钟
 	
 	public static final double DOUBLE_1E6 = 1000000.0;
 	

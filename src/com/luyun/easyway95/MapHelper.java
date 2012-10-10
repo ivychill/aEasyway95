@@ -294,5 +294,24 @@ public class MapHelper {
 		mMKSearch.drivingSearch(null, start, null, end);
 	}
     
+    public TrafficPoint getNextTrafficPoint() {
+    	if (mDrivingRoutes != null)
+    		return mDrivingRoutes.getTrafficPoint(mCurrentPoint);
+    	return null;
+    }
+    
+	double getLinearDistanceFromHere(GeoPoint pt) {
+		return MKRouteHelper.getDistance(mCurrentPoint, pt);
+	}
+	
+	String formatDistanceMsg(double distance) {
+		String msg = null;
+		if (distance<1000) {
+			msg = String.format("距离约%d米", (int)(distance/1000));
+		} else {
+			msg = String.format("距离约%d千米", (int)(distance/1000*1000));			
+		}
+		return msg;
+	}
 }
 

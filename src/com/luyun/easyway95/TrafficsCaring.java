@@ -101,7 +101,7 @@ public class TrafficsCaring extends ListActivity {
         	for (int i=0; i<segments.size(); i++) {
 	        	long time_stamp = segments.get(i).getTimestamp();
 	        	long interval = (now.getTime()/1000 - time_stamp)/60;
-	        	if (interval > 6) {
+	        	if (interval > Constants.TRAFFIC_LAST_DURATION) {
 	        		rt.clearSegment(i);
 	        		continue;
 	        	}
