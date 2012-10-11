@@ -118,6 +118,7 @@ public class ZMQService extends Service {
 					+":"
 					+Constants.TSS_SERVER_PORT;
 	        mzsProSvrEnd.connect (strProTSS);
+	        Log.d(TAG, strProTSS);
 	        
 	        //create a separate thread to retrieve data from server
 			//  Initialize poll set

@@ -32,8 +32,8 @@ import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
 import com.baidu.mapapi.PoiOverlay;
 import com.baidu.mapapi.RouteOverlay;
-import com.luyun.easyway95.MKRouteHelper.GeoPointHelper;
-import com.luyun.easyway95.MKRouteHelper.STPointLineDistInfo;
+import com.luyun.easyway95.MapUtils.GeoPointHelper;
+import com.luyun.easyway95.MapUtils.STPointLineDistInfo;
 import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgType;
@@ -272,7 +272,7 @@ public class MapHelper {
 				//Log.d(TAG, "route number " + result.getPlan(0).getNumRoutes());
 				MKRoute route = result.getPlan(0).getRoute(0);
 				//这里将原来的规划路径覆盖
-				mDrivingRoutes = new MKRouteHelper(route);
+				mDrivingRoutes = new MKRouteHelper(route, mainActivity.mMapUtils);
 			    mainActivity.resetMapView();
 			    
 			    //Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
@@ -301,15 +301,15 @@ public class MapHelper {
     }
     
 	double getLinearDistanceFromHere(GeoPoint pt) {
-		return MKRouteHelper.getDistance(mCurrentPoint, pt);
+		return mainActivity.mMapUtils.getDistance(mCurrentPoint, pt);
 	}
 	
 	String formatDistanceMsg(double distance) {
 		String msg = null;
 		if (distance<1000) {
-			msg = String.format("距离约%d米", (int)(distance/1000));
+			msg = String.format("距离约%d米", (int)(distance));
 		} else {
-			msg = String.format("距离约%d千米", (int)(distance/1000*1000));			
+			msg = String.format("距离约%#.1f千米", (float)(distance/1000));			
 		}
 		return msg;
 	}

@@ -24,7 +24,6 @@ import org.restlet.ext.json.JsonRepresentation;
 
 import com.baidu.mapapi.GeoPoint;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
 import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
@@ -89,11 +88,11 @@ public class TrafficsCaring extends ListActivity {
         	return list;
         }
         Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
-        Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();
+        Map<String, DrivingRoadWithTraffic> roadTraffics = drivingRoutes.getRoadsWithTraffic();
         Iterator it = roadTraffics.entrySet().iterator();
         while (it.hasNext()) {
-        	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
-        	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
+        	Map.Entry<String, DrivingRoadWithTraffic> entry = (Entry<String, DrivingRoadWithTraffic>) it.next();
+        	DrivingRoadWithTraffic rt = (DrivingRoadWithTraffic) entry.getValue();
         	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
         	if (segments == null) continue;
         	Date now = new Date();

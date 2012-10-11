@@ -18,10 +18,9 @@ import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
 import com.baidu.mapapi.RouteOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.luyun.easyway95.MKRouteHelper.GeoPointHelper;
-import com.luyun.easyway95.MKRouteHelper.RoadTrafficHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
+import com.luyun.easyway95.MapUtils.GeoPointHelper;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -48,6 +47,8 @@ import android.widget.ImageButton;
 public class MainActivity extends MapActivity {
 	//BMapManager mBMapMan = null; 
 	final static String TAG = "MainActivity";
+	public MapUtils mMapUtils = null;
+	
 	private ZMQService mzService;
 	private TTSService mtService;
     private boolean mIsBound;
@@ -172,6 +173,7 @@ public class MainActivity extends MapActivity {
 		}
 		app.mBMapMan.start();
         super.initMapActivity(app.mBMapMan);
+        mMapUtils = app.getMapUtils();
         
 		mMapView = (MapView) findViewById(R.id.bmapsView);
         //mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
@@ -537,12 +539,12 @@ public class MainActivity extends MapActivity {
         	return;
         }
         Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
-        Map<String, RoadTrafficHelper> roadTraffics = drivingRoutes.getRoadsWithTraffic();
+        Map<String, DrivingRoadWithTraffic> roadTraffics = drivingRoutes.getRoadsWithTraffic();
         Iterator it = roadTraffics.entrySet().iterator();
         
         while (it.hasNext()) {
-        	Map.Entry<String, RoadTrafficHelper> entry = (Entry<String, RoadTrafficHelper>) it.next();
-        	RoadTrafficHelper rt = (RoadTrafficHelper) entry.getValue();
+        	Map.Entry<String, DrivingRoadWithTraffic> entry = (Entry<String, DrivingRoadWithTraffic>) it.next();
+        	DrivingRoadWithTraffic rt = (DrivingRoadWithTraffic) entry.getValue();
         	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPointsByList();
         	if (matchedPoints == null || matchedPoints.size() == 0) continue;
     		
@@ -557,6 +559,7 @@ public class MainActivity extends MapActivity {
     }
     
     private void updateNextTrafficPoint() {
+    	Log.d(TAG, "in updateNextTrafficPoint");
     	mTrafficPoint = mMapHelper.getNextTrafficPoint();
     }
       
@@ -569,10 +572,12 @@ public class MainActivity extends MapActivity {
     	String msg = Constants.NO_TRAFFIC_AHEAD;
 		mTrafficPoint = new TrafficPoint(tp);
     	if (tp != null && tp.getRoad() != null) {
+    		Log.d(TAG, "next traffic point="+tp.toString());
     		double linearDistance = mMapHelper.getLinearDistanceFromHere(tp.getPoint());
     		String distMsg = mMapHelper.formatDistanceMsg(linearDistance);
-    		msg = tp.getRoad()+tp.getDesc()+"\n"+distMsg;
+    		msg = tp.getDesc()+"\n"+distMsg;
     		mTrafficPoint.setDesc(msg);
+    		msg = tp.getRoad()+msg;
     	}
 
     	Log.d(TAG, "msg to be showed:"+msg);

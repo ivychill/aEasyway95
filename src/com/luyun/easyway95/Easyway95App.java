@@ -19,6 +19,9 @@ public class Easyway95App extends Application {
 	private Location lastLocation;
 	private long lastChecked = 0;
 	
+	//Map工具类，提供距离、路径拟合等算法支持
+	private MapUtils mMapUtils = null;
+	
 	//百度MapAPI的管理类
 	BMapManager mBMapMan = null;
 	
@@ -54,6 +57,8 @@ public class Easyway95App extends Application {
     public void onCreate() {
 		Log.d("Easyway95App", "onCreate");
 		mApp = this;
+		mMapUtils = new MapUtils();
+		
 		mBMapMan = new BMapManager(this);
 		mBMapMan.init(this.mStrKey, new MyGeneralListener());
 		mBMapMan.getLocationManager().setNotifyInternal(10, 5);
@@ -80,14 +85,20 @@ public class Easyway95App extends Application {
 	public void setMainActivity(MainActivity act) {
 		mainActivity = act;
 	}
+	
 	public MainActivity getMainActivity() {
 		return mainActivity;
 	}
+	
+	public MapUtils getMapUtils() {
+		return mMapUtils;
+	}
+	
 	boolean isTinyMove(Location location) {
 		if (location == null) return true;
 		
 		long timenow = System.currentTimeMillis();
-		if (lastLocation == null || MKRouteHelper.getDistance(location, lastLocation)>Constants.MIN_CHK_DISTANCE || timenow-lastChecked >300*1000) {
+		if (lastLocation == null || mMapUtils.getDistance(location, lastLocation)>Constants.MIN_CHK_DISTANCE || timenow-lastChecked >300*1000) {
 			lastLocation = location;
 			lastChecked = timenow;
 			return false;
