@@ -61,7 +61,7 @@ public class SettingActivity extends MapActivity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
-        setContentView(R.layout.poisearch);
+        setContentView(R.layout.setting);
         
 		app = (Easyway95App)this.getApplication();
 		if (app.mBMapMan == null) {
@@ -231,20 +231,20 @@ public class SettingActivity extends MapActivity {
 		if (tmpString != null && tmpString.length() > 0)
 			txtHome.setText(tmpString);
 		
-		TextView txtHomeLatLng = (TextView)findViewById(R.id.home_lat_lng);
-		tmpString = mUserProfile.getHomeLatLng();
-		if (tmpString != null && tmpString.length() > 0)
-			txtHomeLatLng.setText(tmpString);
-		
+//		TextView txtHomeLatLng = (TextView)findViewById(R.id.home_lat_lng);
+//		tmpString = mUserProfile.getHomeLatLng();
+//		if (tmpString != null && tmpString.length() > 0)
+//			txtHomeLatLng.setText(tmpString);
+//		
 		TextView txtOffice = (TextView)findViewById(R.id.officeaddr);
 		tmpString = mUserProfile.getOfficeAddr().getName();
 		if (tmpString != null && tmpString.length() > 0)
 			txtOffice.setText(tmpString);
 
-		TextView txtOfficeLatLng = (TextView)findViewById(R.id.office_lat_lng);
-		tmpString = mUserProfile.getOfficeLatLng();
-		if (tmpString != null && tmpString.length() > 0)
-			txtOfficeLatLng.setText(tmpString);
+//		TextView txtOfficeLatLng = (TextView)findViewById(R.id.office_lat_lng);
+//		tmpString = mUserProfile.getOfficeLatLng();
+//		if (tmpString != null && tmpString.length() > 0)
+//			txtOfficeLatLng.setText(tmpString);
 	}
 
 	/** get the stored cookies */

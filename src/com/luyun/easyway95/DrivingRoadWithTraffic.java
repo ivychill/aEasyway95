@@ -71,11 +71,11 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
 	void matchRoute(LYRoadTraffic rt) {
 		this.buildSegmentsFromAir(rt);
 		matchedPoints = new HashMap<Integer, ArrayList<GeoPoint>>();
-		Log.d(TAG, mPointsOfRoute.toString());
+		//Log.d(TAG, mPointsOfRoute.toString());
 		ArrayList<LYSegmentTraffic> segments = getSegments();
 		for (int i=0; i<segments.size(); i++) {
     		ArrayList<GeoPoint> tmpMatchedPoints = new ArrayList();
-    		Log.d(TAG, segments.get(i).getSegment().toString());
+    		//Log.d(TAG, segments.get(i).getSegment().toString());
     		mMapUtils.MatchRoadAndTraffic(segments.get(i).getSegment(), mPointsOfRoute, tmpMatchedPoints);
 			if (tmpMatchedPoints.size() >0) {
 				matchedPoints.put(i, tmpMatchedPoints);
@@ -89,9 +89,9 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
 	 * µ÷ÓÃfindNextPoint(pt, tmpPoints)
 	 */
 	public TrafficPoint getNextTrafficPoint(GeoPoint pt) {
-		Log.d(TAG, "in getNextTrafficPoint, point="+pt.toString());
+		//Log.d(TAG, "in getNextTrafficPoint, point="+pt.toString());
 		if (matchedPoints == null || matchedPoints.size() == 0) return null;
-		Log.d(TAG, matchedPoints.toString());
+		//Log.d(TAG, matchedPoints.toString());
 		ArrayList<GeoPoint> points = new ArrayList<GeoPoint>();
 		int indexOfSegment = -1;
 		GeoPointHelper nextPoint = null;
@@ -110,12 +110,13 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
     		}
 		}
 		if (nextPoint == null || indexOfSegment < 0) return null;
-		Log.d(TAG, "in getNextTrafficPoint, found nextPoint="+nextPoint.toString());
+		//Log.d(TAG, "in getNextTrafficPoint, found nextPoint="+nextPoint.toString());
 		TrafficPoint tp = new TrafficPoint();
 		tp.setPoint(nextPoint.getPoint());
 		tp.setDistance(nextPoint.getDistance());
 		tp.setDesc(segments.get(indexOfSegment).getDetails());
-		Log.d(TAG, "in getNextTrafficPoint, found nextTrafficPoint="+tp.toString());
+		tp.setSpeed(segments.get(indexOfSegment).getSpeed());
+		//Log.d(TAG, "in getNextTrafficPoint, found nextTrafficPoint="+tp.toString());
 		return tp;
 	}
 	

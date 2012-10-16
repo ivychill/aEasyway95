@@ -6,6 +6,7 @@ public final class TrafficPoint {
 	private String road;
 	private String desc;
 	private GeoPoint point;
+	private int speed;
 	private double distance;
 	
 	TrafficPoint(TrafficPoint pt) {
@@ -15,6 +16,7 @@ public final class TrafficPoint {
 		this.road = pt.getRoad();
 		this.desc = pt.getDesc();
 		this.point = pt.getPoint();
+		this.speed = pt.getSpeed();
 		this.distance = pt.getDistance();
 	}
 	TrafficPoint () {
@@ -22,6 +24,14 @@ public final class TrafficPoint {
 		desc = null;
 		point = null;
 		distance = 0.0;
+		speed = 0;
+	}
+	public void setSpeed(int spd) {
+		speed = spd;
+	}
+	
+	public int getSpeed() {
+		return speed;
 	}
 	
 	public void setRoad(String rd) {

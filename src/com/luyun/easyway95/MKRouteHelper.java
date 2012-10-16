@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,7 +100,7 @@ public class MKRouteHelper implements Serializable{
      * 根据stepCursor所对应的step，找出路名，然后找出该路所包括的matchPoint
      * 如果step.getContent()包括”进入“，表示是从一条路切换到另一条路
      */
-    public TrafficPoint getTrafficPoint(GeoPoint currentPoint) {
+    public TrafficPoint getNextTrafficPoint(GeoPoint currentPoint) {
     	Log.d(TAG, "in MKRouteHelper::getTrafficPoint, stepCursor="+stepCursor);
     	if (stepCursor < 0 || mMatchedPoints == null || mMatchedPoints.size() == 0) {
     		return null;
@@ -198,6 +199,39 @@ public class MKRouteHelper implements Serializable{
 		}
     }
 
+    public List<Map<String, Object>> getAllRoadsWithTrafficByList() {
+    	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = null;
+        Log.d(TAG, "fetching data from internal container!");
+        Iterator it = mRoadsWithTraffic.entrySet().iterator();
+        while (it.hasNext()) {
+        	Map.Entry<String, DrivingRoadWithTraffic> entry = (Entry<String, DrivingRoadWithTraffic>) it.next();
+        	DrivingRoadWithTraffic rt = (DrivingRoadWithTraffic) entry.getValue();
+        	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
+        	if (segments == null) continue;
+        	long nowTime = System.currentTimeMillis()/1000;
+        	for (int i=0; i<segments.size(); i++) {
+	        	long time_stamp = segments.get(i).getTimestamp();
+	        	long interval = (nowTime - time_stamp)/60;
+	        	if (interval > Constants.TRAFFIC_LAST_DURATION) {
+	        		rt.clearSegment(i);
+	        		continue;
+	        	}
+        		map = new HashMap<String, Object>();
+	        	map.put("road", entry.getKey());
+	        	map.put("desc", segments.get(i).getDetails());
+	        	int speed = segments.get(i).getSpeed();
+	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
+	        	if (speed >= 15) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
+	        	if (speed < 15 && speed >=6) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	        	String formatedStr = String.format("%d分钟前，%s", interval, strSpeed);
+	            map.put("timestamp", formatedStr);
+	        	list.add(map);
+        	}
+        }
+    	return list;
+    }
+    
     /*
      * 这个函数只在构造时调用一次，创建路作为容器，收纳所有路况
      * 并创建一个Map，用于快速索引step到路

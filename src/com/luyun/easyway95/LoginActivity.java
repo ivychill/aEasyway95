@@ -61,7 +61,6 @@ public class LoginActivity extends Activity {
 	private static final int ERROR_DIALOG = 2;
 	private static final String LOGIN_URL = "http://2.easilocation.appspot.com/signIn";
 	
-	private State mState;
 	private EditText username;
 	private EditText password;
 	private SharedPreferences mSharedPreferences;
@@ -111,24 +110,4 @@ public class LoginActivity extends Activity {
 		mwvLogin.loadUrl(Constants.USERS_PROFILE_URL);
 	}
 	
-	/**
-	 * @return boolean return true if the application can access the internet
-	 */
-	private boolean isConnectedToInternet() {
-		ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo info = mConnectivityManager.getActiveNetworkInfo();
-		if (info == null) {
-			return false;
-		} else if (!info.isConnected()) {
-			return false;
-		} else if (info.getType() != ConnectivityManager.TYPE_WIFI) {
-			return false;
-		} 
-		return true;
-	}
-	
-	/** The state of this application (preferences....) */
-	private static class State {
-		public boolean mWifiConnection = false;
-	}
 }

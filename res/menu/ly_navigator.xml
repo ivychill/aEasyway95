@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"><item android:id="@+id/go_office" android:icon="@drawable/officelogo" android:title="一键上班"></item><item android:id="@+id/go_home" android:title="@string/traffic_home" android:icon="@drawable/homelogo"></item>
+    
+    
+    <item android:id="@+id/profile_setting" android:icon="@drawable/accountsetting" android:title="帐户"></item>
+    
+</menu>
+

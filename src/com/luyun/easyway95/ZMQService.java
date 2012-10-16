@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class ZMQService extends Service {
+	private static String TAG = "ZMQService";
 	//zmq & protobuf
 	private ZMQ.Context mzcContextInproc;   //explicitly to use two different context! Be very careful here!
 	private ZMQ.Socket mzsLifeCycleInproc;  //tell mztIO thread to exit
@@ -29,7 +30,6 @@ public class ZMQService extends Service {
 	//private ZMQQueue mzqDev;          //pipe for production
 	
 	private ZMQThread mztIO;
-	private static String TAG = "ZMQService";
 	
 	private Handler mTriggerHdl;
 	
@@ -40,7 +40,7 @@ public class ZMQService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mTriggerHdl = ((MainActivity)((Easyway95App)getApplication()).getMainActivity()).handler;
+		mTriggerHdl = ((LYNavigator)((Easyway95App)getApplication()).getMainActivity()).handler;
 		
 		mzcContextInproc = ZMQ.context(1);
 		mztIO = new ZMQThread();

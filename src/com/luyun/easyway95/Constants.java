@@ -1,6 +1,7 @@
 package com.luyun.easyway95;
 
 public class Constants {
+	public static final String RELEASE_VERSION = "2.0";
 	public static final int POISEARCH=1000;
 	
 	public static final int ERROR=1001;
@@ -50,14 +51,16 @@ public class Constants {
 	public static final double DISTANCE_OFF_ROAD=180.0; //标识是否偏离航线,单位M
 	public static final double MIN_CHK_DISTANCE=20.0; //标识是否偏离航线,单位M
 	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //用于强制位置更新，单位毫秒，生产环境建议5分钟以上
-	public static final int TRAFFIC_LAST_DURATION=60; //路况保活的的时间，单位分钟
+	public static final int TRAFFIC_LAST_DURATION=6; //路况保活的的时间，单位分钟
 	
 	public static final double DOUBLE_1E6 = 1000000.0;
 	
 	public static final String NO_TRAFFIC_AHEAD="前方无拥堵"; //
-	public static final String TRAFFIC_JAM_LVL_HIGH="基本不动"; //<6KM
-	public static final String TRAFFIC_JAM_LVL_MIDDLE="重度拥堵"; //[6km, 15km)
-	public static final String TRAFFIC_JAM_LVL_LOW="轻度拥堵"; //[15km, 
+	public static final String TRAFFIC_JAM_LVL_HIGH="严重拥堵"; //<6KM
+	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=6;
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="拥堵"; //[6km, 15km)
+	public static final int TRAFFIC_JAM_LVL_MIDDLE_SPD=15;
+	public static final String TRAFFIC_JAM_LVL_LOW="缓行"; //[15km, 
 	
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;

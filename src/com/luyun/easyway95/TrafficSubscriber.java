@@ -14,10 +14,10 @@ import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficSub;
 
 public class TrafficSubscriber {
-	MainActivity mainActivity;
+	LYNavigator mainActivity;
 	private static final String TAG = "TrafficSubscriber";
 	
-	TrafficSubscriber (MainActivity activity) {
+	TrafficSubscriber (LYNavigator activity) {
 		mainActivity = activity;
 	}
 	

@@ -10,14 +10,15 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
-    <application
+    	<!-- android:hardwareAccelerated="false" --> 
+    <application 
         android:name=".Easyway95App"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/icon95"
         android:label="@string/app_name"
-    	android:hardwareAccelerated="false" 
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".LYEasyway"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
             <intent-filter>
@@ -27,12 +28,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:name=".LoginActivity" >
+            android:name=".LYNavigator"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".SettingActivity" >
+            android:name=".LoginActivity" >
         </activity>
         <activity
             android:screenOrientation="portrait"

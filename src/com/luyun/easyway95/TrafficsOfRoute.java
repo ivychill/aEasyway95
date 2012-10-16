@@ -56,7 +56,7 @@ public class TrafficsOfRoute extends ListActivity {
 	// VERBOSE debug log is complied in but stripped at runtime
 	private static final String TAG = "TrafficsOfRoute";
 	private Easyway95App app;
-	private MainActivity mainActivity;
+	private LYNavigator mainActivity;
 	
 	//private ListView mListView;
 	

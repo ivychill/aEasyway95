@@ -40,13 +40,14 @@ import com.luyun.easyway95.shared.TSSProtos.LYMsgType;
 import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
 import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
+import com.luyun.easyway95.shared.TSSProtos.LYTrafficPub;
 
 public class MapHelper {
 	private static String TAG = "MapHelper";
 	//百度MapAPI的管理类, 与Easyway95App相同
 	BMapManager mBMapMan;
 	
-	private MainActivity mainActivity;
+	private LYNavigator mainActivity;
 	public GeoPoint mCurrentPoint;
 	public GeoPoint mDestPoint;
 	private ArrayList<MKPoiInfo> mRoadsAround;
@@ -54,10 +55,11 @@ public class MapHelper {
 	private TrafficSubscriber mTrafficSubscriber;
 	
 	private MKRouteHelper mDrivingRoutes;
+	private HotRoadsWithTraffic mHotRoadsWithTraffic;
 	
 	//private DrivingRoutes;
 	
-	public MapHelper(MainActivity act) {
+	public MapHelper(LYNavigator act) {
 		mainActivity = act;
 		mBMapMan = ((Easyway95App)mainActivity.getApplication()).mBMapMan;
 		//mCurrentLocation = new Location("深圳");
@@ -70,10 +72,15 @@ public class MapHelper {
 		}else {
 			mDestPoint = mainActivity.getHomeAddr();
 		}
+		mHotRoadsWithTraffic = new HotRoadsWithTraffic();
 	}
 	
 	MKRouteHelper getDrivingRoutes() {
 		return mDrivingRoutes;
+	}
+	
+	HotRoadsWithTraffic getHotRoadsWithTraffic() {
+		return mHotRoadsWithTraffic;
 	}
 	
 	/*SegmentTraffic getSegTraffic() {
@@ -93,11 +100,11 @@ public class MapHelper {
     /*
      * 核心功能：收到TSS发的路况信息，进行处理。
      * pacakge:msg, msg=[{name:r1, segments:[{startPoi:{lat, lng}, endPoi:{lat, lng}}, ...]}, ...]
-     * 客户端要有四张表：
-     * listDrivingRoutes: 运动过程中如果有偏离航线的情况发生则更新，否则用于接收路况。对于每条路，新的时间点将覆盖以前的路况。
-     * listRoadsInsight:周边的路况，也在运动过程中不断更新，每隔10分钟刷新一次，或者10KM更新一次
-     * listHotRoads：由系统设置，一般一个城市共享相同的信息，并且可以从服务器上生成图片传下来，类似于交通播报的概略图
-     * listFavoriteRoads：个性化设置，在用户设置完自己的家庭和办公室地址之后，自动将规划好的路径存到用户的preferences和profile里，并且上报到服务器
+     * 客户端要有四个不同的容器：
+     * DrivingRoutes: 运动过程中如果有偏离航线的情况发生则更新，否则用于接收路况。对于每条路，新的时间点将覆盖以前的路况。
+     * RoadsInsight:周边的路况，也在运动过程中不断更新，每隔10分钟刷新一次，或者10KM更新一次
+     * HotRoadsWithTraffic：由系统设置，一般一个城市共享相同的信息，并且可以从服务器上生成图片传下来，类似于交通播报的概略图
+     * FavoriteRoads：个性化设置，在用户设置完自己的家庭和办公室地址之后，自动将规划好的路径存到用户的preferences和profile里，并且上报到服务器
      * 
      * 登录用户和非登录用户的处理：
      * 非登录用户：通过与TSS的消息将这四张表上报，用户标识是DEVICEID@deviceid.android.roadclouding，这个标识也将用来标识ZMQ的ID
@@ -129,6 +136,17 @@ public class MapHelper {
     		}
     		return;
     	case LY_TRAFFIC_PUB:
+    		LYTrafficPub trafficPub = msg.getTrafficPub();
+    		if (trafficPub == null) {
+    			Log.i(TAG, "wrong message!");
+    			return;
+    		}
+    		int routeId = trafficPub.getRouteId();
+    		if (routeId <= 255 && routeId >=128) {
+    			Log.d(TAG, "processing hotroads");
+    			mHotRoadsWithTraffic.onTraffic(trafficPub);
+    			return;
+    		}
     		//与DrivingRoute进行拟合
     		if (mDrivingRoutes == null) {
     			//the only situation happened when traffic_pub arrives prior to driving routes instantiated, i.e, app reboots
@@ -162,7 +180,7 @@ public class MapHelper {
     	
     	if (mDrivingRoutes.isOnRoute(mCurrentPoint)) {
     		Log.d(TAG, "on route");
-    		TrafficPoint nextTrafficPoint = mDrivingRoutes.getTrafficPoint(mCurrentPoint);
+    		TrafficPoint nextTrafficPoint = mDrivingRoutes.getNextTrafficPoint(mCurrentPoint);
     		//Log.d(TAG, nextTrafficPoint.toString());
 			mainActivity.popupTrafficDialog(nextTrafficPoint);
 			return;
@@ -296,7 +314,7 @@ public class MapHelper {
     
     public TrafficPoint getNextTrafficPoint() {
     	if (mDrivingRoutes != null)
-    		return mDrivingRoutes.getTrafficPoint(mCurrentPoint);
+    		return mDrivingRoutes.getNextTrafficPoint(mCurrentPoint);
     	return null;
     }
     
@@ -307,7 +325,7 @@ public class MapHelper {
 	String formatDistanceMsg(double distance) {
 		String msg = null;
 		if (distance<1000) {
-			msg = String.format("距离约%d米", (int)(distance));
+			msg = String.format("距离约%d米", (int)(distance/100)*100);
 		} else {
 			msg = String.format("距离约%#.1f千米", (float)(distance/1000));			
 		}

@@ -1,64 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 声明版本号和编码格式 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:gravity="center|center_vertical"
+    >
 
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/grid"
+	    >
+	    <FrameLayout
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	    	<TextView
+	            android:id="@+id/username"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="深圳市路云信息科技有限公司"
+	    	    android:layout_gravity="center_vertical"
+	            android:textSize="22px" />
 
-    <LinearLayout
-        android:id="@+id/setting_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+	    	<Button
+	    	    android:id="@+id/login"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:layout_gravity="top|right"
+	    	    android:text="登录\n或注册" />
+
+	    </FrameLayout>
+	
+	    	<View
+		    android:layout_width="fill_parent" 
+		    android:layout_height="3dp" 
+		    android:background="?android:attr/listDivider" 
+		/>
 	    <LinearLayout
-	        android:id="@+id/setting_layout11"
-	        android:layout_width="fill_parent"
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" >
-	     	<Button
-	            android:id="@+id/login"
+	
+	      	<ImageView
+	            android:id="@+id/imageView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="登 录" />
-	     	<TextView 
-	     	    	android:id="@+id/username"
-	     	    	android:text="路云用户11457"
-	     		android:layout_width="wrap_content" 
-	     		android:layout_height="wrap_content"></TextView>
+	            android:src="@drawable/homelogo" />
+	
+	        <TextView
+	            android:id="@+id/homeaddr"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="深圳"
+	    	    android:layout_gravity="center|center_vertical"
+	            android:textSize="34px" />
 	    </LinearLayout>
- 	    <LinearLayout
-	        android:id="@+id/setting_layout12"
-	        android:layout_width="fill_parent"
+	
+	<View
+	    android:layout_width="fill_parent" 
+	    android:layout_height="4dp" 
+	    android:background="?android:attr/listDivider" 
+	/>
+	     <LinearLayout
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" >
-	     	<Button
-	            android:id="@+id/sethome"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="我的家" />
- 	        <TextView 
-	     	    	android:id="@+id/homeaddr"
-	     	    	android:text="宝安25区前进一路华丰时代广场"
-	     		android:layout_width="wrap_content" 
-	     		android:layout_height="wrap_content"></TextView>
-	    </LinearLayout>
- 	    <LinearLayout
-	        android:id="@+id/setting_layout13"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
-	     	<Button
-	            android:id="@+id/setoffice"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="办公室" />
- 	        <TextView 
-	     	    	android:id="@+id/officeaddr"
-	     	    	android:text="梅观高速华为出口"
-	     		android:layout_width="wrap_content" 
-	     		android:layout_height="wrap_content"></TextView>
-	    </LinearLayout>
-    </LinearLayout>
 	    
-
-</FrameLayout>
+	    	<ImageView
+	    	    android:id="@+id/imageView2"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:src="@drawable/officelogo" />
+	
+	        <TextView
+		    android:id="@+id/officeaddr"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:text="深圳"
+	    	    android:layout_gravity="center|center_vertical"
+		    android:textSize="34px"
+		/>
+	    </LinearLayout>
+	<View
+	    android:layout_width="fill_parent" 
+	    android:layout_height="4dp" 
+	    android:background="?android:attr/listDivider" 
+	/>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+	
+	    <FrameLayout
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+        	  
+		<EditText
+		    android:id="@+id/searchkey"
+		    android:layout_width="220dp"
+		    android:layout_height="wrap_content"
+		    android:maxLines="1"
+		    android:minLines="1"
+		    android:text="福田中心区市民中心" />
+	
+		    <LinearLayout
+		        xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		    	android:layout_gravity="top|right"
+		        android:orientation="horizontal" >
+			<Button
+			    	android:id="@+id/search_home"
+			    	android:text="设为\n家"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+		    	/>
+		    	<Button
+			    	android:id="@+id/search_office"
+			    	android:text="设为\n办公室"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+		    	        android:layout_gravity="top|right"
+		    	/>
+		    </LinearLayout>
+	      </FrameLayout>
+	</LinearLayout>
+    </LinearLayout>
+    <com.baidu.mapapi.MapView android:id="@+id/poi_search_view"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" 
+	android:clickable="true"     
+	/>
+</LinearLayout>

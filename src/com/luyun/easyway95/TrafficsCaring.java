@@ -56,7 +56,7 @@ public class TrafficsCaring extends ListActivity {
 	// VERBOSE debug log is complied in but stripped at runtime
 	private static final String TAG = "ShowTraffics";
 	private Easyway95App app;
-	private MainActivity mainActivity;
+	private LYNavigator mainActivity;
 	
 	//private ListView mListView;
 	
@@ -80,41 +80,13 @@ public class TrafficsCaring extends ListActivity {
     private List<Map<String, Object>> getTrafficsCaring() {
     	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
     	
-        Map<String, Object> map = null;
-        MKRouteHelper drivingRoutes = mainActivity.mMapHelper.getDrivingRoutes();
-        Log.d(TAG, "fetching data from driving routes!");
-        if (drivingRoutes == null) {
-        	Log.d(TAG, "no data before request driving routes!");
-        	return list;
+        HotRoadsWithTraffic hotRoadsWithTraffic = mainActivity.mMapHelper.getHotRoadsWithTraffic();
+        if (hotRoadsWithTraffic != null) {
+        	list.addAll(hotRoadsWithTraffic.getAllRoadsWithTrafficByList());
         }
-        Log.d(TAG, "Driving routes not null. Fetching data from driving routes!");
-        Map<String, DrivingRoadWithTraffic> roadTraffics = drivingRoutes.getRoadsWithTraffic();
-        Iterator it = roadTraffics.entrySet().iterator();
-        while (it.hasNext()) {
-        	Map.Entry<String, DrivingRoadWithTraffic> entry = (Entry<String, DrivingRoadWithTraffic>) it.next();
-        	DrivingRoadWithTraffic rt = (DrivingRoadWithTraffic) entry.getValue();
-        	ArrayList<LYSegmentTraffic> segments = rt.getSegments();
-        	if (segments == null) continue;
-        	Date now = new Date();
-        	long nowTime = now.getTime()/1000;
-        	for (int i=0; i<segments.size(); i++) {
-	        	long time_stamp = segments.get(i).getTimestamp();
-	        	long interval = (now.getTime()/1000 - time_stamp)/60;
-	        	if (interval > Constants.TRAFFIC_LAST_DURATION) {
-	        		rt.clearSegment(i);
-	        		continue;
-	        	}
-        		map = new HashMap<String, Object>();
-	        	map.put("road", entry.getKey());
-	        	map.put("desc", segments.get(i).getDetails());
-	        	int speed = segments.get(i).getSpeed();
-	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
-	        	if (speed >= 15) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	if (speed < 15 && speed >=6) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
-	        	String formatedStr = String.format("%d∑÷÷”«∞£¨%s", interval, strSpeed);
-	            map.put("timestamp", formatedStr);
-	        	list.add(map);
-        	}
+        MKRouteHelper drivingRoutes = mainActivity.mMapHelper.getDrivingRoutes();
+        if (drivingRoutes != null) {
+        	list.addAll(drivingRoutes.getAllRoadsWithTrafficByList());
         }
     	return list;
     }

@@ -8,11 +8,13 @@ import com.baidu.mapapi.MKPoiResult;
 
 import android.app.Application;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
 public class Easyway95App extends Application {
-	private MainActivity mainActivity;
+	private LYNavigator mainActivity;
 	
 	static Easyway95App mApp;
 	public MKPoiResult mMKPoiResult;
@@ -82,11 +84,11 @@ public class Easyway95App extends Application {
 	}
 
 	
-	public void setMainActivity(MainActivity act) {
+	public void setMainActivity(LYNavigator act) {
 		mainActivity = act;
 	}
 	
-	public MainActivity getMainActivity() {
+	public LYNavigator getMainActivity() {
 		return mainActivity;
 	}
 	
@@ -106,4 +108,5 @@ public class Easyway95App extends Application {
 		
 		return true;
 	}
+	
 }
