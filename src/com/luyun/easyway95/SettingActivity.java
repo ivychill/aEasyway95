@@ -18,6 +18,7 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -74,6 +75,7 @@ public class SettingActivity extends MapActivity {
 	private String mSearchKey;
 	
 	private GeoPoint mPointTapped;
+	private boolean isScale = false;
 	
 	MapView mMapView = null;	// 地图View
 	MKSearch mSearch = null;	// 搜索模块，也可去掉地图模块独立使用
@@ -347,6 +349,22 @@ public class SettingActivity extends MapActivity {
 //		tmpString = mUserProfile.getOfficeLatLng();
 //		if (tmpString != null && tmpString.length() > 0)
 //			txtOfficeLatLng.setText(tmpString);
+		
+		//增加防止缩放时误报long press
+		mMapView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+		    	int pointer_touch = event.getPointerCount();
+		    	if (pointer_touch == 2) {
+		    		isScale = true;
+		    	}
+		    	//Log.d(TAG, String.format("pointer=%d", pointer_touch));
+				return false;
+			}
+			
+		});
 	}
 
 	/** get the stored cookies */
@@ -394,13 +412,14 @@ public class SettingActivity extends MapActivity {
 
 	    @Override  
 	    public boolean onTouchEvent(MotionEvent arg0, MapView mapView) {  
-	    	Log.d(TAG, "in onTouchEvent");
+	    	//Log.d(TAG, "in onTouchEvent"+arg0.toString());
 	        float x = arg0.getX();  
 	        float y = arg0.getY();  
 	        switch (arg0.getAction()) {  
 	        case MotionEvent.ACTION_DOWN:  
 	            time = System.currentTimeMillis();  
 	            isLongPress = false;  
+	            isScale = false;
 	            break;  
 	  
 	        case MotionEvent.ACTION_UP:  
@@ -448,7 +467,11 @@ public class SettingActivity extends MapActivity {
 		@Override
 		public void onLongPress(MotionEvent e) {
 			// TODO Auto-generated method stub
-			Log.d(TAG, "in onLongPress,"+e.toString());
+			if (isScale) {
+				Log.d(TAG, "scaling map, not long press");
+				return;
+			}
+			//Log.d(TAG, "in onLongPress,"+e.toString());
 	        float x = e.getX();  
 	        float y = e.getY();  
 	        Projection pj = mMapView.getProjection();
