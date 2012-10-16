@@ -45,7 +45,12 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" >
 	
-	      	<ImageView
+		<CheckBox
+		    android:id="@+id/homeselected"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" />
+		
+	        <ImageView
 	            android:id="@+id/imageView1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -57,9 +62,11 @@
 	            android:layout_height="wrap_content"
 	            android:text="深圳"
 	    	    android:layout_gravity="center|center_vertical"
-	            android:textSize="34px" />
-	    </LinearLayout>
+	            android:textSize="28px" />
+
 	
+	</LinearLayout>
+
 	<View
 	    android:layout_width="fill_parent" 
 	    android:layout_height="4dp" 
@@ -70,7 +77,12 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" >
-	    
+		
+		<CheckBox
+		    android:id="@+id/officeselected"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" />
+			    
 	    	<ImageView
 	    	    android:id="@+id/imageView2"
 	    	    android:layout_width="wrap_content"
@@ -83,7 +95,7 @@
 		    android:layout_height="wrap_content" 
 		    android:text="深圳"
 	    	    android:layout_gravity="center|center_vertical"
-		    android:textSize="34px"
+		    android:textSize="28px"
 		/>
 	    </LinearLayout>
 	<View
@@ -105,7 +117,7 @@
         	  
 		<EditText
 		    android:id="@+id/searchkey"
-		    android:layout_width="220dp"
+		    android:layout_width="275dp"
 		    android:layout_height="wrap_content"
 		    android:maxLines="1"
 		    android:minLines="1"
@@ -117,19 +129,13 @@
 		        android:layout_height="wrap_content"
 		    	android:layout_gravity="top|right"
 		        android:orientation="horizontal" >
-			<Button
-			    	android:id="@+id/search_home"
-			    	android:text="设为\n家"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-		    	/>
-		    	<Button
-			    	android:id="@+id/search_office"
-			    	android:text="设为\n办公室"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-		    	        android:layout_gravity="top|right"
-		    	/>
+
+		        <ImageButton
+		            android:id="@+id/search"
+		            android:layout_width="38dp"
+		            android:layout_height="42dp"
+		            android:background="@drawable/ic_search_32" />
+
 		    </LinearLayout>
 	      </FrameLayout>
 	</LinearLayout>

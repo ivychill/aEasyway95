@@ -1,14 +1,22 @@
 package com.luyun.easyway95;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.GestureDetector.OnDoubleTapListener;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,12 +25,18 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.ItemizedOverlay;
 import com.baidu.mapapi.MKAddrInfo;
 import com.baidu.mapapi.MKBusLineResult;
 import com.baidu.mapapi.MKDrivingRouteResult;
@@ -35,7 +49,10 @@ import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapView;
+import com.baidu.mapapi.Overlay;
+import com.baidu.mapapi.OverlayItem;
 import com.baidu.mapapi.PoiOverlay;
+import com.baidu.mapapi.Projection;
 import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 
 
@@ -46,13 +63,17 @@ public class SettingActivity extends MapActivity {
 	private SharedPreferences mSP;
 	private UserProfile mUserProfile;
 	
-	Button mBtnSearchHome = null;	// 搜索按钮
-	Button mBtnSearchOffice = null;	// 搜索按钮
+	private AddrType mAddrProcessing = AddrType.HOME_ADDR;
+	private CheckBox mHomeSelected;
+	private CheckBox mOfficeSelected;
+	
+	ImageButton mBtnSearch = null;	// 搜索按钮
 	Button mSuggestionSearch = null;  //suggestion搜索
 	ListView mSuggestionList = null;
 	public static String mStrSuggestions[] = {};
 	private String mSearchKey;
-	private String mSearchPlace;
+	
+	private GeoPoint mPointTapped;
 	
 	MapView mMapView = null;	// 地图View
 	MKSearch mSearch = null;	// 搜索模块，也可去掉地图模块独立使用
@@ -76,7 +97,49 @@ public class SettingActivity extends MapActivity {
         mMapView.setBuiltInZoomControls(true);
         //设置在缩放动画过程中也显示overlay,默认为不绘制
         mMapView.setDrawOverlayWhenZooming(true);
-        
+        LongTap lt = new LongTap();
+        mMapView.getOverlays().add(lt);
+        mMapView.invalidate();
+		
+        mHomeSelected = (CheckBox)findViewById(R.id.homeselected);
+        mHomeSelected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked) {
+					mAddrProcessing = AddrType.HOME_ADDR;
+					mOfficeSelected.setChecked(false);
+					GeoPoint pt = mUserProfile.getHomeAddr().getPt();
+					mMapView.getController().animateTo(pt);
+				} else {
+					mAddrProcessing = AddrType.OFFICE_ADDR;
+					mOfficeSelected.setChecked(true);
+					GeoPoint pt = mUserProfile.getOfficeAddr().getPt();
+					mMapView.getController().animateTo(pt);
+				}
+			}
+		});
+		mOfficeSelected = (CheckBox)findViewById(R.id.officeselected);
+		mOfficeSelected.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked) {
+					mAddrProcessing = AddrType.OFFICE_ADDR;
+					mHomeSelected.setChecked(false);
+					GeoPoint pt = mUserProfile.getOfficeAddr().getPt();
+					mMapView.getController().animateTo(pt);
+				} else {
+					mAddrProcessing = AddrType.HOME_ADDR;
+					mHomeSelected.setChecked(true);
+					GeoPoint pt = mUserProfile.getHomeAddr().getPt();
+					mMapView.getController().animateTo(pt);
+				}
+			}
+		});
+		
         // 初始化搜索模块，注册事件监听
         mSearch = new MKSearch();
         mSearch.init(app.mBMapMan, new MKSearchListener(){
@@ -95,10 +158,6 @@ public class SettingActivity extends MapActivity {
 					ArrayList<MKPoiInfo> poiResults = new ArrayList(1);
 					poiResults.add(res.getPoi(0));
 					poiOverlay.setData(poiResults);
-				    mMapView.getOverlays().clear();
-				    mMapView.getOverlays().add(poiOverlay);
-				    mMapView.invalidate();
-			    	mMapView.getController().animateTo(res.getPoi(0).pt);
 			    	
 			    	//将结果传回给SettingActivity
 			    	//2012.09.25直接在poisearch中处理搜索结果，故将传递消息功能注释掉
@@ -117,13 +176,20 @@ public class SettingActivity extends MapActivity {
 			        //app.getSettingActivity().handler.sendMessage(msg);
 			    	
 			        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res.getPoi(0));
-			        if (mSearchPlace.equals("home")) {
+			        if (mAddrProcessing == AddrType.HOME_ADDR) {
 			        	mUserProfile.setHomeAddr(mpi);
 			        } else {
 			        	mUserProfile.setOfficeAddr(mpi);
 			        }
 	            	mUserProfile.commitPreferences(mSP);			    	
 	        		resetTextView();
+				    mMapView.getOverlays().clear();
+				    mMapView.getOverlays().add(poiOverlay);
+			        LongTap lt = new LongTap();
+			        mMapView.getOverlays().add(lt);
+			        setMarkers();
+				    mMapView.invalidate();
+			    	mMapView.getController().animateTo(res.getPoi(0).pt);
 			    } else if (res.getCityListNum() > 0) {
 			    	String strInfo = "在";
 			    	for (int i = 0; i < res.getCityListNum(); i++) {
@@ -144,6 +210,33 @@ public class SettingActivity extends MapActivity {
 					int error) {
 			}
 			public void onGetAddrResult(MKAddrInfo res, int error) {
+				if (error != 0) {
+					String str = String.format("错误号：%d", error);
+					Toast.makeText(SettingActivity.this, str, Toast.LENGTH_LONG).show();
+					return;
+				}
+
+				mMapView.getController().animateTo(res.geoPt);
+					
+				String strInfo = String.format("纬度：%f 经度：%f\r\n, name: %s", res.geoPt.getLatitudeE6()/1e6, 
+							res.geoPt.getLongitudeE6()/1e6, res.strAddr);
+
+				Toast.makeText(SettingActivity.this, strInfo, Toast.LENGTH_LONG).show();
+				Log.d(TAG, strInfo);
+		        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res);
+		        if (mAddrProcessing == AddrType.HOME_ADDR) {
+		        	mUserProfile.setHomeAddr(mpi);
+		        } else {
+		        	mUserProfile.setOfficeAddr(mpi);
+		        }
+            	mUserProfile.commitPreferences(mSP);			    	
+        		resetTextView();
+				
+				mMapView.getOverlays().clear();
+		        LongTap lt = new LongTap();
+		        mMapView.getOverlays().add(lt);
+		        setMarkers();
+		        mMapView.getController().animateTo(res.geoPt);
 			}
 			public void onGetBusDetailResult(MKBusLineResult result, int iError) {
 			}
@@ -171,6 +264,8 @@ public class SettingActivity extends MapActivity {
 		retrieveAuthToken();
 		retrieveSessionToken();
 		resetTextView();
+		setMarkers();
+		mHomeSelected.setChecked(true);
 		
         // 设定搜索按钮的响应
         OnClickListener clickListener = new OnClickListener(){
@@ -178,20 +273,27 @@ public class SettingActivity extends MapActivity {
 				SearchButtonProcess(v);
 			}
         };
-        mBtnSearchHome = (Button)findViewById(R.id.search_home);
-        mBtnSearchHome.setOnClickListener(clickListener); 
-        mBtnSearchOffice = (Button)findViewById(R.id.search_office);
-        mBtnSearchOffice.setOnClickListener(clickListener); 
+        mBtnSearch = (ImageButton)findViewById(R.id.search);
+        mBtnSearch.setOnClickListener(clickListener); 
 	}
+	
+	public void setMarkers() {
+		GeoPoint ptHome = mUserProfile.getHomeAddr().getPt();
+		mMapView.getController().animateTo(ptHome);
+		Drawable markerHome = getResources().getDrawable(R.drawable.bubble_48);  //得到需要标在地图上的资源
+		markerHome.setBounds(0, 0, markerHome.getIntrinsicWidth(), markerHome
+				.getIntrinsicHeight());   //为maker定义位置和边界
+		GeoPoint ptOffice = mUserProfile.getOfficeAddr().getPt();
+		mMapView.getController().animateTo(ptOffice);
+		Drawable markerOffice = getResources().getDrawable(R.drawable.bubble_48);  //得到需要标在地图上的资源
+		markerHome.setBounds(0, 0, markerHome.getIntrinsicWidth(), markerOffice
+				.getIntrinsicHeight());   //为maker定义位置和边界
+		mMapView.getOverlays().add(new OverItemT(markerHome, SettingActivity.this, ptHome, null));
+		mMapView.getOverlays().add(new OverItemT(markerOffice, SettingActivity.this, ptOffice, null));
+	}
+	
 	void SearchButtonProcess(View v) {
-		if (mBtnSearchHome.equals(v)) {
-			mSearchPlace = "home";
-			EditText editSearchKey = (EditText)findViewById(R.id.searchkey);
-			mSearch.poiSearchInCity("深圳", 
-					editSearchKey.getText().toString());
-		}
-		if (mBtnSearchOffice.equals(v)) {
-			mSearchPlace = "office";
+		if (mBtnSearch.equals(v)) {
 			EditText editSearchKey = (EditText)findViewById(R.id.searchkey);
 			mSearch.poiSearchInCity("深圳", 
 					editSearchKey.getText().toString());
@@ -282,5 +384,133 @@ public class SettingActivity extends MapActivity {
 	    		return;
 	    	}
 	    }
+	}
+	
+	
+	public class LongTap extends Overlay implements OnDoubleTapListener, OnGestureListener {
+		private GestureDetector mGestureDetector = new GestureDetector(this); 
+		private boolean isLongPress = false;
+		private long time;
+
+	    @Override  
+	    public boolean onTouchEvent(MotionEvent arg0, MapView mapView) {  
+	    	Log.d(TAG, "in onTouchEvent");
+	        float x = arg0.getX();  
+	        float y = arg0.getY();  
+	        switch (arg0.getAction()) {  
+	        case MotionEvent.ACTION_DOWN:  
+	            time = System.currentTimeMillis();  
+	            isLongPress = false;  
+	            break;  
+	  
+	        case MotionEvent.ACTION_UP:  
+	            if (System.currentTimeMillis() - time > 3000) {  
+	                isLongPress = true;  
+	            }  
+	            break;  
+	        default:  
+	            break;  
+	        }  
+	        return mGestureDetector.onTouchEvent(arg0);  
+	    }  
+	    
+		@Override
+		public boolean onDoubleTap(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onDoubleTapEvent(MotionEvent e) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent e) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onDown(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2,
+				float arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void onLongPress(MotionEvent e) {
+			// TODO Auto-generated method stub
+			Log.d(TAG, "in onLongPress,"+e.toString());
+	        float x = e.getX();  
+	        float y = e.getY();  
+	        Projection pj = mMapView.getProjection();
+        	mPointTapped = pj.fromPixels((int) x, (int) y);
+        	
+			//Log.d(TAG, "in onLongPress,"+pt.toString());
+        	//调用一次反向地理解码，获取位置描述信息
+        	mSearch.reverseGeocode(mPointTapped);
+	        isLongPress = false;  
+		}
+
+		@Override
+		public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
+				float arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void onShowPress(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean onSingleTapUp(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
+	}
+	
+	public enum AddrType {
+		HOME_ADDR, 
+		OFFICE_ADDR;
+	}
+	
+	class OverItemT extends ItemizedOverlay<OverlayItem>{
+		private List<OverlayItem> mGeoList = new ArrayList<OverlayItem>();
+
+		public OverItemT(Drawable marker, Context context, GeoPoint pt, String title) {
+			super(boundCenterBottom(marker));
+			
+			mGeoList.add(new OverlayItem(pt, title, null));
+
+			populate();
+		}
+
+		@Override
+		protected OverlayItem createItem(int i) {
+			return mGeoList.get(i);
+		}
+
+		@Override
+		public int size() {
+			return mGeoList.size();
+		}
+
+		@Override
+		public boolean onSnapToItem(int i, int j, Point point, MapView mapview) {
+			Log.e("ItemizedOverlayDemo","enter onSnapToItem()!");
+			return false;
+		}
 	}
 }

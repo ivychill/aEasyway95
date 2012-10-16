@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.MKAddrInfo;
 import com.baidu.mapapi.MKPoiInfo;
 
 public class UserProfile {
@@ -215,6 +216,45 @@ public class UserProfile {
 			this.pt = mpi.pt;
 			this.ePoiType = mpi.ePoiType;
 		}
+
+		MKPoiInfoHelper(MKAddrInfo mdi) {
+			//对返回的结果进行正则表达式的处理
+			//返回的结果形式为：广东省深圳市宝安区公园路1号
+			String addr = mdi.strAddr;
+			//首先获取省的信息
+			String tmpStrings[] = addr.split("省");
+			String province = "";
+			String addrWithCity = addr;
+			if (tmpStrings.length >= 2) {
+				province = tmpStrings[0]+"省";
+				addrWithCity = addr.replaceAll(province, "");
+			}
+			//然后获取市的信息
+			tmpStrings = addrWithCity.split("市");
+			String city = "";
+			String addrWithDist = addrWithCity;
+			if (tmpStrings.length >= 2) {
+				city = tmpStrings[0]+"市";
+				addrWithDist = addrWithCity.replaceAll(city, "");
+			}
+			//然后获取区的信息
+			tmpStrings = addrWithDist.split("区");
+			String dist = "";
+			String addrWithStreet = addrWithDist;
+			if (tmpStrings.length >= 2) {
+				dist = tmpStrings[0]+"区";
+				addrWithStreet = addrWithStreet.replaceAll(dist, "");
+			}
+			
+			this.name = addrWithStreet;
+			this.address = "";
+			this.city = city;
+			this.phoneNum = "";
+			this.postCode = "";
+			this.pt = mdi.geoPt;
+			//this.ePoiType = ;
+		}
+
 		MKPoiInfoHelper() {
 			this.name = "";
 			this.address = "";
