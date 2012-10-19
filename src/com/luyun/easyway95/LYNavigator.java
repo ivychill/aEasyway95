@@ -20,7 +20,14 @@ import com.baidu.mapapi.RouteOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
+import com.luyun.easyway95.weibo.WBEntry;
+import com.luyun.easyway95.wxapi.WXEntryActivity;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXTextObject;
 
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -31,10 +38,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.provider.Settings;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -47,6 +58,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -655,7 +667,8 @@ public class LYNavigator extends MapActivity {
         getMenuInflater().inflate(R.menu.ly_navigator, menu);
         return true;
     }
-
+    
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 //            case R.id.more_traffic:
@@ -676,6 +689,16 @@ public class LYNavigator extends MapActivity {
                 // The reply item is part of the email group
         		startActivity(new Intent(LYNavigator.this, SettingActivity.class));
         		return true;
+        		
+            case R.id.weibo:
+                // The reply item is part of the email group
+            	ShareToWeibo();
+        		return true;
+        		
+            case R.id.weixin:
+                // The reply item is part of the email group
+            	ShareToWeixin();
+        		return true;
                 
             // Generic catch all for all the other menu resources
             default:
@@ -684,5 +707,36 @@ public class LYNavigator extends MapActivity {
         }
         
         return false;
+    }
+    
+    public void ShareToWeibo() {
+		WBEntry wbEntry = new WBEntry(LYNavigator.this);
+		if (!wbEntry.sendWeibo())
+		{
+			wbEntry.authorize();
+		}
+    }
+    
+    public void ShareToWeixin() {
+		IWXAPI wxApi = WXAPIFactory.createWXAPI(this, Constants.WEIXIN_APP_ID, true);
+		wxApi.registerApp(Constants.WEIXIN_APP_ID);
+        WXTextObject textObj = new WXTextObject();
+        textObj.text = Constants.SHARE_MESSAGE;
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = textObj;
+        msg.description = Constants.SHARE_MESSAGE;
+        
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        if (wxApi.getWXAppSupportAPI() >= 0x21020001) {
+        	req.scene = SendMessageToWX.Req.WXSceneTimeline;
+            Log.d(TAG, "support friend circle");
+        }
+        else {
+        	req.scene = SendMessageToWX.Req.WXSceneSession;
+        }
+        
+        wxApi.sendReq(req);
     }
 }

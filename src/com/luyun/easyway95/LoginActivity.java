@@ -85,6 +85,7 @@ public class LoginActivity extends Activity {
 	    	Log.d(TAG, cookie);
 
 		mwvLogin = (WebView)findViewById(R.id.wv);
+		mwvLogin.getSettings().setJavaScriptEnabled(true);	//added by Chen Feng
 		mwvLogin.setWebChromeClient(new WebChromeClient() {
 			@Override
 			public void onProgressChanged(WebView view, int newProgress) {
