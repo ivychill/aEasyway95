@@ -496,19 +496,7 @@ public class LYNavigator extends MapActivity {
     	updateNextTrafficPoint();
     	updateTrafficView();
 		
-//		if (updateViewTimerCreated) return;
-//		updateViewTimerCreated = true;
-    	//创建一个60秒的timer，保证自动刷新，否则界面显示和数据不同步
-//		Timer timer = new Timer();
-//		LYResetTimerTask timerTask = new LYResetTimerTask();
-//		timer.schedule(timerTask, 5000);
-    	
-		long timenow = System.currentTimeMillis();
-    	if (timenow-mlLastPrompt>120*1000) {
-    		promptTraffic();
-    		mlLastPrompt = timenow;
-    	}
-    	//setResetTimerTask();
+		promptTraffic();
     }
     
     private void resetMapViewByRoute() {
@@ -558,6 +546,11 @@ public class LYNavigator extends MapActivity {
     }
       
     public void promptTraffic() {
+		long timenow = System.currentTimeMillis();
+    	if (timenow-mlLastPrompt<30*1000) {
+    		return;
+    	}    	
+		mlLastPrompt = timenow;
     	popupTrafficDialog(mTrafficPoint);
     }
     
