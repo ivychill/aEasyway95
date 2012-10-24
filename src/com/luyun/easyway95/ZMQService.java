@@ -5,12 +5,14 @@ import org.zeromq.ZMQQueue;
 
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class ZMQService extends Service {
@@ -32,6 +34,7 @@ public class ZMQService extends Service {
 	private ZMQThread mztIO;
 	
 	private Handler mTriggerHdl;
+	private String mDeviceID;
 	
 	//public void registerHandler(Handler hdl) {
 	//	mTriggerHdl = hdl;
@@ -40,6 +43,9 @@ public class ZMQService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        mDeviceID = tm.getDeviceId();
+        
 		mTriggerHdl = ((LYNavigator)((Easyway95App)getApplication()).getMainActivity()).handler;
 		
 		mzcContextInproc = ZMQ.context(1);
@@ -112,6 +118,7 @@ public class ZMQService extends Service {
 	        
 	        
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
+	        mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
 	        String strProTSS = 
 					"tcp://"
 					+Constants.TSS_PRO_HOST

@@ -53,9 +53,9 @@ public class Constants {
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
-	public static final String TSS_PRO_HOST="www.roadclouding.com";	
+	//public static final String TSS_PRO_HOST="www.roadclouding.com";	
 	//public static final String TSS_PRO_HOST="42.121.99.247";	
-	//public static final String TSS_PRO_HOST="172.16.0.100";	
+	public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;	
@@ -78,4 +78,6 @@ public class Constants {
 	
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;
+	
+	public static long INTERVAL_OF_TRAFFIC_REPORT = 5; //上报路况间隔时间
 }
