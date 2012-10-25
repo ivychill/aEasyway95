@@ -41,6 +41,7 @@ import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
 import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficPub;
+import com.luyun.easyway95.shared.TSSProtos.LYTrafficReport;
 
 public class MapHelper {
 	private static String TAG = "MapHelper";
@@ -57,7 +58,8 @@ public class MapHelper {
 	private MKRouteHelper mDrivingRoutes;
 	private HotRoadsWithTraffic mHotRoadsWithTraffic;
 	
-	//private DrivingRoutes;
+	//终端上报
+	private LYLocation mLocationSet;
 	
 	public MapHelper(LYNavigator act) {
 		mainActivity = act;
@@ -73,6 +75,7 @@ public class MapHelper {
 			mDestPoint = mainActivity.getHomeAddr();
 		}
 		mHotRoadsWithTraffic = new HotRoadsWithTraffic();
+		mLocationSet = new LYLocation();
 	}
 	
 	MKRouteHelper getDrivingRoutes() {
@@ -168,7 +171,23 @@ public class MapHelper {
 	 * 与即将途径的路况距离是否<1KM，YES则弹出警示，不断刷新距离，能否将周边不堵的路显示出来？
 	 */
     public void onLocationChanged(Location location) {
-    	Log.d(TAG, "in onLocationChanged");
+    	Log.d(TAG, "in MapHelper::onLocationChanged");
+    	mLocationSet.onLocationChanged(location);
+    	LYTrafficReport tr = mLocationSet.genTraffic();
+    	if (tr != null) {
+        	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
+    				.setVersion(1)
+    				.setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT)
+    				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TC)
+    				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_REPORT)
+    				.setMsgId(2000)
+    				.setTimestamp(System.currentTimeMillis()/1000)
+    				.setTrafficReport(tr)
+    				.build();
+        	Log.d(TAG, msg.toString());
+        	byte[] data = msg.toByteArray();
+        	mainActivity.sendMsgToSvr(data);
+    	}
 		//update marker
 		//request a new driving route to baidu in case off road
 		//popup a prompt when distance between current location with traffic < 10KM

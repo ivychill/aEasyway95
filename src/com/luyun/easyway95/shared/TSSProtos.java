@@ -186,10 +186,12 @@ public final class TSSProtos {
       implements com.google.protobuf.ProtocolMessageEnum {
     LY_CLIENT(0, 1),
     LY_TSS(1, 2),
+    LY_TC(2, 3),
     ;
     
     public static final int LY_CLIENT_VALUE = 1;
     public static final int LY_TSS_VALUE = 2;
+    public static final int LY_TC_VALUE = 3;
     
     
     public final int getNumber() { return value; }
@@ -198,6 +200,7 @@ public final class TSSProtos {
       switch (value) {
         case 1: return LY_CLIENT;
         case 2: return LY_TSS;
+        case 3: return LY_TC;
         default: return null;
       }
     }
@@ -228,7 +231,7 @@ public final class TSSProtos {
     }
     
     private static final LYParty[] VALUES = {
-      LY_CLIENT, LY_TSS, 
+      LY_CLIENT, LY_TSS, LY_TC, 
     };
     
     public static LYParty valueOf(
@@ -2664,850 +2667,6 @@ public final class TSSProtos {
     }
     
     // @@protoc_insertion_point(class_scope:tss.LYRoute)
-  }
-  
-  public interface LYTrafficReportOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // optional .tss.LYSegment segment = 1;
-    boolean hasSegment();
-    com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment();
-    com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder();
-    
-    // optional .tss.LYCoordinate location = 2;
-    boolean hasLocation();
-    com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation();
-    com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder();
-    
-    // optional int64 timestamp = 3;
-    boolean hasTimestamp();
-    long getTimestamp();
-    
-    // required .tss.LYDirection direction = 4;
-    boolean hasDirection();
-    com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection();
-    
-    // required int32 speed = 5;
-    boolean hasSpeed();
-    int getSpeed();
-    
-    // optional int32 acceleration = 6;
-    boolean hasAcceleration();
-    int getAcceleration();
-  }
-  public static final class LYTrafficReport extends
-      com.google.protobuf.GeneratedMessage
-      implements LYTrafficReportOrBuilder {
-    // Use LYTrafficReport.newBuilder() to construct.
-    private LYTrafficReport(Builder builder) {
-      super(builder);
-    }
-    private LYTrafficReport(boolean noInit) {}
-    
-    private static final LYTrafficReport defaultInstance;
-    public static LYTrafficReport getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public LYTrafficReport getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
-    }
-    
-    private int bitField0_;
-    // optional .tss.LYSegment segment = 1;
-    public static final int SEGMENT_FIELD_NUMBER = 1;
-    private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_;
-    public boolean hasSegment() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
-      return segment_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
-      return segment_;
-    }
-    
-    // optional .tss.LYCoordinate location = 2;
-    public static final int LOCATION_FIELD_NUMBER = 2;
-    private com.luyun.easyway95.shared.TSSProtos.LYCoordinate location_;
-    public boolean hasLocation() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation() {
-      return location_;
-    }
-    public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder() {
-      return location_;
-    }
-    
-    // optional int64 timestamp = 3;
-    public static final int TIMESTAMP_FIELD_NUMBER = 3;
-    private long timestamp_;
-    public boolean hasTimestamp() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    public long getTimestamp() {
-      return timestamp_;
-    }
-    
-    // required .tss.LYDirection direction = 4;
-    public static final int DIRECTION_FIELD_NUMBER = 4;
-    private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_;
-    public boolean hasDirection() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
-      return direction_;
-    }
-    
-    // required int32 speed = 5;
-    public static final int SPEED_FIELD_NUMBER = 5;
-    private int speed_;
-    public boolean hasSpeed() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
-    }
-    public int getSpeed() {
-      return speed_;
-    }
-    
-    // optional int32 acceleration = 6;
-    public static final int ACCELERATION_FIELD_NUMBER = 6;
-    private int acceleration_;
-    public boolean hasAcceleration() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
-    }
-    public int getAcceleration() {
-      return acceleration_;
-    }
-    
-    private void initFields() {
-      segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
-      location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
-      timestamp_ = 0L;
-      direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
-      speed_ = 0;
-      acceleration_ = 0;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
-      if (!hasDirection()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasSpeed()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (hasSegment()) {
-        if (!getSegment().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      if (hasLocation()) {
-        if (!getLocation().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, segment_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeMessage(2, location_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt64(3, timestamp_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeEnum(4, direction_.getNumber());
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt32(5, speed_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeInt32(6, acceleration_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, segment_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, location_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, timestamp_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, direction_.getNumber());
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, speed_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, acceleration_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-    
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
-      }
-      
-      // Construct using com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-      
-      private Builder(BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getSegmentFieldBuilder();
-          getLocationFieldBuilder();
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-      
-      public Builder clear() {
-        super.clear();
-        if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
-        } else {
-          segmentBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
-        } else {
-          locationBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000002);
-        timestamp_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
-        bitField0_ = (bitField0_ & ~0x00000008);
-        speed_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000010);
-        acceleration_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000020);
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDescriptor();
-      }
-      
-      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getDefaultInstanceForType() {
-        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
-      }
-      
-      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport build() {
-        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-      
-      private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildPartial() {
-        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = new com.luyun.easyway95.shared.TSSProtos.LYTrafficReport(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        if (segmentBuilder_ == null) {
-          result.segment_ = segment_;
-        } else {
-          result.segment_ = segmentBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        if (locationBuilder_ == null) {
-          result.location_ = location_;
-        } else {
-          result.location_ = locationBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.timestamp_ = timestamp_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        result.direction_ = direction_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
-        }
-        result.speed_ = speed_;
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
-        }
-        result.acceleration_ = acceleration_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYTrafficReport) {
-          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYTrafficReport)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport other) {
-        if (other == com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance()) return this;
-        if (other.hasSegment()) {
-          mergeSegment(other.getSegment());
-        }
-        if (other.hasLocation()) {
-          mergeLocation(other.getLocation());
-        }
-        if (other.hasTimestamp()) {
-          setTimestamp(other.getTimestamp());
-        }
-        if (other.hasDirection()) {
-          setDirection(other.getDirection());
-        }
-        if (other.hasSpeed()) {
-          setSpeed(other.getSpeed());
-        }
-        if (other.hasAcceleration()) {
-          setAcceleration(other.getAcceleration());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public final boolean isInitialized() {
-        if (!hasDirection()) {
-          
-          return false;
-        }
-        if (!hasSpeed()) {
-          
-          return false;
-        }
-        if (hasSegment()) {
-          if (!getSegment().isInitialized()) {
-            
-            return false;
-          }
-        }
-        if (hasLocation()) {
-          if (!getLocation().isInitialized()) {
-            
-            return false;
-          }
-        }
-        return true;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder();
-              if (hasSegment()) {
-                subBuilder.mergeFrom(getSegment());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setSegment(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder();
-              if (hasLocation()) {
-                subBuilder.mergeFrom(getLocation());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLocation(subBuilder.buildPartial());
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              timestamp_ = input.readInt64();
-              break;
-            }
-            case 32: {
-              int rawValue = input.readEnum();
-              com.luyun.easyway95.shared.TSSProtos.LYDirection value = com.luyun.easyway95.shared.TSSProtos.LYDirection.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(4, rawValue);
-              } else {
-                bitField0_ |= 0x00000008;
-                direction_ = value;
-              }
-              break;
-            }
-            case 40: {
-              bitField0_ |= 0x00000010;
-              speed_ = input.readInt32();
-              break;
-            }
-            case 48: {
-              bitField0_ |= 0x00000020;
-              acceleration_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      }
-      
-      private int bitField0_;
-      
-      // optional .tss.LYSegment segment = 1;
-      private com.luyun.easyway95.shared.TSSProtos.LYSegment segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> segmentBuilder_;
-      public boolean hasSegment() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYSegment getSegment() {
-        if (segmentBuilder_ == null) {
-          return segment_;
-        } else {
-          return segmentBuilder_.getMessage();
-        }
-      }
-      public Builder setSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
-        if (segmentBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          segment_ = value;
-          onChanged();
-        } else {
-          segmentBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder setSegment(
-          com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder builderForValue) {
-        if (segmentBuilder_ == null) {
-          segment_ = builderForValue.build();
-          onChanged();
-        } else {
-          segmentBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder mergeSegment(com.luyun.easyway95.shared.TSSProtos.LYSegment value) {
-        if (segmentBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              segment_ != com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance()) {
-            segment_ =
-              com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder(segment_).mergeFrom(value).buildPartial();
-          } else {
-            segment_ = value;
-          }
-          onChanged();
-        } else {
-          segmentBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder clearSegment() {
-        if (segmentBuilder_ == null) {
-          segment_ = com.luyun.easyway95.shared.TSSProtos.LYSegment.getDefaultInstance();
-          onChanged();
-        } else {
-          segmentBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder getSegmentBuilder() {
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return getSegmentFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder getSegmentOrBuilder() {
-        if (segmentBuilder_ != null) {
-          return segmentBuilder_.getMessageOrBuilder();
-        } else {
-          return segment_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder> 
-          getSegmentFieldBuilder() {
-        if (segmentBuilder_ == null) {
-          segmentBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.LYSegment, com.luyun.easyway95.shared.TSSProtos.LYSegment.Builder, com.luyun.easyway95.shared.TSSProtos.LYSegmentOrBuilder>(
-                  segment_,
-                  getParentForChildren(),
-                  isClean());
-          segment_ = null;
-        }
-        return segmentBuilder_;
-      }
-      
-      // optional .tss.LYCoordinate location = 2;
-      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> locationBuilder_;
-      public boolean hasLocation() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getLocation() {
-        if (locationBuilder_ == null) {
-          return location_;
-        } else {
-          return locationBuilder_.getMessage();
-        }
-      }
-      public Builder setLocation(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
-        if (locationBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          location_ = value;
-          onChanged();
-        } else {
-          locationBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000002;
-        return this;
-      }
-      public Builder setLocation(
-          com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder builderForValue) {
-        if (locationBuilder_ == null) {
-          location_ = builderForValue.build();
-          onChanged();
-        } else {
-          locationBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000002;
-        return this;
-      }
-      public Builder mergeLocation(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
-        if (locationBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              location_ != com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) {
-            location_ =
-              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder(location_).mergeFrom(value).buildPartial();
-          } else {
-            location_ = value;
-          }
-          onChanged();
-        } else {
-          locationBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000002;
-        return this;
-      }
-      public Builder clearLocation() {
-        if (locationBuilder_ == null) {
-          location_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
-          onChanged();
-        } else {
-          locationBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder getLocationBuilder() {
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return getLocationFieldBuilder().getBuilder();
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getLocationOrBuilder() {
-        if (locationBuilder_ != null) {
-          return locationBuilder_.getMessageOrBuilder();
-        } else {
-          return location_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> 
-          getLocationFieldBuilder() {
-        if (locationBuilder_ == null) {
-          locationBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder>(
-                  location_,
-                  getParentForChildren(),
-                  isClean());
-          location_ = null;
-        }
-        return locationBuilder_;
-      }
-      
-      // optional int64 timestamp = 3;
-      private long timestamp_ ;
-      public boolean hasTimestamp() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      public long getTimestamp() {
-        return timestamp_;
-      }
-      public Builder setTimestamp(long value) {
-        bitField0_ |= 0x00000004;
-        timestamp_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearTimestamp() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        timestamp_ = 0L;
-        onChanged();
-        return this;
-      }
-      
-      // required .tss.LYDirection direction = 4;
-      private com.luyun.easyway95.shared.TSSProtos.LYDirection direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
-      public boolean hasDirection() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      public com.luyun.easyway95.shared.TSSProtos.LYDirection getDirection() {
-        return direction_;
-      }
-      public Builder setDirection(com.luyun.easyway95.shared.TSSProtos.LYDirection value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
-        direction_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearDirection() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        direction_ = com.luyun.easyway95.shared.TSSProtos.LYDirection.LY_UNKNOWN;
-        onChanged();
-        return this;
-      }
-      
-      // required int32 speed = 5;
-      private int speed_ ;
-      public boolean hasSpeed() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-      public int getSpeed() {
-        return speed_;
-      }
-      public Builder setSpeed(int value) {
-        bitField0_ |= 0x00000010;
-        speed_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearSpeed() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        speed_ = 0;
-        onChanged();
-        return this;
-      }
-      
-      // optional int32 acceleration = 6;
-      private int acceleration_ ;
-      public boolean hasAcceleration() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
-      }
-      public int getAcceleration() {
-        return acceleration_;
-      }
-      public Builder setAcceleration(int value) {
-        bitField0_ |= 0x00000020;
-        acceleration_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearAcceleration() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        acceleration_ = 0;
-        onChanged();
-        return this;
-      }
-      
-      // @@protoc_insertion_point(builder_scope:tss.LYTrafficReport)
-    }
-    
-    static {
-      defaultInstance = new LYTrafficReport(true);
-      defaultInstance.initFields();
-    }
-    
-    // @@protoc_insertion_point(class_scope:tss.LYTrafficReport)
   }
   
   public interface LYSegmentTrafficOrBuilder
@@ -8896,6 +8055,1188 @@ public final class TSSProtos {
     // @@protoc_insertion_point(class_scope:tss.LYDeviceReport)
   }
   
+  public interface LYSamplePointOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required .tss.LYCoordinate sp_coordinate = 1;
+    boolean hasSpCoordinate();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinate getSpCoordinate();
+    com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getSpCoordinateOrBuilder();
+    
+    // required int64 timestamp = 2;
+    boolean hasTimestamp();
+    long getTimestamp();
+    
+    // optional double altitude = 3;
+    boolean hasAltitude();
+    double getAltitude();
+    
+    // optional double course = 4;
+    boolean hasCourse();
+    double getCourse();
+  }
+  public static final class LYSamplePoint extends
+      com.google.protobuf.GeneratedMessage
+      implements LYSamplePointOrBuilder {
+    // Use LYSamplePoint.newBuilder() to construct.
+    private LYSamplePoint(Builder builder) {
+      super(builder);
+    }
+    private LYSamplePoint(boolean noInit) {}
+    
+    private static final LYSamplePoint defaultInstance;
+    public static LYSamplePoint getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYSamplePoint getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSamplePoint_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSamplePoint_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required .tss.LYCoordinate sp_coordinate = 1;
+    public static final int SP_COORDINATE_FIELD_NUMBER = 1;
+    private com.luyun.easyway95.shared.TSSProtos.LYCoordinate spCoordinate_;
+    public boolean hasSpCoordinate() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getSpCoordinate() {
+      return spCoordinate_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getSpCoordinateOrBuilder() {
+      return spCoordinate_;
+    }
+    
+    // required int64 timestamp = 2;
+    public static final int TIMESTAMP_FIELD_NUMBER = 2;
+    private long timestamp_;
+    public boolean hasTimestamp() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public long getTimestamp() {
+      return timestamp_;
+    }
+    
+    // optional double altitude = 3;
+    public static final int ALTITUDE_FIELD_NUMBER = 3;
+    private double altitude_;
+    public boolean hasAltitude() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public double getAltitude() {
+      return altitude_;
+    }
+    
+    // optional double course = 4;
+    public static final int COURSE_FIELD_NUMBER = 4;
+    private double course_;
+    public boolean hasCourse() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public double getCourse() {
+      return course_;
+    }
+    
+    private void initFields() {
+      spCoordinate_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
+      timestamp_ = 0L;
+      altitude_ = 0D;
+      course_ = 0D;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasSpCoordinate()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasTimestamp()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getSpCoordinate().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, spCoordinate_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt64(2, timestamp_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeDouble(3, altitude_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeDouble(4, course_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, spCoordinate_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, timestamp_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(3, altitude_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(4, course_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYSamplePoint parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYSamplePoint prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSamplePoint_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYSamplePoint_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSpCoordinateFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        if (spCoordinateBuilder_ == null) {
+          spCoordinate_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
+        } else {
+          spCoordinateBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        altitude_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        course_ = 0D;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint build() {
+        com.luyun.easyway95.shared.TSSProtos.LYSamplePoint result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYSamplePoint buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYSamplePoint result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYSamplePoint result = new com.luyun.easyway95.shared.TSSProtos.LYSamplePoint(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        if (spCoordinateBuilder_ == null) {
+          result.spCoordinate_ = spCoordinate_;
+        } else {
+          result.spCoordinate_ = spCoordinateBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.timestamp_ = timestamp_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.altitude_ = altitude_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.course_ = course_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYSamplePoint) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYSamplePoint)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYSamplePoint other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.getDefaultInstance()) return this;
+        if (other.hasSpCoordinate()) {
+          mergeSpCoordinate(other.getSpCoordinate());
+        }
+        if (other.hasTimestamp()) {
+          setTimestamp(other.getTimestamp());
+        }
+        if (other.hasAltitude()) {
+          setAltitude(other.getAltitude());
+        }
+        if (other.hasCourse()) {
+          setCourse(other.getCourse());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasSpCoordinate()) {
+          
+          return false;
+        }
+        if (!hasTimestamp()) {
+          
+          return false;
+        }
+        if (!getSpCoordinate().isInitialized()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder();
+              if (hasSpCoordinate()) {
+                subBuilder.mergeFrom(getSpCoordinate());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setSpCoordinate(subBuilder.buildPartial());
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              timestamp_ = input.readInt64();
+              break;
+            }
+            case 25: {
+              bitField0_ |= 0x00000004;
+              altitude_ = input.readDouble();
+              break;
+            }
+            case 33: {
+              bitField0_ |= 0x00000008;
+              course_ = input.readDouble();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required .tss.LYCoordinate sp_coordinate = 1;
+      private com.luyun.easyway95.shared.TSSProtos.LYCoordinate spCoordinate_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> spCoordinateBuilder_;
+      public boolean hasSpCoordinate() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate getSpCoordinate() {
+        if (spCoordinateBuilder_ == null) {
+          return spCoordinate_;
+        } else {
+          return spCoordinateBuilder_.getMessage();
+        }
+      }
+      public Builder setSpCoordinate(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
+        if (spCoordinateBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          spCoordinate_ = value;
+          onChanged();
+        } else {
+          spCoordinateBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder setSpCoordinate(
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder builderForValue) {
+        if (spCoordinateBuilder_ == null) {
+          spCoordinate_ = builderForValue.build();
+          onChanged();
+        } else {
+          spCoordinateBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder mergeSpCoordinate(com.luyun.easyway95.shared.TSSProtos.LYCoordinate value) {
+        if (spCoordinateBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              spCoordinate_ != com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance()) {
+            spCoordinate_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder(spCoordinate_).mergeFrom(value).buildPartial();
+          } else {
+            spCoordinate_ = value;
+          }
+          onChanged();
+        } else {
+          spCoordinateBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder clearSpCoordinate() {
+        if (spCoordinateBuilder_ == null) {
+          spCoordinate_ = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.getDefaultInstance();
+          onChanged();
+        } else {
+          spCoordinateBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder getSpCoordinateBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getSpCoordinateFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder getSpCoordinateOrBuilder() {
+        if (spCoordinateBuilder_ != null) {
+          return spCoordinateBuilder_.getMessageOrBuilder();
+        } else {
+          return spCoordinate_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder> 
+          getSpCoordinateFieldBuilder() {
+        if (spCoordinateBuilder_ == null) {
+          spCoordinateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCoordinate, com.luyun.easyway95.shared.TSSProtos.LYCoordinate.Builder, com.luyun.easyway95.shared.TSSProtos.LYCoordinateOrBuilder>(
+                  spCoordinate_,
+                  getParentForChildren(),
+                  isClean());
+          spCoordinate_ = null;
+        }
+        return spCoordinateBuilder_;
+      }
+      
+      // required int64 timestamp = 2;
+      private long timestamp_ ;
+      public boolean hasTimestamp() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public long getTimestamp() {
+        return timestamp_;
+      }
+      public Builder setTimestamp(long value) {
+        bitField0_ |= 0x00000002;
+        timestamp_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearTimestamp() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        timestamp_ = 0L;
+        onChanged();
+        return this;
+      }
+      
+      // optional double altitude = 3;
+      private double altitude_ ;
+      public boolean hasAltitude() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public double getAltitude() {
+        return altitude_;
+      }
+      public Builder setAltitude(double value) {
+        bitField0_ |= 0x00000004;
+        altitude_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearAltitude() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        altitude_ = 0D;
+        onChanged();
+        return this;
+      }
+      
+      // optional double course = 4;
+      private double course_ ;
+      public boolean hasCourse() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public double getCourse() {
+        return course_;
+      }
+      public Builder setCourse(double value) {
+        bitField0_ |= 0x00000008;
+        course_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearCourse() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        course_ = 0D;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYSamplePoint)
+    }
+    
+    static {
+      defaultInstance = new LYSamplePoint(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYSamplePoint)
+  }
+  
+  public interface LYTrafficReportOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .tss.LYSamplePoint points = 1;
+    java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> 
+        getPointsList();
+    com.luyun.easyway95.shared.TSSProtos.LYSamplePoint getPoints(int index);
+    int getPointsCount();
+    java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder> 
+        getPointsOrBuilderList();
+    com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder getPointsOrBuilder(
+        int index);
+  }
+  public static final class LYTrafficReport extends
+      com.google.protobuf.GeneratedMessage
+      implements LYTrafficReportOrBuilder {
+    // Use LYTrafficReport.newBuilder() to construct.
+    private LYTrafficReport(Builder builder) {
+      super(builder);
+    }
+    private LYTrafficReport(boolean noInit) {}
+    
+    private static final LYTrafficReport defaultInstance;
+    public static LYTrafficReport getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYTrafficReport getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
+    }
+    
+    // repeated .tss.LYSamplePoint points = 1;
+    public static final int POINTS_FIELD_NUMBER = 1;
+    private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> points_;
+    public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> getPointsList() {
+      return points_;
+    }
+    public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder> 
+        getPointsOrBuilderList() {
+      return points_;
+    }
+    public int getPointsCount() {
+      return points_.size();
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint getPoints(int index) {
+      return points_.get(index);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder getPointsOrBuilder(
+        int index) {
+      return points_.get(index);
+    }
+    
+    private void initFields() {
+      points_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getPointsCount(); i++) {
+        if (!getPoints(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int i = 0; i < points_.size(); i++) {
+        output.writeMessage(1, points_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (int i = 0; i < points_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, points_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYTrafficReport parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficReport_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getPointsFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        if (pointsBuilder_ == null) {
+          points_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          pointsBuilder_.clear();
+        }
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport build() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYTrafficReport result = new com.luyun.easyway95.shared.TSSProtos.LYTrafficReport(this);
+        int from_bitField0_ = bitField0_;
+        if (pointsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            points_ = java.util.Collections.unmodifiableList(points_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.points_ = points_;
+        } else {
+          result.points_ = pointsBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYTrafficReport) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYTrafficReport)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance()) return this;
+        if (pointsBuilder_ == null) {
+          if (!other.points_.isEmpty()) {
+            if (points_.isEmpty()) {
+              points_ = other.points_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePointsIsMutable();
+              points_.addAll(other.points_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.points_.isEmpty()) {
+            if (pointsBuilder_.isEmpty()) {
+              pointsBuilder_.dispose();
+              pointsBuilder_ = null;
+              points_ = other.points_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pointsBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getPointsFieldBuilder() : null;
+            } else {
+              pointsBuilder_.addAllMessages(other.points_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getPointsCount(); i++) {
+          if (!getPoints(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addPoints(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // repeated .tss.LYSamplePoint points = 1;
+      private java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> points_ =
+        java.util.Collections.emptyList();
+      private void ensurePointsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          points_ = new java.util.ArrayList<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint>(points_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYSamplePoint, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder, com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder> pointsBuilder_;
+      
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> getPointsList() {
+        if (pointsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(points_);
+        } else {
+          return pointsBuilder_.getMessageList();
+        }
+      }
+      public int getPointsCount() {
+        if (pointsBuilder_ == null) {
+          return points_.size();
+        } else {
+          return pointsBuilder_.getCount();
+        }
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint getPoints(int index) {
+        if (pointsBuilder_ == null) {
+          return points_.get(index);
+        } else {
+          return pointsBuilder_.getMessage(index);
+        }
+      }
+      public Builder setPoints(
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint value) {
+        if (pointsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointsIsMutable();
+          points_.set(index, value);
+          onChanged();
+        } else {
+          pointsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setPoints(
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder builderForValue) {
+        if (pointsBuilder_ == null) {
+          ensurePointsIsMutable();
+          points_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addPoints(com.luyun.easyway95.shared.TSSProtos.LYSamplePoint value) {
+        if (pointsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointsIsMutable();
+          points_.add(value);
+          onChanged();
+        } else {
+          pointsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addPoints(
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint value) {
+        if (pointsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePointsIsMutable();
+          points_.add(index, value);
+          onChanged();
+        } else {
+          pointsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addPoints(
+          com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder builderForValue) {
+        if (pointsBuilder_ == null) {
+          ensurePointsIsMutable();
+          points_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pointsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addPoints(
+          int index, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder builderForValue) {
+        if (pointsBuilder_ == null) {
+          ensurePointsIsMutable();
+          points_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pointsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllPoints(
+          java.lang.Iterable<? extends com.luyun.easyway95.shared.TSSProtos.LYSamplePoint> values) {
+        if (pointsBuilder_ == null) {
+          ensurePointsIsMutable();
+          super.addAll(values, points_);
+          onChanged();
+        } else {
+          pointsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearPoints() {
+        if (pointsBuilder_ == null) {
+          points_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          pointsBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removePoints(int index) {
+        if (pointsBuilder_ == null) {
+          ensurePointsIsMutable();
+          points_.remove(index);
+          onChanged();
+        } else {
+          pointsBuilder_.remove(index);
+        }
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder getPointsBuilder(
+          int index) {
+        return getPointsFieldBuilder().getBuilder(index);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder getPointsOrBuilder(
+          int index) {
+        if (pointsBuilder_ == null) {
+          return points_.get(index);  } else {
+          return pointsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder> 
+           getPointsOrBuilderList() {
+        if (pointsBuilder_ != null) {
+          return pointsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(points_);
+        }
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder addPointsBuilder() {
+        return getPointsFieldBuilder().addBuilder(
+            com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.getDefaultInstance());
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder addPointsBuilder(
+          int index) {
+        return getPointsFieldBuilder().addBuilder(
+            index, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.getDefaultInstance());
+      }
+      public java.util.List<com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder> 
+           getPointsBuilderList() {
+        return getPointsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYSamplePoint, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder, com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder> 
+          getPointsFieldBuilder() {
+        if (pointsBuilder_ == null) {
+          pointsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYSamplePoint, com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder, com.luyun.easyway95.shared.TSSProtos.LYSamplePointOrBuilder>(
+                  points_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          points_ = null;
+        }
+        return pointsBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYTrafficReport)
+    }
+    
+    static {
+      defaultInstance = new LYTrafficReport(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYTrafficReport)
+  }
+  
   public interface LYMsgOnAirOrBuilder extends
       com.google.protobuf.GeneratedMessage.
           ExtendableMessageOrBuilder<LYMsgOnAir> {
@@ -10316,11 +10657,6 @@ public final class TSSProtos {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_tss_LYRoute_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_tss_LYTrafficReport_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_tss_LYTrafficReport_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_tss_LYSegmentTraffic_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -10356,6 +10692,16 @@ public final class TSSProtos {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_tss_LYDeviceReport_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYSamplePoint_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYSamplePoint_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYTrafficReport_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYTrafficReport_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_tss_LYMsgOnAir_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -10376,63 +10722,62 @@ public final class TSSProtos {
       "\021.tss.LYCoordinate\022\036\n\003end\030\002 \002(\0132\021.tss.LY" +
       "Coordinate\022\014\n\004road\030\003 \001(\t\"=\n\007LYRoute\022\020\n\010i" +
       "dentity\030\001 \002(\005\022 \n\010segments\030\002 \003(\0132\016.tss.LY" +
-      "Segment\"\264\001\n\017LYTrafficReport\022\037\n\007segment\030\001" +
-      " \001(\0132\016.tss.LYSegment\022#\n\010location\030\002 \001(\0132\021" +
-      ".tss.LYCoordinate\022\021\n\ttimestamp\030\003 \001(\003\022#\n\t",
-      "direction\030\004 \002(\0162\020.tss.LYDirection\022\r\n\005spe" +
-      "ed\030\005 \002(\005\022\024\n\014acceleration\030\006 \001(\005\"\213\001\n\020LYSeg" +
-      "mentTraffic\022\037\n\007segment\030\001 \002(\0132\016.tss.LYSeg" +
-      "ment\022\021\n\ttimestamp\030\003 \001(\003\022#\n\tdirection\030\004 \002" +
-      "(\0162\020.tss.LYDirection\022\r\n\005speed\030\005 \002(\005\022\017\n\007d" +
-      "etails\030\013 \001(\t\"}\n\rLYRoadTraffic\022\014\n\004road\030\001 " +
-      "\002(\t\022\021\n\ttimestamp\030\002 \001(\003\022/\n\020segment_traffi" +
-      "cs\030\003 \003(\0132\025.tss.LYSegmentTraffic\022\014\n\004href\030" +
-      "\014 \001(\t\022\014\n\004desc\030\013 \001(\t\"[\n\rLYCityTraffic\022\014\n\004" +
-      "city\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\003\022)\n\rroad_tr",
-      "affics\030\003 \003(\0132\022.tss.LYRoadTraffic\"\344\001\n\tLYC" +
-      "rontab\022,\n\tcron_type\030\001 \002(\0162\031.tss.LYCronta" +
-      "b.LYCronType\022\016\n\006minute\030\002 \001(\003\022\014\n\004hour\030\003 \001" +
-      "(\003\022\013\n\003dom\030\004 \001(\005\022\r\n\005month\030\005 \001(\005\022\013\n\003dow\030\006 " +
-      "\001(\005\"b\n\nLYCronType\022\021\n\rLY_REP_MINUTE\020\001\022\017\n\013" +
-      "LY_REP_HOUR\020\002\022\016\n\nLY_REP_DOM\020\004\022\020\n\014LY_REP_" +
-      "MONTH\020\010\022\016\n\nLY_REP_DOW\020\020\"\326\002\n\014LYTrafficSub" +
-      "\022\014\n\004city\030\001 \002(\t\022\033\n\005route\030\002 \002(\0132\014.tss.LYRo" +
-      "ute\022-\n\010opr_type\030\003 \002(\0162\033.tss.LYTrafficSub" +
-      ".LYOprType\022-\n\010pub_type\030\004 \002(\0162\033.tss.LYTra",
-      "fficSub.LYPubType\022\023\n\007expires\030\005 \001(\005:\00230\022 " +
-      "\n\010cron_tab\030\006 \001(\0132\016.tss.LYCrontab\"D\n\tLYOp" +
-      "rType\022\021\n\rLY_SUB_CREATE\020\001\022\021\n\rLY_SUB_DELET" +
-      "E\020\002\022\021\n\rLY_SUB_UPDATE\020\003\"@\n\tLYPubType\022\020\n\014L" +
-      "Y_PUB_ADHOC\020\001\022\020\n\014LY_PUB_EVENT\020\002\022\017\n\013LY_PU" +
-      "B_CRON\020\003\"J\n\014LYTrafficPub\022\020\n\010route_id\030\001 \002" +
-      "(\005\022(\n\014city_traffic\030\002 \002(\0132\022.tss.LYCityTra" +
-      "ffic\"\177\n\016LYDeviceReport\022\021\n\tdevice_id\030\001 \002(" +
-      "\t\022\024\n\014device_token\030\002 \002(\014\022\023\n\013device_name\030\003" +
-      " \002(\t\022\024\n\014device_model\030\004 \002(\t\022\031\n\021device_os_",
-      "version\030\005 \002(\t\"\370\002\n\nLYMsgOnAir\022\017\n\007version\030" +
-      "\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003" +
-      "\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to" +
-      "_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_type\030\004" +
-      " \002(\0162\016.tss.LYMsgType\022 \n\010ret_code\030\021 \001(\0162\016" +
-      ".tss.LYRetCode\022*\n\rdevice_report\030\023 \001(\0132\023." +
-      "tss.LYDeviceReport\022&\n\013traffic_sub\030$ \001(\0132" +
-      "\021.tss.LYTrafficSub\022&\n\013traffic_pub\0303 \001(\0132" +
-      "\021.tss.LYTrafficPub\022,\n\016traffic_report\030A \001" +
-      "(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*\233\001\n\013LYD",
-      "irection\022\016\n\nLY_UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n" +
-      "\014LY_NORTHEAST\020\002\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORT" +
-      "HWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014" +
-      "\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHEAST\020\010*\241\001\n\tLYRet" +
-      "Code\022\016\n\nLY_SUCCESS\020\000\022\034\n\027LY_VERSION_IMCOM" +
-      "PATIBLE\020\221\002\022\023\n\016LY_VERSION_LOW\020\243\002\022\023\n\016LY_PA" +
-      "RTY_ERROR\020\251\004\022\026\n\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n\n" +
-      "LY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER_ERROR\020\231\023*$\n\007LY" +
-      "Party\022\r\n\tLY_CLIENT\020\001\022\n\n\006LY_TSS\020\002*~\n\tLYMs" +
-      "gType\022\013\n\007LY_VOID\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016L",
-      "Y_TRAFFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024" +
-      "\n\020LY_DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023" +
-      "B\'\n\032com.luyun.easyway95.sharedB\tTSSProto" +
-      "s"
+      "Segment\"\213\001\n\020LYSegmentTraffic\022\037\n\007segment\030" +
+      "\001 \002(\0132\016.tss.LYSegment\022\021\n\ttimestamp\030\003 \001(\003" +
+      "\022#\n\tdirection\030\004 \002(\0162\020.tss.LYDirection\022\r\n",
+      "\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"}\n\rLYRoadT" +
+      "raffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003\022" +
+      "/\n\020segment_traffics\030\003 \003(\0132\025.tss.LYSegmen" +
+      "tTraffic\022\014\n\004href\030\014 \001(\t\022\014\n\004desc\030\013 \001(\t\"[\n\r" +
+      "LYCityTraffic\022\014\n\004city\030\001 \001(\t\022\021\n\ttimestamp" +
+      "\030\002 \001(\003\022)\n\rroad_traffics\030\003 \003(\0132\022.tss.LYRo" +
+      "adTraffic\"\344\001\n\tLYCrontab\022,\n\tcron_type\030\001 \002" +
+      "(\0162\031.tss.LYCrontab.LYCronType\022\016\n\006minute\030" +
+      "\002 \001(\003\022\014\n\004hour\030\003 \001(\003\022\013\n\003dom\030\004 \001(\005\022\r\n\005mont" +
+      "h\030\005 \001(\005\022\013\n\003dow\030\006 \001(\005\"b\n\nLYCronType\022\021\n\rLY",
+      "_REP_MINUTE\020\001\022\017\n\013LY_REP_HOUR\020\002\022\016\n\nLY_REP" +
+      "_DOM\020\004\022\020\n\014LY_REP_MONTH\020\010\022\016\n\nLY_REP_DOW\020\020" +
+      "\"\326\002\n\014LYTrafficSub\022\014\n\004city\030\001 \002(\t\022\033\n\005route" +
+      "\030\002 \002(\0132\014.tss.LYRoute\022-\n\010opr_type\030\003 \002(\0162\033" +
+      ".tss.LYTrafficSub.LYOprType\022-\n\010pub_type\030" +
+      "\004 \002(\0162\033.tss.LYTrafficSub.LYPubType\022\023\n\007ex" +
+      "pires\030\005 \001(\005:\00230\022 \n\010cron_tab\030\006 \001(\0132\016.tss." +
+      "LYCrontab\"D\n\tLYOprType\022\021\n\rLY_SUB_CREATE\020" +
+      "\001\022\021\n\rLY_SUB_DELETE\020\002\022\021\n\rLY_SUB_UPDATE\020\003\"" +
+      "@\n\tLYPubType\022\020\n\014LY_PUB_ADHOC\020\001\022\020\n\014LY_PUB",
+      "_EVENT\020\002\022\017\n\013LY_PUB_CRON\020\003\"J\n\014LYTrafficPu" +
+      "b\022\020\n\010route_id\030\001 \002(\005\022(\n\014city_traffic\030\002 \002(" +
+      "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
+      "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
+      "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
+      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"n\n\rLYSamp" +
+      "lePoint\022(\n\rsp_coordinate\030\001 \002(\0132\021.tss.LYC" +
+      "oordinate\022\021\n\ttimestamp\030\002 \002(\003\022\020\n\010altitude" +
+      "\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5\n\017LYTrafficRepor" +
+      "t\022\"\n\006points\030\001 \003(\0132\022.tss.LYSamplePoint\"\370\002",
+      "\n\nLYMsgOnAir\022\017\n\007version\030\001 \002(\005\022\016\n\006msg_id\030" +
+      "\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003\022 \n\nfrom_party\030\002" +
+      " \002(\0162\014.tss.LYParty\022\036\n\010to_party\030\003 \002(\0162\014.t" +
+      "ss.LYParty\022 \n\010msg_type\030\004 \002(\0162\016.tss.LYMsg" +
+      "Type\022 \n\010ret_code\030\021 \001(\0162\016.tss.LYRetCode\022*" +
+      "\n\rdevice_report\030\023 \001(\0132\023.tss.LYDeviceRepo" +
+      "rt\022&\n\013traffic_sub\030$ \001(\0132\021.tss.LYTrafficS" +
+      "ub\022&\n\013traffic_pub\0303 \001(\0132\021.tss.LYTrafficP" +
+      "ub\022,\n\016traffic_report\030A \001(\0132\024.tss.LYTraff" +
+      "icReport*\006\010\200\001\020\200\002*\233\001\n\013LYDirection\022\016\n\nLY_U",
+      "NKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022" +
+      "\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WE" +
+      "ST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014" +
+      "LY_SOUTHEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCE" +
+      "SS\020\000\022\034\n\027LY_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY" +
+      "_VERSION_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021" +
+      "LY_MSG_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n" +
+      "\016LY_OTHER_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIE" +
+      "NT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*~\n\tLYMsgType" +
+      "\022\013\n\007LY_VOID\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRA",
+      "FFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_" +
+      "DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032c" +
+      "om.luyun.easyway95.sharedB\tTSSProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -10471,16 +10816,8 @@ public final class TSSProtos {
               new java.lang.String[] { "Identity", "Segments", },
               com.luyun.easyway95.shared.TSSProtos.LYRoute.class,
               com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder.class);
-          internal_static_tss_LYTrafficReport_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_tss_LYTrafficReport_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_tss_LYTrafficReport_descriptor,
-              new java.lang.String[] { "Segment", "Location", "Timestamp", "Direction", "Speed", "Acceleration", },
-              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.class,
-              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder.class);
           internal_static_tss_LYSegmentTraffic_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+            getDescriptor().getMessageTypes().get(4);
           internal_static_tss_LYSegmentTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYSegmentTraffic_descriptor,
@@ -10488,7 +10825,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic.Builder.class);
           internal_static_tss_LYRoadTraffic_descriptor =
-            getDescriptor().getMessageTypes().get(6);
+            getDescriptor().getMessageTypes().get(5);
           internal_static_tss_LYRoadTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYRoadTraffic_descriptor,
@@ -10496,7 +10833,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder.class);
           internal_static_tss_LYCityTraffic_descriptor =
-            getDescriptor().getMessageTypes().get(7);
+            getDescriptor().getMessageTypes().get(6);
           internal_static_tss_LYCityTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCityTraffic_descriptor,
@@ -10504,7 +10841,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder.class);
           internal_static_tss_LYCrontab_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(7);
           internal_static_tss_LYCrontab_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCrontab_descriptor,
@@ -10512,7 +10849,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYCrontab.class,
               com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder.class);
           internal_static_tss_LYTrafficSub_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(8);
           internal_static_tss_LYTrafficSub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficSub_descriptor,
@@ -10520,7 +10857,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder.class);
           internal_static_tss_LYTrafficPub_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_tss_LYTrafficPub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficPub_descriptor,
@@ -10528,15 +10865,31 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder.class);
           internal_static_tss_LYDeviceReport_descriptor =
-            getDescriptor().getMessageTypes().get(11);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_tss_LYDeviceReport_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYDeviceReport_descriptor,
               new java.lang.String[] { "DeviceId", "DeviceToken", "DeviceName", "DeviceModel", "DeviceOsVersion", },
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.class,
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder.class);
-          internal_static_tss_LYMsgOnAir_descriptor =
+          internal_static_tss_LYSamplePoint_descriptor =
+            getDescriptor().getMessageTypes().get(11);
+          internal_static_tss_LYSamplePoint_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYSamplePoint_descriptor,
+              new java.lang.String[] { "SpCoordinate", "Timestamp", "Altitude", "Course", },
+              com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.class,
+              com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder.class);
+          internal_static_tss_LYTrafficReport_descriptor =
             getDescriptor().getMessageTypes().get(12);
+          internal_static_tss_LYTrafficReport_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYTrafficReport_descriptor,
+              new java.lang.String[] { "Points", },
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.class,
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder.class);
+          internal_static_tss_LYMsgOnAir_descriptor =
+            getDescriptor().getMessageTypes().get(13);
           internal_static_tss_LYMsgOnAir_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYMsgOnAir_descriptor,
