@@ -49,8 +49,8 @@ public class MapHelper {
 	BMapManager mBMapMan;
 	
 	private LYNavigator mainActivity;
-	public GeoPoint mCurrentPoint;
-	public GeoPoint mDestPoint;
+	private GeoPoint mCurrentPoint;
+	private GeoPoint mDestPoint;
 	private ArrayList<MKPoiInfo> mRoadsAround;
 	//private SegmentTraffic mCurrentSegTraffic; //traffic received from tss, used to update view of traffic list and update "traffic line??"
 	private TrafficSubscriber mTrafficSubscriber;
@@ -201,7 +201,9 @@ public class MapHelper {
     		Log.d(TAG, "on route");
     		TrafficPoint nextTrafficPoint = mDrivingRoutes.getNextTrafficPoint(mCurrentPoint);
     		//Log.d(TAG, nextTrafficPoint.toString());
-			mainActivity.popupTrafficDialog(nextTrafficPoint);
+    		mainActivity.genTrafficMsg(nextTrafficPoint);
+    		//mainActivity.mTrafficPoint = nextTrafficPoint;
+			//mainActivity.promptTraffic();
 			return;
     	} else {
     		//off road
@@ -291,6 +293,8 @@ public class MapHelper {
     
     public void requestDrivingRoutes(GeoPoint startPoint, GeoPoint endPoint) {
 		Log.d(TAG, "enter requestDrivingRoutes, start="+startPoint.toString()+",end="+endPoint.toString());
+		mDestPoint = endPoint;
+		
 		MKPlanNode start = new MKPlanNode();
 		start.pt = startPoint;
 		MKPlanNode end = new MKPlanNode();
@@ -337,8 +341,18 @@ public class MapHelper {
     	return null;
     }
     
+    public ArrayList<TrafficPoint> getAllTrafficPointsAhead() {
+    	if (mDrivingRoutes != null)
+    		return mDrivingRoutes.getAllTrafficPointsAhead(mCurrentPoint);
+    	return null;
+    }
+    
 	double getLinearDistanceFromHere(GeoPoint pt) {
 		return mainActivity.mMapUtils.getDistance(mCurrentPoint, pt);
+	}
+	
+	public GeoPoint getCurrentPoint() {
+		return mCurrentPoint;
 	}
 	
 	String formatDistanceMsg(double distance) {

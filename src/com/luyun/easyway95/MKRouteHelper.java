@@ -121,6 +121,32 @@ public class MKRouteHelper implements Serializable{
     }
     
     /*
+     * 根据stepCursor所对应的step，找出路名，然后找出该路所包括的matchPoint
+     * 如果step.getContent()包括”进入“，表示是从一条路切换到另一条路
+     */
+    public ArrayList<TrafficPoint> getAllTrafficPointsAhead(GeoPoint currentPoint) {
+    	Log.d(TAG, "in MKRouteHelper::getAllTrafficPointsAhead, stepCursor="+stepCursor);
+    	if (stepCursor < 0 || mMatchedPoints == null || mMatchedPoints.size() == 0) {
+    		return null;
+    	}
+    	String roadName = null;
+    	ArrayList<TrafficPoint> allPointsAhead = new ArrayList<TrafficPoint>();
+    	//找前方的路上匹配最近的点
+    	for (int i=stepCursor; i<mAllSteps.size();i++) {
+    		roadName = mStepsOfRoad.get(new Integer(i));
+    		if (roadName == null) continue;
+    		DrivingRoadWithTraffic rt = mRoadsWithTraffic.get(roadName);
+    		if (rt == null) continue;
+    		TrafficPoint tp = rt.getNextTrafficPoint(currentPoint);
+    		if (tp == null) continue;
+    		tp.setRoad(roadName);
+    		Log.d(TAG, tp.toString());
+    		allPointsAhead.add(tp);
+    	}
+    	return allPointsAhead;
+    }
+    
+    /*
      * 根据stepCursor，寻找当前、后面、前面三个step的points去匹配，同时更新stepCursor
      * 如果不匹配，则从头循环step找出匹配点，同时更新该cursor
      * 从前方的step中找出路名，然后从路里找出matchedPoints
