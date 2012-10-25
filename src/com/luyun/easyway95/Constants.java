@@ -24,6 +24,8 @@ public class Constants {
 	public static final int DLG_LAST_DURATION=12000;	//对话框存在的时间
 	public static final int RESET_MAP_TIME_OUT=5701;	
 	public static final int RESET_MAP_INTERVAL=60000;	
+	public static final int PROMPT_WATCH_DOG=5801;	
+	public static final int PROMPT_WATCH_DOG_INTERVAL=60000;	
 
 	public static final int WAITING_TRACKEE_LOC=5500;
 	public static final int GOT_TRACKEE_LOC=5501;
@@ -72,7 +74,8 @@ public class Constants {
 	
 	public static final double DOUBLE_1E6 = 1000000.0;
 	
-	public static final String NO_TRAFFIC_AHEAD="前方无拥堵"; //
+	public static final String ROAD_AHEAD="前方"; //
+	public static final String NO_TRAFFIC="无拥堵"; //
 	public static final String TRAFFIC_JAM_LVL_HIGH="严重拥堵"; //<6KM
 	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=6;
 	public static final String TRAFFIC_JAM_LVL_MIDDLE="拥堵"; //[6km, 15km)

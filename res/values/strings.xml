@@ -6,13 +6,14 @@
     <string name="title_activity_main">路易95</string>
 	<string name="app_id">4fb78f39</string>
 	<string name="traffic_home">一键回家</string>
-	
+    <!-- social share -->
 	<string name="traffic_message">分享自路易95 http://www.roadclouding.com</string>
-	
-	<!-- social share -->
     <string name="title_activity_display_message">send message to weixin</string>
     <string name="errcode_success">发送成功</string>
 	<string name="errcode_cancel">发送取消</string>
 	<string name="errcode_deny">发送被拒绝</string>
 	<string name="errcode_unknown">发送返回</string>
+	
+	<string name="search_label">easyway95</string>
+	<string name="search_hint">指定目的地</string>
 </resources>

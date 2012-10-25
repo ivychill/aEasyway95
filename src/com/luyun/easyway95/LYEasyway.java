@@ -1,8 +1,10 @@
 package com.luyun.easyway95;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -38,6 +40,7 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 	int mImageCursor = 0;
 	String mRelease;
 	boolean showGuide = false;
+	boolean willSetNetwork = false;
 
     private ProgressDialog internetConnectionDlg;
 
@@ -62,6 +65,7 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 	    mImageView.setLongClickable(true);
 	    mImageView.setOnTouchListener(this);
 	    
+
         Button btnStart = (Button)findViewById(R.id.start_use);
         btnStart.setOnClickListener(new OnClickListener() {
         	@Override
@@ -69,11 +73,28 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
         		//判断网络连接是否正常 
         		//显示连接网络，如果网络连接未成功，则一直不进行下一步
         		boolean isNetworked = isConnectedToInternet();
+
         		if (isNetworked == false) {
-        	        startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
-        			return;
+    	            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
+    			    return;
+//        			new AlertDialog.Builder(LYEasyway.this) 
+//        			    .setTitle("请打开网络连接")
+//        			    .setMessage("你当前没有网络连接。要接收实时路况，需要打开网络连接。")
+//        			    .setPositiveButton("设置", 
+//        			    	new DialogInterface.OnClickListener() {
+//        			        public void onClick(DialogInterface dialog, int which) {
+//        			        	willSetNetwork = true;
+//        			        }
+//        			     })
+//        			    .setNegativeButton("取消", null)
+//        			    .show();
         		}
         		
+//        		if (willSetNetwork)
+//        		{
+//    	            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
+//    			    return;
+//        		}
         		//start LYNavigator activity
         		startActivity(new Intent(LYEasyway.this, LYNavigator.class));
         		LYEasyway.this.finish();
