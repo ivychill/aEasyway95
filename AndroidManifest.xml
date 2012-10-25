@@ -10,7 +10,7 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
-    	<!-- android:hardwareAccelerated="false" --> 
+
     <application 
         android:name="com.luyun.easyway95.Easyway95App"
         android:hardwareAccelerated="false"
@@ -30,6 +30,11 @@
         <activity
             android:name="com.luyun.easyway95.LYNavigator"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                   android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:screenOrientation="portrait"

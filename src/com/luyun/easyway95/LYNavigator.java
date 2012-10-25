@@ -38,6 +38,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.provider.Settings;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -53,6 +54,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -61,6 +63,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 /*
@@ -80,6 +83,7 @@ public class LYNavigator extends MapActivity {
     private GeoPoint mOfficeAddr;
     private TrafficPoint mTrafficPoint;
     private ProgressDialog popupDlg;
+    private SearchView mEndpoint;
     
     MapView mMapView;
     Easyway95App app;
@@ -176,7 +180,11 @@ public class LYNavigator extends MapActivity {
         super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
-		
+
+//		getWindow().setFlags(
+//			    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+//			    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+
 		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
@@ -352,7 +360,18 @@ public class LYNavigator extends MapActivity {
         		startActivity(new Intent(LYNavigator.this, ShowTraffics.class));
         	}
         });
+        
+//        mEndpoint = new SearchView(this);
     }
+    
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+    
+//	public boolean onTouchEvent(MotionEvent event) {
+//    	mEndpoint.setVisibility(View.VISIBLE);
+//    	return super.onTouchEvent(event);
+//    }
 
     public GeoPoint getCurrentLocation() {
     	return mMapHelper.mCurrentPoint;
@@ -691,14 +710,15 @@ public class LYNavigator extends MapActivity {
         		return true;
         		
             case R.id.weibo:
-                // The reply item is part of the email group
             	ShareToWeibo();
         		return true;
         		
             case R.id.weixin:
-                // The reply item is part of the email group
             	ShareToWeixin();
         		return true;
+        		
+            case R.id.quit:
+            	finish();	
                 
             // Generic catch all for all the other menu resources
             default:
@@ -711,10 +731,7 @@ public class LYNavigator extends MapActivity {
     
     public void ShareToWeibo() {
 		WBEntry wbEntry = new WBEntry(LYNavigator.this);
-		if (!wbEntry.sendWeibo())
-		{
-			wbEntry.authorize();
-		}
+	    wbEntry.authorize();
     }
     
     public void ShareToWeixin() {

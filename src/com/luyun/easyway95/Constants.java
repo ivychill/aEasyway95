@@ -37,7 +37,7 @@ public class Constants {
 	public static final String USERS_PROFILE_URL="http://www.roadclouding.com/users/profile";	
 	//public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";
 	
-	//weibo related by chenfeng
+	//weibo by chenfeng
 //	public static final String POST_WEIBO_URL="http://www.roadclouding.com/weibos/post";
 	public static final String GET_WEIBO_URL="http://www.roadclouding.com/weibos/get";
 	public static final String WEIBO_URL_OAUTH2="https://api.weibo.com";
@@ -48,7 +48,10 @@ public class Constants {
 	public static final String WEIBO_CONSUMER_KEY = "1443429908";
 	public static final String WEIBO_CONSUMER_SECRET = "7c3e7ab52eaa67644b49d923a837c01c";
 	public static final String WEIBO_REDIRECT_URL = "http://www.roadclouding.com/users/auth/weibo/callback";
-	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";
+	
+	//wexin by chenfeng
+//	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//测试
+	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//发布
 	public static final String SHARE_MESSAGE = "分享自路易95 http://www.roadclouding.com";
 
 	public static final int TSS_SERVER_PORT=7001; 

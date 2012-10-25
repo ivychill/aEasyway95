@@ -7,12 +7,11 @@
         <menu>
             <item android:id="@+id/weibo"
                   android:title="新浪微博"
-                  android:icon="@drawable/weibo_32"
-                  android:onClick="ShareToWeibo" />
+                  android:icon="@drawable/weibo" />
             <item android:id="@+id/weixin"
                   android:title="微信朋友"
-                  android:icon="@drawable/weixin_32"
-                  android:onClick="ShareToWeixin" />
+                  android:icon="@drawable/weixin" />
         </menu>
     </item>
+    <item android:id="@+id/quit" android:icon="@drawable/quit" android:title="退出"></item>
 </menu>
