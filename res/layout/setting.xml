@@ -50,38 +50,36 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content" />
 		
-	        <ImageView
-	            android:id="@+id/imageView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:src="@drawable/homelogo" />
+	    <ImageView
+	        android:id="@+id/imageView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/homelogo" />
 	
-	        <TextView
-	            android:id="@+id/homeaddr"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="深圳"
-	    	    android:layout_gravity="center|center_vertical"
-	            android:textSize="28px" />
+	    <TextView
+	        android:id="@+id/homeaddr"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="深圳"
+            android:layout_gravity="center|center_vertical"
+            android:textSize="28px" />
+        </LinearLayout>
 
-	
-	</LinearLayout>
-
-	<View
-	    android:layout_width="fill_parent" 
-	    android:layout_height="4dp" 
-	    android:background="?android:attr/listDivider" 
-	/>
-	     <LinearLayout
+	    <View
+	        android:layout_width="fill_parent" 
+	        android:layout_height="4dp" 
+	        android:background="?android:attr/listDivider" />
+	    
+	    <LinearLayout
 	        xmlns:android="http://schemas.android.com/apk/res/android"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" >
 		
-		<CheckBox
-		    android:id="@+id/officeselected"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content" />
+		    <CheckBox
+		        android:id="@+id/officeselected"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" />
 			    
 	    	<ImageView
 	    	    android:id="@+id/imageView2"
@@ -94,54 +92,54 @@
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content" 
 		    android:text="深圳"
-	    	    android:layout_gravity="center|center_vertical"
-		    android:textSize="28px"
-		/>
+            android:layout_gravity="center|center_vertical"
+		    android:textSize="28px" />
+	        
 	    </LinearLayout>
-	<View
-	    android:layout_width="fill_parent" 
-	    android:layout_height="4dp" 
-	    android:background="?android:attr/listDivider" 
-	/>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        <View
+	        android:layout_width="fill_parent" 
+            android:layout_height="4dp" 
+	        android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 	
-	    <FrameLayout
-	        xmlns:android="http://schemas.android.com/apk/res/android"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
+    	    <FrameLayout
+    	        xmlns:android="http://schemas.android.com/apk/res/android"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal" >
         	  
-		<EditText
-		    android:id="@+id/searchkey"
-		    android:layout_width="275dp"
-		    android:layout_height="wrap_content"
-		    android:maxLines="1"
-		    android:minLines="1"
-		    android:text="福田中心区市民中心" />
+    		    <EditText
+                    android:id="@+id/searchkey"
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="福田中心区市民中心" />
 	
-		    <LinearLayout
-		        xmlns:android="http://schemas.android.com/apk/res/android"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		    	android:layout_gravity="top|right"
-		        android:orientation="horizontal" >
+		        <LinearLayout
+		            xmlns:android="http://schemas.android.com/apk/res/android"
+    		        android:layout_width="wrap_content"
+    		        android:layout_height="wrap_content"
+    		    	android:layout_gravity="top|right"
+    		        android:orientation="horizontal" >
 
-		        <ImageButton
-		            android:id="@+id/search"
-		            android:layout_width="38dp"
-		            android:layout_height="42dp"
-		            android:background="@drawable/ic_search_32" />
-
-		    </LinearLayout>
-	      </FrameLayout>
-	</LinearLayout>
+    		        <ImageButton
+    		            android:id="@+id/search"
+    		            android:layout_width="38dp"
+    		            android:layout_height="42dp"
+	    	            android:background="@drawable/ic_search_32" />		    
+		        </LinearLayout>
+	        </FrameLayout>
+	    </LinearLayout>
     </LinearLayout>
-    <com.baidu.mapapi.MapView android:id="@+id/poi_search_view"
-	android:layout_width="fill_parent" android:layout_height="fill_parent" 
-	android:clickable="true"     
-	/>
+    <com.baidu.mapapi.MapView
+        android:id="@+id/poi_search_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:clickable="true" />
 </LinearLayout>

@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/go_office" android:icon="@drawable/officelogo" android:title="一键上班"></item>
-    <item android:id="@+id/go_home" android:icon="@drawable/homelogo" android:title="@string/traffic_home" ></item>
+    <item android:id="@+id/search" android:icon="@drawable/search" android:title="指定目的地"></item>
+    <item android:id="@+id/go_office" android:icon="@drawable/officelogo" android:title="上班"></item>
+    <item android:id="@+id/go_home" android:icon="@drawable/homelogo" android:title="回家" ></item>
     <item android:id="@+id/profile_setting" android:icon="@drawable/accountsetting" android:title="帐户"></item>
     <item android:id="@+id/social_share" android:icon="@drawable/social_share" android:title="分享">
         <!-- "social_share" submenu -->

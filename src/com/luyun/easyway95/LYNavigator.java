@@ -11,11 +11,22 @@ import java.util.TimerTask;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKAddrInfo;
+import com.baidu.mapapi.MKBusLineResult;
+import com.baidu.mapapi.MKDrivingRouteResult;
+import com.baidu.mapapi.MKPoiInfo;
+import com.baidu.mapapi.MKPoiResult;
 import com.baidu.mapapi.MKRoute;
+import com.baidu.mapapi.MKSearch;
+import com.baidu.mapapi.MKSearchListener;
+import com.baidu.mapapi.MKSuggestionResult;
+import com.baidu.mapapi.MKTransitRouteResult;
+import com.baidu.mapapi.MKWalkingRouteResult;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.MyLocationOverlay;
+import com.baidu.mapapi.PoiOverlay;
 import com.baidu.mapapi.RouteOverlay;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
@@ -23,6 +34,9 @@ import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 import com.luyun.easyway95.weibo.WBEntry;
 import com.luyun.easyway95.wxapi.WXEntryActivity;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
+import com.luyun.easyway95.SettingActivity.AddrType;
+import com.luyun.easyway95.SettingActivity.LongTap;
+import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -44,6 +58,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -83,7 +98,7 @@ public class LYNavigator extends MapActivity {
     private GeoPoint mOfficeAddr;
     private TrafficPoint mTrafficPoint;
     private ProgressDialog popupDlg;
-    private SearchView mEndpoint;
+    private MKSearch mSearch = null;
     
     MapView mMapView;
     Easyway95App app;
@@ -254,89 +269,6 @@ public class LYNavigator extends MapActivity {
         bindZMQService();
         //启动TTSService，非独立线程
         bindTTSService();
-        
-        /* 
-         * 以下是测试代码，如果放开，需要在layout.activity_main配置相应的资源。
-        btnLogin = (Button)findViewById(R.id.button2);
-        btnLogin.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start login activity
-        		startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        	}
-        });
-
-        Button btnSetting = (Button)findViewById(R.id.button3);
-        btnSetting.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start login activity
-        		startActivity(new Intent(MainActivity.this, SettingActivity.class));
-        	}
-        });
-
-        Button btnXunfei1 = (Button)findViewById(R.id.button4);
-        btnXunfei1.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start TTS service
-        		TTSThread t = new TTSThread("江西一高校新生霸气姓名“操日本”"); 
-        		t.start();
-        	}
-        });
-
-        Button btnXunfei2 = (Button)findViewById(R.id.button5);
-        btnXunfei2.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start TTS service
-        		TTSThread t = new TTSThread("家长们：大家好!今天下午放学后，需要把印制的教室板报文字贴到板报上，有时间的家长请今天下午放学后到教室帮忙，谢谢大家支持！"); 
-        		t.start();
-        	}
-        });
-        
-        */
-        /*
-        Button btnDrivingReq = (Button)findViewById(R.id.button6);
-        btnDrivingReq.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start request driving routes
-        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
-        		GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
-        		mMapHelper.requestDrivingRoutes(startPoint, endPoint);
-        	}
-        });
-        
-        Button btnAroundReq = (Button)findViewById(R.id.button7);
-        btnAroundReq.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start request driving routes
-        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
-        		//GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
-        		mMapHelper.requestRoadsAround(startPoint);
-        	}
-        });
-
-        Button btnLineTest = (Button)findViewById(R.id.linetest);
-        btnLineTest.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start request driving routes
-        		GeoPoint startPoint = new GeoPoint((int) (22.661993 * 1E6), (int) (114.063844 * 1E6));
-        		GeoPoint endPoint = new GeoPoint((int) (22.575831 * 1E6), (int) (113.908052 * 1E6));
-        		Drawable marker = getResources().getDrawable(R.drawable.icon95);  //得到需要标在地图上的资源
-        		marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker
-        				.getIntrinsicHeight());   //为maker定义位置和边界
-        		ArrayList<GeoPoint> listPoints = new ArrayList();
-        		listPoints.add(startPoint);
-        		listPoints.add(endPoint);
-        		LineOverlay lines = new LineOverlay(marker, MainActivity.this, listPoints);
-        		mMapView.getOverlays().add(lines); //添加ItemizedOverlay实例到mMapView
-        	}
-        });
-        */
 
         ImageButton btnReset = (ImageButton)findViewById(R.id.resetbtn);
         btnReset.setOnClickListener(new OnClickListener() {
@@ -361,9 +293,25 @@ public class LYNavigator extends MapActivity {
         	}
         });
         
-//        mEndpoint = new SearchView(this);
+        handleIntent(getIntent());
     }
     
+    @Override
+    public void onNewIntent(Intent intent) {
+    	Log.d (TAG, "enter onNewIntent");
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+    	Log.d (TAG, "enter handleIntent");
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        	Log.d (TAG, "enter handleIntent, QUERY");
+            String query = intent.getStringExtra(SearchManager.QUERY);
+//          doMySearch(query);
+        }
+    }
+        
     public void onBackPressed() {
         moveTaskToBack(true);
     }
@@ -687,14 +635,22 @@ public class LYNavigator extends MapActivity {
 //        		startActivity(new Intent(LYNavigator.this, ShowTraffics.class));
 //                return true;
 //
+            case R.id.search:
+            	Log.d(TAG, "enter search");
+            	onSearchRequested();
+//    		    mMapHelper.requestDrivingRoutes(mOfficeAddr, mHomeAddr);
+                return true;
+            
             case R.id.go_home:
         		mMapHelper.requestDrivingRoutes(mOfficeAddr, mHomeAddr);
+        		//TODO: 弹出“路况获取中”
                 return true;
 
             // For "Groups": Toggle visibility of grouped menu items with
             //               nongrouped menu items
             case R.id.go_office:
         		mMapHelper.requestDrivingRoutes(mHomeAddr, mOfficeAddr);
+        		//TODO: 弹出“路况获取中”
                 return true;
                 
             case R.id.profile_setting:
@@ -703,11 +659,11 @@ public class LYNavigator extends MapActivity {
         		return true;
         		
             case R.id.weibo:
-            	ShareToWeibo();
+            	shareToWeibo();
         		return true;
         		
             case R.id.weixin:
-            	ShareToWeixin();
+            	shareToWeixin();
         		return true;
         		
             case R.id.quit:
@@ -722,12 +678,121 @@ public class LYNavigator extends MapActivity {
         return false;
     }
     
-    public void ShareToWeibo() {
+//    public void onSearch () {
+//        // 初始化搜索模块，注册事件监听
+//        mSearch = new MKSearch();
+//        mSearch.init(app.mBMapMan, new MKSearchListener(){
+//			public void onGetPoiResult(MKPoiResult res, int type, int error) {
+//				// 错误号可参考MKEvent中的定义
+//				if (error != 0 || res == null) {
+//					Toast.makeText(SettingActivity.this, "抱歉，未找到结果", Toast.LENGTH_LONG).show();
+//					return;
+//				}
+//
+//			    // 将地图移动到第一个POI中心点
+//			    if (res.getCurrentNumPois() > 0) {
+//				    // 将poi结果显示到地图上
+//					PoiOverlay poiOverlay = new PoiOverlay(SettingActivity.this, mMapView);
+//					//poiOverlay.setData(res.getAllPoi());
+//					ArrayList<MKPoiInfo> poiResults = new ArrayList(1);
+//					poiResults.add(res.getPoi(0));
+//					poiOverlay.setData(poiResults);
+//			    	
+//			    	//将结果传回给SettingActivity
+//			    	//2012.09.25直接在poisearch中处理搜索结果，故将传递消息功能注释掉
+//			        //Message msg = new Message();
+//			        //Bundle bdl = new Bundle();
+//			        //UserProfile up = new UserProfile();
+//			        //MKPoiInfoHelper mpi = up.new MKPoiInfoHelper(res.getPoi(0));
+//			        //MKPoiInfoHelper mpi = new UserProfile().setHomeAddr(res.getPoi(0));// 
+//			        //mpi.setSearchPlace(mSearchPlace);
+//			        //bdl.putSerializable(Constants.POI_SEARCH_RESULT, mpi);
+//			        //msg.setData(bdl);
+//			        // The PendingIntent to launch our activity
+//			        //PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+//			        //        new Intent(getApplicationContext(), MainActivity.class), 0);
+//			        //((MainActivity)getApplicationContext()).handler.sendMessage(msg);
+//			        //app.getSettingActivity().handler.sendMessage(msg);
+//			    	
+//			        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res.getPoi(0));
+//			        if (mAddrProcessing == AddrType.HOME_ADDR) {
+//			        	mUserProfile.setHomeAddr(mpi);
+//			        } else {
+//			        	mUserProfile.setOfficeAddr(mpi);
+//			        }
+//	            	mUserProfile.commitPreferences(mSP);			    	
+//	        		resetTextView();
+//				    mMapView.getOverlays().clear();
+//				    mMapView.getOverlays().add(poiOverlay);
+//			        LongTap lt = new LongTap();
+//			        mMapView.getOverlays().add(lt);
+//			        setMarkers();
+//				    mMapView.invalidate();
+//			    	mMapView.getController().animateTo(res.getPoi(0).pt);
+//			    } else if (res.getCityListNum() > 0) {
+//			    	String strInfo = "在";
+//			    	for (int i = 0; i < res.getCityListNum(); i++) {
+//			    		strInfo += res.getCityListInfo(i).city;
+//			    		strInfo += ",";
+//			    	}
+//			    	strInfo += "找到结果";
+//					Toast.makeText(SettingActivity.this, strInfo, Toast.LENGTH_LONG).show();
+//			    }
+//			}
+//			public void onGetDrivingRouteResult(MKDrivingRouteResult res,
+//					int error) {
+//			}
+//			public void onGetTransitRouteResult(MKTransitRouteResult res,
+//					int error) {
+//			}
+//			public void onGetWalkingRouteResult(MKWalkingRouteResult res,
+//					int error) {
+//			}
+//			public void onGetAddrResult(MKAddrInfo res, int error) {
+//				if (error != 0) {
+//					String str = String.format("错误号：%d", error);
+//					Toast.makeText(SettingActivity.this, str, Toast.LENGTH_LONG).show();
+//					return;
+//				}
+//
+//				mMapView.getController().animateTo(res.geoPt);
+//					
+//				String strInfo = String.format("纬度：%f 经度：%f\r\n, name: %s", res.geoPt.getLatitudeE6()/1e6, 
+//							res.geoPt.getLongitudeE6()/1e6, res.strAddr);
+//
+//				Toast.makeText(SettingActivity.this, strInfo, Toast.LENGTH_LONG).show();
+//				Log.d(TAG, strInfo);
+//		        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res);
+//		        if (mAddrProcessing == AddrType.HOME_ADDR) {
+//		        	mUserProfile.setHomeAddr(mpi);
+//		        } else {
+//		        	mUserProfile.setOfficeAddr(mpi);
+//		        }
+//            	mUserProfile.commitPreferences(mSP);			    	
+//        		resetTextView();
+//				
+//				mMapView.getOverlays().clear();
+//		        LongTap lt = new LongTap();
+//		        mMapView.getOverlays().add(lt);
+//		        setMarkers();
+//		        mMapView.getController().animateTo(res.geoPt);
+//			}
+//			public void onGetBusDetailResult(MKBusLineResult result, int iError) {
+//			}
+//			@Override
+//			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
+//				// TODO Auto-generated method stub
+//			}
+//			
+//        });
+//    }
+    
+    public void shareToWeibo() {
 		WBEntry wbEntry = new WBEntry(LYNavigator.this);
 	    wbEntry.authorize();
     }
     
-    public void ShareToWeixin() {
+    public void shareToWeixin() {
 		IWXAPI wxApi = WXAPIFactory.createWXAPI(this, Constants.WEIXIN_APP_ID, true);
 		wxApi.registerApp(Constants.WEIXIN_APP_ID);
         WXTextObject textObj = new WXTextObject();

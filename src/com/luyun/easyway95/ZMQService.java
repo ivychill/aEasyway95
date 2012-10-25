@@ -91,7 +91,7 @@ public class ZMQService extends Service {
 	}
 	
 	public void sendMsgToSvr(byte[] data) {
-		System.out.println("in sendMsgToSvr!");
+		Log.d(TAG, "in sendMsgToSvr!");
 		mzsLifeCycleInproc.send(data, 0);
 	}
     
