@@ -228,7 +228,7 @@ public class MKRouteHelper implements Serializable{
     public List<Map<String, Object>> getAllRoadsWithTrafficByList() {
     	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> map = null;
-        Log.d(TAG, "fetching data from internal container!");
+        Log.d(TAG, "fetching data from internal container!"+mRoadsWithTraffic.toString());
         Iterator it = mRoadsWithTraffic.entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry<String, DrivingRoadWithTraffic> entry = (Entry<String, DrivingRoadWithTraffic>) it.next();

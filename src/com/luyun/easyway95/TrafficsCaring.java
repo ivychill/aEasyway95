@@ -86,8 +86,19 @@ public class TrafficsCaring extends ListActivity {
         }
         MKRouteHelper drivingRoutes = mainActivity.mMapHelper.getDrivingRoutes();
         if (drivingRoutes != null) {
-        	list.addAll(drivingRoutes.getAllRoadsWithTrafficByList());
+        	List<Map<String, Object>> tmpList = drivingRoutes.getAllRoadsWithTrafficByList();
+        	if (tmpList != null) {
+        		for (int i=0; i<tmpList.size();i++) {
+        			Map<String, Object> item = tmpList.get(i);
+        			String road = (String) item.get("road");
+        			if (road != null && !hotRoadsWithTraffic.hasRoad(road)) {
+        				list.add(item);
+        			}
+        		}
+        	}
         }
+        //删除重复的，如果一条路既是规划路径，又是热点路况，就会重复
+        
     	return list;
     }
     
