@@ -75,6 +75,13 @@ public class HotRoadsWithTraffic {
         }
     	return list;
     }
+    
+    public boolean hasRoad(String road) {
+		if (mRoadsWithTraffic == null || road == null) {
+			return false;
+		}
+		return (mRoadsWithTraffic.get(road) != null);
+    }
 
 
 }
