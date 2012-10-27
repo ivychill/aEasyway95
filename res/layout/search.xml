@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <!-- TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/bookmark"
+                android:layout_margin="4dp"
+                android:src="@drawable/bookmark" />
+            
+            <EditText
+                android:id="@+id/query"
+                android:layout_height="fill_parent"
+                android:layout_margin="4dp"
+                android:maxLines="1"
+                android:minLines="1"
+                android:text="福田中心区市民中心"
+                android:hint="@string/search_hint" />
+            
+            <ImageButton
+		        android:id="@+id/search"
+		        android:alpha="1"
+		        android:src="@drawable/search"
+		        android:layout_margin="4dp" />  
+        </TableRow>
+    </TableLayout -->
+
+    <!--  TextView
+            android:id="@+id/textField"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/destination"/-->
+
+    <ListView
+            android:id="@+id/listAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+</LinearLayout>
