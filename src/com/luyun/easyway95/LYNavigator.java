@@ -599,7 +599,8 @@ public class LYNavigator extends MapActivity {
                 
             case R.id.profile_setting:
                 // The reply item is part of the email group
-        		startActivity(new Intent(LYNavigator.this, SettingActivity.class));
+        		//startActivity(new Intent(LYNavigator.this, SettingActivity.class));
+        		startActivity(new Intent(LYNavigator.this, LYSetting.class));
         		return true;
         		
             case R.id.weibo:
