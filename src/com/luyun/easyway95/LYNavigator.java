@@ -42,6 +42,7 @@ import android.provider.Settings;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -72,6 +73,7 @@ import android.widget.Toast;
 public class LYNavigator extends MapActivity {
 	//BMapManager mBMapMan = null; 
 	final static String TAG = "LYNavigator";
+    private static final int MENU_SEARCH = 1;
 	public MapUtils mMapUtils = null;
 	
 	private ZMQService mzService;
@@ -260,6 +262,15 @@ public class LYNavigator extends MapActivity {
         		//GeoPoint currPosition = new GeoPoint((int) (getCurrLocation().getLatitude() * 1E6), (int) (getCurrLocation().getLongitude() * 1E6));
         		mMapView.getController().animateTo(getCurrentLocation());
 				resetMapView();
+        	}
+        });
+        
+        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
+        btnSearch.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+//        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
+    	        onSearchRequested();
         	}
         });
         
@@ -571,20 +582,17 @@ public class LYNavigator extends MapActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.ly_navigator, menu);
-        return true;
+        return true; 
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.more_traffic:
-//        		startActivity(new Intent(LYNavigator.this, ShowTraffics.class));
-//                return true;
             case R.id.search:
-        	    Log.d(TAG, "enter search");
-        	    onSearchRequested();
+//        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
+    	        onSearchRequested();
                 return true;
-        
+
             case R.id.go_home:
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
         		//TODO: 弹出“路况获取中”
@@ -604,11 +612,11 @@ public class LYNavigator extends MapActivity {
         		return true;
         		
             case R.id.weibo:
-            	ShareToWeibo();
+            	shareToWeibo();
         		return true;
         		
             case R.id.weixin:
-            	ShareToWeixin();
+            	shareToWeixin();
         		return true;
         		
             case R.id.quit:
@@ -620,15 +628,16 @@ public class LYNavigator extends MapActivity {
                 break;
         }
         
-        return false;
+        return super.onOptionsItemSelected(item);
+//        return false;
     }
     
-    public void ShareToWeibo() {
+    public void shareToWeibo() {
 		WBEntry wbEntry = new WBEntry(LYNavigator.this);
 	    wbEntry.authorize();
     }
     
-    public void ShareToWeixin() {
+    public void shareToWeixin() {
 		IWXAPI wxApi = WXAPIFactory.createWXAPI(this, Constants.WEIXIN_APP_ID, true);
 		wxApi.registerApp(Constants.WEIXIN_APP_ID);
         WXTextObject textObj = new WXTextObject();
