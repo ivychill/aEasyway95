@@ -35,29 +35,59 @@ public class LYSetting extends PreferenceActivity implements OnPreferenceChangeL
 		mSP = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mUserProfile = new UserProfile(mSP);
 		this.addPreferencesFromResource(R.xml.preferences);
-		String currentAction = PreferenceManager.getDefaultSharedPreferences(app).getString("map_mgr_preference", null);
-		Preference pref = this.findPreference("map_mgr_preference");
+//		String currentAction = PreferenceManager.getDefaultSharedPreferences(app).getString("map_mgr_preference", null);
+//		Preference pref = this.findPreference("map_mgr_preference");
+//		if (pref != null) {
+//			if (currentAction != null && currentAction.equals("download")) {
+//				pref.setSummary(String.format("正在下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//			} else if (currentAction != null && currentAction.equals("pause")){
+//				pref.setSummary(String.format("暂停下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//			}
+//			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
+//				@Override
+//				public boolean onPreferenceChange(Preference preference,
+//						Object newValue) {
+//					// TODO Auto-generated method stub
+//					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
+//					if (((String)newValue).equals("download")) {
+//						preference.setSummary(String.format("正在下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//						app.getMainActivity().downloadMap();
+//					} else if (((String)newValue).equals("pause")) {
+//						preference.setSummary(String.format("暂停下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//						app.getMainActivity().pauseMap();
+//					} else if (((String)newValue).equals("delete")) {
+//						preference.setSummary(String.format("当前仅支持深圳地图，建议在WiFi网络下下载"));
+//						app.getMainActivity().removeMap();
+//					}
+//					return true;
+//				}   
+//			});
+//		}
+		Preference pref = this.findPreference("homeaddr_preference");
 		if (pref != null) {
-			if (currentAction != null && currentAction.equals("download")) {
-				pref.setSummary(String.format("正在下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
-			} else if (currentAction != null && currentAction.equals("pause")){
-				pref.setSummary(String.format("暂停下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
-			}
 			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
 				@Override
 				public boolean onPreferenceChange(Preference preference,
 						Object newValue) {
 					// TODO Auto-generated method stub
 					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
-					if (((String)newValue).equals("download")) {
-						preference.setSummary(String.format("正在下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
-						app.getMainActivity().downloadMap();
-					} else if (((String)newValue).equals("pause")) {
-						preference.setSummary(String.format("暂停下载深圳地图，大小%.2fmb，完成进度%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
-						app.getMainActivity().pauseMap();
-					} else if (((String)newValue).equals("delete")) {
-						preference.setSummary(String.format("当前仅支持深圳地图，建议在WiFi网络下下载"));
-						app.getMainActivity().removeMap();
+					if (((String)newValue).equals("set")) {
+		        		startActivity(new Intent(LYSetting.this, SettingActivity.class));
+					}
+					return true;
+				}   
+			});
+		}
+		pref = this.findPreference("officeaddr_preference");
+		if (pref != null) {
+			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
+				@Override
+				public boolean onPreferenceChange(Preference preference,
+						Object newValue) {
+					// TODO Auto-generated method stub
+					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
+					if (((String)newValue).equals("set")) {
+		        		startActivity(new Intent(LYSetting.this, SettingActivity.class));
 					}
 					return true;
 				}   

@@ -3,13 +3,41 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         >
 
-    <PreferenceCategory
+    <PreferenceCategory android:title="地址设置">
+        <ListPreference 
+            android:key="homeaddr_preference" 
+            android:title="家庭地址" 
+            android:summary="深圳市福田市民中心"
+            android:entries="@array/set_addr"
+            android:entryValues="@array/set_addr_action"
+            android:dialogTitle="地址设置" />
+        <ListPreference 
+            android:key="officeaddr_preference" 
+            android:title="办公室地址" 
+            android:summary="深圳市福田市民中心"
+            android:entries="@array/set_addr"
+            android:entryValues="@array/set_addr_action"
+            android:dialogTitle="地址设置" />
+        
+    </PreferenceCategory><PreferenceCategory
                 android:title="功能设置" >
         <CheckBoxPreference
                 android:key="voice_preference"
                 android:title="声音提示"
+                android:defaultValue="true"
                 android:summaryOff="关闭声音提示"
                 android:summaryOn="开启声音提示需要使用网络，将会导致流量增加" />
+        <CheckBoxPreference
+                android:key="subscription_preference"
+                android:title="上下班路况订阅"
+                android:defaultValue="true"
+                android:summary="周一至周五，分别于早九点晚五点，系统自动将上下班路况推送到手机上" />
+        <CheckBoxPreference
+                android:key="around_traffic_preference"
+                android:title="周边路况查询"
+                android:defaultValue="true"
+                android:summary="开启周边路况查询，将会导致流量增加" />
+    
     </PreferenceCategory>
         
     <PreferenceCategory
@@ -23,6 +51,7 @@
                 android:dialogTitle="离线地图管理" />
                 
     </PreferenceCategory>
+    
     <PreferenceCategory
                 android:title="系统信息">
         <Preference
@@ -50,7 +79,11 @@
                 android:key="user_preference"
                 android:title="登录"
                 android:summary="深圳市路云信息科技有限公司" />
-            
+        <Preference
+                android:key="promotion_preference"
+                android:title="最新活动"
+                android:summary="担心流量超标？移动号码上网慢？来这里有达人秘招，还有最新的团购活动" />
+        
         </PreferenceCategory>
     
 </PreferenceScreen>

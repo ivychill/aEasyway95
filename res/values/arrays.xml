@@ -10,6 +10,12 @@
         <item >pause</item>
         <item >delete</item>
     </string-array>
+    <string-array name="set_addr">
+        <item >设置</item>
+    </string-array>
+    <string-array name="set_addr_action">
+        <item >set</item>
+    </string-array>
     
     
 </resources>
