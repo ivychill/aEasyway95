@@ -24,6 +24,7 @@ import com.luyun.easyway95.weibo.WBEntry;
 import com.luyun.easyway95.wxapi.WXEntryActivity;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
 import com.luyun.easyway95.PromptTrafficMsg.TrafficMsg;
+import com.luyun.easyway95.TTSService.MsgReceiver;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -46,10 +47,12 @@ import android.app.SearchManager;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -65,6 +68,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /*
@@ -91,6 +95,8 @@ public class LYNavigator extends MapActivity {
     private Timer mTimer;
     private LYDlgDismissTimerTask mDlgTimerTask;
     private LYPromptWatchDogTask mPromptWatchDogTask;
+    
+	private MsgReceiver mReceiver;
     
     //提示播放声音、弹出对话框时间间隔
     private long mlLastPrompt = 0;
@@ -286,7 +292,62 @@ public class LYNavigator extends MapActivity {
         });
         
         mPromptTrafficMsg = new PromptTrafficMsg();
+        
+//        //从searchActivity接收查询结果信息
+//        IntentFilter filter = new IntentFilter("searchResult");  
+//        mReceiver = new MsgReceiver();  
+//        registerReceiver(mReceiver,filter);  
+        handleIntent(getIntent());
     }
+    
+	@Override
+	public void onNewIntent(Intent intent) {
+		Log.d (TAG, "enter onNewIntent");
+		setIntent(intent);
+		handleIntent(intent);
+	}
+
+	private void handleIntent(Intent intent) {
+		// Get the intent, verify the action and get the query
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			Log.d(TAG, "query: " + query);
+			// manually launch the real search activity
+			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+			// add query to the Intent Extras
+			searchIntent.putExtra(SearchManager.QUERY, query);
+			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (resultCode == RESULT_OK && requestCode == Constants.ACTIVITY_REQUEST_CODE) { 
+			Log.d(TAG, "intent: " + intent);
+			Bundle bundle = intent.getExtras();
+			Log.d(TAG, "bundle: " + bundle); 
+//    		String value = bundle.getString("key");
+//    		Log.d(TAG, "value: " + value);
+			MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)bundle.getSerializable(Constants.POI_RETURN_KEY);
+//			MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)intent.getSerializableExtra(Constants.POI_RETURN_KEY);
+			Log.d(TAG, "poiInfoSerialable: " + poiInfoSerialable.latitudeE6 + " " + poiInfoSerialable.longitudeE6);
+			GeoPoint endPoint = new GeoPoint(poiInfoSerialable.latitudeE6, poiInfoSerialable.longitudeE6);
+//			ProgressDialog promptDlg = new ProgressDialog(LYNavigator.this);
+//			promptDlg.setTitle("路况获取中...");
+//			popupDlg.setMessage("");
+//			popupDlg.setIndeterminate(true);
+//			popupDlg.setCancelable(true);
+//			Log.d(TAG, "endPoint: " + endPoint);
+			mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), endPoint);
+			TextView textView = (TextView)findViewById(R.id.hint);
+			textView.setText("从当前位置至" + poiInfoSerialable.name + "路况");
+			textView.setTextSize(16);
+//			promptDlg.dismiss();
+		}
+		else {
+			Log.d(TAG, "unknown requestCode: " + requestCode + " or resultCode: " + resultCode);
+		}
+	}
     
     public void onBackPressed() {
         moveTaskToBack(true);
@@ -587,22 +648,34 @@ public class LYNavigator extends MapActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	ProgressDialog promptDlg;
         switch (item.getItemId()) {
             case R.id.search:
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
     	        onSearchRequested();
+    	        Log.d(TAG, "return from SearchActivity");
                 return true;
 
             case R.id.go_home:
+            	promptDlg = new ProgressDialog(this);
+                promptDlg.setTitle("路况获取中...");
+                popupDlg.setMessage("");
+                popupDlg.setIndeterminate(true);
+                popupDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
-        		//TODO: 弹出“路况获取中”
+        		promptDlg.dismiss();
                 return true;
 
             // For "Groups": Toggle visibility of grouped menu items with
             //               nongrouped menu items
             case R.id.go_office:
+            	promptDlg = new ProgressDialog(this);
+                promptDlg.setTitle("路况获取中...");
+                popupDlg.setMessage("");
+                popupDlg.setIndeterminate(true);
+                popupDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
-        		//TODO: 弹出“路况获取中”
+        		promptDlg.dismiss();
                 return true;
                 
             case R.id.profile_setting:
@@ -658,4 +731,25 @@ public class LYNavigator extends MapActivity {
         
         wxApi.sendReq(req);
     }
+    
+//    public class MsgReceiver extends BroadcastReceiver {  
+//        public boolean mbRunFlagReceiver = false;  
+//        @Override  
+//        public void onReceive(Context context, Intent intent) {  
+//            // TODO Auto-generated method stub  
+//       		Log.d(TAG, "in MsgReceiver::onReceive");
+//
+//       	    Bundle bundle = intent.getExtras();
+//       	    MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)bundle.getSerializable("poiInfo");
+//    		Log.d(TAG, "poiInfoSerialable: " + poiInfoSerialable);
+//    		GeoPoint endPoint = poiInfoSerialable.pt;
+//    		ProgressDialog promptDlg = new ProgressDialog(LYNavigator.this);
+//            promptDlg.setTitle("路况获取中...");
+//            popupDlg.setMessage("");
+//            popupDlg.setIndeterminate(true);
+//            popupDlg.setCancelable(true);
+//    		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
+//    		promptDlg.dismiss();
+//        }  
+//    }  
 }
