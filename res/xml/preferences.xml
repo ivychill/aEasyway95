@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        >
 
     <PreferenceCategory
-            android:title="关于">
-            
+                android:title="功能设置" >
         <CheckBoxPreference
-                android:key="checkbox_preference"
-                android:title="关于"
-                android:summary="关于" />
-            
+                android:key="voice_preference"
+                android:title="声音提示"
+                android:summaryOff="关闭声音提示"
+                android:summaryOn="开启声音提示需要使用网络，将会导致流量增加" />
     </PreferenceCategory>
+        
+    <PreferenceCategory
+                android:title="离线地图" >
+        <ListPreference
+                android:key="map_mgr_preference"
+                android:title="下载离线地图"
+                android:summary="当前仅支持深圳"
+                android:entries="@array/map_mgr"
+                android:entryValues="@array/map_mgr_action"
+                android:dialogTitle="离线地图管理" />
                 
+    </PreferenceCategory>
+    <PreferenceCategory
+                android:title="系统信息">
+        <Preference
+                android:key="homepage_preference"
+                android:title="公司主页"
+                android:summary="http://www.roadclouding.com" />
+            
+        <Preference
+                android:key="release_preference"
+                android:title="版本号"
+                android:summary="2.0.1" />
+        <Preference
+                android:key="weibo_preference"
+                android:title="关注新浪官博"
+                android:summary="'@'路云信息科技有限公司" />
+        <Preference
+                android:key="wechat_preference"
+                android:title="关注腾讯官微"
+                android:summary="路云信息科技有限公司" />
+        
+        </PreferenceCategory>
+    <PreferenceCategory
+                android:title="用户" >
+        <Preference
+                android:key="user_preference"
+                android:title="登录"
+                android:summary="深圳市路云信息科技有限公司" />
+            
+        </PreferenceCategory>
+    
 </PreferenceScreen>

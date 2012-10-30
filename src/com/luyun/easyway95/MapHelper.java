@@ -280,6 +280,11 @@ public class MapHelper {
 			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
 				// TODO Auto-generated method stub
 			}
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
 			
         });
     	mkSearch.poiSearchNearBy("·", currentPoint, Constants.CHKPNT_OF_DISTANCE*1000);

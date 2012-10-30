@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="map_mgr">
+        <item >下载</item>
+        <item >暂停</item>
+        <item >删除</item>
+    </string-array>
+    <string-array name="map_mgr_action">
+        <item >download</item>
+        <item >pause</item>
+        <item >delete</item>
+    </string-array>
+    
+    
+</resources>

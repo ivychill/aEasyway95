@@ -53,4 +53,10 @@ public class TrafficSearchListener implements MKSearchListener {
 
 	}
 
+	@Override
+	public void onGetRGCShareUrlResult(String arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

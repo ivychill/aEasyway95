@@ -11,6 +11,10 @@ import java.util.TimerTask;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKOLSearchRecord;
+import com.baidu.mapapi.MKOLUpdateElement;
+import com.baidu.mapapi.MKOfflineMap;
+import com.baidu.mapapi.MKOfflineMapListener;
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
@@ -38,6 +42,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -70,7 +75,7 @@ import android.widget.Toast;
 /*
  * 这是程序的主要功能实现，负责调用BaiduMap的各种API
  */
-public class LYNavigator extends MapActivity {
+public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	//BMapManager mBMapMan = null; 
 	final static String TAG = "LYNavigator";
     private static final int MENU_SEARCH = 1;
@@ -86,6 +91,7 @@ public class LYNavigator extends MapActivity {
     private ProgressDialog popupDlg;
     
     MapView mMapView;
+	private MKOfflineMap mOffline = null;
     Easyway95App app;
     private boolean updateViewTimerCreated = false;
     private Timer mTimer;
@@ -102,6 +108,7 @@ public class LYNavigator extends MapActivity {
 	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
 
     private static boolean mbSynthetizeOngoing = false;
+    private boolean isRunning = true;
     
     private ServiceConnection mConnectionZMQ = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -214,6 +221,31 @@ public class LYNavigator extends MapActivity {
         //mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
+        //支持离线地图
+        mOffline = new MKOfflineMap();
+        mOffline.init(app.mBMapMan, this);
+        ArrayList<MKOLUpdateElement> info = mOffline.getAllUpdateInfo();
+        if (info != null) {
+        	Log.d(TAG, String.format("has %d city info", info.size()));
+        	if (info.get(0).status == MKOLUpdateElement.FINISHED) {
+        		
+        	}
+        }
+        ArrayList<MKOLSearchRecord> records = mOffline.getHotCityList();
+        if (records != null) {
+        	Log.d(TAG, String.format("has %d hot city", records.size()));
+        }
+        records = mOffline.getOfflineCityList();
+        if (records != null) {
+        	Log.d(TAG, String.format("has %d offline city", records.size()));
+        }
+        int num = mOffline.scan();
+        Log.d(TAG, String.format("installed offline map %d", num));
+//        int progress = downloadProgress();
+//        if (progress < 100)
+//        	downloadMap();
+        
+        
         //GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
         //        (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
         GeoPoint point = null;
@@ -312,6 +344,7 @@ public class LYNavigator extends MapActivity {
 	}
 	@Override
 	protected void onPause() {
+		isRunning = false;
 		Easyway95App app = (Easyway95App)this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
 		mLocationOverlay.disableMyLocation();
@@ -321,6 +354,7 @@ public class LYNavigator extends MapActivity {
 	}
 	@Override
 	protected void onResume() {
+		isRunning = true;
 		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
@@ -382,6 +416,10 @@ public class LYNavigator extends MapActivity {
     };
     
     public void text2Speech(String msg) {
+    	boolean voiceOn = PreferenceManager.getDefaultSharedPreferences(app).getBoolean("voice_preference", true);
+    	if (!voiceOn) {
+    		return;
+    	}
         Log.d(TAG, "in text2Speech");
         Bundle bundle = new Bundle();  
         bundle.putString("ttsmsg", msg);  
@@ -518,6 +556,7 @@ public class LYNavigator extends MapActivity {
     
     public void popupTrafficDialog(TrafficMsg tmsg) {
         Log.d(TAG, "in popupTrafficDialog");
+        if (!isRunning) return;
         mMsgToBeShown = tmsg;
         
     	showDialog(Constants.TRAFFIC_POPUP);
@@ -590,7 +629,8 @@ public class LYNavigator extends MapActivity {
         switch (item.getItemId()) {
             case R.id.search:
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-    	        onSearchRequested();
+    	        //onSearchRequested();
+            	downloadMap();
                 return true;
 
             case R.id.go_home:
@@ -659,4 +699,80 @@ public class LYNavigator extends MapActivity {
         
         wxApi.sendReq(req);
     }
+
+	@Override
+	public void onGetOfflineMapState(int type, int state) {
+		// TODO Auto-generated method stub
+		switch (type) {
+		case MKOfflineMap.TYPE_DOWNLOAD_UPDATE:
+			{
+				Log.d(TAG, String.format("cityid:%d update", state));
+				if (state != Constants.SHENZHEN_CITY_ID) {
+					Log.d(TAG, String.format("cityid:%d update", state));
+					removeMap(state);
+				}
+				//MKOLUpdateElement update = mOffline.getUpdateInfo(state);
+				//mText.setText(String.format("%s : %d%%", update.cityName, update.ratio));
+			}
+			break;
+		case MKOfflineMap.TYPE_NEW_OFFLINE:
+			Log.d(TAG, String.format("add offlinemap num:%d", state));
+			break;
+		case MKOfflineMap.TYPE_VER_UPDATE:
+			Log.d(TAG, String.format("new offlinemap ver"));
+			break;
+		}
+		 
+	}
+	
+	public int downloadProgress() {
+		MKOLUpdateElement element = mOffline.getUpdateInfo(Constants.SHENZHEN_CITY_ID);
+		if (element != null) {
+			return element.ratio;
+		}
+		return -1;
+	}
+	
+	public double getMapSize() {
+		MKOLUpdateElement element = mOffline.getUpdateInfo(Constants.SHENZHEN_CITY_ID);
+		if (element != null) {
+			return (double)(element.size/1E6);
+		}
+		return 0.0;
+	}
+	
+	public void downloadMap() {
+		//Log.d(TAG, "in downloadMap()");
+		boolean result = mOffline.start(Constants.SHENZHEN_CITY_ID);
+		if (result) {
+			Log.d(TAG, String.format("started downloading map %d", Constants.SHENZHEN_CITY_ID));
+		} else {
+			Log.d(TAG, "failed to download map");
+		}
+	}
+	
+	public void pauseMap() {
+		//Log.d(TAG, "in pauseMap()");
+		boolean result = mOffline.pause(Constants.SHENZHEN_CITY_ID);
+		if (result) {
+			Log.d(TAG, String.format("pauseMap %d", Constants.SHENZHEN_CITY_ID));
+		} else {
+			Log.d(TAG, "failed to pauseMap");
+		}
+	}
+	
+	public void removeMap(int state) {
+		//Log.d(TAG, "in removeMap()");
+		boolean result = mOffline.remove(state);
+		if (result) {
+			Log.d(TAG, String.format("removeMap %d", state));
+		} else {
+			Log.d(TAG, "failed to removeMap");
+		}
+	}
+	
+	public void removeMap() {
+		//Log.d(TAG, "in removeMap()");
+		removeMap(Constants.SHENZHEN_CITY_ID);
+	}
 }

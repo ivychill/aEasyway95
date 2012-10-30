@@ -85,5 +85,6 @@ public class Constants {
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;
 	
-	public static long INTERVAL_OF_TRAFFIC_REPORT = 5; //上报路况间隔时间
+	public static final long INTERVAL_OF_TRAFFIC_REPORT = 5; //上报路况间隔时间
+	public static final int SHENZHEN_CITY_ID = 340; //百度定义深圳ID
 }

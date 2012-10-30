@@ -246,6 +246,11 @@ public class SettingActivity extends MapActivity {
 			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
 				// TODO Auto-generated method stub
 			}
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
 			
         });
         
