@@ -55,6 +55,9 @@ public class Constants {
 //	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//测试
 	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//发布
 	public static final String SHARE_MESSAGE = "分享自路易95 http://www.roadclouding.com";
+	
+	public static final String POI_RETURN_KEY = "poiInfo";
+	public static final int ACTIVITY_REQUEST_CODE = 1888;
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
@@ -63,7 +66,7 @@ public class Constants {
 	//public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
-	public static final int TRAFFIC_UPDATE_CMD=9900;	
+	public static final int TRAFFIC_UPDATE_CMD=9900;
 	
 	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
 	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
