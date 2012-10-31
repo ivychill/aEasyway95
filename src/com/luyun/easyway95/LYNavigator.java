@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKPoiInfo;
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
@@ -276,7 +277,9 @@ public class LYNavigator extends MapActivity {
         	@Override
         	public void onClick(View v) {
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-    	        onSearchRequested();
+//    	        onSearchRequested();
+    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+    			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
         	}
         });
         
@@ -332,17 +335,10 @@ public class LYNavigator extends MapActivity {
 //			MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)intent.getSerializableExtra(Constants.POI_RETURN_KEY);
 			Log.d(TAG, "poiInfoSerialable: " + poiInfoSerialable.latitudeE6 + " " + poiInfoSerialable.longitudeE6);
 			GeoPoint endPoint = new GeoPoint(poiInfoSerialable.latitudeE6, poiInfoSerialable.longitudeE6);
-//			ProgressDialog promptDlg = new ProgressDialog(LYNavigator.this);
-//			promptDlg.setTitle("路况获取中...");
-//			popupDlg.setMessage("");
-//			popupDlg.setIndeterminate(true);
-//			popupDlg.setCancelable(true);
-//			Log.d(TAG, "endPoint: " + endPoint);
+//			MKPoiInfo poiInfo = new MKPoiInfo();
+//			poiInfoSerialable.copyTo(poiInfo);
 			mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), endPoint);
-			TextView textView = (TextView)findViewById(R.id.hint);
-			textView.setText("从当前位置至" + poiInfoSerialable.name + "路况");
-			textView.setTextSize(16);
-//			promptDlg.dismiss();
+
 		}
 		else {
 			Log.d(TAG, "unknown requestCode: " + requestCode + " or resultCode: " + resultCode);
@@ -652,30 +648,31 @@ public class LYNavigator extends MapActivity {
         switch (item.getItemId()) {
             case R.id.search:
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-    	        onSearchRequested();
-    	        Log.d(TAG, "return from SearchActivity");
+//    	        onSearchRequested();
+    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+    			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
                 return true;
 
             case R.id.go_home:
-            	promptDlg = new ProgressDialog(this);
-                promptDlg.setTitle("路况获取中...");
-                popupDlg.setMessage("");
-                popupDlg.setIndeterminate(true);
-                popupDlg.setCancelable(true);
+//            	promptDlg = new ProgressDialog(this);
+//                promptDlg.setTitle("路况获取中...");
+//                promptDlg.setMessage("");
+//                promptDlg.setIndeterminate(true);
+//                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
-        		promptDlg.dismiss();
+//        		promptDlg.dismiss();
                 return true;
 
             // For "Groups": Toggle visibility of grouped menu items with
             //               nongrouped menu items
             case R.id.go_office:
-            	promptDlg = new ProgressDialog(this);
-                promptDlg.setTitle("路况获取中...");
-                popupDlg.setMessage("");
-                popupDlg.setIndeterminate(true);
-                popupDlg.setCancelable(true);
+//            	promptDlg = new ProgressDialog(this);
+//                promptDlg.setTitle("路况获取中...");
+//                promptDlg.setMessage("");
+//                promptDlg.setIndeterminate(true);
+//                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
-        		promptDlg.dismiss();
+//        		promptDlg.dismiss();
                 return true;
                 
             case R.id.profile_setting:

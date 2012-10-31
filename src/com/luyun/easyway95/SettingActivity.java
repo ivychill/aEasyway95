@@ -248,18 +248,7 @@ public class SettingActivity extends MapActivity {
 			}
 			
         });
-        
-        //login
-        Button btnLogin = (Button)findViewById(R.id.login);
-        btnLogin.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-        		//start login activity
-        		startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-        	}
-        });
 
-        
         //query SharedPreferences
 		mSP = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mUserProfile = new UserProfile(mSP);

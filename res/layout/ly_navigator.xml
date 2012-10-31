@@ -16,30 +16,29 @@
 	    android:id="@+id/TableLayout01" 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
+	    android:alpha="1"
+	    android:background="#ffbbbbbb"
 	    android:layout_gravity="top" 
+	    android:layout_margin = "4dp"
 	    android:stretchColumns="0"
 	    xmlns:android="http://schemas.android.com/apk/res/android">
 	    <!-- android:stretchColumns="0" 设置0号列为可伸展的列，当有多个列可伸展时用逗号隔开 -->
 	    <TableRow 
-            android:id="@+id/TableRow01" 
-	        android:layout_width="wrap_content" 
-	        android:layout_height="wrap_content">
+	        android:layout_width="fill_parent" 
+	        android:layout_height="fill_parent">
 		    <TextView
 		        android:id="@+id/hint"
+		        android:layout_width="fill_parent" 
 		        android:layout_height="fill_parent"
 		        android:maxLines="1"
 		        android:minLines="1"
-		        android:alpha="1"
-		        android:background="#88ffffff"
 		        android:textSize="24sp"
 		        android:gravity="center"
-		        android:hint="指定目的地"
-		        android:layout_margin="4dp" />
+		        android:scrollHorizontally="true"
+		        android:text="指定目的地" />
             <ImageButton
 		        android:id="@+id/search"
-		        android:alpha="1"
-		        android:src="@drawable/search"
-		        android:layout_margin="4dp" />    
+		        android:src="@drawable/search" />    
 	    </TableRow> 
     </TableLayout>
 

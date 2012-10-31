@@ -4,7 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <!-- TableLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/grid" >
+	    
+    <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -20,21 +26,20 @@
                 android:src="@drawable/bookmark" />
             
             <EditText
-                android:id="@+id/query"
-                android:layout_height="fill_parent"
-                android:layout_margin="4dp"
+                android:id="@+id/searchkey"
+                android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text="福田中心区市民中心"
-                android:hint="@string/search_hint" />
-            
+                android:hint="@string/search_hint"
+                android:scrollHorizontally="true" />       
             <ImageButton
 		        android:id="@+id/search"
 		        android:alpha="1"
 		        android:src="@drawable/search"
 		        android:layout_margin="4dp" />  
         </TableRow>
-    </TableLayout -->
+    </TableLayout>
 
     <!--  TextView
             android:id="@+id/textField"
@@ -48,4 +53,11 @@
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"/>
+    </LinearLayout>
+        
+    <com.baidu.mapapi.MapView
+        android:id="@+id/mapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
 </LinearLayout>

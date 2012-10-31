@@ -301,7 +301,7 @@ public class MapHelper {
 		end.pt = endPoint;
 		// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 		MKSearch mMKSearch = new MKSearch();
-		mMKSearch.init(mBMapMan, new TrafficSearchListener(){
+		mMKSearch.init(mBMapMan, new MKSearchListener(){
 			@Override
 			public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
 				Log.d(TAG, "enter onGetDrivingRouteResult");
@@ -329,6 +329,44 @@ public class MapHelper {
 			    //}
 
 			    mTrafficSubscriber.SubTraffic(route);
+			}
+
+			@Override
+			public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetPoiResult(MKPoiResult arg0, int arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetTransitRouteResult(MKTransitRouteResult arg0,
+					int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
+					int arg1) {
+				// TODO Auto-generated method stub
+				
 			}
 	    });
 		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
