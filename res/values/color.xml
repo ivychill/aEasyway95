@@ -20,5 +20,6 @@
 <resources> 
     <color name="transparent">#00000000</color>
     <color name="text_num_gray">#333</color>
+    <color name="black">#FF0000</color>
     <color name="dialog_title_blue">#9CCCF7</color>
 </resources> 
