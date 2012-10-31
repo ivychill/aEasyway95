@@ -21,9 +21,6 @@ import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.PoiOverlay;
-import com.luyun.easyway95.SettingActivity.AddrType;
-import com.luyun.easyway95.SettingActivity.LongTap;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -205,16 +202,22 @@ public class SearchActivity extends MapActivity {
 //				mSuggestionList.setAdapter(suggestionString);
 //				Toast.makeText(SearchActivity.this, "suggestion callback", Toast.LENGTH_LONG).show();
     		}    		
+
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
         });
 
-	    handleIntent(getIntent());
+//	    handleIntent(getIntent());
 	}
     
 	@Override
 	public void onNewIntent(Intent intent) {
 		Log.d (TAG, "enter onNewIntent");
 		setIntent(intent);
-		handleIntent(intent);
+//		handleIntent(intent);
 	}
 
 	private void handleIntent(Intent intent) {
@@ -224,9 +227,6 @@ public class SearchActivity extends MapActivity {
 //    		Log.d(TAG, "query: " + query);
     		mSearch.poiSearchInCity("…Ó€⁄", query);
         }
-		
-//		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//		}
     }
 	
     /**  
@@ -322,7 +322,7 @@ public class SearchActivity extends MapActivity {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         	MKPoiInfo poiInfo = mPoiInfos.get(position);
-        	MKPoiInfoSerialable poiInfoSerialable = new MKPoiInfoSerialable();
+        	MKPoiInfoHelper poiInfoSerialable = new MKPoiInfoHelper();
         	poiInfoSerialable.copyFrom(poiInfo);
         	
             Bundle bundle = new Bundle();

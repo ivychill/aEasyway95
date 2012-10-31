@@ -34,7 +34,6 @@ import com.baidu.mapapi.PoiOverlay;
 import com.baidu.mapapi.RouteOverlay;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
 import com.luyun.easyway95.MapUtils.STPointLineDistInfo;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgType;
 import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
@@ -280,6 +279,11 @@ public class MapHelper {
 			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
 				// TODO Auto-generated method stub
 			}
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
 			
         });
     	mkSearch.poiSearchNearBy("·", currentPoint, Constants.CHKPNT_OF_DISTANCE*1000);
@@ -365,6 +369,12 @@ public class MapHelper {
 			@Override
 			public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
 					int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
 				// TODO Auto-generated method stub
 				
 			}

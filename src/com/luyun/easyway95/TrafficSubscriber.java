@@ -90,7 +90,7 @@ public class TrafficSubscriber {
 				.setTimestamp(System.currentTimeMillis()/1000)
 				.setTrafficSub(tsub)
 				.build();
-    	//Log.i(TAG, msg.toString());
+    	//Log.d(TAG, msg.toString());
     	byte[] data = msg.toByteArray();
     	mainActivity.sendMsgToSvr(data);
 	}

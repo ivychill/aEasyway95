@@ -12,6 +12,10 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.LocationListener;
 import com.baidu.mapapi.MKPoiInfo;
+import com.baidu.mapapi.MKOLSearchRecord;
+import com.baidu.mapapi.MKOLUpdateElement;
+import com.baidu.mapapi.MKOfflineMap;
+import com.baidu.mapapi.MKOfflineMapListener;
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
@@ -40,6 +44,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -75,7 +80,7 @@ import android.widget.Toast;
 /*
  * 这是程序的主要功能实现，负责调用BaiduMap的各种API
  */
-public class LYNavigator extends MapActivity {
+public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	//BMapManager mBMapMan = null; 
 	final static String TAG = "LYNavigator";
     private static final int MENU_SEARCH = 1;
@@ -86,11 +91,13 @@ public class LYNavigator extends MapActivity {
     private boolean mIsBound;
     private boolean mIsTTSBound;
     public MapHelper mMapHelper;
-    private GeoPoint mHomeAddr;
-    private GeoPoint mOfficeAddr;
+    private MKPoiInfoHelper mHomeAddr;
+    private MKPoiInfoHelper mOfficeAddr;
     private ProgressDialog popupDlg;
     
     MapView mMapView;
+    TextView mHeading;
+	private MKOfflineMap mOffline = null;
     Easyway95App app;
     private boolean updateViewTimerCreated = false;
     private Timer mTimer;
@@ -109,6 +116,7 @@ public class LYNavigator extends MapActivity {
 	LocationListener mLocationListener = null;//create时注册此listener，Destroy时需要Remove
 
     private static boolean mbSynthetizeOngoing = false;
+    private boolean isRunning = true;
     
     private ServiceConnection mConnectionZMQ = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -198,8 +206,8 @@ public class LYNavigator extends MapActivity {
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		//Log.d(TAG, up.toString());
-		mHomeAddr = up.getHomeAddr().getPt();
-		mOfficeAddr = up.getOfficeAddr().getPt();
+		mHomeAddr = up.getHomeAddr();
+		mOfficeAddr = up.getOfficeAddr();
 		mMapHelper = new MapHelper(this);
 
 		setContentView(R.layout.ly_navigator);
@@ -214,13 +222,38 @@ public class LYNavigator extends MapActivity {
 		app.mBMapMan.start();
         super.initMapActivity(app.mBMapMan);
         mMapUtils = app.getMapUtils();
-        
-		mMapView = (MapView) findViewById(R.id.bmapsView);
+
+		mMapView = (MapView)findViewById(R.id.bmapsView);
         //mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
         //设置在缩放动画过程中也显示overlay,默认为不绘制
         //mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
+        //支持离线地图
+        mOffline = new MKOfflineMap();
+        mOffline.init(app.mBMapMan, this);
+        ArrayList<MKOLUpdateElement> info = mOffline.getAllUpdateInfo();
+        if (info != null) {
+        	Log.d(TAG, String.format("has %d city info", info.size()));
+        	if (info.get(0).status == MKOLUpdateElement.FINISHED) {
+        		
+        	}
+        }
+        ArrayList<MKOLSearchRecord> records = mOffline.getHotCityList();
+        if (records != null) {
+        	Log.d(TAG, String.format("has %d hot city", records.size()));
+        }
+        records = mOffline.getOfflineCityList();
+        if (records != null) {
+        	Log.d(TAG, String.format("has %d offline city", records.size()));
+        }
+        int num = mOffline.scan();
+        Log.d(TAG, String.format("installed offline map %d", num));
+//        int progress = downloadProgress();
+//        if (progress < 100)
+//        	downloadMap();
+        
+        
         //GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
         //        (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
         GeoPoint point = null;
@@ -228,9 +261,9 @@ public class LYNavigator extends MapActivity {
         
         //if (now.getHours() <= 12) {
         if (rightNow.get(Calendar.HOUR_OF_DAY) <= 12) {
-        	point = mHomeAddr;
+        	point = mHomeAddr.getPt();
         } else {
-        	point = mOfficeAddr;
+        	point = mOfficeAddr.getPt();
         }
         if (point == null) {
         	point = new GeoPoint((int) (22.551541 * 1E6),
@@ -258,7 +291,6 @@ public class LYNavigator extends MapActivity {
         bindZMQService();
         //启动TTSService，非独立线程
         bindTTSService();
-        
 
         ImageButton btnReset = (ImageButton)findViewById(R.id.resetbtn);
         btnReset.setOnClickListener(new OnClickListener() {
@@ -272,6 +304,16 @@ public class LYNavigator extends MapActivity {
         	}
         });
         
+        
+        mHeading = (TextView)findViewById(R.id.heading);
+        mHeading.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
+        	}
+        });
+        
         ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
         btnSearch.setOnClickListener(new OnClickListener() {
         	@Override
@@ -279,7 +321,7 @@ public class LYNavigator extends MapActivity {
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
 //    	        onSearchRequested();
     			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
-    			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
+    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
         	}
         });
         
@@ -319,28 +361,31 @@ public class LYNavigator extends MapActivity {
 			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
 			// add query to the Intent Extras
 			searchIntent.putExtra(SearchManager.QUERY, query);
-			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
+			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
 		}
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (resultCode == RESULT_OK && requestCode == Constants.ACTIVITY_REQUEST_CODE) { 
-			Log.d(TAG, "intent: " + intent);
-			Bundle bundle = intent.getExtras();
-			Log.d(TAG, "bundle: " + bundle); 
-//    		String value = bundle.getString("key");
-//    		Log.d(TAG, "value: " + value);
-			MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)bundle.getSerializable(Constants.POI_RETURN_KEY);
-//			MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)intent.getSerializableExtra(Constants.POI_RETURN_KEY);
-			Log.d(TAG, "poiInfoSerialable: " + poiInfoSerialable.latitudeE6 + " " + poiInfoSerialable.longitudeE6);
-			GeoPoint endPoint = new GeoPoint(poiInfoSerialable.latitudeE6, poiInfoSerialable.longitudeE6);
-//			MKPoiInfo poiInfo = new MKPoiInfo();
-//			poiInfoSerialable.copyTo(poiInfo);
-			mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), endPoint);
-
-		}
-		else {
+		if (resultCode == RESULT_OK) {
+			if (requestCode == Constants.ENDPOINT_REQUEST_CODE) { 
+				Bundle bundle = intent.getExtras();
+				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
+				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
+				mHeading.setText("当前位置至" + poiInfo.getName() + "的路况");
+				mHeading.setTextSize(16);
+			} else if (requestCode == Constants.SETTING_REQUEST_CODE) {
+//				Bundle bundle = intent.getExtras();
+//				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
+//				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+//				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
+//				mHomeAddr = up.getHomeAddr();
+//				mOfficeAddr = up.getOfficeAddr();
+			} else {
+				Log.d(TAG, "unknown requestCode: " + requestCode);
+			}
+		} else {
 			Log.d(TAG, "unknown requestCode: " + requestCode + " or resultCode: " + resultCode);
 		}
 	}
@@ -369,6 +414,7 @@ public class LYNavigator extends MapActivity {
 	}
 	@Override
 	protected void onPause() {
+		isRunning = false;
 		Easyway95App app = (Easyway95App)this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
 		mLocationOverlay.disableMyLocation();
@@ -378,12 +424,13 @@ public class LYNavigator extends MapActivity {
 	}
 	@Override
 	protected void onResume() {
+		isRunning = true;
 		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		//Log.d(TAG, up.toString());
-		mHomeAddr = up.getHomeAddr().getPt();
-		mOfficeAddr = up.getOfficeAddr().getPt();
+		mHomeAddr = up.getHomeAddr();
+		mOfficeAddr = up.getOfficeAddr();
 		
 		Easyway95App app = (Easyway95App)this.getApplication();
 		// 注册Listener
@@ -429,7 +476,7 @@ public class LYNavigator extends MapActivity {
             try {
             	//Log.i(TAG, "get message from server.");
             	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
-            	Log.i(TAG, msgOnAir.toString());
+            	Log.d(TAG, msgOnAir.toString());
              	mMapHelper.onMsg(msgOnAir);
             	LYNavigator.this.resetMapView();
 			} catch (InvalidProtocolBufferException e) {
@@ -439,6 +486,10 @@ public class LYNavigator extends MapActivity {
     };
     
     public void text2Speech(String msg) {
+    	boolean voiceOn = PreferenceManager.getDefaultSharedPreferences(app).getBoolean("voice_preference", true);
+    	if (!voiceOn) {
+    		return;
+    	}
         Log.d(TAG, "in text2Speech");
         Bundle bundle = new Bundle();  
         bundle.putString("ttsmsg", msg);  
@@ -452,11 +503,11 @@ public class LYNavigator extends MapActivity {
     }
     
     public GeoPoint getOfficeAddr() {
-    	return mOfficeAddr;
+    	return mOfficeAddr.getPt();
     }
     
     public GeoPoint getHomeAddr() {
-    	return mHomeAddr;
+    	return mHomeAddr.getPt();
     }
     
     public void resetMapView() {
@@ -575,6 +626,7 @@ public class LYNavigator extends MapActivity {
     
     public void popupTrafficDialog(TrafficMsg tmsg) {
         Log.d(TAG, "in popupTrafficDialog");
+        if (!isRunning) return;
         mMsgToBeShown = tmsg;
         
     	showDialog(Constants.TRAFFIC_POPUP);
@@ -650,7 +702,7 @@ public class LYNavigator extends MapActivity {
 //        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
 //    	        onSearchRequested();
     			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
-    			startActivityForResult(searchIntent, Constants.ACTIVITY_REQUEST_CODE);
+    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
                 return true;
 
             case R.id.go_home:
@@ -659,7 +711,9 @@ public class LYNavigator extends MapActivity {
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
-        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
+        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr.getPt());
+    			mHeading.setText("当前位置至" + mHomeAddr.getName() + "的路况");
+    			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
 
@@ -671,13 +725,17 @@ public class LYNavigator extends MapActivity {
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
-        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
+        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr.getPt());
+    			mHeading.setText("当前位置至" + mOfficeAddr.getName() + "的路况");
+    			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
                 
             case R.id.profile_setting:
                 // The reply item is part of the email group
-        		startActivity(new Intent(LYNavigator.this, SettingActivity.class));
+        		//startActivity(new Intent(LYNavigator.this, SettingActivity.class));
+    			final Intent settingIntent = new Intent(LYNavigator.this, LYSetting.class);
+    			startActivityForResult(settingIntent, Constants.SETTING_REQUEST_CODE);
         		return true;
         		
             case R.id.weibo:
@@ -728,6 +786,82 @@ public class LYNavigator extends MapActivity {
         
         wxApi.sendReq(req);
     }
+
+	@Override
+	public void onGetOfflineMapState(int type, int state) {
+		// TODO Auto-generated method stub
+		switch (type) {
+		case MKOfflineMap.TYPE_DOWNLOAD_UPDATE:
+			{
+				Log.d(TAG, String.format("cityid:%d update", state));
+				if (state != Constants.SHENZHEN_CITY_ID) {
+					Log.d(TAG, String.format("cityid:%d update", state));
+					removeMap(state);
+				}
+				//MKOLUpdateElement update = mOffline.getUpdateInfo(state);
+				//mText.setText(String.format("%s : %d%%", update.cityName, update.ratio));
+			}
+			break;
+		case MKOfflineMap.TYPE_NEW_OFFLINE:
+			Log.d(TAG, String.format("add offlinemap num:%d", state));
+			break;
+		case MKOfflineMap.TYPE_VER_UPDATE:
+			Log.d(TAG, String.format("new offlinemap ver"));
+			break;
+		}
+		 
+	}
+	
+	public int downloadProgress() {
+		MKOLUpdateElement element = mOffline.getUpdateInfo(Constants.SHENZHEN_CITY_ID);
+		if (element != null) {
+			return element.ratio;
+		}
+		return -1;
+	}
+	
+	public double getMapSize() {
+		MKOLUpdateElement element = mOffline.getUpdateInfo(Constants.SHENZHEN_CITY_ID);
+		if (element != null) {
+			return (double)(element.size/1E6);
+		}
+		return 0.0;
+	}
+	
+	public void downloadMap() {
+		//Log.d(TAG, "in downloadMap()");
+		boolean result = mOffline.start(Constants.SHENZHEN_CITY_ID);
+		if (result) {
+			Log.d(TAG, String.format("started downloading map %d", Constants.SHENZHEN_CITY_ID));
+		} else {
+			Log.d(TAG, "failed to download map");
+		}
+	}
+	
+	public void pauseMap() {
+		//Log.d(TAG, "in pauseMap()");
+		boolean result = mOffline.pause(Constants.SHENZHEN_CITY_ID);
+		if (result) {
+			Log.d(TAG, String.format("pauseMap %d", Constants.SHENZHEN_CITY_ID));
+		} else {
+			Log.d(TAG, "failed to pauseMap");
+		}
+	}
+	
+	public void removeMap(int state) {
+		//Log.d(TAG, "in removeMap()");
+		boolean result = mOffline.remove(state);
+		if (result) {
+			Log.d(TAG, String.format("removeMap %d", state));
+		} else {
+			Log.d(TAG, "failed to removeMap");
+		}
+	}
+	
+	public void removeMap() {
+		//Log.d(TAG, "in removeMap()");
+		removeMap(Constants.SHENZHEN_CITY_ID);
+	}
     
 //    public class MsgReceiver extends BroadcastReceiver {  
 //        public boolean mbRunFlagReceiver = false;  

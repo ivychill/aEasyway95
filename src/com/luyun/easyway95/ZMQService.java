@@ -119,13 +119,17 @@ public class ZMQService extends Service {
 	        
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
 	        mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
-	        String strProTSS = 
-					"tcp://"
-					+Constants.TSS_PRO_HOST
-					+":"
-					+Constants.TSS_SERVER_PORT;
-	        mzsProSvrEnd.connect (strProTSS);
-	        Log.d(TAG, strProTSS);
+	        try {
+		        String strProTSS = 
+						"tcp://"
+						+Constants.TSS_PRO_HOST
+						+":"
+						+Constants.TSS_SERVER_PORT;
+		        mzsProSvrEnd.connect (strProTSS);
+		        Log.d(TAG, strProTSS);
+	        } catch (Exception e) {
+	        	Log.e(TAG, "connect to server failed.");
+	        }
 	        
 	        //create a separate thread to retrieve data from server
 			//  Initialize poll set
@@ -148,12 +152,12 @@ public class ZMQService extends Service {
 					continue;
 				}
 				if (items.pollin(1)) {
-					Log.i(TAG, "get data from product server");
+					Log.d(TAG, "get data from product server");
 					data = mzsProSvrEnd.recv(0);
 					//data = mzsDevSvrEnd.recv(0);
 				}
 				/*if (items.pollin(2)) {
-				Log.i(TAG, "get data from dev server");
+				Log.d(TAG, "get data from dev server");
 				data = mzsDevSvrEnd.recv(0);
 				}*/
 		        Message msg = new Message();
