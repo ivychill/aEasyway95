@@ -37,7 +37,7 @@
 		        android:layout_marginLeft="4dp"
 		        android:layout_marginTop="4dp"
 		        android:layout_marginBottom= "4dp"
-		        android:hint="指定目的地" />
+		        android:text="指定目的地" />
             <ImageButton
 		        android:id="@+id/search"
 		        android:layout_height="wrap_content"
