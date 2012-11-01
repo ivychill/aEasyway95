@@ -54,7 +54,6 @@ import com.baidu.mapapi.Overlay;
 import com.baidu.mapapi.OverlayItem;
 import com.baidu.mapapi.PoiOverlay;
 import com.baidu.mapapi.Projection;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 
 
 public class SettingActivity extends MapActivity {
@@ -177,7 +176,7 @@ public class SettingActivity extends MapActivity {
 			        //((MainActivity)getApplicationContext()).handler.sendMessage(msg);
 			        //app.getSettingActivity().handler.sendMessage(msg);
 			    	
-			        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res.getPoi(0));
+			        MKPoiInfoHelper mpi = new MKPoiInfoHelper(res.getPoi(0));
 			        if (mAddrProcessing == AddrType.HOME_ADDR) {
 			        	mUserProfile.setHomeAddr(mpi);
 			        } else {
@@ -225,7 +224,7 @@ public class SettingActivity extends MapActivity {
 
 				Toast.makeText(SettingActivity.this, strInfo, Toast.LENGTH_LONG).show();
 				Log.d(TAG, strInfo);
-		        MKPoiInfoHelper mpi = mUserProfile.new MKPoiInfoHelper(res);
+		        MKPoiInfoHelper mpi = new MKPoiInfoHelper(res);
 		        if (mAddrProcessing == AddrType.HOME_ADDR) {
 		        	mUserProfile.setHomeAddr(mpi);
 		        } else {
