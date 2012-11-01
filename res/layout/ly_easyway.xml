@@ -9,11 +9,11 @@
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
         android:src="@drawable/instro_1" />
-
+
     <Button
         android:id="@+id/start_use"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_gravity="bottom|right"
         android:background="@drawable/grid"
         android:text="立即开始" />

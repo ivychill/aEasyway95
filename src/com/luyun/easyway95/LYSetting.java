@@ -3,8 +3,10 @@ package com.luyun.easyway95;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -16,12 +18,16 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-public class LYSetting extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener{
+public class LYSetting extends PreferenceActivity
+	implements OnPreferenceChangeListener, OnPreferenceClickListener, OnSharedPreferenceChangeListener {
+	
 	private static final String TAG = "LYSetting";
 	
 	Easyway95App app;
 	private SharedPreferences mSP;
 	private UserProfile mUserProfile;
+	private ListPreference mLPHome;
+	private ListPreference mLPOffice;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -63,31 +69,42 @@ public class LYSetting extends PreferenceActivity implements OnPreferenceChangeL
 //				}   
 //			});
 //		}
-		Preference pref = this.findPreference("homeaddr_preference");
-		if (pref != null) {
-			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
+		mLPHome = (ListPreference)findPreference("homeaddr_preference");  
+    	mLPOffice = (ListPreference)findPreference("officeaddr_preference"); 
+    	
+		mLPHome.setSummary(mUserProfile.getHomeAddr().getName());
+		mLPOffice.setSummary(mUserProfile.getOfficeAddr().getName());
+		 
+//		Preference pref = this.findPreference("homeaddr_preference");
+		if (mLPHome != null) {
+			mLPHome.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
 				@Override
 				public boolean onPreferenceChange(Preference preference,
 						Object newValue) {
 					// TODO Auto-generated method stub
 					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
 					if (((String)newValue).equals("set")) {
-		        		startActivity(new Intent(LYSetting.this, SettingActivity.class));
+		    			final Intent searchIntent = new Intent(LYSetting.this, SearchActivity.class);
+		    			startActivityForResult(searchIntent, Constants.HOME_REQUEST_CODE);
 					}
 					return true;
 				}   
 			});
 		}
-		pref = this.findPreference("officeaddr_preference");
-		if (pref != null) {
-			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
+//		pref = this.findPreference("officeaddr_preference");
+		if (mLPOffice != null) {
+			mLPOffice.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
 				@Override
 				public boolean onPreferenceChange(Preference preference,
 						Object newValue) {
 					// TODO Auto-generated method stub
 					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
 					if (((String)newValue).equals("set")) {
-		        		startActivity(new Intent(LYSetting.this, SettingActivity.class));
+		    			final Intent searchIntent = new Intent(LYSetting.this, SearchActivity.class);
+		    			startActivityForResult(searchIntent, Constants.OFFICE_REQUEST_CODE);
 					}
 					return true;
 				}   
@@ -95,6 +112,30 @@ public class LYSetting extends PreferenceActivity implements OnPreferenceChangeL
 		}
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (resultCode == RESULT_OK) {
+			if (requestCode == Constants.HOME_REQUEST_CODE) { 
+				Bundle bundle = intent.getExtras(); 
+				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
+				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				mUserProfile.setHomeAddr(poiInfo);
+				mUserProfile.commitPreferences(mSP);
+				mLPHome.setSummary(poiInfo.getName());
+			} else if (requestCode == Constants.OFFICE_REQUEST_CODE) {
+				Bundle bundle = intent.getExtras(); 
+				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
+				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				mUserProfile.setOfficeAddr(poiInfo);
+				mUserProfile.commitPreferences(mSP);
+				mLPOffice.setSummary(poiInfo.getName());
+			} else {
+				Log.d(TAG, "unknown requestCode: " + requestCode);
+			}
+		} else {
+			Log.d(TAG, "unknown resultCode: " + resultCode);
+		}
+	}
 
 	@Override
 	protected void onPause() {
@@ -127,6 +168,7 @@ public class LYSetting extends PreferenceActivity implements OnPreferenceChangeL
 	public boolean onPreferenceChange(Preference preference, Object arg1) {
 		// TODO Auto-generated method stub
 		Log.d(TAG, "in onPreferenceChange");
+		
 		return true;
 	}
 
@@ -138,4 +180,15 @@ public class LYSetting extends PreferenceActivity implements OnPreferenceChangeL
 		return false;
 	}
 
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		// TODO Auto-generated method stub
+//		Log.d(TAG, "in onSharedPreferenceChanged");
+//        if(key.equals("homeaddr_preference")){  
+//        	mLPHome.setSummary(mLPHome.getEntry());  
+//        }  
+//        if(key.equals("officeaddr_preference")){  
+//        	mLPOffice.setSummary(mLPOffice.getEntry()); 
+//        }
+	}
 }

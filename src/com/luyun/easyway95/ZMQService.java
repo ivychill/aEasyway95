@@ -162,12 +162,12 @@ public class ZMQService extends Service {
 					continue;
 				}
 				if (items.pollin(1)) {
-					Log.i(TAG, "get data from product server");
+					Log.d(TAG, "get data from product server");
 					data = mzsProSvrEnd.recv(0);
 					//data = mzsDevSvrEnd.recv(0);
 				}
 				/*if (items.pollin(2)) {
-				Log.i(TAG, "get data from dev server");
+				Log.d(TAG, "get data from dev server");
 				data = mzsDevSvrEnd.recv(0);
 				}*/
 		        Message msg = new Message();

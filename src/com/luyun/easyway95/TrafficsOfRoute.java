@@ -24,7 +24,6 @@ import org.restlet.ext.json.JsonRepresentation;
 
 import com.baidu.mapapi.GeoPoint;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
 import android.app.Activity;

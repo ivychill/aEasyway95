@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.MKAddrInfo;
 import com.baidu.mapapi.MKBusLineResult;
 import com.baidu.mapapi.MKDrivingRouteResult;
@@ -16,10 +17,10 @@ import com.baidu.mapapi.MKSearchListener;
 import com.baidu.mapapi.MKSuggestionResult;
 import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
+import com.baidu.mapapi.MapActivity;
+import com.baidu.mapapi.MapController;
+import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.PoiOverlay;
-import com.luyun.easyway95.SettingActivity.AddrType;
-import com.luyun.easyway95.SettingActivity.LongTap;
-import com.luyun.easyway95.UserProfile.MKPoiInfoHelper;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -27,7 +28,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +39,7 @@ import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,20 +50,23 @@ import android.widget.Toast;
 import android.widget.TwoLineListItem;
 
 //public class SearchActivity extends Activity implements OnScrollListener {
-public class SearchActivity extends Activity {
+public class SearchActivity extends MapActivity {
 	final static String TAG = "SearchActivity";
 //	private boolean isSearchrequested = true;
     private View loadMoreView;    
     private Button loadMoreButton;  
 //    private TextView mTextView;
-//    private ArrayList<MKPoiInfo> mListPoi;
-//    private ImageButton mBtnSearch;
-//    private EditText mEditText;
+    private ImageButton mBtnSearch;
+    private EditText mSearchKey;
+    private ImageButton mBtnBookmark;
     private ListView mListView;
     private BMapManager mMapMan;
+    private MapView mMapView = null;
     PoiAdapter poiAdapter = new PoiAdapter(new ArrayList<MKPoiInfo>());
     int mNumPages = 0;
     int mPageIndex = 0;
+    private static String mStrSuggestions[] = {};
+    
     
     private MKSearch mSearch = new MKSearch();;
     private Handler handler = new Handler(); 
@@ -68,15 +75,21 @@ public class SearchActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.search);
+        mMapMan = ((Easyway95App)getApplicationContext()).mBMapMan;
+        mMapMan.start();
+        super.initMapActivity(mMapMan);
+        mMapView = (MapView) findViewById(R.id.mapView);
+        mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
+        MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
+        GeoPoint point = new GeoPoint((int) (22.526292 * 1E6),
+                (int) (113.910416 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
+        mMapController.setCenter(point);  //设置地图中心点
+
+        mBtnSearch = (ImageButton)findViewById(R.id.search);
+        mSearchKey = (EditText)findViewById(R.id.searchkey);
+        mBtnBookmark = (ImageButton)findViewById(R.id.bookmark);
         mListView = (ListView) findViewById(R.id.listAddress);
-//        mTextView = (TextView) findViewById(R.id.textField);
-//        mBtnSearch = (ImageButton)findViewById(R.id.search);
-//        mEditText = (EditText)findViewById(R.id.query);
-       
-        loadMoreView = getLayoutInflater().inflate(R.layout.loadmore, null);  
-        mListView.addFooterView(loadMoreView);    //设置列表底部视图 
-	    mListView.setAdapter(poiAdapter);
-	    mListView.setOnItemClickListener(poiAdapter); 
+        loadMoreView = getLayoutInflater().inflate(R.layout.loadmore, null);
 //        mListView.setOnScrollListener(this);
         loadMoreButton = (Button)loadMoreView.findViewById(R.id.loadMoreButton);  
         loadMoreButton.setOnClickListener(new View.OnClickListener() {  
@@ -94,8 +107,35 @@ public class SearchActivity extends Activity {
             }  
         });  
         
-        mMapMan = ((Easyway95App)getApplicationContext()).mBMapMan;
-        mMapMan.start();
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
+        	@Override  
+            public void onClick(View v) {  
+    			String query = mSearchKey.getText().toString();
+        		Log.d(TAG, "query: " + query);
+        		mSearch.poiSearchInCity("深圳", query);
+            }  
+        });
+        
+        mSearchKey.addTextChangedListener( new TextWatcher() {
+        	@Override  
+            public void onTextChanged(CharSequence s, int start, int before, int count) {  
+        		mSearch.suggestionSearch( 
+        				mSearchKey.getText().toString());
+            }
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}  
+        });
 
         mSearch.init(mMapMan, new MKSearchListener(){
     		public void onGetPoiResult(MKPoiResult res, int type, int error) {
@@ -107,11 +147,14 @@ public class SearchActivity extends Activity {
     				return;
     			}
     			int numPois = res.getCurrentNumPois();
-    			Log.d (TAG, "numPois: " + numPois);
+//    			Log.d (TAG, "numPois: " + numPois);
     		    if (numPois > 0) {
+        	        mListView.addFooterView(loadMoreView);    //设置列表底部视图 
     			    poiAdapter.add(res.getAllPoi());
-    			    poiAdapter.notifyDataSetChanged(); 
-    			    Log.d (TAG, "all pois: " + res.getAllPoi());
+    			    poiAdapter.notifyDataSetChanged();
+        		    mListView.setAdapter(poiAdapter);
+        		    mListView.setOnItemClickListener(poiAdapter); 
+//    			    Log.d (TAG, "all pois: " + res.getAllPoi());
     			    mPageIndex = res.getPageIndex();
     		    } else if (res.getCityListNum() > 0) {
     		    	String strInfo = "在";
@@ -141,39 +184,40 @@ public class SearchActivity extends Activity {
     		@Override
     		public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
     			// TODO Auto-generated method stub
-    		}
+				if (arg1 != 0 || res == null) {
+					Toast.makeText(SearchActivity.this, "抱歉，未找到结果", Toast.LENGTH_LONG).show();
+					return;
+				}
+				int nSize = res.getSuggestionNum();
+				mStrSuggestions = new String[nSize];
+
+				for (int i = 0; i < nSize; i++) {
+					mStrSuggestions[i] = res.getSuggestion(i).city + res.getSuggestion(i).key;
+				}
+				ArrayAdapter<String> suggestionString
+					= new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_list_item_1,mStrSuggestions);
+				SuggestionAdapter suggestionAdapter = new SuggestionAdapter(SearchActivity.this, android.R.layout.simple_list_item_1,mStrSuggestions);
+				mListView.setAdapter(suggestionAdapter);
+				mListView.setOnItemClickListener(suggestionAdapter); 
+//				mSuggestionList.setAdapter(suggestionString);
+//				Toast.makeText(SearchActivity.this, "suggestion callback", Toast.LENGTH_LONG).show();
+    		}    		
+
 			@Override
 			public void onGetRGCShareUrlResult(String arg0, int arg1) {
 				// TODO Auto-generated method stub
 				
 			}
-    		
         });
-        
-//        mBtnSearch.setOnClickListener(new OnClickListener() {
-//        	@Override
-//        	public void onClick(View v) {
-//        		String query = mEditText.getText().toString();
-//        		Log.d(TAG, "query: " + query);
-//        		mSearch.poiSearchInCity("深圳", query);
-//        	}
-//        });
-        
-//	    if (isSearchrequested)
-//	    {
-//	        onSearchRequested();
-//	    }
-//	    else
-//	    {
-	        handleIntent(getIntent());
-//	    }
+
+//	    handleIntent(getIntent());
 	}
     
 	@Override
 	public void onNewIntent(Intent intent) {
 		Log.d (TAG, "enter onNewIntent");
 		setIntent(intent);
-		handleIntent(intent);
+//		handleIntent(intent);
 	}
 
 	private void handleIntent(Intent intent) {
@@ -183,9 +227,6 @@ public class SearchActivity extends Activity {
 //    		Log.d(TAG, "query: " + query);
     		mSearch.poiSearchInCity("深圳", query);
         }
-		
-//		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//		}
     }
 	
     /**  
@@ -194,11 +235,9 @@ public class SearchActivity extends Activity {
     private void loadMoreData(){
     	Log.d(TAG, "mPageIndex: " + mPageIndex + " mNumPages: " + mNumPages);
     	if (mPageIndex < mNumPages - 1) {
-    		
     		mSearch.goToPoiPage(++mPageIndex);
     	}
     	else {
-    		
     		mListView.removeFooterView(loadMoreView);  
             Toast.makeText(this, "数据全部加载完!", Toast.LENGTH_LONG).show();  
 //    		loadMoreButton.setText("已达最后");
@@ -283,7 +322,7 @@ public class SearchActivity extends Activity {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         	MKPoiInfo poiInfo = mPoiInfos.get(position);
-        	MKPoiInfoSerialable poiInfoSerialable = new MKPoiInfoSerialable();
+        	MKPoiInfoHelper poiInfoSerialable = new MKPoiInfoHelper();
         	poiInfoSerialable.copyFrom(poiInfo);
         	
             Bundle bundle = new Bundle();
@@ -294,17 +333,29 @@ public class SearchActivity extends Activity {
 //            intent.putExtra(Constants.POI_RETURN_KEY, poiInfoSerialable);
             intent.putExtras(bundle);
 //    		sendBroadcast(intent);
-            Log.d(TAG, "before setResult");
         	setResult(RESULT_OK, intent);
-        	Log.d(TAG, "after setResult");
-//            if (getParent() == null) {
-//            	Log.d(TAG, "no parent");
-//                setResult(Activity.RESULT_OK, intent);
-//            } else {
-//            	Log.d(TAG, "parent: " + getParent());
-//                getParent().setResult(Activity.RESULT_OK, intent);
-//            }
         	finish();
         }
     }
+    
+    class SuggestionAdapter extends ArrayAdapter<String> implements AdapterView.OnItemClickListener {
+        public SuggestionAdapter(Context context, int textViewResourceId,
+				String[] objects) {
+			super(context, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
+        
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        	String query = mStrSuggestions[position];
+    		Log.d(TAG, "query: " + query);
+        	mSearchKey.setText(query);
+    		mSearch.poiSearchInCity("深圳", query);
+        }
+    }
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

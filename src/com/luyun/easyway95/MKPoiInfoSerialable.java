@@ -31,4 +31,14 @@ public class MKPoiInfoSerialable implements Serializable {
 		latitudeE6 = poiInfo.pt.getLatitudeE6();
 		longitudeE6 = poiInfo.pt.getLongitudeE6();
 	}
+	
+	public void copyTo (MKPoiInfo poiInfo) {
+		poiInfo.address = address;
+		poiInfo.city = city;
+		poiInfo.ePoiType = ePoiType;
+		poiInfo.name = name;
+		poiInfo.phoneNum = phoneNum;
+		poiInfo.postCode = postCode;
+		poiInfo.pt = new GeoPoint(latitudeE6, longitudeE6);
+	}
 }

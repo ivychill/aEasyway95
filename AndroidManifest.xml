@@ -41,8 +41,9 @@
         </activity>
         
         <activity
+            android:name="com.luyun.easyway95.SearchActivity" 
             android:screenOrientation="portrait"
-            android:name="com.luyun.easyway95.SearchActivity" >
+            android:launchMode="singleTop" >
         </activity>
         
         <activity

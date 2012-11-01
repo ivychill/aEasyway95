@@ -57,7 +57,12 @@ public class Constants {
 	public static final String SHARE_MESSAGE = "分享自路易95 http://www.roadclouding.com";
 	
 	public static final String POI_RETURN_KEY = "poiInfo";
-	public static final int ACTIVITY_REQUEST_CODE = 1888;
+//	public static final String HOME_RETURN_KEY = "homePoi";
+//	public static final String OFFICE_RETURN_KEY = "homePoi";
+	public static final int SETTING_REQUEST_CODE = 1887;
+	public static final int ENDPOINT_REQUEST_CODE = 1888;
+	public static final int HOME_REQUEST_CODE = 1889;
+	public static final int OFFICE_REQUEST_CODE = 1890;
 
 	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
