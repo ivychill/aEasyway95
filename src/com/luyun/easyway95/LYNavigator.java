@@ -172,7 +172,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         // class name because we want a specific service implementation that
         // we know will be running in our own process (and thus won't be
         // supporting component replacement by other applications).
-        Log.d(TAG, "in bindTTSService");
+        Log.d(TAG, "in bindTTSService"); 
     	bindService(new Intent(LYNavigator.this, 
                 TTSService.class), mConnectionTTS, Context.BIND_AUTO_CREATE);
         mIsTTSBound = true;
@@ -698,9 +698,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             case R.id.go_home:
             	promptDlg = new ProgressDialog(this);
                 promptDlg.setTitle("路况获取中...");
-                popupDlg.setMessage("");
-                popupDlg.setIndeterminate(true);
-                popupDlg.setCancelable(true);
+                promptDlg.setMessage("");
+                promptDlg.setIndeterminate(true);
+                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
         		promptDlg.dismiss();
                 return true;
@@ -710,9 +710,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             case R.id.go_office:
             	promptDlg = new ProgressDialog(this);
                 promptDlg.setTitle("路况获取中...");
-                popupDlg.setMessage("");
-                popupDlg.setIndeterminate(true);
-                popupDlg.setCancelable(true);
+                promptDlg.setMessage("");
+                promptDlg.setIndeterminate(true);
+                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
         		promptDlg.dismiss();
                 return true;

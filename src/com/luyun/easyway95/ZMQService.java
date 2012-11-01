@@ -1,5 +1,10 @@
 package com.luyun.easyway95;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQQueue;
 
@@ -118,7 +123,8 @@ public class ZMQService extends Service {
 	        
 	        
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
-	        mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
+	        //mzsProSvrEnd.setReconnectIVL(1000);
+	        //mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
 	        try {
 		        String strProTSS = 
 						"tcp://"
@@ -126,9 +132,12 @@ public class ZMQService extends Service {
 						+":"
 						+Constants.TSS_SERVER_PORT;
 		        mzsProSvrEnd.connect (strProTSS);
-		        Log.d(TAG, strProTSS);
+		        String localIP = getLocalIpAddress();
+		        if (localIP != null) {
+		        	Log.d(TAG, String.format("local %s connected to %s", localIP, strProTSS));
+		        }
 	        } catch (Exception e) {
-	        	Log.e(TAG, "connect to server failed.");
+	        	Log.e(TAG, "connect to server failed."+e.getMessage());
 	        }
 	        
 	        //create a separate thread to retrieve data from server
@@ -145,6 +154,7 @@ public class ZMQService extends Service {
 				if (items.pollin(0)) {
 					data = mzsLifeCycleSvrEnd.recv(0);
 					if (data.length == 0) {
+						Log.d(TAG, "ZMQService quitting...");
 						break; //break the loop 
 					}
 					//mzsDevSvrEnd.send(data, 0);
@@ -176,5 +186,22 @@ public class ZMQService extends Service {
 			mzsProSvrEnd.close();
 			mzcContextSvrEnd.term();
 		}
+	}
+	
+	public String getLocalIpAddress() {
+	    try {
+	        for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+	            NetworkInterface intf = en.nextElement();
+	            for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+	                InetAddress inetAddress = enumIpAddr.nextElement();
+	                if (!inetAddress.isLoopbackAddress()) {
+	                    return inetAddress.getHostAddress().toString();
+	                }
+	            }
+	        }
+	    } catch (SocketException ex) {
+	        Log.e(TAG, ex.toString());
+	    }
+	    return null;
 	}
 }
