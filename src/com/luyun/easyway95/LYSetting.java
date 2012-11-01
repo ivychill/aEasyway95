@@ -118,14 +118,14 @@ public class LYSetting extends PreferenceActivity
 			if (requestCode == Constants.HOME_REQUEST_CODE) { 
 				Bundle bundle = intent.getExtras(); 
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
-				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				Log.d(TAG, "poi: " + poiInfo.toString());
 				mUserProfile.setHomeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPHome.setSummary(poiInfo.getName());
 			} else if (requestCode == Constants.OFFICE_REQUEST_CODE) {
 				Bundle bundle = intent.getExtras(); 
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
-				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				Log.d(TAG, "poi: " + poiInfo.toString());
 				mUserProfile.setOfficeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPOffice.setSummary(poiInfo.getName());

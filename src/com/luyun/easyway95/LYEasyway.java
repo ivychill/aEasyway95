@@ -75,19 +75,20 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
         		boolean isNetworked = isConnectedToInternet();
 
         		if (isNetworked == false) {
-    	            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
-    			    return;
-//        			new AlertDialog.Builder(LYEasyway.this) 
-//        			    .setTitle("请打开网络连接")
-//        			    .setMessage("你当前没有网络连接。要接收实时路况，需要打开网络连接。")
-//        			    .setPositiveButton("设置", 
-//        			    	new DialogInterface.OnClickListener() {
-//        			        public void onClick(DialogInterface dialog, int which) {
-//        			        	willSetNetwork = true;
-//        			        }
-//        			     })
-//        			    .setNegativeButton("取消", null)
-//        			    .show();
+        			new AlertDialog.Builder(LYEasyway.this) 
+        			    .setTitle("请打开网络连接")
+        			    .setMessage("你当前没有网络连接。要接收实时路况，需要打开网络连接。")
+        			    .setPositiveButton("设置", 
+        			    	new DialogInterface.OnClickListener() {
+        			        public void onClick(DialogInterface dialog, int which) {
+//        			        	startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), which);//进入无线网络配置界面
+        		    			final Intent settingIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        		    			startActivityForResult(settingIntent, Constants.SETTING_REQUEST_CODE);
+        			        	return;
+        			        }
+        			     })
+        			    .setNegativeButton("取消", null)
+        			    .show();
         		}
         		
 //        		if (willSetNetwork)
@@ -96,10 +97,22 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 //    			    return;
 //        		}
         		//start LYNavigator activity
-        		startActivity(new Intent(LYEasyway.this, LYNavigator.class));
-        		LYEasyway.this.finish();
+
         	}
         });
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (requestCode == Constants.SETTING_REQUEST_CODE) { 
+    		boolean isNetworked = isConnectedToInternet();
+    		if (isNetworked == true) {
+    			startActivity(new Intent(LYEasyway.this, LYNavigator.class));
+    			LYEasyway.this.finish();
+    		}
+		} else {
+			Log.d(TAG, "unknown requestCode: " + requestCode);
+		}
 	}
 	
 	@Override

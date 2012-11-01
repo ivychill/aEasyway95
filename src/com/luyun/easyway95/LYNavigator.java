@@ -371,7 +371,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 			if (requestCode == Constants.ENDPOINT_REQUEST_CODE) { 
 				Bundle bundle = intent.getExtras();
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
-				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				Log.d(TAG, "poi: " + poiInfo.toString());
 				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
 				mHeading.setText("当前位置至" + poiInfo.getName() + "的路况");
 				mHeading.setTextSize(16);
@@ -726,9 +726,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
                 
             case R.id.profile_setting:
                 // The reply item is part of the email group
-        		//startActivity(new Intent(LYNavigator.this, SettingActivity.class));
-    			final Intent settingIntent = new Intent(LYNavigator.this, LYSetting.class);
-    			startActivityForResult(settingIntent, Constants.SETTING_REQUEST_CODE);
+        		startActivity(new Intent(LYNavigator.this, LYSetting.class));
         		return true;
         		
             case R.id.weibo:

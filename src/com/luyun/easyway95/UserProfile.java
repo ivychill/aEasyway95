@@ -93,18 +93,23 @@ public class UserProfile {
 		}
 	}
 	
-	UserProfile() {
-		
-	}
+//	UserProfile() {
+//		
+//	}
 	
 	UserProfile(SharedPreferences sp) {
 		mSP = sp;
 		msUserName = sp.getString("UserName", null);
 		msEmail = sp.getString("Email", null);
 		msSessionId = sp.getString("SessionId", null);
-		mHomeAddr = new MKPoiInfoHelper(sp.getString("homeaddr", null));
+		String poiShekou = String.format(
+				"name=(蛇口港), address=(广东省深圳市南山区), city=(深圳), phoneNum=(), postCode=(), pt.lat=(22481722), pt.lng=(113919781), ePoiType=(0), searchPlace=()");
+		mHomeAddr = new MKPoiInfoHelper(sp.getString("homeaddr", poiShekou));
 		//mHomeAddr = new MKPoiInfoHelper("name=(aaaa), address=(bbbb), city=(cccc), phoneNum=(dddd), postCode=(ffff), pt.lat=(22.11), pt.lng=(130.11), ePoiType=(0), searchPlace=(ffff)");
-		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", null));
+		//设置缺省office地址为华为总部
+		String poiHuawei = String.format(
+				"name=(华为总部), address=(b654路;b666路;b667路;m342路空调;机场7线空调), city=(深圳), phoneNum=(), postCode=(), pt.lat=(22661034), pt.lng=(114064093), ePoiType=(1), searchPlace=()");
+		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", poiHuawei));
 	}
 	
 	public void commitPreferences(SharedPreferences sp) {
