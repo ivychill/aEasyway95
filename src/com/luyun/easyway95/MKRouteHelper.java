@@ -248,8 +248,8 @@ public class MKRouteHelper implements Serializable{
 	        	map.put("desc", segments.get(i).getDetails());
 	        	int speed = segments.get(i).getSpeed();
 	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
-	        	if (speed >= 20) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	if (speed < 20 && speed >=10) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	        	if (speed >= Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	        	if (speed < Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD && speed >= Constants.TRAFFIC_JAM_LVL_HIGH_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
 	        	String formatedStr = String.format("%d∑÷÷”«∞£¨%s", interval, strSpeed);
 	            map.put("timestamp", formatedStr);
 	        	list.add(map);
