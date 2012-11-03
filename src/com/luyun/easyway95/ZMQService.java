@@ -125,6 +125,7 @@ public class ZMQService extends Service {
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
 	        //mzsProSvrEnd.setReconnectIVL(1000);
 	        //mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
+	        Log.d(TAG, String.format("local ZMQID%s", mzsProSvrEnd.getIdentity()));
 	        try {
 		        String strProTSS = 
 						"tcp://"

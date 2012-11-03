@@ -2,6 +2,8 @@ package com.luyun.easyway95;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +40,7 @@ public class UserProfile {
 	
 	MKPoiInfoHelper mHomeAddr;
 	MKPoiInfoHelper mOfficeAddr;
+	LinkedList<String> mRecentQuery;
 	MKRouteHelper mRouteHome2Office;
 	MKRouteHelper mRouteOffice2Home;
 	
@@ -83,6 +86,13 @@ public class UserProfile {
 	public String getOfficeLatLng() {
 		return mOfficeAddr.getLatLng();
 	}
+	public LinkedList<String> getRecentQuery() {
+		return mRecentQuery;
+	}
+	
+	public void setRecentQuery(LinkedList<String> recentQuery) {
+		mRecentQuery = recentQuery;
+	}
 	
 	void updateFields(JSONObject jsonObj) {
 		try {
@@ -93,18 +103,31 @@ public class UserProfile {
 		}
 	}
 	
-	UserProfile() {
-		
-	}
+//	UserProfile() {
+//		
+//	}
 	
 	UserProfile(SharedPreferences sp) {
 		mSP = sp;
 		msUserName = sp.getString("UserName", null);
 		msEmail = sp.getString("Email", null);
 		msSessionId = sp.getString("SessionId", null);
-		mHomeAddr = new MKPoiInfoHelper(sp.getString("homeaddr", null));
+		String poiShekou = String.format(
+				"name=(蛇口港), address=(广东省深圳市南山区), city=(深圳), phoneNum=(), postCode=(), pt.lat=(22481722), pt.lng=(113919781), ePoiType=(0), searchPlace=()");
+		mHomeAddr = new MKPoiInfoHelper(sp.getString("homeaddr", poiShekou));
 		//mHomeAddr = new MKPoiInfoHelper("name=(aaaa), address=(bbbb), city=(cccc), phoneNum=(dddd), postCode=(ffff), pt.lat=(22.11), pt.lng=(130.11), ePoiType=(0), searchPlace=(ffff)");
-		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", null));
+		//设置缺省office地址为华为总部
+		String poiHuawei = String.format(
+				"name=(华为总部), address=(b654路;b666路;b667路;m342路空调;机场7线空调), city=(深圳), phoneNum=(), postCode=(), pt.lat=(22661034), pt.lng=(114064093), ePoiType=(1), searchPlace=()");
+		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", poiHuawei));
+		mRecentQuery = new LinkedList();
+		int index = 0;
+		String recentQuery;
+		while ((recentQuery = sp.getString("RecentQuery"+index, null)) != null) {
+			mRecentQuery.addLast(recentQuery);
+			index++;
+		}
+		Log.d(TAG, "mRecentQuery: " + mRecentQuery);
 	}
 	
 	public void commitPreferences(SharedPreferences sp) {
@@ -114,6 +137,9 @@ public class UserProfile {
 		ed.putString("UserPassword", msUserPassword);
 		ed.putString("homeaddr", mHomeAddr.toString());
 		ed.putString("officeaddr", mOfficeAddr.toString());
+		for (int index = 0; index < mRecentQuery.size(); index++) {
+			ed.putString("RecentQuery"+index, mRecentQuery.toArray(new String[0])[index]);
+		}
 		ed.commit();
 	}
 	

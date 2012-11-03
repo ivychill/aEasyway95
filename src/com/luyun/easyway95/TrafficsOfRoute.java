@@ -23,6 +23,7 @@ import org.restlet.data.*;
 import org.restlet.ext.json.JsonRepresentation;
 
 import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.MapView;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
@@ -66,8 +67,8 @@ public class TrafficsOfRoute extends ListActivity {
 		mainActivity = app.getMainActivity();
 
         SimpleAdapter adapter = new SimpleAdapter(this, getTrafficsOfRoute(), R.layout.vlist,
-                new String[]{"road","desc", "timestamp"},
-                new int[]{R.id.road,R.id.desc, R.id.timestamp});
+                new String[]{"road", "desc", "timestamp"},
+                new int[]{R.id.road, R.id.desc, R.id.timestamp});
         setListAdapter(adapter);
     }
     
@@ -108,8 +109,8 @@ public class TrafficsOfRoute extends ListActivity {
 	        	map.put("desc", segments.get(i).getDetails());
 	        	int speed = segments.get(i).getSpeed();
 	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
-	        	if (speed >= 15) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	if (speed < 15 && speed >=6) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	        	if (speed >= 20) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
+	        	if (speed < 20 && speed >=10) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
 	        	String formatedStr = String.format("%d∑÷÷”«∞£¨%s", interval, strSpeed);
 	            map.put("timestamp", formatedStr);
 	        	list.add(map);

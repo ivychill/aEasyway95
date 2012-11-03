@@ -71,8 +71,8 @@ public class TrafficsCaring extends ListActivity {
         //        android.R.layout.simple_list_item_1, getTrafficsOfRoute()));
         //getListView().setTextFilterEnabled(true);
         SimpleAdapter adapter = new SimpleAdapter(this, getTrafficsCaring(), R.layout.vlist,
-                new String[]{"road","desc", "timestamp"},
-                new int[]{R.id.road,R.id.desc, R.id.timestamp});
+                new String[]{"road", "desc", "timestamp"},
+                new int[]{R.id.road, R.id.desc, R.id.timestamp});
         setListAdapter(adapter);
     }
     

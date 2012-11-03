@@ -314,16 +314,16 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	}
         });
         
-        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
-        btnSearch.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-//        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-//    	        onSearchRequested();
-    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
-    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
-        	}
-        });
+//        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
+//        btnSearch.setOnClickListener(new OnClickListener() {
+//        	@Override
+//        	public void onClick(View v) {
+////        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
+////    	        onSearchRequested();
+//    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+//    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
+//        	}
+//        });
         
         ImageButton btnTraffics = (ImageButton)findViewById(R.id.trafficbtn);
         btnTraffics.setOnClickListener(new OnClickListener() {
@@ -371,10 +371,11 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 			if (requestCode == Constants.ENDPOINT_REQUEST_CODE) { 
 				Bundle bundle = intent.getExtras();
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
-				Log.d(TAG, "poi: " + poiInfo.getName() + " " + poiInfo.getAddress());
+				Log.d(TAG, "poi: " + poiInfo.toString());
 				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
-				mHeading.setText("当前位置至" + poiInfo.getName() + "的路况");
-				mHeading.setTextSize(16);
+				mHeading.setText("至" + poiInfo.getName() + "的路况");
+				mMapView.getController().animateTo(poiInfo.getPt());
+//				mHeading.setTextSize(16);
 			} else {
 				Log.d(TAG, "unknown requestCode: " + requestCode);
 			}
@@ -726,9 +727,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
                 
             case R.id.profile_setting:
                 // The reply item is part of the email group
-        		//startActivity(new Intent(LYNavigator.this, SettingActivity.class));
-    			final Intent settingIntent = new Intent(LYNavigator.this, LYSetting.class);
-    			startActivityForResult(settingIntent, Constants.SETTING_REQUEST_CODE);
+        		startActivity(new Intent(LYNavigator.this, LYSetting.class));
         		return true;
         		
             case R.id.weibo:
