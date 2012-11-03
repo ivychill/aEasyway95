@@ -10,8 +10,11 @@
         android:layout_height="fill_parent"
         android:clickable="true" >
     </com.baidu.mapapi.MapView>
+    
+    
+        <TableLayout 
+	    android:id="@+id/TableLayout01" 
 
-    <TableLayout 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:background="#88444444"
@@ -29,12 +32,15 @@
 		        android:layout_height="fill_parent"
 		        android:maxLines="1"
 		        android:minLines="1"
+		        android:textSize="18sp"
 		        android:gravity="center"
 				android:background="@drawable/textview_style"
 		        android:scrollHorizontally="true"
 		        android:layout_marginLeft="4dp"
 		        android:layout_marginTop="4dp"
 		        android:layout_marginBottom= "4dp"
+		        android:text="指定目的地" />
+                 <ImageButton
 		        android:text="@string/set_endpoint" />
             <ImageButton
 		        android:id="@+id/search"

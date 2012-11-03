@@ -210,7 +210,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mOfficeAddr = up.getOfficeAddr();
 		mMapHelper = new MapHelper(this);
 
-		setContentView(R.layout.ly_navigator);
+		setContentView(R.layout.ly_navigator2);
          
 		app = (Easyway95App)this.getApplication();
 		//×¢²ámainActivity
