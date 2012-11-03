@@ -67,19 +67,9 @@ public class TrafficsOfRoute extends ListActivity {
 		mainActivity = app.getMainActivity();
 
         SimpleAdapter adapter = new SimpleAdapter(this, getTrafficsOfRoute(), R.layout.vlist,
-                new String[]{"road","desc", "timestamp"},
-                new int[]{R.id.road,R.id.desc, R.id.timestamp});
+                new String[]{"road", "desc", "timestamp"},
+                new int[]{R.id.road, R.id.desc, R.id.timestamp});
         setListAdapter(adapter);
-        TextView timestampView = (TextView)findViewById(R.id.timestamp);
-        String timestamp = timestampView.getText().toString();
-        Log.d(TAG, timestamp);
-		if (timestamp.contains(Constants.TRAFFIC_JAM_LVL_HIGH)) {
-			timestampView.setTextColor(Color.RED);
-		} else if (timestamp.contains(Constants.TRAFFIC_JAM_LVL_MIDDLE)) {
-			timestampView.setTextColor(0xFFF06D2F);	//orange
-		} else if (timestamp.contains(Constants.TRAFFIC_JAM_LVL_LOW)) {
-			timestampView.setTextColor(Color.YELLOW);
-		}
     }
     
     private List<Map<String, Object>> getTrafficsOfRoute() {
