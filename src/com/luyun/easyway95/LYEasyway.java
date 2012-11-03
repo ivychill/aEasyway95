@@ -49,7 +49,7 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 		super.onCreate(savedInstanceState);
 		mGestureDetector  = new GestureDetector(this,(android.view.GestureDetector.OnGestureListener) this);
 	    
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//≤È—Ø∞Ê±æ
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mRelease = sp.getString("ReleaseVersion", null);

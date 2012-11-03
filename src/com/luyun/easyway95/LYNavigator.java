@@ -314,16 +314,16 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	}
         });
         
-        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
-        btnSearch.setOnClickListener(new OnClickListener() {
-        	@Override
-        	public void onClick(View v) {
-//        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-//    	        onSearchRequested();
-    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
-    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
-        	}
-        });
+//        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
+//        btnSearch.setOnClickListener(new OnClickListener() {
+//        	@Override
+//        	public void onClick(View v) {
+////        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
+////    	        onSearchRequested();
+//    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+//    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
+//        	}
+//        });
         
         ImageButton btnTraffics = (ImageButton)findViewById(R.id.trafficbtn);
         btnTraffics.setOnClickListener(new OnClickListener() {
@@ -373,8 +373,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
 				Log.d(TAG, "poi: " + poiInfo.toString());
 				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
-				mHeading.setText("当前位置至" + poiInfo.getName() + "的路况");
-				mHeading.setTextSize(16);
+				mHeading.setText("至" + poiInfo.getName() + "的路况");
+//				mHeading.setTextSize(16);
 			} else {
 				Log.d(TAG, "unknown requestCode: " + requestCode);
 			}

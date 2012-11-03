@@ -3,6 +3,7 @@ package com.luyun.easyway95;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.baidu.mapapi.BMapManager;
@@ -21,23 +22,32 @@ import com.baidu.mapapi.MapActivity;
 import com.baidu.mapapi.MapController;
 import com.baidu.mapapi.MapView;
 import com.baidu.mapapi.PoiOverlay;
+import com.baidu.mapapi.Projection;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -50,8 +60,9 @@ import android.widget.Toast;
 import android.widget.TwoLineListItem;
 
 //public class SearchActivity extends Activity implements OnScrollListener {
-public class SearchActivity extends MapActivity {
+public class SearchActivity extends MapActivity implements OnGestureListener {
 	final static String TAG = "SearchActivity";
+	private GestureDetector mGestureDetector;
 //	private boolean isSearchrequested = true;
     private View loadMoreView;    
     private Button loadMoreButton;  
@@ -65,9 +76,10 @@ public class SearchActivity extends MapActivity {
     PoiAdapter poiAdapter = new PoiAdapter(new ArrayList<MKPoiInfo>());
     int mNumPages = 0;
     int mPageIndex = 0;
-    private static String mStrSuggestions[] = {};
-    
-    
+	private SharedPreferences mSP;
+	private UserProfile mUserProfile;
+    private static String mStrSuggestions[] = {};   
+    private static LinkedList<String> mRecentQuery;
     private MKSearch mSearch = new MKSearch();;
     private Handler handler = new Handler(); 
 	
@@ -75,6 +87,7 @@ public class SearchActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.search);
+	    mGestureDetector  = new GestureDetector(this,(android.view.GestureDetector.OnGestureListener) this);
         mMapMan = ((Easyway95App)getApplicationContext()).mBMapMan;
         mMapMan.start();
         super.initMapActivity(mMapMan);
@@ -84,10 +97,22 @@ public class SearchActivity extends MapActivity {
         GeoPoint point = new GeoPoint((int) (22.526292 * 1E6),
                 (int) (113.910416 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
         mMapController.setCenter(point);  //设置地图中心点
+        mMapView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				Log.d(TAG, "onTouch");
+				return mGestureDetector.onTouchEvent(event);
+			}
+			
+		});
+
+		mSP = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+		mUserProfile = new UserProfile(mSP);
+		mRecentQuery = mUserProfile.getRecentQuery();
 
         mBtnSearch = (ImageButton)findViewById(R.id.search);
         mSearchKey = (EditText)findViewById(R.id.searchkey);
-        mBtnBookmark = (ImageButton)findViewById(R.id.bookmark);
         mListView = (ListView) findViewById(R.id.listAddress);
         loadMoreView = getLayoutInflater().inflate(R.layout.loadmore, null);
 //        mListView.setOnScrollListener(this);
@@ -112,6 +137,13 @@ public class SearchActivity extends MapActivity {
             public void onClick(View v) {  
     			String query = mSearchKey.getText().toString();
         		Log.d(TAG, "query: " + query);
+        		mRecentQuery.remove(query);
+        		mRecentQuery.addFirst(query);
+        		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
+        			mRecentQuery.removeLast();
+        		}
+        		mUserProfile.setRecentQuery(mRecentQuery);
+        		mUserProfile.commitPreferences(mSP);
         		mSearch.poiSearchInCity("深圳", query);
             }  
         });
@@ -135,6 +167,33 @@ public class SearchActivity extends MapActivity {
 				// TODO Auto-generated method stub
 				
 			}  
+        });
+        
+        mSearchKey.setOnTouchListener( new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				Log.d(TAG, "onTouch");
+				ArrayAdapter<String> recentQueryAdapter = new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_list_item_1, mRecentQuery);
+				mListView.setAdapter(recentQueryAdapter);
+				mListView.setOnItemClickListener( new AdapterView.OnItemClickListener(){
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			        	String query = mRecentQuery.toArray(new String[0])[position];
+			    		Log.d(TAG, "query: " + query);
+			        	mSearchKey.setText(query);
+		        		mRecentQuery.remove(query);
+		        		mRecentQuery.addFirst(query);
+		        		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
+		        			mRecentQuery.removeLast();
+		        		}
+		        		mUserProfile.setRecentQuery(mRecentQuery);
+		        		mUserProfile.commitPreferences(mSP);
+			    		mSearch.poiSearchInCity("深圳", query);
+					}
+				}); 
+				return false;
+			}
         });
 
         mSearch.init(mMapMan, new MKSearchListener(){
@@ -178,6 +237,39 @@ public class SearchActivity extends MapActivity {
     		public void onGetAddrResult(MKAddrInfo res, int error) {
     			// TODO Auto-generated method stub
     			Log.d (TAG, "enter onGetAddrResult");
+				if (error != 0) {
+					String str = String.format("错误号：%d", error);
+					Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+					return;
+				}
+
+//				mMapView.getController().animateTo(res.geoPt);
+//				String strInfo = String.format("%s 纬度：%f 经度：%f\r\n", res.strAddr, res.geoPt.getLatitudeE6()/1e6, 
+//							res.geoPt.getLongitudeE6()/1e6);
+//				Toast.makeText(SearchActivity.this, strInfo, Toast.LENGTH_LONG).show();
+//				Log.d(TAG, strInfo);
+		        final MKPoiInfoHelper mpi = new MKPoiInfoHelper(res);
+//		        mSearchKey.setText(res.strAddr);
+    			new AlertDialog.Builder(SearchActivity.this) 
+ 			       .setTitle("设置地址")
+			       .setMessage(String.format("设置目标地址为%s吗?", res.strAddr))
+			       .setPositiveButton("确定", 
+			    	    new DialogInterface.OnClickListener() {
+			                public void onClick(DialogInterface dialog, int which) {
+			                    Bundle bundle = new Bundle();
+//			                    bundle.putString("key", "value");
+			                    bundle.putSerializable(Constants.POI_RETURN_KEY, mpi);
+			        			Log.d(TAG, "bundle: " + bundle);
+			                    Intent intent = new Intent();  
+//			                    intent.putExtra(Constants.POI_RETURN_KEY, poiInfoSerialable);
+			                    intent.putExtras(bundle);
+//			            		sendBroadcast(intent);
+			                	setResult(RESULT_OK, intent);
+			                	finish();
+			                }
+			            })
+			        .setNegativeButton("取消", null)
+			        .show();    			
     		}
     		public void onGetBusDetailResult(MKBusLineResult result, int iError) {
     		}
@@ -194,11 +286,12 @@ public class SearchActivity extends MapActivity {
 				for (int i = 0; i < nSize; i++) {
 					mStrSuggestions[i] = res.getSuggestion(i).city + res.getSuggestion(i).key;
 				}
-				ArrayAdapter<String> suggestionString
-					= new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_list_item_1,mStrSuggestions);
+
 				SuggestionAdapter suggestionAdapter = new SuggestionAdapter(SearchActivity.this, android.R.layout.simple_list_item_1,mStrSuggestions);
 				mListView.setAdapter(suggestionAdapter);
 				mListView.setOnItemClickListener(suggestionAdapter); 
+//				ArrayAdapter<String> suggestionString
+//					= new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_list_item_1,mStrSuggestions);
 //				mSuggestionList.setAdapter(suggestionString);
 //				Toast.makeText(SearchActivity.this, "suggestion callback", Toast.LENGTH_LONG).show();
     		}    		
@@ -225,6 +318,13 @@ public class SearchActivity extends MapActivity {
         if (intent.getExtras() != null) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 //    		Log.d(TAG, "query: " + query);
+    		mRecentQuery.remove(query);
+    		mRecentQuery.addFirst(query);
+    		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
+    			mRecentQuery.removeLast();
+    		}
+    		mUserProfile.setRecentQuery(mRecentQuery);
+    		mUserProfile.commitPreferences(mSP);
     		mSearch.poiSearchInCity("深圳", query);
         }
     }
@@ -329,7 +429,7 @@ public class SearchActivity extends MapActivity {
 //            bundle.putString("key", "value");
             bundle.putSerializable(Constants.POI_RETURN_KEY, poiInfoSerialable);
 			Log.d(TAG, "bundle: " + bundle);
-            Intent intent = new Intent(SearchActivity.this, LYNavigator.class);  
+            Intent intent = new Intent();  
 //            intent.putExtra(Constants.POI_RETURN_KEY, poiInfoSerialable);
             intent.putExtras(bundle);
 //    		sendBroadcast(intent);
@@ -349,12 +449,70 @@ public class SearchActivity extends MapActivity {
         	String query = mStrSuggestions[position];
     		Log.d(TAG, "query: " + query);
         	mSearchKey.setText(query);
+    		mRecentQuery.remove(query);
+    		mRecentQuery.addFirst(query);
+    		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
+    			mRecentQuery.removeLast();
+    		}
+    		mUserProfile.setRecentQuery(mRecentQuery);
+    		mUserProfile.commitPreferences(mSP);
     		mSearch.poiSearchInCity("深圳", query);
         }
     }
 
 	@Override
 	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	//以下重载OnGestureListener方法
+	@Override
+	public boolean onDown(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+//		if (isScale) {
+//			Log.d(TAG, "scaling map, not long press");
+//			return;
+//		}
+		//Log.d(TAG, "in onLongPress,"+e.toString());
+        float x = e.getX();  
+        float y = e.getY();  
+        Projection pj = mMapView.getProjection();
+        GeoPoint pointTapped = pj.fromPixels((int) x, (int) y);
+    	
+		Log.d(TAG, "in onLongPress");
+    	//调用一次反向地理解码，获取位置描述信息
+    	mSearch.reverseGeocode(pointTapped);
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
 		// TODO Auto-generated method stub
 		return false;
 	}

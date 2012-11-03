@@ -9,16 +9,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:stretchColumns="1" >
+        android:stretchColumns="0" >
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageButton
-                android:id="@+id/bookmark"
-                android:src="@drawable/bookmark" />
-            
+   
             <EditText
                 android:id="@+id/searchkey"
                 android:layout_width="fill_parent"
@@ -26,10 +22,9 @@
                 android:maxLines="1"
                 android:minLines="1"
                 android:hint="@string/search_hint"
-                android:scrollHorizontally="true" />       
+                android:scrollHorizontally="true" />     
             <ImageButton
 		        android:id="@+id/search"
-		        android:alpha="1"
 		        android:src="@drawable/search" />  
         </TableRow>
     </TableLayout>

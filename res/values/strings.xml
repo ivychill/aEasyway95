@@ -15,5 +15,6 @@
 	<string name="errcode_unknown">发送返回</string>
 	
 	<string name="search_label">easyway95</string>
-	<string name="search_hint">指定目的地</string>
+	<string name="set_endpoint">指定目的地</string>
+	<string name="search_hint">设置地址</string>
 </resources>
