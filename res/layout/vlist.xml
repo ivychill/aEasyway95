@@ -15,18 +15,18 @@
 	        <TextView android:id="@+id/road"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:textSize="34px" />
+	            android:textSize="36px" />
 	        
 	        <TextView android:id="@+id/timestamp"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textColor="#FF0000"
-	            android:textSize="18px" />
+	            android:textSize="24px" />
     	</LinearLayout>
 	<TextView android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22px" />
+            android:textSize="24px" />
  
     </LinearLayout>
  

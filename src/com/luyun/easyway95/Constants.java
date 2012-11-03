@@ -85,11 +85,11 @@ public class Constants {
 	
 	public static final String ROAD_AHEAD="前方"; //
 	public static final String NO_TRAFFIC="无拥堵"; //
-	public static final String TRAFFIC_JAM_LVL_HIGH="严重拥堵"; //<6KM
-	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=6;
-	public static final String TRAFFIC_JAM_LVL_MIDDLE="拥堵"; //[6km, 15km)
-	public static final int TRAFFIC_JAM_LVL_MIDDLE_SPD=15;
-	public static final String TRAFFIC_JAM_LVL_LOW="缓行"; //[15km, 
+	public static final String TRAFFIC_JAM_LVL_HIGH="严重拥堵"; //<10KM
+	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=10;
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="拥堵"; //[10km, 20km)
+	public static final int TRAFFIC_JAM_LVL_MIDDLE_SPD=20;
+	public static final String TRAFFIC_JAM_LVL_LOW="缓行"; //[20km, 
 	
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;
