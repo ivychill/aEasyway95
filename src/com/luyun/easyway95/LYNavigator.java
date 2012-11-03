@@ -374,6 +374,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 				Log.d(TAG, "poi: " + poiInfo.toString());
 				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
 				mHeading.setText("至" + poiInfo.getName() + "的路况");
+				mMapView.getController().animateTo(poiInfo.getPt());
 //				mHeading.setTextSize(16);
 			} else {
 				Log.d(TAG, "unknown requestCode: " + requestCode);

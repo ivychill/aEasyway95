@@ -41,6 +41,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -86,6 +88,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 	    setContentView(R.layout.search);
 	    mGestureDetector  = new GestureDetector(this,(android.view.GestureDetector.OnGestureListener) this);
         mMapMan = ((Easyway95App)getApplicationContext()).mBMapMan;
@@ -169,11 +172,12 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			}  
         });
         
-        mSearchKey.setOnTouchListener( new OnTouchListener() {
+//        mSearchKey.setOnTouchListener( new OnTouchListener() {
+        mSearchKey.setOnFocusChangeListener ( new OnFocusChangeListener() {
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public void onFocusChange (View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
-				Log.d(TAG, "onTouch");
+				Log.d(TAG, "onTouch"); 
 				ArrayAdapter<String> recentQueryAdapter = new ArrayAdapter<String>(SearchActivity.this, android.R.layout.simple_list_item_1, mRecentQuery);
 				mListView.setAdapter(recentQueryAdapter);
 				mListView.setOnItemClickListener( new AdapterView.OnItemClickListener(){
@@ -192,7 +196,6 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			    		mSearch.poiSearchInCity("…Ó€⁄", query);
 					}
 				}); 
-				return false;
 			}
         });
 
