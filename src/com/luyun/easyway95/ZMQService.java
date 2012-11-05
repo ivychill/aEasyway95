@@ -96,7 +96,6 @@ public class ZMQService extends Service {
 	}
 	
 	public void sendMsgToSvr(byte[] data) {
-		Log.d(TAG, "in sendMsgToSvr!");
 		mzsLifeCycleInproc.send(data, 0);
 	}
     
@@ -124,8 +123,8 @@ public class ZMQService extends Service {
 	        
 	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
 	        //mzsProSvrEnd.setReconnectIVL(1000);
-	        //mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
-	        Log.d(TAG, String.format("local ZMQID%s", mzsProSvrEnd.getIdentity()));
+//	        mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
+
 	        try {
 		        String strProTSS = 
 						"tcp://"
@@ -135,7 +134,7 @@ public class ZMQService extends Service {
 		        mzsProSvrEnd.connect (strProTSS);
 		        String localIP = getLocalIpAddress();
 		        if (localIP != null) {
-		        	Log.d(TAG, String.format("local %s connected to %s", localIP, strProTSS));
+		        	Log.d(TAG, String.format("ZMQ ID: %s, IP: %s connected to %s", new String(mzsProSvrEnd.getIdentity()), localIP, strProTSS));
 		        }
 	        } catch (Exception e) {
 	        	Log.e(TAG, "connect to server failed."+e.getMessage());
@@ -159,6 +158,7 @@ public class ZMQService extends Service {
 						break; //break the loop 
 					}
 					//mzsDevSvrEnd.send(data, 0);
+			        Log.d(TAG, String.format("send msg, ZMQID: %s, IP: %s", new String(mzsProSvrEnd.getIdentity()), getLocalIpAddress()));
 					mzsProSvrEnd.send(data, 0);
 					continue;
 				}
