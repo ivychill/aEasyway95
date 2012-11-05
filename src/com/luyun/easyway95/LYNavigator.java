@@ -95,8 +95,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     private MKPoiInfoHelper mOfficeAddr;
     private ProgressDialog popupDlg;
     
-    MapView mMapView;
-    TextView mHeading;
+    private MapView mMapView;
+    private TextView mHeading;
+    private ImageButton mSearch;
 	private MKOfflineMap mOffline = null;
     Easyway95App app;
     private boolean updateViewTimerCreated = false;
@@ -307,6 +308,15 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         
         mHeading = (TextView)findViewById(R.id.heading);
         mHeading.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
+    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
+        	}
+        });
+        
+        mSearch = (ImageButton)findViewById(R.id.search);
+        mSearch.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
     			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
@@ -706,7 +716,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr.getPt());
-    			mHeading.setText("当前位置至" + mHomeAddr.getName() + "的路况");
+    			mHeading.setText("至" + mHomeAddr.getName() + "的路况");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
