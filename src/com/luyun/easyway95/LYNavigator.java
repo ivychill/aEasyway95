@@ -211,7 +211,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mOfficeAddr = up.getOfficeAddr();
 		mMapHelper = new MapHelper(this);
 
-		setContentView(R.layout.ly_navigator2);
+		setContentView(R.layout.ly_navigator);
          
 		app = (Easyway95App)this.getApplication();
 		//注册mainActivity
@@ -230,26 +230,38 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         //mMapView.setDrawOverlayWhenZooming(true);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-        //支持离线地图
-        mOffline = new MKOfflineMap();
-        mOffline.init(app.mBMapMan, this);
-        ArrayList<MKOLUpdateElement> info = mOffline.getAllUpdateInfo();
-        if (info != null) {
-        	Log.d(TAG, String.format("has %d city info", info.size()));
-        	if (info.get(0).status == MKOLUpdateElement.FINISHED) {
-        		
-        	}
-        }
-        ArrayList<MKOLSearchRecord> records = mOffline.getHotCityList();
-        if (records != null) {
-        	Log.d(TAG, String.format("has %d hot city", records.size()));
-        }
-        records = mOffline.getOfflineCityList();
-        if (records != null) {
-        	Log.d(TAG, String.format("has %d offline city", records.size()));
-        }
-        int num = mOffline.scan();
-        Log.d(TAG, String.format("installed offline map %d", num));
+        //支持离线地图, 20121105 因Baidu API离线地图功能有问题。如果放开可以把preference加到preferences.xml中
+//        <PreferenceCategory
+//        android:title="离线地图" >
+//<ListPreference
+//        android:key="map_mgr_preference"
+//        android:title="下载离线地图"
+//        android:summary="当前仅支持深圳"
+//        android:entries="@array/map_mgr"
+//        android:entryValues="@array/map_mgr_action"
+//        android:dialogTitle="离线地图管理" />
+//        
+//</PreferenceCategory>
+//
+//        mOffline = new MKOfflineMap();
+//        mOffline.init(app.mBMapMan, this);
+//        ArrayList<MKOLUpdateElement> info = mOffline.getAllUpdateInfo();
+//        if (info != null) {
+//        	Log.d(TAG, String.format("has %d city info", info.size()));
+//        	if (info.get(0).status == MKOLUpdateElement.FINISHED) {
+//        		
+//        	}
+//        }
+//        ArrayList<MKOLSearchRecord> records = mOffline.getHotCityList();
+//        if (records != null) {
+//        	Log.d(TAG, String.format("has %d hot city", records.size()));
+//        }
+//        records = mOffline.getOfflineCityList();
+//        if (records != null) {
+//        	Log.d(TAG, String.format("has %d offline city", records.size()));
+//        }
+//        int num = mOffline.scan();
+//        Log.d(TAG, String.format("installed offline map %d", num));
 //        int progress = downloadProgress();
 //        if (progress < 100)
 //        	downloadMap();
@@ -730,7 +742,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr.getPt());
-    			mHeading.setText("当前位置至" + mOfficeAddr.getName() + "的路况");
+    			mHeading.setText("至" + mOfficeAddr.getName() + "的路况");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
@@ -865,24 +877,4 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		removeMap(Constants.SHENZHEN_CITY_ID);
 	}
     
-//    public class MsgReceiver extends BroadcastReceiver {  
-//        public boolean mbRunFlagReceiver = false;  
-//        @Override  
-//        public void onReceive(Context context, Intent intent) {  
-//            // TODO Auto-generated method stub  
-//       		Log.d(TAG, "in MsgReceiver::onReceive");
-//
-//       	    Bundle bundle = intent.getExtras();
-//       	    MKPoiInfoSerialable poiInfoSerialable = (MKPoiInfoSerialable)bundle.getSerializable("poiInfo");
-//    		Log.d(TAG, "poiInfoSerialable: " + poiInfoSerialable);
-//    		GeoPoint endPoint = poiInfoSerialable.pt;
-//    		ProgressDialog promptDlg = new ProgressDialog(LYNavigator.this);
-//            promptDlg.setTitle("路况获取中...");
-//            popupDlg.setMessage("");
-//            popupDlg.setIndeterminate(true);
-//            popupDlg.setCancelable(true);
-//    		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
-//    		promptDlg.dismiss();
-//        }  
-//    }  
 }

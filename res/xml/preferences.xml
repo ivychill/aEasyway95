@@ -40,7 +40,7 @@
     
     </PreferenceCategory>
         
-    <PreferenceCategory
+    <!-- PreferenceCategory
                 android:title="离线地图" >
         <ListPreference
                 android:key="map_mgr_preference"
@@ -51,6 +51,7 @@
                 android:dialogTitle="离线地图管理" />
                 
     </PreferenceCategory>
+    -->
     
     <PreferenceCategory
                 android:title="系统信息">

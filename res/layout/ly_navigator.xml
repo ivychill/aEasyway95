@@ -17,9 +17,8 @@
 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:background="#88444444"
+	    android:background="#f8444444"
 	    android:layout_gravity="top"
-	    android:layout_margin="4dp"
 	    android:stretchColumns="0"
 	    xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -38,14 +37,16 @@
 		        android:scrollHorizontally="true"
 		        android:layout_marginLeft="4dp"
 		        android:layout_marginTop="4dp"
+		        android:layout_marginRight="4dp"
 		        android:layout_marginBottom= "4dp"
 		        android:text="指定目的地" />
-                 <ImageButton
-		        android:text="@string/set_endpoint" />
             <ImageButton
 		        android:id="@+id/search"
+                        android:background="@drawable/search_icon_64"
+		        android:layout_marginTop="4dp"
+		        android:layout_marginBottom="4dp"
 		        android:layout_height="wrap_content"
-		        android:src="@drawable/search" />    
+		        android:src="@drawable/search_icon_64" />    
 	    </TableRow> 
     </TableLayout>
     <LinearLayout
