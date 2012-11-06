@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -106,6 +107,19 @@ public class LYSetting extends PreferenceActivity
 		    			final Intent searchIntent = new Intent(LYSetting.this, SearchActivity.class);
 		    			startActivityForResult(searchIntent, Constants.OFFICE_REQUEST_CODE);
 					}
+					return true;
+				}   
+			});
+		}
+		final CheckBoxPreference pref = (CheckBoxPreference)this.findPreference("traffic_layer_preference");
+		if (pref != null) {
+			pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {  
+				@Override
+				public boolean onPreferenceClick(Preference preference
+						) {
+					// TODO Auto-generated method stub
+					boolean checked = pref.isChecked();
+					app.getMainActivity().setTraffic(checked);
 					return true;
 				}   
 			});

@@ -9,7 +9,7 @@
 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:background="#f8444444"
+	    android:background="#9f444444"
 	    android:layout_gravity="top"
 	    android:stretchColumns="0"
 	    xmlns:android="http://schemas.android.com/apk/res/android">
@@ -31,7 +31,7 @@
 		        android:layout_marginTop="4dp"
 		        android:layout_marginRight="4dp"
 		        android:layout_marginBottom= "4dp"
-		        android:text="指定目的地" />
+		        android:text="深圳" />
             <ImageButton
 		        android:id="@+id/search"
                         android:background="@drawable/search_icon_64"

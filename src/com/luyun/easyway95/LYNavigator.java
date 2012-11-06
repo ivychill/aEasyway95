@@ -62,6 +62,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,6 +119,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 
     private static boolean mbSynthetizeOngoing = false;
     private boolean isRunning = true;
+    
+    //设备ID
+	private String mDeviceID;
     
     private ServiceConnection mConnectionZMQ = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -198,6 +202,10 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
+        
+		//获取DeviceID
+		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        mDeviceID = tm.getDeviceId();
 
 //		getWindow().setFlags(
 //			    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
@@ -336,17 +344,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	}
         });
         
-//        ImageButton btnSearch = (ImageButton)findViewById(R.id.search);
-//        btnSearch.setOnClickListener(new OnClickListener() {
-//        	@Override
-//        	public void onClick(View v) {
-////        		startActivity(new Intent(LYNavigator.this, SearchActivity.class));
-////    	        onSearchRequested();
-//    			final Intent searchIntent = new Intent(LYNavigator.this, SearchActivity.class);
-//    			startActivityForResult(searchIntent, Constants.ENDPOINT_REQUEST_CODE);
-//        	}
-//        });
-        
         ImageButton btnTraffics = (ImageButton)findViewById(R.id.trafficbtn);
         btnTraffics.setOnClickListener(new OnClickListener() {
         	@Override
@@ -360,10 +357,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         
         mPromptTrafficMsg = new PromptTrafficMsg();
         
-//        //从searchActivity接收查询结果信息
-//        IntentFilter filter = new IntentFilter("searchResult");  
-//        mReceiver = new MsgReceiver();  
-//        registerReceiver(mReceiver,filter);  
         handleIntent(getIntent());
     }
     
@@ -461,7 +454,10 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	    }
 	    resetMapView();
 	    //setResetTimerTask();
+	    
 	    super.onResume();
+	    //向服务器checkin
+	    //mMapHelper.checkIn();
 	}    
     
 	public Handler handler = new Handler() {
@@ -617,6 +613,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     
     public TrafficMsg genTrafficMsg(TrafficPoint tp) {
         Log.d(TAG, "in genTrafficMsg");
+        //不播放“前方无拥堵”，20121105，蔡庆丰修改
+        if (tp == null) return null;
+        
 		TrafficMsg trafficMsg = mPromptTrafficMsg.new TrafficMsg(Constants.ROAD_AHEAD, Constants.NO_TRAFFIC, null);
     	
     	if (tp != null && tp.getRoad() != null) {
@@ -875,6 +874,14 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	public void removeMap() {
 		//Log.d(TAG, "in removeMap()");
 		removeMap(Constants.SHENZHEN_CITY_ID);
+	}
+	
+	public String getDeviceID() {
+		return mDeviceID;
+	}
+	
+	public void setTraffic(boolean to_set) {
+		mMapView.setTraffic(to_set);
 	}
     
 }

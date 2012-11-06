@@ -1,6 +1,7 @@
 package com.luyun.easyway95;
 
 public class Constants {
+	public static final String SHARED_SECRET="LYUN";
 	public static final String RELEASE_VERSION = "2.0";
 	public static final int POISEARCH=1000;
 	

@@ -28,6 +28,12 @@
                 android:summaryOff="关闭声音提示"
                 android:summaryOn="开启声音提示需要使用网络，将会导致流量增加" />
         <CheckBoxPreference
+                android:key="traffic_layer_preference"
+                android:title="交通流量图层"
+                android:defaultValue="false"
+                android:summaryOff="关闭交通流量图层"
+                android:summaryOn="开启交通流量图层将会导致流量增加" />
+        <CheckBoxPreference
                 android:key="subscription_preference"
                 android:title="上下班路况订阅"
                 android:defaultValue="true"
@@ -87,4 +93,21 @@
         
         </PreferenceCategory>
     
+     <PreferenceCategory
+                android:title="其它" >
+    	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:title="常见问题..."
+	        android:key="questions_preferences">
+	        <PreferenceCategory android:title="常见问题">
+	        <Preference android:key="question_data_source" android:title="实时路况的数据来源？" android:summary="我们的数据来自业界最领先的实时路况数据提供方，覆盖全市超过95％区域，同时还通过搜索互联网、交警微博及电台等收集更多的路况。" />
+	        <Preference android:key="question_data_interval" android:title="路况有多长时间延迟？" android:summary="一般不超过3分钟。" />
+	        <Preference android:key="question_city" android:title="我不在深圳，也能用吗？" android:summary="当前仅支持深圳，其它城市的支持敬请关注我们的网站最新进展。" />
+	        <Preference android:key="question_accuracy" android:title="有时等待很长时间，但显示无拥堵？" android:summary="如果因此带来困扰，我们深表抱歉。但我们正在努力让路况变得更实时和准确。" />
+	        <Preference android:key="question_voice" android:title="有时无声音播报？" android:summary="请检查打开声音开关，有时因为网络原因无法播报。" />
+	        <Preference android:key="question_more" android:title="更多..." android:summary="请访问我们的网站获取更多的信息。" />
+	        
+	        </PreferenceCategory>
+	        
+	</PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

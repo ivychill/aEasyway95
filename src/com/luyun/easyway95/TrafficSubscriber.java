@@ -81,13 +81,19 @@ public class TrafficSubscriber {
 				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_EVENT)
 				.setRoute(mRoute)
 				.build();
+		byte[] payload = tsub.toByteArray();
+		int checkSum = LYCheckSum.genCheckSum(payload);
+		Log.d(TAG, String.format("check sum %d", checkSum));
+		
     	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
 				.setVersion(1)
 				.setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT)
 				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TSS)
+				.setSndId(mainActivity.getDeviceID())
 				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_SUB)
 				.setMsgId(1000)
 				.setTimestamp(System.currentTimeMillis()/1000)
+				.setChecksum(checkSum)
 				.setTrafficSub(tsub)
 				.build();
     	//Log.d(TAG, msg.toString());

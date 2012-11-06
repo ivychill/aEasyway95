@@ -34,8 +34,10 @@ import com.baidu.mapapi.PoiOverlay;
 import com.baidu.mapapi.RouteOverlay;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
 import com.luyun.easyway95.MapUtils.STPointLineDistInfo;
+import com.luyun.easyway95.shared.TSSProtos.LYCheckin;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgType;
+import com.luyun.easyway95.shared.TSSProtos.LYOsType;
 import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
 import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
@@ -174,13 +176,19 @@ public class MapHelper {
     	mLocationSet.onLocationChanged(location);
     	LYTrafficReport tr = mLocationSet.genTraffic();
     	if (tr != null) {
+    		byte[] payload = tr.toByteArray();
+    		int checkSum = LYCheckSum.genCheckSum(payload);
+    		Log.d(TAG, String.format("check sum %d", checkSum));
+    		
         	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
     				.setVersion(1)
     				.setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT)
     				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TC)
+    				.setSndId(mainActivity.getDeviceID())
     				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_REPORT)
     				.setMsgId(2000)
     				.setTimestamp(System.currentTimeMillis()/1000)
+    				.setChecksum(checkSum)
     				.setTrafficReport(tr)
     				.build();
         	Log.d(TAG, msg.toString());
@@ -411,6 +419,35 @@ public class MapHelper {
 			msg = String.format("æ‡¿Î‘º%#.1f«ß√◊", (float)(distance/1000));			
 		}
 		return msg;
+	}
+	
+	public void checkIn() {
+		LYCheckin ci = com.luyun.easyway95.shared.TSSProtos.LYCheckin.newBuilder()
+				.setDeviceModel(android.os.Build.MODEL)
+				.setOsType(LYOsType.LY_ANDROID)
+				.setOsVersion(android.os.Build.VERSION.SDK)
+				.setLyMajorRelease(2)
+				.setLyMinorRelease(1)
+				.build();
+		byte[] payload = ci.toByteArray();
+		int checkSum = LYCheckSum.genCheckSum(payload);
+		Log.d(TAG, String.format("check sum %d", checkSum));
+		
+    	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
+				.setVersion(1)
+				.setFromParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT)
+				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TSS)
+				.setSndId(mainActivity.getDeviceID())
+				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN)
+				.setMsgId(2000)
+				.setTimestamp(System.currentTimeMillis()/1000)
+				.setChecksum(checkSum)
+				.setCheckin(ci)
+				.build();
+    	
+    	Log.d(TAG, msg.toString());
+    	byte[] data = msg.toByteArray();
+    	mainActivity.sendMsgToSvr(data);
 	}
 }
 

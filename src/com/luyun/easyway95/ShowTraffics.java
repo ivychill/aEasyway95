@@ -23,7 +23,7 @@ public class ShowTraffics extends TabActivity {
         myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
         
         myTabhost.addTab(myTabhost.newTabSpec("TrafficsOfRoute")
-                .setIndicator("途径路况",
+                .setIndicator("途经路况",
                         getResources().getDrawable(R.drawable.slow_speed))
                         .setContent(new Intent(this, TrafficsOfRoute.class)));
         myTabhost.addTab(myTabhost.newTabSpec("TrafficsCaring")

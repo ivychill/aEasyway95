@@ -201,13 +201,13 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 
         mSearch.init(mMapMan, new MKSearchListener(){
     		public void onGetPoiResult(MKPoiResult res, int type, int error) {
-    			mNumPages = res.getNumPages();
-    			Log.d (TAG, "mNumPages: " + mNumPages);
     			// 错误号可参考MKEvent中的定义
     			if (error != 0 || res == null) {
     				Toast.makeText(SearchActivity.this, "抱歉，未找到结果", Toast.LENGTH_LONG).show();
     				return;
     			}
+    			mNumPages = res.getNumPages();
+    			Log.d (TAG, "mNumPages: " + mNumPages);
     			int numPois = res.getCurrentNumPois();
 //    			Log.d (TAG, "numPois: " + numPois);
     		    if (numPois > 0) {

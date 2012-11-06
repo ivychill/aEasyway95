@@ -8,6 +8,78 @@ public final class TSSProtos {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
+  public enum LYOsType
+      implements com.google.protobuf.ProtocolMessageEnum {
+    LY_ANDROID(0, 0),
+    LY_IOS(1, 1),
+    LY_WP(2, 2),
+    ;
+    
+    public static final int LY_ANDROID_VALUE = 0;
+    public static final int LY_IOS_VALUE = 1;
+    public static final int LY_WP_VALUE = 2;
+    
+    
+    public final int getNumber() { return value; }
+    
+    public static LYOsType valueOf(int value) {
+      switch (value) {
+        case 0: return LY_ANDROID;
+        case 1: return LY_IOS;
+        case 2: return LY_WP;
+        default: return null;
+      }
+    }
+    
+    public static com.google.protobuf.Internal.EnumLiteMap<LYOsType>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static com.google.protobuf.Internal.EnumLiteMap<LYOsType>
+        internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<LYOsType>() {
+            public LYOsType findValueByNumber(int number) {
+              return LYOsType.valueOf(number);
+            }
+          };
+    
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(index);
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(0);
+    }
+    
+    private static final LYOsType[] VALUES = {
+      LY_ANDROID, LY_IOS, LY_WP, 
+    };
+    
+    public static LYOsType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      return VALUES[desc.getIndex()];
+    }
+    
+    private final int index;
+    private final int value;
+    
+    private LYOsType(int index, int value) {
+      this.index = index;
+      this.value = value;
+    }
+    
+    // @@protoc_insertion_point(enum_scope:tss.LYOsType)
+  }
+  
   public enum LYDirection
       implements com.google.protobuf.ProtocolMessageEnum {
     LY_UNKNOWN(0, 0),
@@ -71,7 +143,7 @@ public final class TSSProtos {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(0);
+      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(1);
     }
     
     private static final LYDirection[] VALUES = {
@@ -155,7 +227,7 @@ public final class TSSProtos {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(1);
+      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(2);
     }
     
     private static final LYRetCode[] VALUES = {
@@ -227,7 +299,7 @@ public final class TSSProtos {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(2);
+      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(3);
     }
     
     private static final LYParty[] VALUES = {
@@ -256,7 +328,7 @@ public final class TSSProtos {
   
   public enum LYMsgType
       implements com.google.protobuf.ProtocolMessageEnum {
-    LY_VOID(0, 1),
+    LY_CHECKIN(0, 1),
     LY_RET_CODE(1, 2),
     LY_TRAFFIC_SUB(2, 4),
     LY_TRAFFIC_REPORT(3, 5),
@@ -264,7 +336,7 @@ public final class TSSProtos {
     LY_TRAFFIC_PUB(5, 19),
     ;
     
-    public static final int LY_VOID_VALUE = 1;
+    public static final int LY_CHECKIN_VALUE = 1;
     public static final int LY_RET_CODE_VALUE = 2;
     public static final int LY_TRAFFIC_SUB_VALUE = 4;
     public static final int LY_TRAFFIC_REPORT_VALUE = 5;
@@ -276,7 +348,7 @@ public final class TSSProtos {
     
     public static LYMsgType valueOf(int value) {
       switch (value) {
-        case 1: return LY_VOID;
+        case 1: return LY_CHECKIN;
         case 2: return LY_RET_CODE;
         case 4: return LY_TRAFFIC_SUB;
         case 5: return LY_TRAFFIC_REPORT;
@@ -308,11 +380,11 @@ public final class TSSProtos {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(3);
+      return com.luyun.easyway95.shared.TSSProtos.getDescriptor().getEnumTypes().get(4);
     }
     
     private static final LYMsgType[] VALUES = {
-      LY_VOID, LY_RET_CODE, LY_TRAFFIC_SUB, LY_TRAFFIC_REPORT, LY_DEVICE_REPORT, LY_TRAFFIC_PUB, 
+      LY_CHECKIN, LY_RET_CODE, LY_TRAFFIC_SUB, LY_TRAFFIC_REPORT, LY_DEVICE_REPORT, LY_TRAFFIC_PUB, 
     };
     
     public static LYMsgType valueOf(
@@ -8055,6 +8127,687 @@ public final class TSSProtos {
     // @@protoc_insertion_point(class_scope:tss.LYDeviceReport)
   }
   
+  public interface LYCheckinOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string device_model = 1;
+    boolean hasDeviceModel();
+    String getDeviceModel();
+    
+    // required .tss.LYOsType os_type = 2;
+    boolean hasOsType();
+    com.luyun.easyway95.shared.TSSProtos.LYOsType getOsType();
+    
+    // required string os_version = 3;
+    boolean hasOsVersion();
+    String getOsVersion();
+    
+    // required int32 ly_major_release = 4;
+    boolean hasLyMajorRelease();
+    int getLyMajorRelease();
+    
+    // required int32 ly_minor_release = 5;
+    boolean hasLyMinorRelease();
+    int getLyMinorRelease();
+  }
+  public static final class LYCheckin extends
+      com.google.protobuf.GeneratedMessage
+      implements LYCheckinOrBuilder {
+    // Use LYCheckin.newBuilder() to construct.
+    private LYCheckin(Builder builder) {
+      super(builder);
+    }
+    private LYCheckin(boolean noInit) {}
+    
+    private static final LYCheckin defaultInstance;
+    public static LYCheckin getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYCheckin getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCheckin_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCheckin_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // optional string device_model = 1;
+    public static final int DEVICE_MODEL_FIELD_NUMBER = 1;
+    private java.lang.Object deviceModel_;
+    public boolean hasDeviceModel() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getDeviceModel() {
+      java.lang.Object ref = deviceModel_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          deviceModel_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getDeviceModelBytes() {
+      java.lang.Object ref = deviceModel_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        deviceModel_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // required .tss.LYOsType os_type = 2;
+    public static final int OS_TYPE_FIELD_NUMBER = 2;
+    private com.luyun.easyway95.shared.TSSProtos.LYOsType osType_;
+    public boolean hasOsType() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYOsType getOsType() {
+      return osType_;
+    }
+    
+    // required string os_version = 3;
+    public static final int OS_VERSION_FIELD_NUMBER = 3;
+    private java.lang.Object osVersion_;
+    public boolean hasOsVersion() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getOsVersion() {
+      java.lang.Object ref = osVersion_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          osVersion_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getOsVersionBytes() {
+      java.lang.Object ref = osVersion_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        osVersion_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // required int32 ly_major_release = 4;
+    public static final int LY_MAJOR_RELEASE_FIELD_NUMBER = 4;
+    private int lyMajorRelease_;
+    public boolean hasLyMajorRelease() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getLyMajorRelease() {
+      return lyMajorRelease_;
+    }
+    
+    // required int32 ly_minor_release = 5;
+    public static final int LY_MINOR_RELEASE_FIELD_NUMBER = 5;
+    private int lyMinorRelease_;
+    public boolean hasLyMinorRelease() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public int getLyMinorRelease() {
+      return lyMinorRelease_;
+    }
+    
+    private void initFields() {
+      deviceModel_ = "";
+      osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
+      osVersion_ = "";
+      lyMajorRelease_ = 0;
+      lyMinorRelease_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasOsType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasOsVersion()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLyMajorRelease()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLyMinorRelease()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getDeviceModelBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeEnum(2, osType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getOsVersionBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, lyMajorRelease_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, lyMinorRelease_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getDeviceModelBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, osType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getOsVersionBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, lyMajorRelease_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, lyMinorRelease_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCheckin parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYCheckin prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCheckin_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCheckin_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYCheckin.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        deviceModel_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        osVersion_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        lyMajorRelease_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        lyMinorRelease_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckin getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckin build() {
+        com.luyun.easyway95.shared.TSSProtos.LYCheckin result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYCheckin buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYCheckin result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckin buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYCheckin result = new com.luyun.easyway95.shared.TSSProtos.LYCheckin(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.deviceModel_ = deviceModel_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.osType_ = osType_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.osVersion_ = osVersion_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.lyMajorRelease_ = lyMajorRelease_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.lyMinorRelease_ = lyMinorRelease_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYCheckin) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYCheckin)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYCheckin other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance()) return this;
+        if (other.hasDeviceModel()) {
+          setDeviceModel(other.getDeviceModel());
+        }
+        if (other.hasOsType()) {
+          setOsType(other.getOsType());
+        }
+        if (other.hasOsVersion()) {
+          setOsVersion(other.getOsVersion());
+        }
+        if (other.hasLyMajorRelease()) {
+          setLyMajorRelease(other.getLyMajorRelease());
+        }
+        if (other.hasLyMinorRelease()) {
+          setLyMinorRelease(other.getLyMinorRelease());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasOsType()) {
+          
+          return false;
+        }
+        if (!hasOsVersion()) {
+          
+          return false;
+        }
+        if (!hasLyMajorRelease()) {
+          
+          return false;
+        }
+        if (!hasLyMinorRelease()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              deviceModel_ = input.readBytes();
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+              com.luyun.easyway95.shared.TSSProtos.LYOsType value = com.luyun.easyway95.shared.TSSProtos.LYOsType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(2, rawValue);
+              } else {
+                bitField0_ |= 0x00000002;
+                osType_ = value;
+              }
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              osVersion_ = input.readBytes();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              lyMajorRelease_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              lyMinorRelease_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // optional string device_model = 1;
+      private java.lang.Object deviceModel_ = "";
+      public boolean hasDeviceModel() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public String getDeviceModel() {
+        java.lang.Object ref = deviceModel_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          deviceModel_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setDeviceModel(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        deviceModel_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDeviceModel() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        deviceModel_ = getDefaultInstance().getDeviceModel();
+        onChanged();
+        return this;
+      }
+      void setDeviceModel(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        deviceModel_ = value;
+        onChanged();
+      }
+      
+      // required .tss.LYOsType os_type = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYOsType osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
+      public boolean hasOsType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYOsType getOsType() {
+        return osType_;
+      }
+      public Builder setOsType(com.luyun.easyway95.shared.TSSProtos.LYOsType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000002;
+        osType_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearOsType() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
+        onChanged();
+        return this;
+      }
+      
+      // required string os_version = 3;
+      private java.lang.Object osVersion_ = "";
+      public boolean hasOsVersion() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public String getOsVersion() {
+        java.lang.Object ref = osVersion_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          osVersion_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setOsVersion(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        osVersion_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearOsVersion() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        osVersion_ = getDefaultInstance().getOsVersion();
+        onChanged();
+        return this;
+      }
+      void setOsVersion(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000004;
+        osVersion_ = value;
+        onChanged();
+      }
+      
+      // required int32 ly_major_release = 4;
+      private int lyMajorRelease_ ;
+      public boolean hasLyMajorRelease() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public int getLyMajorRelease() {
+        return lyMajorRelease_;
+      }
+      public Builder setLyMajorRelease(int value) {
+        bitField0_ |= 0x00000008;
+        lyMajorRelease_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearLyMajorRelease() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        lyMajorRelease_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // required int32 ly_minor_release = 5;
+      private int lyMinorRelease_ ;
+      public boolean hasLyMinorRelease() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public int getLyMinorRelease() {
+        return lyMinorRelease_;
+      }
+      public Builder setLyMinorRelease(int value) {
+        bitField0_ |= 0x00000010;
+        lyMinorRelease_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearLyMinorRelease() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        lyMinorRelease_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYCheckin)
+    }
+    
+    static {
+      defaultInstance = new LYCheckin(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYCheckin)
+  }
+  
   public interface LYSamplePointOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
@@ -9265,9 +10018,26 @@ public final class TSSProtos {
     boolean hasMsgType();
     com.luyun.easyway95.shared.TSSProtos.LYMsgType getMsgType();
     
+    // optional string snd_id = 7;
+    boolean hasSndId();
+    String getSndId();
+    
+    // optional string rcv_id = 8;
+    boolean hasRcvId();
+    String getRcvId();
+    
+    // optional int32 checksum = 9;
+    boolean hasChecksum();
+    int getChecksum();
+    
     // optional .tss.LYRetCode ret_code = 17;
     boolean hasRetCode();
     com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode();
+    
+    // optional .tss.LYCheckin checkin = 18;
+    boolean hasCheckin();
+    com.luyun.easyway95.shared.TSSProtos.LYCheckin getCheckin();
+    com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder getCheckinOrBuilder();
     
     // optional .tss.LYDeviceReport device_report = 19;
     boolean hasDeviceReport();
@@ -9378,21 +10148,108 @@ public final class TSSProtos {
       return msgType_;
     }
     
+    // optional string snd_id = 7;
+    public static final int SND_ID_FIELD_NUMBER = 7;
+    private java.lang.Object sndId_;
+    public boolean hasSndId() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public String getSndId() {
+      java.lang.Object ref = sndId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          sndId_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getSndIdBytes() {
+      java.lang.Object ref = sndId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        sndId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional string rcv_id = 8;
+    public static final int RCV_ID_FIELD_NUMBER = 8;
+    private java.lang.Object rcvId_;
+    public boolean hasRcvId() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    public String getRcvId() {
+      java.lang.Object ref = rcvId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          rcvId_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRcvIdBytes() {
+      java.lang.Object ref = rcvId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        rcvId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // optional int32 checksum = 9;
+    public static final int CHECKSUM_FIELD_NUMBER = 9;
+    private int checksum_;
+    public boolean hasChecksum() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    public int getChecksum() {
+      return checksum_;
+    }
+    
     // optional .tss.LYRetCode ret_code = 17;
     public static final int RET_CODE_FIELD_NUMBER = 17;
     private com.luyun.easyway95.shared.TSSProtos.LYRetCode retCode_;
     public boolean hasRetCode() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     public com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode() {
       return retCode_;
+    }
+    
+    // optional .tss.LYCheckin checkin = 18;
+    public static final int CHECKIN_FIELD_NUMBER = 18;
+    private com.luyun.easyway95.shared.TSSProtos.LYCheckin checkin_;
+    public boolean hasCheckin() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCheckin getCheckin() {
+      return checkin_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder getCheckinOrBuilder() {
+      return checkin_;
     }
     
     // optional .tss.LYDeviceReport device_report = 19;
     public static final int DEVICE_REPORT_FIELD_NUMBER = 19;
     private com.luyun.easyway95.shared.TSSProtos.LYDeviceReport deviceReport_;
     public boolean hasDeviceReport() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000800) == 0x00000800);
     }
     public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDeviceReport() {
       return deviceReport_;
@@ -9405,7 +10262,7 @@ public final class TSSProtos {
     public static final int TRAFFIC_SUB_FIELD_NUMBER = 36;
     private com.luyun.easyway95.shared.TSSProtos.LYTrafficSub trafficSub_;
     public boolean hasTrafficSub() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00001000) == 0x00001000);
     }
     public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getTrafficSub() {
       return trafficSub_;
@@ -9418,7 +10275,7 @@ public final class TSSProtos {
     public static final int TRAFFIC_PUB_FIELD_NUMBER = 51;
     private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub trafficPub_;
     public boolean hasTrafficPub() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getTrafficPub() {
       return trafficPub_;
@@ -9431,7 +10288,7 @@ public final class TSSProtos {
     public static final int TRAFFIC_REPORT_FIELD_NUMBER = 65;
     private com.luyun.easyway95.shared.TSSProtos.LYTrafficReport trafficReport_;
     public boolean hasTrafficReport() {
-      return ((bitField0_ & 0x00000400) == 0x00000400);
+      return ((bitField0_ & 0x00004000) == 0x00004000);
     }
     public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getTrafficReport() {
       return trafficReport_;
@@ -9446,8 +10303,12 @@ public final class TSSProtos {
       timestamp_ = 0L;
       fromParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
       toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
-      msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+      msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN;
+      sndId_ = "";
+      rcvId_ = "";
+      checksum_ = 0;
       retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+      checkin_ = com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
       deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
       trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
       trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
@@ -9481,6 +10342,12 @@ public final class TSSProtos {
       if (!hasMsgType()) {
         memoizedIsInitialized = 0;
         return false;
+      }
+      if (hasCheckin()) {
+        if (!getCheckin().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasDeviceReport()) {
         if (!getDeviceReport().isInitialized()) {
@@ -9539,18 +10406,30 @@ public final class TSSProtos {
         output.writeInt64(6, timestamp_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        output.writeEnum(17, retCode_.getNumber());
+        output.writeBytes(7, getSndIdBytes());
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeMessage(19, deviceReport_);
+        output.writeBytes(8, getRcvIdBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeMessage(36, trafficSub_);
+        output.writeInt32(9, checksum_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeMessage(51, trafficPub_);
+        output.writeEnum(17, retCode_.getNumber());
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeMessage(18, checkin_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeMessage(19, deviceReport_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeMessage(36, trafficSub_);
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        output.writeMessage(51, trafficPub_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
         output.writeMessage(65, trafficReport_);
       }
       extensionWriter.writeUntil(256, output);
@@ -9589,21 +10468,37 @@ public final class TSSProtos {
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(17, retCode_.getNumber());
+          .computeBytesSize(7, getSndIdBytes());
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(19, deviceReport_);
+          .computeBytesSize(8, getRcvIdBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(36, trafficSub_);
+          .computeInt32Size(9, checksum_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(51, trafficPub_);
+          .computeEnumSize(17, retCode_.getNumber());
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(18, checkin_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(19, deviceReport_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(36, trafficSub_);
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(51, trafficPub_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(65, trafficReport_);
       }
@@ -9724,6 +10619,7 @@ public final class TSSProtos {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getCheckinFieldBuilder();
           getDeviceReportFieldBuilder();
           getTrafficSubFieldBuilder();
           getTrafficPubFieldBuilder();
@@ -9746,34 +10642,46 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000008);
         toParty_ = com.luyun.easyway95.shared.TSSProtos.LYParty.LY_CLIENT;
         bitField0_ = (bitField0_ & ~0x00000010);
-        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN;
         bitField0_ = (bitField0_ & ~0x00000020);
-        retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+        sndId_ = "";
         bitField0_ = (bitField0_ & ~0x00000040);
+        rcvId_ = "";
+        bitField0_ = (bitField0_ & ~0x00000080);
+        checksum_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        if (checkinBuilder_ == null) {
+          checkin_ = com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
+        } else {
+          checkinBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
         if (deviceReportBuilder_ == null) {
           deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
         } else {
           deviceReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000800);
         if (trafficSubBuilder_ == null) {
           trafficSub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance();
         } else {
           trafficSubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00001000);
         if (trafficPubBuilder_ == null) {
           trafficPub_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance();
         } else {
           trafficPubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00002000);
         if (trafficReportBuilder_ == null) {
           trafficReport_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance();
         } else {
           trafficReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
       
@@ -9839,33 +10747,53 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.retCode_ = retCode_;
+        result.sndId_ = sndId_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
+        }
+        result.rcvId_ = rcvId_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.checksum_ = checksum_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.retCode_ = retCode_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        if (checkinBuilder_ == null) {
+          result.checkin_ = checkin_;
+        } else {
+          result.checkin_ = checkinBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
         }
         if (deviceReportBuilder_ == null) {
           result.deviceReport_ = deviceReport_;
         } else {
           result.deviceReport_ = deviceReportBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
-          to_bitField0_ |= 0x00000100;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
         }
         if (trafficSubBuilder_ == null) {
           result.trafficSub_ = trafficSub_;
         } else {
           result.trafficSub_ = trafficSubBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
-          to_bitField0_ |= 0x00000200;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00002000;
         }
         if (trafficPubBuilder_ == null) {
           result.trafficPub_ = trafficPub_;
         } else {
           result.trafficPub_ = trafficPubBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
-          to_bitField0_ |= 0x00000400;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
         }
         if (trafficReportBuilder_ == null) {
           result.trafficReport_ = trafficReport_;
@@ -9906,8 +10834,20 @@ public final class TSSProtos {
         if (other.hasMsgType()) {
           setMsgType(other.getMsgType());
         }
+        if (other.hasSndId()) {
+          setSndId(other.getSndId());
+        }
+        if (other.hasRcvId()) {
+          setRcvId(other.getRcvId());
+        }
+        if (other.hasChecksum()) {
+          setChecksum(other.getChecksum());
+        }
         if (other.hasRetCode()) {
           setRetCode(other.getRetCode());
+        }
+        if (other.hasCheckin()) {
+          mergeCheckin(other.getCheckin());
         }
         if (other.hasDeviceReport()) {
           mergeDeviceReport(other.getDeviceReport());
@@ -9950,6 +10890,12 @@ public final class TSSProtos {
         if (!hasMsgType()) {
           
           return false;
+        }
+        if (hasCheckin()) {
+          if (!getCheckin().isInitialized()) {
+            
+            return false;
+          }
         }
         if (hasDeviceReport()) {
           if (!getDeviceReport().isInitialized()) {
@@ -10053,15 +10999,39 @@ public final class TSSProtos {
               timestamp_ = input.readInt64();
               break;
             }
+            case 58: {
+              bitField0_ |= 0x00000040;
+              sndId_ = input.readBytes();
+              break;
+            }
+            case 66: {
+              bitField0_ |= 0x00000080;
+              rcvId_ = input.readBytes();
+              break;
+            }
+            case 72: {
+              bitField0_ |= 0x00000100;
+              checksum_ = input.readInt32();
+              break;
+            }
             case 136: {
               int rawValue = input.readEnum();
               com.luyun.easyway95.shared.TSSProtos.LYRetCode value = com.luyun.easyway95.shared.TSSProtos.LYRetCode.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(17, rawValue);
               } else {
-                bitField0_ |= 0x00000040;
+                bitField0_ |= 0x00000200;
                 retCode_ = value;
               }
+              break;
+            }
+            case 146: {
+              com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCheckin.newBuilder();
+              if (hasCheckin()) {
+                subBuilder.mergeFrom(getCheckin());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setCheckin(subBuilder.buildPartial());
               break;
             }
             case 154: {
@@ -10218,7 +11188,7 @@ public final class TSSProtos {
       }
       
       // required .tss.LYMsgType msg_type = 4;
-      private com.luyun.easyway95.shared.TSSProtos.LYMsgType msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+      private com.luyun.easyway95.shared.TSSProtos.LYMsgType msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN;
       public boolean hasMsgType() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
@@ -10236,7 +11206,100 @@ public final class TSSProtos {
       }
       public Builder clearMsgType() {
         bitField0_ = (bitField0_ & ~0x00000020);
-        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_VOID;
+        msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN;
+        onChanged();
+        return this;
+      }
+      
+      // optional string snd_id = 7;
+      private java.lang.Object sndId_ = "";
+      public boolean hasSndId() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      public String getSndId() {
+        java.lang.Object ref = sndId_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          sndId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setSndId(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        sndId_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearSndId() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        sndId_ = getDefaultInstance().getSndId();
+        onChanged();
+        return this;
+      }
+      void setSndId(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000040;
+        sndId_ = value;
+        onChanged();
+      }
+      
+      // optional string rcv_id = 8;
+      private java.lang.Object rcvId_ = "";
+      public boolean hasRcvId() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      public String getRcvId() {
+        java.lang.Object ref = rcvId_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          rcvId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setRcvId(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        rcvId_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearRcvId() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        rcvId_ = getDefaultInstance().getRcvId();
+        onChanged();
+        return this;
+      }
+      void setRcvId(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000080;
+        rcvId_ = value;
+        onChanged();
+      }
+      
+      // optional int32 checksum = 9;
+      private int checksum_ ;
+      public boolean hasChecksum() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      public int getChecksum() {
+        return checksum_;
+      }
+      public Builder setChecksum(int value) {
+        bitField0_ |= 0x00000100;
+        checksum_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearChecksum() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        checksum_ = 0;
         onChanged();
         return this;
       }
@@ -10244,7 +11307,7 @@ public final class TSSProtos {
       // optional .tss.LYRetCode ret_code = 17;
       private com.luyun.easyway95.shared.TSSProtos.LYRetCode retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
       public boolean hasRetCode() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       public com.luyun.easyway95.shared.TSSProtos.LYRetCode getRetCode() {
         return retCode_;
@@ -10253,16 +11316,106 @@ public final class TSSProtos {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000200;
         retCode_ = value;
         onChanged();
         return this;
       }
       public Builder clearRetCode() {
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000200);
         retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
         onChanged();
         return this;
+      }
+      
+      // optional .tss.LYCheckin checkin = 18;
+      private com.luyun.easyway95.shared.TSSProtos.LYCheckin checkin_ = com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCheckin, com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder, com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder> checkinBuilder_;
+      public boolean hasCheckin() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckin getCheckin() {
+        if (checkinBuilder_ == null) {
+          return checkin_;
+        } else {
+          return checkinBuilder_.getMessage();
+        }
+      }
+      public Builder setCheckin(com.luyun.easyway95.shared.TSSProtos.LYCheckin value) {
+        if (checkinBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          checkin_ = value;
+          onChanged();
+        } else {
+          checkinBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      public Builder setCheckin(
+          com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder builderForValue) {
+        if (checkinBuilder_ == null) {
+          checkin_ = builderForValue.build();
+          onChanged();
+        } else {
+          checkinBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      public Builder mergeCheckin(com.luyun.easyway95.shared.TSSProtos.LYCheckin value) {
+        if (checkinBuilder_ == null) {
+          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+              checkin_ != com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance()) {
+            checkin_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCheckin.newBuilder(checkin_).mergeFrom(value).buildPartial();
+          } else {
+            checkin_ = value;
+          }
+          onChanged();
+        } else {
+          checkinBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      public Builder clearCheckin() {
+        if (checkinBuilder_ == null) {
+          checkin_ = com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
+          onChanged();
+        } else {
+          checkinBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder getCheckinBuilder() {
+        bitField0_ |= 0x00000400;
+        onChanged();
+        return getCheckinFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder getCheckinOrBuilder() {
+        if (checkinBuilder_ != null) {
+          return checkinBuilder_.getMessageOrBuilder();
+        } else {
+          return checkin_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCheckin, com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder, com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder> 
+          getCheckinFieldBuilder() {
+        if (checkinBuilder_ == null) {
+          checkinBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCheckin, com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder, com.luyun.easyway95.shared.TSSProtos.LYCheckinOrBuilder>(
+                  checkin_,
+                  getParentForChildren(),
+                  isClean());
+          checkin_ = null;
+        }
+        return checkinBuilder_;
       }
       
       // optional .tss.LYDeviceReport device_report = 19;
@@ -10270,7 +11423,7 @@ public final class TSSProtos {
       private com.google.protobuf.SingleFieldBuilder<
           com.luyun.easyway95.shared.TSSProtos.LYDeviceReport, com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYDeviceReportOrBuilder> deviceReportBuilder_;
       public boolean hasDeviceReport() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport getDeviceReport() {
         if (deviceReportBuilder_ == null) {
@@ -10289,7 +11442,7 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder setDeviceReport(
@@ -10300,12 +11453,12 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder mergeDeviceReport(com.luyun.easyway95.shared.TSSProtos.LYDeviceReport value) {
         if (deviceReportBuilder_ == null) {
-          if (((bitField0_ & 0x00000080) == 0x00000080) &&
+          if (((bitField0_ & 0x00000800) == 0x00000800) &&
               deviceReport_ != com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance()) {
             deviceReport_ =
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.newBuilder(deviceReport_).mergeFrom(value).buildPartial();
@@ -10316,7 +11469,7 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder clearDeviceReport() {
@@ -10326,11 +11479,11 @@ public final class TSSProtos {
         } else {
           deviceReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
       public com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder getDeviceReportBuilder() {
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000800;
         onChanged();
         return getDeviceReportFieldBuilder().getBuilder();
       }
@@ -10360,7 +11513,7 @@ public final class TSSProtos {
       private com.google.protobuf.SingleFieldBuilder<
           com.luyun.easyway95.shared.TSSProtos.LYTrafficSub, com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficSubOrBuilder> trafficSubBuilder_;
       public boolean hasTrafficSub() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub getTrafficSub() {
         if (trafficSubBuilder_ == null) {
@@ -10379,7 +11532,7 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00001000;
         return this;
       }
       public Builder setTrafficSub(
@@ -10390,12 +11543,12 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00001000;
         return this;
       }
       public Builder mergeTrafficSub(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub value) {
         if (trafficSubBuilder_ == null) {
-          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+          if (((bitField0_ & 0x00001000) == 0x00001000) &&
               trafficSub_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.getDefaultInstance()) {
             trafficSub_ =
               com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder(trafficSub_).mergeFrom(value).buildPartial();
@@ -10406,7 +11559,7 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00001000;
         return this;
       }
       public Builder clearTrafficSub() {
@@ -10416,11 +11569,11 @@ public final class TSSProtos {
         } else {
           trafficSubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder getTrafficSubBuilder() {
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00001000;
         onChanged();
         return getTrafficSubFieldBuilder().getBuilder();
       }
@@ -10450,7 +11603,7 @@ public final class TSSProtos {
       private com.google.protobuf.SingleFieldBuilder<
           com.luyun.easyway95.shared.TSSProtos.LYTrafficPub, com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficPubOrBuilder> trafficPubBuilder_;
       public boolean hasTrafficPub() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub getTrafficPub() {
         if (trafficPubBuilder_ == null) {
@@ -10469,7 +11622,7 @@ public final class TSSProtos {
         } else {
           trafficPubBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00002000;
         return this;
       }
       public Builder setTrafficPub(
@@ -10480,12 +11633,12 @@ public final class TSSProtos {
         } else {
           trafficPubBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00002000;
         return this;
       }
       public Builder mergeTrafficPub(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub value) {
         if (trafficPubBuilder_ == null) {
-          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+          if (((bitField0_ & 0x00002000) == 0x00002000) &&
               trafficPub_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDefaultInstance()) {
             trafficPub_ =
               com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.newBuilder(trafficPub_).mergeFrom(value).buildPartial();
@@ -10496,7 +11649,7 @@ public final class TSSProtos {
         } else {
           trafficPubBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00002000;
         return this;
       }
       public Builder clearTrafficPub() {
@@ -10506,11 +11659,11 @@ public final class TSSProtos {
         } else {
           trafficPubBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00002000);
         return this;
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder getTrafficPubBuilder() {
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00002000;
         onChanged();
         return getTrafficPubFieldBuilder().getBuilder();
       }
@@ -10540,7 +11693,7 @@ public final class TSSProtos {
       private com.google.protobuf.SingleFieldBuilder<
           com.luyun.easyway95.shared.TSSProtos.LYTrafficReport, com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder, com.luyun.easyway95.shared.TSSProtos.LYTrafficReportOrBuilder> trafficReportBuilder_;
       public boolean hasTrafficReport() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
+        return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport getTrafficReport() {
         if (trafficReportBuilder_ == null) {
@@ -10559,7 +11712,7 @@ public final class TSSProtos {
         } else {
           trafficReportBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00004000;
         return this;
       }
       public Builder setTrafficReport(
@@ -10570,12 +11723,12 @@ public final class TSSProtos {
         } else {
           trafficReportBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00004000;
         return this;
       }
       public Builder mergeTrafficReport(com.luyun.easyway95.shared.TSSProtos.LYTrafficReport value) {
         if (trafficReportBuilder_ == null) {
-          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+          if (((bitField0_ & 0x00004000) == 0x00004000) &&
               trafficReport_ != com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.getDefaultInstance()) {
             trafficReport_ =
               com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.newBuilder(trafficReport_).mergeFrom(value).buildPartial();
@@ -10586,7 +11739,7 @@ public final class TSSProtos {
         } else {
           trafficReportBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00004000;
         return this;
       }
       public Builder clearTrafficReport() {
@@ -10596,11 +11749,11 @@ public final class TSSProtos {
         } else {
           trafficReportBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
       public com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder getTrafficReportBuilder() {
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00004000;
         onChanged();
         return getTrafficReportFieldBuilder().getBuilder();
       }
@@ -10692,6 +11845,11 @@ public final class TSSProtos {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_tss_LYDeviceReport_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYCheckin_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYCheckin_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_tss_LYSamplePoint_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -10750,34 +11908,41 @@ public final class TSSProtos {
       "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
       "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
       "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
-      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"n\n\rLYSamp" +
-      "lePoint\022(\n\rsp_coordinate\030\001 \002(\0132\021.tss.LYC" +
-      "oordinate\022\021\n\ttimestamp\030\002 \002(\003\022\020\n\010altitude" +
-      "\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5\n\017LYTrafficRepor" +
-      "t\022\"\n\006points\030\001 \003(\0132\022.tss.LYSamplePoint\"\370\002",
-      "\n\nLYMsgOnAir\022\017\n\007version\030\001 \002(\005\022\016\n\006msg_id\030" +
-      "\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003\022 \n\nfrom_party\030\002" +
-      " \002(\0162\014.tss.LYParty\022\036\n\010to_party\030\003 \002(\0162\014.t" +
-      "ss.LYParty\022 \n\010msg_type\030\004 \002(\0162\016.tss.LYMsg" +
-      "Type\022 \n\010ret_code\030\021 \001(\0162\016.tss.LYRetCode\022*" +
-      "\n\rdevice_report\030\023 \001(\0132\023.tss.LYDeviceRepo" +
-      "rt\022&\n\013traffic_sub\030$ \001(\0132\021.tss.LYTrafficS" +
-      "ub\022&\n\013traffic_pub\0303 \001(\0132\021.tss.LYTrafficP" +
-      "ub\022,\n\016traffic_report\030A \001(\0132\024.tss.LYTraff" +
-      "icReport*\006\010\200\001\020\200\002*\233\001\n\013LYDirection\022\016\n\nLY_U",
-      "NKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022" +
-      "\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WE" +
-      "ST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014" +
-      "LY_SOUTHEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCE" +
-      "SS\020\000\022\034\n\027LY_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY" +
-      "_VERSION_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021" +
-      "LY_MSG_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n" +
-      "\016LY_OTHER_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIE" +
-      "NT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*~\n\tLYMsgType" +
-      "\022\013\n\007LY_VOID\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRA",
-      "FFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_" +
-      "DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032c" +
-      "om.luyun.easyway95.sharedB\tTSSProtos"
+      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\211\001\n\tLYChe" +
+      "ckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007os_type\030\002 " +
+      "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \002(\t\022\030" +
+      "\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly_minor_rel" +
+      "ease\030\005 \002(\005\"n\n\rLYSamplePoint\022(\n\rsp_coordi",
+      "nate\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\ttimesta" +
+      "mp\030\002 \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006course\030\004 \001" +
+      "(\001\"5\n\017LYTrafficReport\022\"\n\006points\030\001 \003(\0132\022." +
+      "tss.LYSamplePoint\"\313\003\n\nLYMsgOnAir\022\017\n\007vers" +
+      "ion\030\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006" +
+      " \002(\003\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036" +
+      "\n\010to_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_ty" +
+      "pe\030\004 \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id\030\007 \001(\t" +
+      "\022\016\n\006rcv_id\030\010 \001(\t\022\020\n\010checksum\030\t \001(\005\022 \n\010re" +
+      "t_code\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007checkin\030",
+      "\022 \001(\0132\016.tss.LYCheckin\022*\n\rdevice_report\030\023" +
+      " \001(\0132\023.tss.LYDeviceReport\022&\n\013traffic_sub" +
+      "\030$ \001(\0132\021.tss.LYTrafficSub\022&\n\013traffic_pub" +
+      "\0303 \001(\0132\021.tss.LYTrafficPub\022,\n\016traffic_rep" +
+      "ort\030A \001(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*" +
+      "1\n\010LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022" +
+      "\t\n\005LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_UNKNOWN" +
+      "\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022\014\n\010LY_" +
+      "NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WEST\020\005\022\020" +
+      "\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOU",
+      "THEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCESS\020\000\022\034" +
+      "\n\027LY_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY_VERSI" +
+      "ON_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021LY_MSG" +
+      "_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OT" +
+      "HER_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIENT\020\001\022\n" +
+      "\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgType\022\016\n\nL" +
+      "Y_CHECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRAFF" +
+      "IC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_DE" +
+      "VICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032com" +
+      ".luyun.easyway95.sharedB\tTSSProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -10872,8 +12037,16 @@ public final class TSSProtos {
               new java.lang.String[] { "DeviceId", "DeviceToken", "DeviceName", "DeviceModel", "DeviceOsVersion", },
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.class,
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder.class);
-          internal_static_tss_LYSamplePoint_descriptor =
+          internal_static_tss_LYCheckin_descriptor =
             getDescriptor().getMessageTypes().get(11);
+          internal_static_tss_LYCheckin_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYCheckin_descriptor,
+              new java.lang.String[] { "DeviceModel", "OsType", "OsVersion", "LyMajorRelease", "LyMinorRelease", },
+              com.luyun.easyway95.shared.TSSProtos.LYCheckin.class,
+              com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder.class);
+          internal_static_tss_LYSamplePoint_descriptor =
+            getDescriptor().getMessageTypes().get(12);
           internal_static_tss_LYSamplePoint_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYSamplePoint_descriptor,
@@ -10881,7 +12054,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.class,
               com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder.class);
           internal_static_tss_LYTrafficReport_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_tss_LYTrafficReport_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficReport_descriptor,
@@ -10889,11 +12062,11 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder.class);
           internal_static_tss_LYMsgOnAir_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(14);
           internal_static_tss_LYMsgOnAir_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYMsgOnAir_descriptor,
-              new java.lang.String[] { "Version", "MsgId", "Timestamp", "FromParty", "ToParty", "MsgType", "RetCode", "DeviceReport", "TrafficSub", "TrafficPub", "TrafficReport", },
+              new java.lang.String[] { "Version", "MsgId", "Timestamp", "FromParty", "ToParty", "MsgType", "SndId", "RcvId", "Checksum", "RetCode", "Checkin", "DeviceReport", "TrafficSub", "TrafficPub", "TrafficReport", },
               com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.class,
               com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.Builder.class);
           return null;
