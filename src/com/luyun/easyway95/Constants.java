@@ -38,7 +38,8 @@ public class Constants {
 	public static final int TRACKEE_SERVER_PORT=8008;	
 	public static final String TRACKER_SERVER_HOST="42.121.18.140";	
 	public static final String USERS_PROFILE_URL="http://www.roadclouding.com/users/profile";	
-	public static final String DOWNLOAD_URL="http://www.roadclouding.com/download/android";	
+	public static final String DOWNLOAD_URL="http://www.roadclouding.com/data/easyway95.apk";	
+//	public static final String DOWNLOAD_URL="market://search?q=pname:com.luyun.easyway95";
 	//public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";
 	
 	//weibo by chenfeng

@@ -42,6 +42,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -917,13 +918,26 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	 * 2、点击下载，自动升级
 	 * 
 	 */
-	public void onSoftwareUpgrade(String url, boolean force) {
-		String upgradeUrl;
-		if (url == null) {
-			upgradeUrl = Constants.DOWNLOAD_URL;
-		} else {
-			upgradeUrl = url;
-		}
-		Log.d(TAG, "force to upgrade! "+url);
+	public void onSoftwareUpgrade(int major, int minor, String url, boolean force) {
+		final String upgradeUrl = url;
+		new AlertDialog.Builder(LYNavigator.this)
+		.setTitle("升级提示")
+		.setMessage(String.format("您的当前版本: %d.%d, 最新版本: %d.%d, 确定升级吗?", majorRelease, minorRelease, major, minor))
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				/* User clicked OK so do some stuff */
+//				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.luyun.easyway95"));
+				Log.d(TAG, "download url: " + upgradeUrl);
+				finish();
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(upgradeUrl));
+				startActivity(intent);
+			}
+		})
+		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				/* User clicked Cancel */
+			}
+		})
+		.show();
 	}
 }
