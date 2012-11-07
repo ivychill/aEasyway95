@@ -228,6 +228,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         } catch (Exception e) {
         	e.printStackTrace();
         }
+        
+        //2012.11.07 蔡庆丰增加，对网络连接的监控
+        registerReceiver(
+        	      new ConnectivityChangeReceiver(), 
+        	      new IntentFilter(
+        	            ConnectivityManager.CONNECTIVITY_ACTION));
 
 		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
@@ -925,5 +931,47 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 			upgradeUrl = url;
 		}
 		Log.d(TAG, "force to upgrade! "+url);
+	}
+	
+	public void ZMQreconnect() {
+		if (mzService != null) {
+			mzService.reconnect();
+		}
+	}
+	
+	/**
+	 * @return boolean return true if the application can access the internet
+	 */
+	public boolean isConnectedToInternet() {
+		ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        //mobile 3G Data Network
+        State mobile = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+        //wifi
+        State wifi = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        
+        //如果3G网络和wifi网络都未连接，且不是处于正在连接状态 则进入Network Setting界面 由用户配置网络连接
+        if(mobile==State.CONNECTED||mobile==State.CONNECTING)
+            return true;
+        if(wifi==State.CONNECTED||wifi==State.CONNECTING)
+            return true;
+        return false;
+	}
+	
+	/*
+	 * 监控网络连接发生变化
+	 */
+	public class ConnectivityChangeReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			if (isConnectedToInternet()) {
+				if (mzService == null) { //ZMQService not ready yet
+					return;
+				}
+				ZMQreconnect();
+				mMapHelper.checkIn();
+			}
+		}
 	}
 }

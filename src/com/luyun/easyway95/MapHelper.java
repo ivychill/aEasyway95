@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Message;
@@ -464,5 +467,6 @@ public class MapHelper {
     	byte[] data = msg.toByteArray();
     	mainActivity.sendMsgToSvr(data);
 	}
+	
 }
 

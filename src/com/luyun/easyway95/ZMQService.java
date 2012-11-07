@@ -88,11 +88,15 @@ public class ZMQService extends Service {
 
 	@Override
 	public void onDestroy() {
-		mzsLifeCycleInproc.send("".getBytes(), 0); //inform iothread to exit
+		mzsLifeCycleInproc.send(Constants.ZMQ_QUITTING_CMD.getBytes(), 0); //inform iothread to exit
 		mzsLifeCycleInproc.close();
 		mzcContextInproc.term();
 		
 		super.onDestroy();
+	}
+	
+	public void reconnect() {
+		mzsLifeCycleInproc.send(Constants.ZMQ_RECONNECT_CMD.getBytes(), 0); //inform iothread to reconnect
 	}
 	
 	public void sendMsgToSvr(byte[] data) {
@@ -100,52 +104,26 @@ public class ZMQService extends Service {
 	}
     
 	public class ZMQThread extends Thread {
+		String strProTSS;
+		ZMQ.Poller items;
+		
 		@Override
 		public void run() {
 	        Log.d(TAG, "In running"); 
 			mzcContextSvrEnd = ZMQ.context(1);
+			items = mzcContextSvrEnd.poller(2);
 			
 	        //bind inproc socket
 			mzsLifeCycleSvrEnd = mzcContextInproc.socket(ZMQ.PAIR); 
 	        String strLifeCycle = 
 					"inproc://lifecycle";
 	        mzsLifeCycleSvrEnd.bind (strLifeCycle); 
-	        Log.d(TAG, "bound lifecycle.");
-			
-//	        mzsDevSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
-//	        String strDevTSS = 
-//					"tcp://"
-//					+Constants.TSS_DEV_HOST
-//					+":"
-//					+Constants.TSS_SERVER_PORT;
-//	        mzsDevSvrEnd.connect (strDevTSS);
-	        
-	        
-	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
-	        //mzsProSvrEnd.setReconnectIVL(1000);
-//	        mzsProSvrEnd.setIdentity(mDeviceID.getBytes());
-
-	        try {
-		        String strProTSS = 
-						"tcp://"
-						+Constants.TSS_PRO_HOST
-						+":"
-						+Constants.TSS_SERVER_PORT;
-		        mzsProSvrEnd.connect (strProTSS);
-		        String localIP = getLocalIpAddress();
-		        if (localIP != null) {
-		        	Log.d(TAG, String.format("ZMQ ID: %s, IP: %s connected to %s", new String(mzsProSvrEnd.getIdentity()), localIP, strProTSS));
-		        }
-	        } catch (Exception e) {
-	        	Log.e(TAG, "connect to server failed."+e.getMessage());
-	        }
-	        
 	        //create a separate thread to retrieve data from server
 			//  Initialize poll set
-			ZMQ.Poller items = mzcContextSvrEnd.poller(2);
 			items.register(mzsLifeCycleSvrEnd, ZMQ.Poller.POLLIN);
-			//items.register(mzsDevSvrEnd, ZMQ.Poller.POLLIN);
-			items.register(mzsProSvrEnd, ZMQ.Poller.POLLIN);
+			
+	        connectSVR();
+
 
 			//  Process messages from both sockets
 			while (true) {
@@ -153,9 +131,17 @@ public class ZMQService extends Service {
 				items.poll();
 				if (items.pollin(0)) {
 					data = mzsLifeCycleSvrEnd.recv(0);
-					if (data.length == 0) {
-						Log.d(TAG, "ZMQService quitting...");
-						break; //break the loop 
+					//2字节包是内部命令
+					if (data.length == 2) {
+						String cmd = new String(data);
+						if (cmd.equals(Constants.ZMQ_QUITTING_CMD)) {
+							Log.d(TAG, "ZMQService quitting...");
+							break; //break the loop 
+						} else if (cmd.equals(Constants.ZMQ_RECONNECT_CMD)) {
+							Log.d(TAG, "ZMQService reconnecting ...");
+							connectSVR();
+							continue;
+						}
 					}
 					//mzsDevSvrEnd.send(data, 0);
 			        Log.d(TAG, String.format("send msg, ZMQID: %s, IP: %s", new String(mzsProSvrEnd.getIdentity()), getLocalIpAddress()));
@@ -186,6 +172,28 @@ public class ZMQService extends Service {
 			//mzsDevSvrEnd.close();
 			mzsProSvrEnd.close();
 			mzcContextSvrEnd.term();
+		}
+		
+		public void connectSVR() {
+			if (mzsProSvrEnd != null) {
+				items.unregister(mzsProSvrEnd);
+			}
+	        mzsProSvrEnd = mzcContextSvrEnd.socket(ZMQ.DEALER); 
+	        try {
+		        strProTSS = 
+						"tcp://"
+						+Constants.TSS_PRO_HOST
+						+":"
+						+Constants.TSS_SERVER_PORT;
+		        mzsProSvrEnd.connect (strProTSS);
+		        String localIP = getLocalIpAddress();
+		        if (localIP != null) {
+		        	Log.d(TAG, String.format("ZMQ ID: %s, IP: %s connected to %s", new String(mzsProSvrEnd.getIdentity()), localIP, strProTSS));
+		        }
+	        } catch (Exception e) {
+	        	Log.e(TAG, "connect to server failed."+e.getMessage());
+	        }
+			items.register(mzsProSvrEnd, ZMQ.Poller.POLLIN);
 		}
 	}
 	
