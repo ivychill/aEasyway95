@@ -8,6 +8,9 @@ public class Constants {
 	public static final int ERROR=1001;
 	public static final int FIRST_LOCATION=1002;
 	
+	public static final String ZMQ_QUITTING_CMD = "QT";
+	public static final String ZMQ_RECONNECT_CMD = "RC";
+	
 	public static final int ROUTE_START_SEARCH=2000;//路径规划起点搜索
 	public static final int ROUTE_END_SEARCH=2001;//路径规划起点搜索
 	public static final int ROUTE_SEARCH_RESULT=2002;//路径规划结果
