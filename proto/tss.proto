@@ -123,9 +123,10 @@ message LYDeviceReport {
 message LYCheckin {
     optional string device_model = 1; //设备型号，如iPhone, G7
     required LYOsType os_type = 2; //设备类型，如Android, iOS, WP
-    required string os_version = 3; //操作系统版本，如2.3, 4.0.1, 6.0.1
-    required int32 ly_major_release = 4;  //路易95大版本，如果有变化，必须升级
-    required int32 ly_minor_release = 5;  //路易95小版本，如果有变化，可以不升级
+    optional string os_version = 3; //操作系统版本，如2.3, 4.0.1, 6.0.1
+    required int32 ly_major_release = 4; //路易95大版本，如果有变化，必须升级
+    required int32 ly_minor_release = 5; //路易95小版本，如果有变化，可以不升级
+    optional string download_url = 6; //路易95下载地址
 }
 
 message LYSamplePoint {
@@ -170,17 +171,18 @@ enum LYMsgType {
     LY_TRAFFIC_PUB = 0x13;	//message LYTrafficPub
 }
 
+//用于router-feed间通信
 message LYMsgOnAir {
-    required int32 version = 1; //only value 1 supported till 2012-08-30, 2012-12-30 hopehully
+    required int32 version = 1;
     required int32 msg_id = 5;
     required int64 timestamp = 6;
     required LYParty from_party = 2;
     required LYParty to_party = 3;
     required LYMsgType msg_type = 4;
-    //这三个字段为新加，snd_id和rcv_id目前皆高为device id
+    //这两个字段为新加，为客户端寻址用，发送时客户端设snd_id为device_id
     optional string snd_id = 7;
     optional string rcv_id = 8;
-    optional int32 checksum = 9;
+    optional bytes signature = 9;
 
     extensions 128 to 255;
 

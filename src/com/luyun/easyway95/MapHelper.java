@@ -69,12 +69,13 @@ public class MapHelper {
 		mCurrentPoint = new GeoPoint((int) (22.551541 * 1E6),
                 (int) (113.94750 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
 		mTrafficSubscriber = new TrafficSubscriber(mainActivity);
-		Date now = new Date();
-		if (now.getHours()<=12) {
-			mDestPoint = mainActivity.getOfficeAddr();
-		}else {
-			mDestPoint = mainActivity.getHomeAddr();
-		}
+//		Date now = new Date();
+//		if (now.getHours()<=12) {
+//			mDestPoint = mainActivity.getOfficeAddr();
+//		}else {
+//			mDestPoint = mainActivity.getHomeAddr();
+//		}
+		mDestPoint = mainActivity.getLastDestination();
 		mHotRoadsWithTraffic = new HotRoadsWithTraffic();
 		mLocationSet = new LYLocation();
 	}
@@ -139,6 +140,17 @@ public class MapHelper {
     			Log.e(TAG, "some errors happend, error code="+msg.getRetCode());
     		}
     		return;
+    	case LY_CHECKIN:
+    		LYCheckin ci = msg.getCheckin();
+    		Log.d(TAG, ci.toString());
+    		int major = ci.getLyMajorRelease();
+    		int minor = ci.getLyMinorRelease();
+    		if (major > mainActivity.getMajorRelease()) {
+    			mainActivity.onSoftwareUpgrade(ci.getDownloadUrl(), true);
+    		} else if (minor > mainActivity.getMinorRelease()) {
+    			mainActivity.onSoftwareUpgrade(ci.getDownloadUrl(), false);
+    		}
+    		return;
     	case LY_TRAFFIC_PUB:
     		LYTrafficPub trafficPub = msg.getTrafficPub();
     		if (trafficPub == null) {
@@ -177,8 +189,6 @@ public class MapHelper {
     	LYTrafficReport tr = mLocationSet.genTraffic();
     	if (tr != null) {
     		byte[] payload = tr.toByteArray();
-    		int checkSum = LYCheckSum.genCheckSum(payload);
-    		Log.d(TAG, String.format("check sum %d", checkSum));
     		
         	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
     				.setVersion(1)
@@ -188,7 +198,6 @@ public class MapHelper {
     				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_REPORT)
     				.setMsgId(2000)
     				.setTimestamp(System.currentTimeMillis()/1000)
-    				.setChecksum(checkSum)
     				.setTrafficReport(tr)
     				.build();
         	Log.d(TAG, msg.toString());
@@ -303,7 +312,16 @@ public class MapHelper {
     	requestDrivingRoutes(startPoint, endPoint);
     }
     
-    public void requestDrivingRoutes(GeoPoint startPoint, GeoPoint endPoint) {
+    /*
+     * 20121106 增加一个封装，为了保存上次目的地址，蔡庆丰
+     */
+    public void requestDrivingRoutes(GeoPoint startPoint, MKPoiInfoHelper endPoi) {
+    	mainActivity.setLastDestination(endPoi);
+    	requestDrivingRoutes(startPoint, endPoi.getPt());
+    }
+
+    
+    private void requestDrivingRoutes(GeoPoint startPoint, GeoPoint endPoint) {
 		Log.d(TAG, "enter requestDrivingRoutes, start="+startPoint.toString()+",end="+endPoint.toString());
 		mDestPoint = endPoint;
 		
@@ -426,12 +444,10 @@ public class MapHelper {
 				.setDeviceModel(android.os.Build.MODEL)
 				.setOsType(LYOsType.LY_ANDROID)
 				.setOsVersion(android.os.Build.VERSION.SDK)
-				.setLyMajorRelease(2)
-				.setLyMinorRelease(1)
+				.setLyMajorRelease(mainActivity.getMajorRelease())
+				.setLyMinorRelease(mainActivity.getMinorRelease())
 				.build();
 		byte[] payload = ci.toByteArray();
-		int checkSum = LYCheckSum.genCheckSum(payload);
-		Log.d(TAG, String.format("check sum %d", checkSum));
 		
     	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
 				.setVersion(1)
@@ -441,7 +457,6 @@ public class MapHelper {
 				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN)
 				.setMsgId(2000)
 				.setTimestamp(System.currentTimeMillis()/1000)
-				.setChecksum(checkSum)
 				.setCheckin(ci)
 				.build();
     	

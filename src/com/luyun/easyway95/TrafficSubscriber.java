@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MKStep;
+import com.google.protobuf.ByteString;
 import com.luyun.easyway95.shared.TSSProtos.LYCoordinate;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYRoute;
@@ -23,7 +24,7 @@ public class TrafficSubscriber {
 	
 	static LYRoute RoadAnalyzer (MKRoute route) {
 		int mNumStep = route.getNumSteps();
-		Log.d(TAG, "mNumStep..." + mNumStep);
+		//Log.d(TAG, "mNumStep..." + mNumStep);
 		com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder mRouteBuilder = com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder();
 		com.luyun.easyway95.shared.TSSProtos.LYCoordinate start = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
 				.setLat(0)
@@ -34,10 +35,10 @@ public class TrafficSubscriber {
 		//boolean isNextRoad = false;
 		
 		for (int index = 0; index < mNumStep; index++){
-			Log.d(TAG, "step index..." + index);
+			//Log.d(TAG, "step index..." + index);
 			MKStep step = route.getStep(index);
 			//Log.d(TAG, "step point..." + step.getPoint().toString());
-			Log.d(TAG, "step content..." + step.getContent());
+			//Log.d(TAG, "step content..." + step.getContent());
 			Scanner scanner = new Scanner(step.getContent());
 			scanner.useDelimiter("\\s*-\\s*");
 			String pattern = ".*½øÈë(.*)";
@@ -46,7 +47,7 @@ public class TrafficSubscriber {
 				MatchResult match = scanner.match();
 				nextRoad = match.group(1);
 				//isNextRoad = true;
-				Log.d(TAG, "road..." + nextRoad);
+				//Log.d(TAG, "road..." + nextRoad);
 				LYCoordinate nextStart = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
 						.setLat(step.getPoint().getLatitudeE6()/1E6)
 						.setLng(step.getPoint().getLongitudeE6()/1E6)
@@ -64,7 +65,7 @@ public class TrafficSubscriber {
 			}
 			else {
 				//isNextRoad = false;
-				Log.d(TAG, "no pattern matched");
+				//Log.d(TAG, "no pattern matched");
 			}
 		}
 		
@@ -73,7 +74,7 @@ public class TrafficSubscriber {
 	
 	void SubTraffic (MKRoute route) {
 	    LYRoute mRoute = RoadAnalyzer (route);
-	    Log.d(TAG, mRoute.toString());
+	    //Log.d(TAG, mRoute.toString());
 	    
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("ÉîÛÚ")
@@ -82,8 +83,6 @@ public class TrafficSubscriber {
 				.setRoute(mRoute)
 				.build();
 		byte[] payload = tsub.toByteArray();
-		int checkSum = LYCheckSum.genCheckSum(payload);
-		Log.d(TAG, String.format("check sum %d", checkSum));
 		
     	LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.newBuilder()
 				.setVersion(1)
@@ -93,7 +92,6 @@ public class TrafficSubscriber {
 				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_SUB)
 				.setMsgId(1000)
 				.setTimestamp(System.currentTimeMillis()/1000)
-				.setChecksum(checkSum)
 				.setTrafficSub(tsub)
 				.build();
     	//Log.d(TAG, msg.toString());

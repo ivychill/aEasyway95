@@ -18,8 +18,9 @@ public class Easyway95App extends Application {
 	
 	static Easyway95App mApp;
 	public MKPoiResult mMKPoiResult;
-	private Location lastLocation;
+	private Location lastLocation=null;
 	private long lastChecked = 0;
+	private boolean trafficLayerOn = false;
 	
 	//Map工具类，提供距离、路径拟合等算法支持
 	private MapUtils mMapUtils = null;
@@ -109,4 +110,11 @@ public class Easyway95App extends Application {
 		return true;
 	}
 	
+	boolean getTrafficLayerFlag() {
+		return trafficLayerOn;
+	}
+	
+	void setTrafficLayerFlag(boolean flag) {
+		trafficLayerOn = flag;
+	}
 }

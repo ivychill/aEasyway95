@@ -40,6 +40,8 @@ public class UserProfile {
 	
 	MKPoiInfoHelper mHomeAddr;
 	MKPoiInfoHelper mOfficeAddr;
+	MKPoiInfoHelper mLastDestination;
+	
 	LinkedList<String> mRecentQuery;
 	MKRouteHelper mRouteHome2Office;
 	MKRouteHelper mRouteOffice2Home;
@@ -83,6 +85,18 @@ public class UserProfile {
 	public void setOfficeAddr(MKPoiInfoHelper mpi) {
 		mOfficeAddr = mpi;
 	}
+	public void setLastDestination(MKPoiInfoHelper mpi) {
+		mLastDestination = mpi;
+	}
+	public void setAndCommitLastDestination(SharedPreferences sp, MKPoiInfoHelper mpi) {
+		mLastDestination = mpi;
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString("lastdest", mLastDestination.toString());
+		ed.commit();
+	}
+	public MKPoiInfoHelper getLastDestination() {
+		return mLastDestination;
+	}
 	public String getOfficeLatLng() {
 		return mOfficeAddr.getLatLng();
 	}
@@ -120,6 +134,7 @@ public class UserProfile {
 		String poiHuawei = String.format(
 				"name=(华为总部), address=(b654路;b666路;b667路;m342路空调;机场7线空调), city=(深圳), phoneNum=(), postCode=(), pt.lat=(22661034), pt.lng=(114064093), ePoiType=(1), searchPlace=()");
 		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", poiHuawei));
+		mLastDestination = new MKPoiInfoHelper(sp.getString("lastdest", poiHuawei));
 		mRecentQuery = new LinkedList();
 		int index = 0;
 		String recentQuery;
@@ -137,6 +152,7 @@ public class UserProfile {
 		ed.putString("UserPassword", msUserPassword);
 		ed.putString("homeaddr", mHomeAddr.toString());
 		ed.putString("officeaddr", mOfficeAddr.toString());
+		ed.putString("lastdest", mLastDestination.toString());
 		for (int index = 0; index < mRecentQuery.size(); index++) {
 			ed.putString("RecentQuery"+index, mRecentQuery.toArray(new String[0])[index]);
 		}

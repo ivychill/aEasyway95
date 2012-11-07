@@ -32,7 +32,7 @@
                 android:title="交通流量图层"
                 android:defaultValue="false"
                 android:summaryOff="关闭交通流量图层"
-                android:summaryOn="开启交通流量图层将会导致流量增加" />
+                android:summaryOn="开启交通流量图层将会导致流量增加，为您节省流量考虑每次重新启动时会自动关闭流量图层" />
         <CheckBoxPreference
                 android:key="subscription_preference"
                 android:title="上下班路况订阅"
@@ -69,7 +69,7 @@
         <Preference
                 android:key="release_preference"
                 android:title="版本号"
-                android:summary="2.0.1" />
+                android:summary="2.0" />
         <Preference
                 android:key="weibo_preference"
                 android:title="关注新浪官博"

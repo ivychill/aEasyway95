@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,6 +63,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -94,6 +97,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     public MapHelper mMapHelper;
     private MKPoiInfoHelper mHomeAddr;
     private MKPoiInfoHelper mOfficeAddr;
+    private MKPoiInfoHelper mLastDestination;
     private ProgressDialog popupDlg;
     
     private MapView mMapView;
@@ -122,6 +126,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     
     //设备ID
 	private String mDeviceID;
+	//系统版本
+	private int majorRelease;
+	private int minorRelease;
     
     private ServiceConnection mConnectionZMQ = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -131,6 +138,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
         	mzService = ((ZMQService.LocalBinder)service).getService();
+        	mMapHelper.checkIn();
             //mzService.registerHandler(handler);
         }
 
@@ -206,10 +214,20 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		//获取DeviceID
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         mDeviceID = tm.getDeviceId();
-
-//		getWindow().setFlags(
-//			    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-//			    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        //获取版本信息
+        try {
+        	PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+        	String versionName = info.versionName;
+        	Pattern p = Pattern.compile("(\\d)(\\.)(\\d)");
+    		Matcher m = p.matcher(versionName);
+    		if (m.find()) {
+    			majorRelease = Integer.parseInt(m.group(1));
+    			minorRelease = Integer.parseInt(m.group(3));
+    			Log.d(TAG, String.format("major=%d, minor=%d", majorRelease, minorRelease));
+    		}
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
 
 		//初始化家庭和办公室地址，在resume里也要做一次
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
@@ -217,6 +235,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		//Log.d(TAG, up.toString());
 		mHomeAddr = up.getHomeAddr();
 		mOfficeAddr = up.getOfficeAddr();
+		mLastDestination = up.getLastDestination();
 		mMapHelper = new MapHelper(this);
 
 		setContentView(R.layout.ly_navigator);
@@ -236,20 +255,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         //mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
         //设置在缩放动画过程中也显示overlay,默认为不绘制
         //mMapView.setDrawOverlayWhenZooming(true);
+		//启动时关闭流量图层
+		toggleTrafficLayer(false);
+		app.setTrafficLayerFlag(false);
          
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
         //支持离线地图, 20121105 因Baidu API离线地图功能有问题。如果放开可以把preference加到preferences.xml中
-//        <PreferenceCategory
-//        android:title="离线地图" >
-//<ListPreference
-//        android:key="map_mgr_preference"
-//        android:title="下载离线地图"
-//        android:summary="当前仅支持深圳"
-//        android:entries="@array/map_mgr"
-//        android:entryValues="@array/map_mgr_action"
-//        android:dialogTitle="离线地图管理" />
-//        
-//</PreferenceCategory>
 //
 //        mOffline = new MKOfflineMap();
 //        mOffline.init(app.mBMapMan, this);
@@ -325,7 +336,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	}
         });
         
-        
         mHeading = (TextView)findViewById(R.id.heading);
         mHeading.setOnClickListener(new OnClickListener() {
         	@Override
@@ -387,7 +397,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 				Bundle bundle = intent.getExtras();
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
 				Log.d(TAG, "poi: " + poiInfo.toString());
-				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo.getPt());
+				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo);
 				mHeading.setText("至" + poiInfo.getName() + "的路况");
 				mMapView.getController().animateTo(poiInfo.getPt());
 //				mHeading.setTextSize(16);
@@ -456,8 +466,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	    //setResetTimerTask();
 	    
 	    super.onResume();
-	    //向服务器checkin
-	    //mMapHelper.checkIn();
 	}    
     
 	public Handler handler = new Handler() {
@@ -488,7 +496,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             try {
             	//Log.i(TAG, "get message from server.");
             	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
-            	Log.d(TAG, msgOnAir.toString());
+            	//Log.d(TAG, msgOnAir.toString());
              	mMapHelper.onMsg(msgOnAir);
             	LYNavigator.this.resetMapView();
 			} catch (InvalidProtocolBufferException e) {
@@ -726,7 +734,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
-        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr.getPt());
+        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
     			mHeading.setText("至" + mHomeAddr.getName() + "的路况");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
@@ -740,7 +748,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
-        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr.getPt());
+        		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
     			mHeading.setText("至" + mOfficeAddr.getName() + "的路况");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
@@ -880,8 +888,42 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		return mDeviceID;
 	}
 	
-	public void setTraffic(boolean to_set) {
+	public void toggleTrafficLayer(boolean to_set) {
 		mMapView.setTraffic(to_set);
 	}
     
+	public void setLastDestination(MKPoiInfoHelper mpi) {
+		//初始化家庭和办公室地址，在resume里也要做一次
+		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+		UserProfile up = new UserProfile(sp);
+		up.setAndCommitLastDestination(sp, mpi);
+	}
+	
+	public GeoPoint getLastDestination() {
+    	return mLastDestination.getPt();
+	}
+	
+	public int getMajorRelease() {
+		return majorRelease;
+	}
+	
+	public int getMinorRelease() {
+		return minorRelease;
+	}
+	
+	/*
+	 * 如果force，则强制升级，否则提示用户有新版本，但当前版本还可继续运行，点升级可去升级，否则关闭对话框继续运行
+	 * 1、弹出对话框
+	 * 2、点击下载，自动升级
+	 * 
+	 */
+	public void onSoftwareUpgrade(String url, boolean force) {
+		String upgradeUrl;
+		if (url == null) {
+			upgradeUrl = Constants.DOWNLOAD_URL;
+		} else {
+			upgradeUrl = url;
+		}
+		Log.d(TAG, "force to upgrade! "+url);
+	}
 }

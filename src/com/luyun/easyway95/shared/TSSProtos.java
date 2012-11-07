@@ -8138,7 +8138,7 @@ public final class TSSProtos {
     boolean hasOsType();
     com.luyun.easyway95.shared.TSSProtos.LYOsType getOsType();
     
-    // required string os_version = 3;
+    // optional string os_version = 3;
     boolean hasOsVersion();
     String getOsVersion();
     
@@ -8149,6 +8149,10 @@ public final class TSSProtos {
     // required int32 ly_minor_release = 5;
     boolean hasLyMinorRelease();
     int getLyMinorRelease();
+    
+    // optional string download_url = 6;
+    boolean hasDownloadUrl();
+    String getDownloadUrl();
   }
   public static final class LYCheckin extends
       com.google.protobuf.GeneratedMessage
@@ -8221,7 +8225,7 @@ public final class TSSProtos {
       return osType_;
     }
     
-    // required string os_version = 3;
+    // optional string os_version = 3;
     public static final int OS_VERSION_FIELD_NUMBER = 3;
     private java.lang.Object osVersion_;
     public boolean hasOsVersion() {
@@ -8273,12 +8277,45 @@ public final class TSSProtos {
       return lyMinorRelease_;
     }
     
+    // optional string download_url = 6;
+    public static final int DOWNLOAD_URL_FIELD_NUMBER = 6;
+    private java.lang.Object downloadUrl_;
+    public boolean hasDownloadUrl() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public String getDownloadUrl() {
+      java.lang.Object ref = downloadUrl_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          downloadUrl_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getDownloadUrlBytes() {
+      java.lang.Object ref = downloadUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        downloadUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     private void initFields() {
       deviceModel_ = "";
       osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
       osVersion_ = "";
       lyMajorRelease_ = 0;
       lyMinorRelease_ = 0;
+      downloadUrl_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -8286,10 +8323,6 @@ public final class TSSProtos {
       if (isInitialized != -1) return isInitialized == 1;
       
       if (!hasOsType()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasOsVersion()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -8323,6 +8356,9 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeInt32(5, lyMinorRelease_);
       }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(6, getDownloadUrlBytes());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -8351,6 +8387,10 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, lyMinorRelease_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, getDownloadUrlBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8486,6 +8526,8 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000008);
         lyMinorRelease_ = 0;
         bitField0_ = (bitField0_ & ~0x00000010);
+        downloadUrl_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -8544,6 +8586,10 @@ public final class TSSProtos {
           to_bitField0_ |= 0x00000010;
         }
         result.lyMinorRelease_ = lyMinorRelease_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.downloadUrl_ = downloadUrl_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -8575,16 +8621,15 @@ public final class TSSProtos {
         if (other.hasLyMinorRelease()) {
           setLyMinorRelease(other.getLyMinorRelease());
         }
+        if (other.hasDownloadUrl()) {
+          setDownloadUrl(other.getDownloadUrl());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
       
       public final boolean isInitialized() {
         if (!hasOsType()) {
-          
-          return false;
-        }
-        if (!hasOsVersion()) {
           
           return false;
         }
@@ -8653,6 +8698,11 @@ public final class TSSProtos {
               lyMinorRelease_ = input.readInt32();
               break;
             }
+            case 50: {
+              bitField0_ |= 0x00000020;
+              downloadUrl_ = input.readBytes();
+              break;
+            }
           }
         }
       }
@@ -8719,7 +8769,7 @@ public final class TSSProtos {
         return this;
       }
       
-      // required string os_version = 3;
+      // optional string os_version = 3;
       private java.lang.Object osVersion_ = "";
       public boolean hasOsVersion() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
@@ -8795,6 +8845,42 @@ public final class TSSProtos {
         lyMinorRelease_ = 0;
         onChanged();
         return this;
+      }
+      
+      // optional string download_url = 6;
+      private java.lang.Object downloadUrl_ = "";
+      public boolean hasDownloadUrl() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public String getDownloadUrl() {
+        java.lang.Object ref = downloadUrl_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          downloadUrl_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setDownloadUrl(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        downloadUrl_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDownloadUrl() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        downloadUrl_ = getDefaultInstance().getDownloadUrl();
+        onChanged();
+        return this;
+      }
+      void setDownloadUrl(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000020;
+        downloadUrl_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:tss.LYCheckin)
@@ -10026,9 +10112,9 @@ public final class TSSProtos {
     boolean hasRcvId();
     String getRcvId();
     
-    // optional int32 checksum = 9;
-    boolean hasChecksum();
-    int getChecksum();
+    // optional bytes signature = 9;
+    boolean hasSignature();
+    com.google.protobuf.ByteString getSignature();
     
     // optional .tss.LYRetCode ret_code = 17;
     boolean hasRetCode();
@@ -10212,14 +10298,14 @@ public final class TSSProtos {
       }
     }
     
-    // optional int32 checksum = 9;
-    public static final int CHECKSUM_FIELD_NUMBER = 9;
-    private int checksum_;
-    public boolean hasChecksum() {
+    // optional bytes signature = 9;
+    public static final int SIGNATURE_FIELD_NUMBER = 9;
+    private com.google.protobuf.ByteString signature_;
+    public boolean hasSignature() {
       return ((bitField0_ & 0x00000100) == 0x00000100);
     }
-    public int getChecksum() {
-      return checksum_;
+    public com.google.protobuf.ByteString getSignature() {
+      return signature_;
     }
     
     // optional .tss.LYRetCode ret_code = 17;
@@ -10306,7 +10392,7 @@ public final class TSSProtos {
       msgType_ = com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_CHECKIN;
       sndId_ = "";
       rcvId_ = "";
-      checksum_ = 0;
+      signature_ = com.google.protobuf.ByteString.EMPTY;
       retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
       checkin_ = com.luyun.easyway95.shared.TSSProtos.LYCheckin.getDefaultInstance();
       deviceReport_ = com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.getDefaultInstance();
@@ -10412,7 +10498,7 @@ public final class TSSProtos {
         output.writeBytes(8, getRcvIdBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeInt32(9, checksum_);
+        output.writeBytes(9, signature_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         output.writeEnum(17, retCode_.getNumber());
@@ -10476,7 +10562,7 @@ public final class TSSProtos {
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(9, checksum_);
+          .computeBytesSize(9, signature_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
@@ -10648,7 +10734,7 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000040);
         rcvId_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
-        checksum_ = 0;
+        signature_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000100);
         retCode_ = com.luyun.easyway95.shared.TSSProtos.LYRetCode.LY_SUCCESS;
         bitField0_ = (bitField0_ & ~0x00000200);
@@ -10755,7 +10841,7 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000100;
         }
-        result.checksum_ = checksum_;
+        result.signature_ = signature_;
         if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000200;
         }
@@ -10840,8 +10926,8 @@ public final class TSSProtos {
         if (other.hasRcvId()) {
           setRcvId(other.getRcvId());
         }
-        if (other.hasChecksum()) {
-          setChecksum(other.getChecksum());
+        if (other.hasSignature()) {
+          setSignature(other.getSignature());
         }
         if (other.hasRetCode()) {
           setRetCode(other.getRetCode());
@@ -11009,9 +11095,9 @@ public final class TSSProtos {
               rcvId_ = input.readBytes();
               break;
             }
-            case 72: {
+            case 74: {
               bitField0_ |= 0x00000100;
-              checksum_ = input.readInt32();
+              signature_ = input.readBytes();
               break;
             }
             case 136: {
@@ -11283,23 +11369,26 @@ public final class TSSProtos {
         onChanged();
       }
       
-      // optional int32 checksum = 9;
-      private int checksum_ ;
-      public boolean hasChecksum() {
+      // optional bytes signature = 9;
+      private com.google.protobuf.ByteString signature_ = com.google.protobuf.ByteString.EMPTY;
+      public boolean hasSignature() {
         return ((bitField0_ & 0x00000100) == 0x00000100);
       }
-      public int getChecksum() {
-        return checksum_;
+      public com.google.protobuf.ByteString getSignature() {
+        return signature_;
       }
-      public Builder setChecksum(int value) {
-        bitField0_ |= 0x00000100;
-        checksum_ = value;
+      public Builder setSignature(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000100;
+        signature_ = value;
         onChanged();
         return this;
       }
-      public Builder clearChecksum() {
+      public Builder clearSignature() {
         bitField0_ = (bitField0_ & ~0x00000100);
-        checksum_ = 0;
+        signature_ = getDefaultInstance().getSignature();
         onChanged();
         return this;
       }
@@ -11908,41 +11997,42 @@ public final class TSSProtos {
       "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
       "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
       "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
-      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\211\001\n\tLYChe" +
+      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\237\001\n\tLYChe" +
       "ckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007os_type\030\002 " +
-      "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \002(\t\022\030" +
+      "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \001(\t\022\030" +
       "\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly_minor_rel" +
-      "ease\030\005 \002(\005\"n\n\rLYSamplePoint\022(\n\rsp_coordi",
-      "nate\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\ttimesta" +
-      "mp\030\002 \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006course\030\004 \001" +
-      "(\001\"5\n\017LYTrafficReport\022\"\n\006points\030\001 \003(\0132\022." +
-      "tss.LYSamplePoint\"\313\003\n\nLYMsgOnAir\022\017\n\007vers" +
-      "ion\030\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006" +
-      " \002(\003\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036" +
-      "\n\010to_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_ty" +
-      "pe\030\004 \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id\030\007 \001(\t" +
-      "\022\016\n\006rcv_id\030\010 \001(\t\022\020\n\010checksum\030\t \001(\005\022 \n\010re" +
-      "t_code\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007checkin\030",
-      "\022 \001(\0132\016.tss.LYCheckin\022*\n\rdevice_report\030\023" +
-      " \001(\0132\023.tss.LYDeviceReport\022&\n\013traffic_sub" +
-      "\030$ \001(\0132\021.tss.LYTrafficSub\022&\n\013traffic_pub" +
-      "\0303 \001(\0132\021.tss.LYTrafficPub\022,\n\016traffic_rep" +
-      "ort\030A \001(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*" +
-      "1\n\010LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022" +
-      "\t\n\005LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_UNKNOWN" +
-      "\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022\014\n\010LY_" +
-      "NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WEST\020\005\022\020" +
-      "\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOU",
-      "THEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCESS\020\000\022\034" +
-      "\n\027LY_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY_VERSI" +
-      "ON_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021LY_MSG" +
-      "_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OT" +
-      "HER_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIENT\020\001\022\n" +
-      "\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgType\022\016\n\nL" +
-      "Y_CHECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRAFF" +
-      "IC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_DE" +
-      "VICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032com" +
-      ".luyun.easyway95.sharedB\tTSSProtos"
+      "ease\030\005 \002(\005\022\024\n\014download_url\030\006 \001(\t\"n\n\rLYSa",
+      "mplePoint\022(\n\rsp_coordinate\030\001 \002(\0132\021.tss.L" +
+      "YCoordinate\022\021\n\ttimestamp\030\002 \002(\003\022\020\n\010altitu" +
+      "de\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5\n\017LYTrafficRep" +
+      "ort\022\"\n\006points\030\001 \003(\0132\022.tss.LYSamplePoint\"" +
+      "\314\003\n\nLYMsgOnAir\022\017\n\007version\030\001 \002(\005\022\016\n\006msg_i" +
+      "d\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003\022 \n\nfrom_party" +
+      "\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to_party\030\003 \002(\0162\014" +
+      ".tss.LYParty\022 \n\010msg_type\030\004 \002(\0162\016.tss.LYM" +
+      "sgType\022\016\n\006snd_id\030\007 \001(\t\022\016\n\006rcv_id\030\010 \001(\t\022\021" +
+      "\n\tsignature\030\t \001(\014\022 \n\010ret_code\030\021 \001(\0162\016.ts",
+      "s.LYRetCode\022\037\n\007checkin\030\022 \001(\0132\016.tss.LYChe" +
+      "ckin\022*\n\rdevice_report\030\023 \001(\0132\023.tss.LYDevi" +
+      "ceReport\022&\n\013traffic_sub\030$ \001(\0132\021.tss.LYTr" +
+      "afficSub\022&\n\013traffic_pub\0303 \001(\0132\021.tss.LYTr" +
+      "afficPub\022,\n\016traffic_report\030A \001(\0132\024.tss.L" +
+      "YTrafficReport*\006\010\200\001\020\200\002*1\n\010LYOsType\022\016\n\nLY" +
+      "_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022\t\n\005LY_WP\020\002*\233\001\n\013LY" +
+      "Direction\022\016\n\nLY_UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020" +
+      "\n\014LY_NORTHEAST\020\002\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NOR" +
+      "THWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022",
+      "\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHEAST\020\010*\241\001\n\tLYRe" +
+      "tCode\022\016\n\nLY_SUCCESS\020\000\022\034\n\027LY_VERSION_IMCO" +
+      "MPATIBLE\020\221\002\022\023\n\016LY_VERSION_LOW\020\243\002\022\023\n\016LY_P" +
+      "ARTY_ERROR\020\251\004\022\026\n\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n" +
+      "\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER_ERROR\020\231\023*/\n\007L" +
+      "YParty\022\r\n\tLY_CLIENT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_" +
+      "TC\020\003*\201\001\n\tLYMsgType\022\016\n\nLY_CHECKIN\020\001\022\017\n\013LY" +
+      "_RET_CODE\020\002\022\022\n\016LY_TRAFFIC_SUB\020\004\022\025\n\021LY_TR" +
+      "AFFIC_REPORT\020\005\022\024\n\020LY_DEVICE_REPORT\020\006\022\022\n\016" +
+      "LY_TRAFFIC_PUB\020\023B\'\n\032com.luyun.easyway95.",
+      "sharedB\tTSSProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -12042,7 +12132,7 @@ public final class TSSProtos {
           internal_static_tss_LYCheckin_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCheckin_descriptor,
-              new java.lang.String[] { "DeviceModel", "OsType", "OsVersion", "LyMajorRelease", "LyMinorRelease", },
+              new java.lang.String[] { "DeviceModel", "OsType", "OsVersion", "LyMajorRelease", "LyMinorRelease", "DownloadUrl", },
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.class,
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder.class);
           internal_static_tss_LYSamplePoint_descriptor =
@@ -12066,7 +12156,7 @@ public final class TSSProtos {
           internal_static_tss_LYMsgOnAir_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYMsgOnAir_descriptor,
-              new java.lang.String[] { "Version", "MsgId", "Timestamp", "FromParty", "ToParty", "MsgType", "SndId", "RcvId", "Checksum", "RetCode", "Checkin", "DeviceReport", "TrafficSub", "TrafficPub", "TrafficReport", },
+              new java.lang.String[] { "Version", "MsgId", "Timestamp", "FromParty", "ToParty", "MsgType", "SndId", "RcvId", "Signature", "RetCode", "Checkin", "DeviceReport", "TrafficSub", "TrafficPub", "TrafficReport", },
               com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.class,
               com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.Builder.class);
           return null;

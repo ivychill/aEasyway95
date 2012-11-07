@@ -112,6 +112,11 @@ public class LYSetting extends PreferenceActivity
 			});
 		}
 		final CheckBoxPreference pref = (CheckBoxPreference)this.findPreference("traffic_layer_preference");
+		if (app.getTrafficLayerFlag()) {
+			pref.setChecked(true);
+		} else {
+			pref.setChecked(false);			
+		}
 		if (pref != null) {
 			pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {  
 				@Override
@@ -119,7 +124,8 @@ public class LYSetting extends PreferenceActivity
 						) {
 					// TODO Auto-generated method stub
 					boolean checked = pref.isChecked();
-					app.getMainActivity().setTraffic(checked);
+					app.setTrafficLayerFlag(checked);
+					app.getMainActivity().toggleTrafficLayer(checked);
 					return true;
 				}   
 			});
