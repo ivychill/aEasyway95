@@ -103,11 +103,18 @@ public class UserProfile {
 	public LinkedList<String> getRecentQuery() {
 		return mRecentQuery;
 	}
-	
 	public void setRecentQuery(LinkedList<String> recentQuery) {
 		mRecentQuery = recentQuery;
 	}
-	
+	public void addRecentQuery(String query) {
+		mRecentQuery.remove(query);
+		mRecentQuery.addFirst(query);
+		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
+			mRecentQuery.removeLast();
+		}
+		setRecentQuery(mRecentQuery);
+		commitPreferences(mSP);
+	}
 	void updateFields(JSONObject jsonObj) {
 		try {
 			msUserName = jsonObj.getString("name");

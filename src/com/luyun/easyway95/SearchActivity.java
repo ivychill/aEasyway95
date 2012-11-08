@@ -140,13 +140,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
             public void onClick(View v) {  
     			String query = mSearchKey.getText().toString();
         		Log.d(TAG, "query: " + query);
-        		mRecentQuery.remove(query);
-        		mRecentQuery.addFirst(query);
-        		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
-        			mRecentQuery.removeLast();
-        		}
-        		mUserProfile.setRecentQuery(mRecentQuery);
-        		mUserProfile.commitPreferences(mSP);
+        		mUserProfile.addRecentQuery(query);
         		mSearch.poiSearchInCity("深圳", query);
             }  
         });
@@ -186,13 +180,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			        	String query = mRecentQuery.toArray(new String[0])[position];
 			    		Log.d(TAG, "query: " + query);
 			        	mSearchKey.setText(query);
-		        		mRecentQuery.remove(query);
-		        		mRecentQuery.addFirst(query);
-		        		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
-		        			mRecentQuery.removeLast();
-		        		}
-		        		mUserProfile.setRecentQuery(mRecentQuery);
-		        		mUserProfile.commitPreferences(mSP);
+		        		mUserProfile.addRecentQuery(query);
 			    		mSearch.poiSearchInCity("深圳", query);
 					}
 				}); 
@@ -321,13 +309,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         if (intent.getExtras() != null) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 //    		Log.d(TAG, "query: " + query);
-    		mRecentQuery.remove(query);
-    		mRecentQuery.addFirst(query);
-    		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
-    			mRecentQuery.removeLast();
-    		}
-    		mUserProfile.setRecentQuery(mRecentQuery);
-    		mUserProfile.commitPreferences(mSP);
+    		mUserProfile.addRecentQuery(query);
     		mSearch.poiSearchInCity("深圳", query);
         }
     }
@@ -452,13 +434,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         	String query = mStrSuggestions[position];
     		Log.d(TAG, "query: " + query);
         	mSearchKey.setText(query);
-    		mRecentQuery.remove(query);
-    		mRecentQuery.addFirst(query);
-    		if (mRecentQuery.size() >= Constants.MAX_RECENT_QUERY) {
-    			mRecentQuery.removeLast();
-    		}
-    		mUserProfile.setRecentQuery(mRecentQuery);
-    		mUserProfile.commitPreferences(mSP);
+    		mUserProfile.addRecentQuery(query);
     		mSearch.poiSearchInCity("深圳", query);
         }
     }
