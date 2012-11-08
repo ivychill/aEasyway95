@@ -924,27 +924,33 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	 * 2、点击下载，自动升级
 	 * 
 	 */
-	public void onSoftwareUpgrade(int major, int minor, String url, boolean force) {
+	public void onSoftwareUpgrade(int major, int minor, String url, String desc, boolean force) {
 		final String upgradeUrl = url;
-		new AlertDialog.Builder(LYNavigator.this)
+		String msg = String.format("您的当前版本: %d.%d, 最新版本: %d.%d\n%s\n", majorRelease, minorRelease, major, minor, desc);
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(LYNavigator.this)
 		.setTitle("升级提示")
-		.setMessage(String.format("您的当前版本: %d.%d, 最新版本: %d.%d, 确定升级吗?", majorRelease, minorRelease, major, minor))
-		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		.setMessage(msg)
+		.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				/* User clicked OK so do some stuff */
 //				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.luyun.easyway95"));
-				Log.d(TAG, "download url: " + upgradeUrl);
-				finish();
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(upgradeUrl));
+				Log.d(TAG, "download url: " + upgradeUrl);
 				startActivity(intent);
+//				System.exit(0);
 			}
-		})
-		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				/* User clicked Cancel */
-			}
-		})
-		.show();
+		});
+		
+		if (!force) {
+			alert.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					/* User clicked Cancel */
+				}
+			});
+		}
+
+		alert.show();
 	}
 	
 	public void ZMQreconnect() {

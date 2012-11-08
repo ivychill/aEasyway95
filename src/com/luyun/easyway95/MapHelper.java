@@ -145,23 +145,26 @@ public class MapHelper {
     		return;
     	case LY_CHECKIN:
     		String strUrl;
+    		String strDesc;
     		LYCheckin ci = msg.getCheckin();
     		Log.d(TAG, ci.toString());
     		int major = ci.getLyMajorRelease();
     		int minor = ci.getLyMinorRelease();
-    		if (ci.hasDownloadUrl())
-    		{
+    		if (ci.hasDownloadUrl()) {
     			strUrl = ci.getDownloadUrl();
     			Log.d(TAG, "download url from server: " + strUrl);
-    		}
-    		else
-    		{
+    		} else {
     			strUrl = Constants.DOWNLOAD_URL;
     		}
+    		if (ci.hasDesc()) {
+    			strDesc = ci.getDesc();
+    		} else {
+    			strDesc = "";
+    		}
     		if (major > mainActivity.getMajorRelease()) {
-    			mainActivity.onSoftwareUpgrade(major, minor, strUrl, true);
+    			mainActivity.onSoftwareUpgrade(major, minor, strUrl, strDesc, true);
     		} else if (minor > mainActivity.getMinorRelease()) {
-    			mainActivity.onSoftwareUpgrade(major, minor, strUrl, false);
+    			mainActivity.onSoftwareUpgrade(major, minor, strUrl, strDesc, false);
     		}
     		return;
     	case LY_TRAFFIC_PUB:

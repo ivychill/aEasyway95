@@ -8153,6 +8153,10 @@ public final class TSSProtos {
     // optional string download_url = 6;
     boolean hasDownloadUrl();
     String getDownloadUrl();
+    
+    // optional string desc = 7;
+    boolean hasDesc();
+    String getDesc();
   }
   public static final class LYCheckin extends
       com.google.protobuf.GeneratedMessage
@@ -8309,6 +8313,38 @@ public final class TSSProtos {
       }
     }
     
+    // optional string desc = 7;
+    public static final int DESC_FIELD_NUMBER = 7;
+    private java.lang.Object desc_;
+    public boolean hasDesc() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public String getDesc() {
+      java.lang.Object ref = desc_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          desc_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getDescBytes() {
+      java.lang.Object ref = desc_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        desc_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     private void initFields() {
       deviceModel_ = "";
       osType_ = com.luyun.easyway95.shared.TSSProtos.LYOsType.LY_ANDROID;
@@ -8316,6 +8352,7 @@ public final class TSSProtos {
       lyMajorRelease_ = 0;
       lyMinorRelease_ = 0;
       downloadUrl_ = "";
+      desc_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -8359,6 +8396,9 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeBytes(6, getDownloadUrlBytes());
       }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(7, getDescBytes());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -8391,6 +8431,10 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(6, getDownloadUrlBytes());
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(7, getDescBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8528,6 +8572,8 @@ public final class TSSProtos {
         bitField0_ = (bitField0_ & ~0x00000010);
         downloadUrl_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
+        desc_ = "";
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       
@@ -8590,6 +8636,10 @@ public final class TSSProtos {
           to_bitField0_ |= 0x00000020;
         }
         result.downloadUrl_ = downloadUrl_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.desc_ = desc_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -8623,6 +8673,9 @@ public final class TSSProtos {
         }
         if (other.hasDownloadUrl()) {
           setDownloadUrl(other.getDownloadUrl());
+        }
+        if (other.hasDesc()) {
+          setDesc(other.getDesc());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -8701,6 +8754,11 @@ public final class TSSProtos {
             case 50: {
               bitField0_ |= 0x00000020;
               downloadUrl_ = input.readBytes();
+              break;
+            }
+            case 58: {
+              bitField0_ |= 0x00000040;
+              desc_ = input.readBytes();
               break;
             }
           }
@@ -8880,6 +8938,42 @@ public final class TSSProtos {
       void setDownloadUrl(com.google.protobuf.ByteString value) {
         bitField0_ |= 0x00000020;
         downloadUrl_ = value;
+        onChanged();
+      }
+      
+      // optional string desc = 7;
+      private java.lang.Object desc_ = "";
+      public boolean hasDesc() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      public String getDesc() {
+        java.lang.Object ref = desc_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          desc_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setDesc(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        desc_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDesc() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        desc_ = getDefaultInstance().getDesc();
+        onChanged();
+        return this;
+      }
+      void setDesc(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000040;
+        desc_ = value;
         onChanged();
       }
       
@@ -11997,42 +12091,42 @@ public final class TSSProtos {
       "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
       "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
       "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
-      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\237\001\n\tLYChe" +
+      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\255\001\n\tLYChe" +
       "ckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007os_type\030\002 " +
       "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \001(\t\022\030" +
       "\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly_minor_rel" +
-      "ease\030\005 \002(\005\022\024\n\014download_url\030\006 \001(\t\"n\n\rLYSa",
-      "mplePoint\022(\n\rsp_coordinate\030\001 \002(\0132\021.tss.L" +
-      "YCoordinate\022\021\n\ttimestamp\030\002 \002(\003\022\020\n\010altitu" +
-      "de\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5\n\017LYTrafficRep" +
-      "ort\022\"\n\006points\030\001 \003(\0132\022.tss.LYSamplePoint\"" +
-      "\314\003\n\nLYMsgOnAir\022\017\n\007version\030\001 \002(\005\022\016\n\006msg_i" +
-      "d\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003\022 \n\nfrom_party" +
-      "\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to_party\030\003 \002(\0162\014" +
-      ".tss.LYParty\022 \n\010msg_type\030\004 \002(\0162\016.tss.LYM" +
-      "sgType\022\016\n\006snd_id\030\007 \001(\t\022\016\n\006rcv_id\030\010 \001(\t\022\021" +
-      "\n\tsignature\030\t \001(\014\022 \n\010ret_code\030\021 \001(\0162\016.ts",
-      "s.LYRetCode\022\037\n\007checkin\030\022 \001(\0132\016.tss.LYChe" +
-      "ckin\022*\n\rdevice_report\030\023 \001(\0132\023.tss.LYDevi" +
-      "ceReport\022&\n\013traffic_sub\030$ \001(\0132\021.tss.LYTr" +
-      "afficSub\022&\n\013traffic_pub\0303 \001(\0132\021.tss.LYTr" +
-      "afficPub\022,\n\016traffic_report\030A \001(\0132\024.tss.L" +
-      "YTrafficReport*\006\010\200\001\020\200\002*1\n\010LYOsType\022\016\n\nLY" +
-      "_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022\t\n\005LY_WP\020\002*\233\001\n\013LY" +
-      "Direction\022\016\n\nLY_UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020" +
-      "\n\014LY_NORTHEAST\020\002\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NOR" +
-      "THWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022",
-      "\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHEAST\020\010*\241\001\n\tLYRe" +
-      "tCode\022\016\n\nLY_SUCCESS\020\000\022\034\n\027LY_VERSION_IMCO" +
-      "MPATIBLE\020\221\002\022\023\n\016LY_VERSION_LOW\020\243\002\022\023\n\016LY_P" +
-      "ARTY_ERROR\020\251\004\022\026\n\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n" +
-      "\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER_ERROR\020\231\023*/\n\007L" +
-      "YParty\022\r\n\tLY_CLIENT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_" +
-      "TC\020\003*\201\001\n\tLYMsgType\022\016\n\nLY_CHECKIN\020\001\022\017\n\013LY" +
-      "_RET_CODE\020\002\022\022\n\016LY_TRAFFIC_SUB\020\004\022\025\n\021LY_TR" +
-      "AFFIC_REPORT\020\005\022\024\n\020LY_DEVICE_REPORT\020\006\022\022\n\016" +
-      "LY_TRAFFIC_PUB\020\023B\'\n\032com.luyun.easyway95.",
-      "sharedB\tTSSProtos"
+      "ease\030\005 \002(\005\022\024\n\014download_url\030\006 \001(\t\022\014\n\004desc",
+      "\030\007 \001(\t\"n\n\rLYSamplePoint\022(\n\rsp_coordinate" +
+      "\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\ttimestamp\030\002" +
+      " \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5" +
+      "\n\017LYTrafficReport\022\"\n\006points\030\001 \003(\0132\022.tss." +
+      "LYSamplePoint\"\314\003\n\nLYMsgOnAir\022\017\n\007version\030" +
+      "\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003" +
+      "\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to" +
+      "_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_type\030\004" +
+      " \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id\030\007 \001(\t\022\016\n\006" +
+      "rcv_id\030\010 \001(\t\022\021\n\tsignature\030\t \001(\014\022 \n\010ret_c",
+      "ode\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007checkin\030\022 \001" +
+      "(\0132\016.tss.LYCheckin\022*\n\rdevice_report\030\023 \001(" +
+      "\0132\023.tss.LYDeviceReport\022&\n\013traffic_sub\030$ " +
+      "\001(\0132\021.tss.LYTrafficSub\022&\n\013traffic_pub\0303 " +
+      "\001(\0132\021.tss.LYTrafficPub\022,\n\016traffic_report" +
+      "\030A \001(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*1\n\010" +
+      "LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022\t\n\005" +
+      "LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_UNKNOWN\020\000\022" +
+      "\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022\014\n\010LY_NOR" +
+      "TH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014L",
+      "Y_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHE" +
+      "AST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCESS\020\000\022\034\n\027L" +
+      "Y_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY_VERSION_" +
+      "LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021LY_MSG_TY" +
+      "PE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER" +
+      "_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIENT\020\001\022\n\n\006L" +
+      "Y_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgType\022\016\n\nLY_C" +
+      "HECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRAFFIC_" +
+      "SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_DEVIC" +
+      "E_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032com.lu",
+      "yun.easyway95.sharedB\tTSSProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -12132,7 +12226,7 @@ public final class TSSProtos {
           internal_static_tss_LYCheckin_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCheckin_descriptor,
-              new java.lang.String[] { "DeviceModel", "OsType", "OsVersion", "LyMajorRelease", "LyMinorRelease", "DownloadUrl", },
+              new java.lang.String[] { "DeviceModel", "OsType", "OsVersion", "LyMajorRelease", "LyMinorRelease", "DownloadUrl", "Desc", },
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.class,
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder.class);
           internal_static_tss_LYSamplePoint_descriptor =
