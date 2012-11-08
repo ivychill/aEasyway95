@@ -112,6 +112,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     private LYPromptWatchDogTask mPromptWatchDogTask;
     
 	private MsgReceiver mReceiver;
+	private ConnectivityChangeReceiver mConnectivityChangeReceiver;
     
     //提示播放声音、弹出对话框时间间隔
     private long mlLastPrompt = 0;
@@ -231,8 +232,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         }
         
         //2012.11.07 蔡庆丰增加，对网络连接的监控
-        registerReceiver(
-        	      new ConnectivityChangeReceiver(), 
+        mConnectivityChangeReceiver = new ConnectivityChangeReceiver();
+        registerReceiver(mConnectivityChangeReceiver,
         	      new IntentFilter(
         	            ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -437,6 +438,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	    //    app.mBMapMan = null;
 	    //}
 	    unbindService();
+	    unregisterReceiver(mConnectivityChangeReceiver);
 	}
 	@Override
 	protected void onPause() {
