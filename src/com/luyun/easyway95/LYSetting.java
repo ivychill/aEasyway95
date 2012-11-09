@@ -172,13 +172,22 @@ public class LYSetting extends PreferenceActivity
 			Preference preference) {		
 		// TODO Auto-generated method stub
 		Log.d(TAG, "enter onPreferenceTreeClick");
+    	Intent intent = new Intent(LYSetting.this, LoginActivity.class);
+		String strKey = "url";
 	    if (preference.getKey().equals("user_preference")) {
 	    	Log.d(TAG, "click user_prefereces");
-    		startActivity(new Intent(LYSetting.this, LoginActivity.class));
+	    	intent.putExtra(strKey, Constants.USERS_PROFILE_URL);
+    		startActivity(intent);
 	    } else if (preference.getKey().equals("map_mgr_preference")) {
 	    	Log.d(TAG, "click map_mgr_preference");
 	    } else if (preference.getKey().equals("homepage_preference")) {
 	    	Log.d(TAG, "click homepage_preference");
+	    } else if (preference.getKey().equals("promotion_preference")) {
+	    	intent.putExtra(strKey, Constants.PROMOTION_URL);
+    		startActivity(intent);
+	    } else if (preference.getKey().equals("question_more")) {
+	    	intent.putExtra(strKey, Constants.FAQ_URL);
+    		startActivity(intent);
 	    }
 		return true;
 	}

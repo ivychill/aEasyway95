@@ -16,5 +16,5 @@
 	
 	<string name="search_label">easyway95</string>
 	<string name="set_endpoint">指定目的地</string>
-	<string name="search_hint">设置地址</string>
+	<string name="search_hint">输入地址</string>
 </resources>

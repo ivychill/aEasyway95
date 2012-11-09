@@ -40,8 +40,10 @@ public class Constants {
 	public static final int TRACKER_SERVER_PORT=8007; 
 	public static final int TRACKEE_SERVER_PORT=8008;	
 	public static final String TRACKER_SERVER_HOST="42.121.18.140";	
-	public static final String USERS_PROFILE_URL="http://www.roadclouding.com/users/profile";	
-	public static final String DOWNLOAD_URL="http://www.roadclouding.com/data/easyway.apk";	
+	public static final String USERS_PROFILE_URL="http://www.roadclouding.com/users/profile";
+	public static final String PROMOTION_URL="http://www.roadclouding.com/commerce";
+	public static final String FAQ_URL="http://www.roadclouding.com/faq";
+	public static final String DOWNLOAD_URL="http://www.roadclouding.com/download/easyway.apk";	
 //	public static final String DOWNLOAD_URL="market://search?q=pname:com.luyun.easyway95";
 	//public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";
 	
@@ -71,7 +73,7 @@ public class Constants {
 	public static final int OFFICE_REQUEST_CODE = 1890;
 	public static final int MAX_RECENT_QUERY = 20;
 
-	public static final int TSS_SERVER_PORT=6001; 
+	public static final int TSS_SERVER_PORT=7001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
 	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
 	//public static final String TSS_PRO_HOST="42.121.99.247";	
