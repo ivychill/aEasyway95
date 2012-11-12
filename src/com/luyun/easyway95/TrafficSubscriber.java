@@ -32,11 +32,13 @@ public class TrafficSubscriber {
 				.build();
 		String road = "";
 		String nextRoad = "";
+		LYCoordinate nextStart = null;
+		MKStep step = null;
 		//boolean isNextRoad = false;
 		
 		for (int index = 0; index < mNumStep; index++){
 			//Log.d(TAG, "step index..." + index);
-			MKStep step = route.getStep(index);
+			step = route.getStep(index);
 			//Log.d(TAG, "step point..." + step.getPoint().toString());
 			//Log.d(TAG, "step content..." + step.getContent());
 			Scanner scanner = new Scanner(step.getContent());
@@ -48,7 +50,7 @@ public class TrafficSubscriber {
 				nextRoad = match.group(1);
 				//isNextRoad = true;
 				//Log.d(TAG, "road..." + nextRoad);
-				LYCoordinate nextStart = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
+				nextStart = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
 						.setLat(step.getPoint().getLatitudeE6()/1E6)
 						.setLng(step.getPoint().getLongitudeE6()/1E6)
 						.build();
@@ -69,12 +71,24 @@ public class TrafficSubscriber {
 			}
 		}
 		
-		return mRouteBuilder.setIdentity(1).build();
+		//最后一段
+		LYCoordinate end = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
+				.setLat(step.getPoint().getLatitudeE6()/1E6)
+				.setLng(step.getPoint().getLongitudeE6()/1E6)
+				.build();
+		LYSegment segment = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder()
+				.setRoad(nextRoad)
+				.setStart(nextStart)
+				.setEnd(end)
+				.build();
+		mRouteBuilder.addSegments(segment);
+		
+		return mRouteBuilder.setIdentity(1024).build();
 	}
 	
 	void SubTraffic (MKRoute route) {
 	    LYRoute mRoute = RoadAnalyzer (route);
-	    //Log.d(TAG, mRoute.toString());
+//	    Log.d(TAG, "sub traffic:\n" + mRoute.toString());
 	    
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("深圳")
@@ -90,7 +104,7 @@ public class TrafficSubscriber {
 				.setToParty(com.luyun.easyway95.shared.TSSProtos.LYParty.LY_TSS)
 				.setSndId(mainActivity.getDeviceID())
 				.setMsgType(com.luyun.easyway95.shared.TSSProtos.LYMsgType.LY_TRAFFIC_SUB)
-				.setMsgId(1000)
+				.setMsgId(1024)
 				.setTimestamp(System.currentTimeMillis()/1000)
 				.setTrafficSub(tsub)
 				.build();

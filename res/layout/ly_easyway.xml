@@ -8,14 +8,37 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/instro_1" />
+        android:src="@drawable/intro_1" />
+    
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/start_use"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|right"
-        android:background="@drawable/grid"
-        android:text="立即开始" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.36"
+            android:background="@android:color/transparent" />
+        
+        <Button
+            android:id="@+id/start_use"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="0dp"
+            android:layout_weight="0.04"
+            android:text="开始使用"
+            android:textColor="@color/black"
+            android:textSize="32dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="fill_parent" 
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
 
 </FrameLayout>

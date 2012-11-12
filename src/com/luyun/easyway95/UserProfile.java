@@ -149,7 +149,7 @@ public class UserProfile {
 			mRecentQuery.addLast(recentQuery);
 			index++;
 		}
-		Log.d(TAG, "mRecentQuery: " + mRecentQuery);
+//		Log.d(TAG, "mRecentQuery: " + mRecentQuery);
 	}
 	
 	public void commitPreferences(SharedPreferences sp) {
