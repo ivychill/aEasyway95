@@ -3492,6 +3492,10 @@ public final class TSSProtos {
     com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
         int index);
     
+    // optional string alias = 4;
+    boolean hasAlias();
+    String getAlias();
+    
     // optional string href = 12;
     boolean hasHref();
     String getHref();
@@ -3592,11 +3596,43 @@ public final class TSSProtos {
       return segmentTraffics_.get(index);
     }
     
+    // optional string alias = 4;
+    public static final int ALIAS_FIELD_NUMBER = 4;
+    private java.lang.Object alias_;
+    public boolean hasAlias() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getAlias() {
+      java.lang.Object ref = alias_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          alias_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getAliasBytes() {
+      java.lang.Object ref = alias_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        alias_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     // optional string href = 12;
     public static final int HREF_FIELD_NUMBER = 12;
     private java.lang.Object href_;
     public boolean hasHref() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     public String getHref() {
       java.lang.Object ref = href_;
@@ -3628,7 +3664,7 @@ public final class TSSProtos {
     public static final int DESC_FIELD_NUMBER = 11;
     private java.lang.Object desc_;
     public boolean hasDesc() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     public String getDesc() {
       java.lang.Object ref = desc_;
@@ -3660,6 +3696,7 @@ public final class TSSProtos {
       road_ = "";
       timestamp_ = 0L;
       segmentTraffics_ = java.util.Collections.emptyList();
+      alias_ = "";
       href_ = "";
       desc_ = "";
     }
@@ -3694,10 +3731,13 @@ public final class TSSProtos {
       for (int i = 0; i < segmentTraffics_.size(); i++) {
         output.writeMessage(3, segmentTraffics_.get(i));
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(4, getAliasBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeBytes(11, getDescBytes());
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeBytes(12, getHrefBytes());
       }
       getUnknownFields().writeTo(output);
@@ -3721,11 +3761,15 @@ public final class TSSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, segmentTraffics_.get(i));
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getAliasBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(11, getDescBytes());
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(12, getHrefBytes());
       }
@@ -3864,10 +3908,12 @@ public final class TSSProtos {
         } else {
           segmentTrafficsBuilder_.clear();
         }
-        href_ = "";
+        alias_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
-        desc_ = "";
+        href_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
+        desc_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -3926,9 +3972,13 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.href_ = href_;
+        result.alias_ = alias_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000008;
+        }
+        result.href_ = href_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000010;
         }
         result.desc_ = desc_;
         result.bitField0_ = to_bitField0_;
@@ -3978,6 +4028,9 @@ public final class TSSProtos {
               segmentTrafficsBuilder_.addAllMessages(other.segmentTraffics_);
             }
           }
+        }
+        if (other.hasAlias()) {
+          setAlias(other.getAlias());
         }
         if (other.hasHref()) {
           setHref(other.getHref());
@@ -4042,13 +4095,18 @@ public final class TSSProtos {
               addSegmentTraffics(subBuilder.buildPartial());
               break;
             }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              alias_ = input.readBytes();
+              break;
+            }
             case 90: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               desc_ = input.readBytes();
               break;
             }
             case 98: {
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               href_ = input.readBytes();
               break;
             }
@@ -4301,10 +4359,46 @@ public final class TSSProtos {
         return segmentTrafficsBuilder_;
       }
       
+      // optional string alias = 4;
+      private java.lang.Object alias_ = "";
+      public boolean hasAlias() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public String getAlias() {
+        java.lang.Object ref = alias_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          alias_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setAlias(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        alias_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearAlias() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        alias_ = getDefaultInstance().getAlias();
+        onChanged();
+        return this;
+      }
+      void setAlias(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000008;
+        alias_ = value;
+        onChanged();
+      }
+      
       // optional string href = 12;
       private java.lang.Object href_ = "";
       public boolean hasHref() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       public String getHref() {
         java.lang.Object ref = href_;
@@ -4320,19 +4414,19 @@ public final class TSSProtos {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000010;
         href_ = value;
         onChanged();
         return this;
       }
       public Builder clearHref() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         href_ = getDefaultInstance().getHref();
         onChanged();
         return this;
       }
       void setHref(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         href_ = value;
         onChanged();
       }
@@ -4340,7 +4434,7 @@ public final class TSSProtos {
       // optional string desc = 11;
       private java.lang.Object desc_ = "";
       public boolean hasDesc() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       public String getDesc() {
         java.lang.Object ref = desc_;
@@ -4356,19 +4450,19 @@ public final class TSSProtos {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000010;
+  bitField0_ |= 0x00000020;
         desc_ = value;
         onChanged();
         return this;
       }
       public Builder clearDesc() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         desc_ = getDefaultInstance().getDesc();
         onChanged();
         return this;
       }
       void setDesc(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         desc_ = value;
         onChanged();
       }
@@ -12066,67 +12160,68 @@ public final class TSSProtos {
       "Segment\"\213\001\n\020LYSegmentTraffic\022\037\n\007segment\030" +
       "\001 \002(\0132\016.tss.LYSegment\022\021\n\ttimestamp\030\003 \001(\003" +
       "\022#\n\tdirection\030\004 \002(\0162\020.tss.LYDirection\022\r\n",
-      "\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"}\n\rLYRoadT" +
-      "raffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003\022" +
-      "/\n\020segment_traffics\030\003 \003(\0132\025.tss.LYSegmen" +
-      "tTraffic\022\014\n\004href\030\014 \001(\t\022\014\n\004desc\030\013 \001(\t\"[\n\r" +
-      "LYCityTraffic\022\014\n\004city\030\001 \001(\t\022\021\n\ttimestamp" +
-      "\030\002 \001(\003\022)\n\rroad_traffics\030\003 \003(\0132\022.tss.LYRo" +
-      "adTraffic\"\344\001\n\tLYCrontab\022,\n\tcron_type\030\001 \002" +
-      "(\0162\031.tss.LYCrontab.LYCronType\022\016\n\006minute\030" +
-      "\002 \001(\003\022\014\n\004hour\030\003 \001(\003\022\013\n\003dom\030\004 \001(\005\022\r\n\005mont" +
-      "h\030\005 \001(\005\022\013\n\003dow\030\006 \001(\005\"b\n\nLYCronType\022\021\n\rLY",
-      "_REP_MINUTE\020\001\022\017\n\013LY_REP_HOUR\020\002\022\016\n\nLY_REP" +
-      "_DOM\020\004\022\020\n\014LY_REP_MONTH\020\010\022\016\n\nLY_REP_DOW\020\020" +
-      "\"\326\002\n\014LYTrafficSub\022\014\n\004city\030\001 \002(\t\022\033\n\005route" +
-      "\030\002 \002(\0132\014.tss.LYRoute\022-\n\010opr_type\030\003 \002(\0162\033" +
-      ".tss.LYTrafficSub.LYOprType\022-\n\010pub_type\030" +
-      "\004 \002(\0162\033.tss.LYTrafficSub.LYPubType\022\023\n\007ex" +
-      "pires\030\005 \001(\005:\00230\022 \n\010cron_tab\030\006 \001(\0132\016.tss." +
-      "LYCrontab\"D\n\tLYOprType\022\021\n\rLY_SUB_CREATE\020" +
-      "\001\022\021\n\rLY_SUB_DELETE\020\002\022\021\n\rLY_SUB_UPDATE\020\003\"" +
-      "@\n\tLYPubType\022\020\n\014LY_PUB_ADHOC\020\001\022\020\n\014LY_PUB",
-      "_EVENT\020\002\022\017\n\013LY_PUB_CRON\020\003\"J\n\014LYTrafficPu" +
-      "b\022\020\n\010route_id\030\001 \002(\005\022(\n\014city_traffic\030\002 \002(" +
-      "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
-      "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
-      "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
-      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\255\001\n\tLYChe" +
-      "ckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007os_type\030\002 " +
-      "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \001(\t\022\030" +
-      "\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly_minor_rel" +
-      "ease\030\005 \002(\005\022\024\n\014download_url\030\006 \001(\t\022\014\n\004desc",
-      "\030\007 \001(\t\"n\n\rLYSamplePoint\022(\n\rsp_coordinate" +
-      "\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\ttimestamp\030\002" +
-      " \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5" +
-      "\n\017LYTrafficReport\022\"\n\006points\030\001 \003(\0132\022.tss." +
-      "LYSamplePoint\"\314\003\n\nLYMsgOnAir\022\017\n\007version\030" +
-      "\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003" +
-      "\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to" +
-      "_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_type\030\004" +
-      " \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id\030\007 \001(\t\022\016\n\006" +
-      "rcv_id\030\010 \001(\t\022\021\n\tsignature\030\t \001(\014\022 \n\010ret_c",
-      "ode\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007checkin\030\022 \001" +
-      "(\0132\016.tss.LYCheckin\022*\n\rdevice_report\030\023 \001(" +
-      "\0132\023.tss.LYDeviceReport\022&\n\013traffic_sub\030$ " +
-      "\001(\0132\021.tss.LYTrafficSub\022&\n\013traffic_pub\0303 " +
-      "\001(\0132\021.tss.LYTrafficPub\022,\n\016traffic_report" +
-      "\030A \001(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*1\n\010" +
-      "LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022\t\n\005" +
-      "LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_UNKNOWN\020\000\022" +
-      "\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022\014\n\010LY_NOR" +
-      "TH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014L",
-      "Y_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHE" +
-      "AST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCESS\020\000\022\034\n\027L" +
-      "Y_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY_VERSION_" +
-      "LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021LY_MSG_TY" +
-      "PE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER" +
-      "_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIENT\020\001\022\n\n\006L" +
-      "Y_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgType\022\016\n\nLY_C" +
-      "HECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRAFFIC_" +
-      "SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_DEVIC" +
-      "E_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032com.lu",
-      "yun.easyway95.sharedB\tTSSProtos"
+      "\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"\214\001\n\rLYRoad" +
+      "Traffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003" +
+      "\022/\n\020segment_traffics\030\003 \003(\0132\025.tss.LYSegme" +
+      "ntTraffic\022\r\n\005alias\030\004 \001(\t\022\014\n\004href\030\014 \001(\t\022\014" +
+      "\n\004desc\030\013 \001(\t\"[\n\rLYCityTraffic\022\014\n\004city\030\001 " +
+      "\001(\t\022\021\n\ttimestamp\030\002 \001(\003\022)\n\rroad_traffics\030" +
+      "\003 \003(\0132\022.tss.LYRoadTraffic\"\344\001\n\tLYCrontab\022" +
+      ",\n\tcron_type\030\001 \002(\0162\031.tss.LYCrontab.LYCro" +
+      "nType\022\016\n\006minute\030\002 \001(\003\022\014\n\004hour\030\003 \001(\003\022\013\n\003d" +
+      "om\030\004 \001(\005\022\r\n\005month\030\005 \001(\005\022\013\n\003dow\030\006 \001(\005\"b\n\n",
+      "LYCronType\022\021\n\rLY_REP_MINUTE\020\001\022\017\n\013LY_REP_" +
+      "HOUR\020\002\022\016\n\nLY_REP_DOM\020\004\022\020\n\014LY_REP_MONTH\020\010" +
+      "\022\016\n\nLY_REP_DOW\020\020\"\326\002\n\014LYTrafficSub\022\014\n\004cit" +
+      "y\030\001 \002(\t\022\033\n\005route\030\002 \002(\0132\014.tss.LYRoute\022-\n\010" +
+      "opr_type\030\003 \002(\0162\033.tss.LYTrafficSub.LYOprT" +
+      "ype\022-\n\010pub_type\030\004 \002(\0162\033.tss.LYTrafficSub" +
+      ".LYPubType\022\023\n\007expires\030\005 \001(\005:\00230\022 \n\010cron_" +
+      "tab\030\006 \001(\0132\016.tss.LYCrontab\"D\n\tLYOprType\022\021" +
+      "\n\rLY_SUB_CREATE\020\001\022\021\n\rLY_SUB_DELETE\020\002\022\021\n\r" +
+      "LY_SUB_UPDATE\020\003\"@\n\tLYPubType\022\020\n\014LY_PUB_A",
+      "DHOC\020\001\022\020\n\014LY_PUB_EVENT\020\002\022\017\n\013LY_PUB_CRON\020" +
+      "\003\"J\n\014LYTrafficPub\022\020\n\010route_id\030\001 \002(\005\022(\n\014c" +
+      "ity_traffic\030\002 \002(\0132\022.tss.LYCityTraffic\"\177\n" +
+      "\016LYDeviceReport\022\021\n\tdevice_id\030\001 \002(\t\022\024\n\014de" +
+      "vice_token\030\002 \002(\014\022\023\n\013device_name\030\003 \002(\t\022\024\n" +
+      "\014device_model\030\004 \002(\t\022\031\n\021device_os_version" +
+      "\030\005 \002(\t\"\255\001\n\tLYCheckin\022\024\n\014device_model\030\001 \001" +
+      "(\t\022\036\n\007os_type\030\002 \002(\0162\r.tss.LYOsType\022\022\n\nos" +
+      "_version\030\003 \001(\t\022\030\n\020ly_major_release\030\004 \002(\005" +
+      "\022\030\n\020ly_minor_release\030\005 \002(\005\022\024\n\014download_u",
+      "rl\030\006 \001(\t\022\014\n\004desc\030\007 \001(\t\"n\n\rLYSamplePoint\022" +
+      "(\n\rsp_coordinate\030\001 \002(\0132\021.tss.LYCoordinat" +
+      "e\022\021\n\ttimestamp\030\002 \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016" +
+      "\n\006course\030\004 \001(\001\"5\n\017LYTrafficReport\022\"\n\006poi" +
+      "nts\030\001 \003(\0132\022.tss.LYSamplePoint\"\314\003\n\nLYMsgO" +
+      "nAir\022\017\n\007version\030\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n" +
+      "\ttimestamp\030\006 \002(\003\022 \n\nfrom_party\030\002 \002(\0162\014.t" +
+      "ss.LYParty\022\036\n\010to_party\030\003 \002(\0162\014.tss.LYPar" +
+      "ty\022 \n\010msg_type\030\004 \002(\0162\016.tss.LYMsgType\022\016\n\006" +
+      "snd_id\030\007 \001(\t\022\016\n\006rcv_id\030\010 \001(\t\022\021\n\tsignatur",
+      "e\030\t \001(\014\022 \n\010ret_code\030\021 \001(\0162\016.tss.LYRetCod" +
+      "e\022\037\n\007checkin\030\022 \001(\0132\016.tss.LYCheckin\022*\n\rde" +
+      "vice_report\030\023 \001(\0132\023.tss.LYDeviceReport\022&" +
+      "\n\013traffic_sub\030$ \001(\0132\021.tss.LYTrafficSub\022&" +
+      "\n\013traffic_pub\0303 \001(\0132\021.tss.LYTrafficPub\022," +
+      "\n\016traffic_report\030A \001(\0132\024.tss.LYTrafficRe" +
+      "port*\006\010\200\001\020\200\002*1\n\010LYOsType\022\016\n\nLY_ANDROID\020\000" +
+      "\022\n\n\006LY_IOS\020\001\022\t\n\005LY_WP\020\002*\233\001\n\013LYDirection\022" +
+      "\016\n\nLY_UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTH" +
+      "EAST\020\002\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013",
+      "\n\007LY_WEST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUT" +
+      "H\020\007\022\020\n\014LY_SOUTHEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nL" +
+      "Y_SUCCESS\020\000\022\034\n\027LY_VERSION_IMCOMPATIBLE\020\221" +
+      "\002\022\023\n\016LY_VERSION_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR" +
+      "\020\251\004\022\026\n\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOU" +
+      "T\020\223\t\022\023\n\016LY_OTHER_ERROR\020\231\023*/\n\007LYParty\022\r\n\t" +
+      "LY_CLIENT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tL" +
+      "YMsgType\022\016\n\nLY_CHECKIN\020\001\022\017\n\013LY_RET_CODE\020" +
+      "\002\022\022\n\016LY_TRAFFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPO" +
+      "RT\020\005\022\024\n\020LY_DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC",
+      "_PUB\020\023B\'\n\032com.luyun.easyway95.sharedB\tTS" +
+      "SProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -12178,7 +12273,7 @@ public final class TSSProtos {
           internal_static_tss_LYRoadTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYRoadTraffic_descriptor,
-              new java.lang.String[] { "Road", "Timestamp", "SegmentTraffics", "Href", "Desc", },
+              new java.lang.String[] { "Road", "Timestamp", "SegmentTraffics", "Alias", "Href", "Desc", },
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder.class);
           internal_static_tss_LYCityTraffic_descriptor =

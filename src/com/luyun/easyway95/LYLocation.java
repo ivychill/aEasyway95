@@ -26,7 +26,7 @@ public class LYLocation {
 	 */
 	public void onLocationChanged(Location loc) {
 		Log.d(TAG, "in LYLocation::onLocationChanged");
-		long timeNow = System.currentTimeMillis();
+		long timeNow = System.currentTimeMillis()/1000;
 		LYCoordinate coor = LYCoordinate.newBuilder()
 				.setLat(loc.getLatitude())
 				.setLng(loc.getLongitude())
