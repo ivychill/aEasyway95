@@ -82,7 +82,7 @@ public class Constants {
 	//public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
-	public static final int TARAFFIC_UPDATE_CMD=9900;
+	public static final int TRAFFIC_UPDATE_CMD=9900;
 	
 	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
 	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
