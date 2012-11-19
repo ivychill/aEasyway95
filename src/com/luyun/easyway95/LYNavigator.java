@@ -100,6 +100,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     private MKPoiInfoHelper mOfficeAddr;
     private MKPoiInfoHelper mLastDestination;
     private ProgressDialog popupDlg;
+    private boolean mSubscript=false;
     
     private MapView mMapView;
     private TextView mHeading;
@@ -245,7 +246,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mOfficeAddr = up.getOfficeAddr();
 		mLastDestination = up.getLastDestination();
 		mMapHelper = new MapHelper(this);
-
+		mSubscript = up.getSubscript();
+		
 		setContentView(R.layout.ly_navigator);
          
 		app = (Easyway95App)this.getApplication();
@@ -374,7 +376,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         });
         
         mPromptTrafficMsg = new PromptTrafficMsg();
-        
         handleIntent(getIntent());
     }
     
@@ -539,6 +540,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     	return mHomeAddr.getPt();
     }
     
+    public boolean getSubscript(){
+    	return mSubscript;
+    }
     public void resetMapView() {
     	resetMapViewByRoute();
     	//刷新周边路况提示
@@ -996,4 +1000,16 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 			}
 		}
 	}
+	
+	public void onSubscription(Boolean sub){
+		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+		UserProfile up = new UserProfile(sp);
+		up.setAndCommitSubscript(sp, sub);
+		mSubscript = sub;
+		
+//		Log.v(TAG, "mHomeAddr:" + mHomeAddr.toString());
+//		Log.v(TAG, "mOfficeAddr:" + mOfficeAddr.toString());
+		mMapHelper.subRoute(mHomeAddr.getPt(), mOfficeAddr.getPt(), sub);
+	}
 }
+

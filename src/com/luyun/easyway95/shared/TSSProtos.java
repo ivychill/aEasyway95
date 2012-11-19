@@ -3492,6 +3492,10 @@ public final class TSSProtos {
     com.luyun.easyway95.shared.TSSProtos.LYSegmentTrafficOrBuilder getSegmentTrafficsOrBuilder(
         int index);
     
+    // optional string alias = 4;
+    boolean hasAlias();
+    String getAlias();
+    
     // optional string href = 12;
     boolean hasHref();
     String getHref();
@@ -3592,11 +3596,43 @@ public final class TSSProtos {
       return segmentTraffics_.get(index);
     }
     
+    // optional string alias = 4;
+    public static final int ALIAS_FIELD_NUMBER = 4;
+    private java.lang.Object alias_;
+    public boolean hasAlias() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getAlias() {
+      java.lang.Object ref = alias_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          alias_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getAliasBytes() {
+      java.lang.Object ref = alias_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        alias_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     // optional string href = 12;
     public static final int HREF_FIELD_NUMBER = 12;
     private java.lang.Object href_;
     public boolean hasHref() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     public String getHref() {
       java.lang.Object ref = href_;
@@ -3628,7 +3664,7 @@ public final class TSSProtos {
     public static final int DESC_FIELD_NUMBER = 11;
     private java.lang.Object desc_;
     public boolean hasDesc() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     public String getDesc() {
       java.lang.Object ref = desc_;
@@ -3660,6 +3696,7 @@ public final class TSSProtos {
       road_ = "";
       timestamp_ = 0L;
       segmentTraffics_ = java.util.Collections.emptyList();
+      alias_ = "";
       href_ = "";
       desc_ = "";
     }
@@ -3694,10 +3731,13 @@ public final class TSSProtos {
       for (int i = 0; i < segmentTraffics_.size(); i++) {
         output.writeMessage(3, segmentTraffics_.get(i));
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(4, getAliasBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeBytes(11, getDescBytes());
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeBytes(12, getHrefBytes());
       }
       getUnknownFields().writeTo(output);
@@ -3721,11 +3761,15 @@ public final class TSSProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, segmentTraffics_.get(i));
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getAliasBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(11, getDescBytes());
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(12, getHrefBytes());
       }
@@ -3864,10 +3908,12 @@ public final class TSSProtos {
         } else {
           segmentTrafficsBuilder_.clear();
         }
-        href_ = "";
+        alias_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
-        desc_ = "";
+        href_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
+        desc_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -3926,9 +3972,13 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.href_ = href_;
+        result.alias_ = alias_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000008;
+        }
+        result.href_ = href_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000010;
         }
         result.desc_ = desc_;
         result.bitField0_ = to_bitField0_;
@@ -3978,6 +4028,9 @@ public final class TSSProtos {
               segmentTrafficsBuilder_.addAllMessages(other.segmentTraffics_);
             }
           }
+        }
+        if (other.hasAlias()) {
+          setAlias(other.getAlias());
         }
         if (other.hasHref()) {
           setHref(other.getHref());
@@ -4042,13 +4095,18 @@ public final class TSSProtos {
               addSegmentTraffics(subBuilder.buildPartial());
               break;
             }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              alias_ = input.readBytes();
+              break;
+            }
             case 90: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               desc_ = input.readBytes();
               break;
             }
             case 98: {
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               href_ = input.readBytes();
               break;
             }
@@ -4301,10 +4359,46 @@ public final class TSSProtos {
         return segmentTrafficsBuilder_;
       }
       
+      // optional string alias = 4;
+      private java.lang.Object alias_ = "";
+      public boolean hasAlias() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public String getAlias() {
+        java.lang.Object ref = alias_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          alias_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setAlias(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        alias_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearAlias() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        alias_ = getDefaultInstance().getAlias();
+        onChanged();
+        return this;
+      }
+      void setAlias(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000008;
+        alias_ = value;
+        onChanged();
+      }
+      
       // optional string href = 12;
       private java.lang.Object href_ = "";
       public boolean hasHref() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       public String getHref() {
         java.lang.Object ref = href_;
@@ -4320,19 +4414,19 @@ public final class TSSProtos {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000010;
         href_ = value;
         onChanged();
         return this;
       }
       public Builder clearHref() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         href_ = getDefaultInstance().getHref();
         onChanged();
         return this;
       }
       void setHref(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         href_ = value;
         onChanged();
       }
@@ -4340,7 +4434,7 @@ public final class TSSProtos {
       // optional string desc = 11;
       private java.lang.Object desc_ = "";
       public boolean hasDesc() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       public String getDesc() {
         java.lang.Object ref = desc_;
@@ -4356,19 +4450,19 @@ public final class TSSProtos {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000010;
+  bitField0_ |= 0x00000020;
         desc_ = value;
         onChanged();
         return this;
       }
       public Builder clearDesc() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         desc_ = getDefaultInstance().getDesc();
         onChanged();
         return this;
       }
       void setDesc(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         desc_ = value;
         onChanged();
       }
@@ -5101,6 +5195,401 @@ public final class TSSProtos {
     // @@protoc_insertion_point(class_scope:tss.LYCityTraffic)
   }
   
+  public interface LYCronTimeOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int32 minute = 1;
+    boolean hasMinute();
+    int getMinute();
+    
+    // optional int32 hour = 2;
+    boolean hasHour();
+    int getHour();
+  }
+  public static final class LYCronTime extends
+      com.google.protobuf.GeneratedMessage
+      implements LYCronTimeOrBuilder {
+    // Use LYCronTime.newBuilder() to construct.
+    private LYCronTime(Builder builder) {
+      super(builder);
+    }
+    private LYCronTime(boolean noInit) {}
+    
+    private static final LYCronTime defaultInstance;
+    public static LYCronTime getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LYCronTime getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCronTime_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCronTime_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // optional int32 minute = 1;
+    public static final int MINUTE_FIELD_NUMBER = 1;
+    private int minute_;
+    public boolean hasMinute() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public int getMinute() {
+      return minute_;
+    }
+    
+    // optional int32 hour = 2;
+    public static final int HOUR_FIELD_NUMBER = 2;
+    private int hour_;
+    public boolean hasHour() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public int getHour() {
+      return hour_;
+    }
+    
+    private void initFields() {
+      minute_ = 0;
+      hour_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, minute_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, hour_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, minute_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, hour_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.luyun.easyway95.shared.TSSProtos.LYCronTime parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.luyun.easyway95.shared.TSSProtos.LYCronTime prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCronTime_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYCronTime_fieldAccessorTable;
+      }
+      
+      // Construct using com.luyun.easyway95.shared.TSSProtos.LYCronTime.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        minute_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        hour_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDescriptor();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime getDefaultInstanceForType() {
+        return com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime build() {
+        com.luyun.easyway95.shared.TSSProtos.LYCronTime result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.luyun.easyway95.shared.TSSProtos.LYCronTime buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.luyun.easyway95.shared.TSSProtos.LYCronTime result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime buildPartial() {
+        com.luyun.easyway95.shared.TSSProtos.LYCronTime result = new com.luyun.easyway95.shared.TSSProtos.LYCronTime(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.minute_ = minute_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.hour_ = hour_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.luyun.easyway95.shared.TSSProtos.LYCronTime) {
+          return mergeFrom((com.luyun.easyway95.shared.TSSProtos.LYCronTime)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.luyun.easyway95.shared.TSSProtos.LYCronTime other) {
+        if (other == com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance()) return this;
+        if (other.hasMinute()) {
+          setMinute(other.getMinute());
+        }
+        if (other.hasHour()) {
+          setHour(other.getHour());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              minute_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              hour_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // optional int32 minute = 1;
+      private int minute_ ;
+      public boolean hasMinute() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public int getMinute() {
+        return minute_;
+      }
+      public Builder setMinute(int value) {
+        bitField0_ |= 0x00000001;
+        minute_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearMinute() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        minute_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // optional int32 hour = 2;
+      private int hour_ ;
+      public boolean hasHour() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public int getHour() {
+        return hour_;
+      }
+      public Builder setHour(int value) {
+        bitField0_ |= 0x00000002;
+        hour_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearHour() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        hour_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:tss.LYCronTime)
+    }
+    
+    static {
+      defaultInstance = new LYCronTime(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:tss.LYCronTime)
+  }
+  
   public interface LYCrontabOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
@@ -5108,13 +5597,15 @@ public final class TSSProtos {
     boolean hasCronType();
     com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType getCronType();
     
-    // optional int64 minute = 2;
-    boolean hasMinute();
-    long getMinute();
+    // optional .tss.LYCronTime gowork = 2;
+    boolean hasGowork();
+    com.luyun.easyway95.shared.TSSProtos.LYCronTime getGowork();
+    com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGoworkOrBuilder();
     
-    // optional int64 hour = 3;
-    boolean hasHour();
-    long getHour();
+    // optional .tss.LYCronTime gohome = 3;
+    boolean hasGohome();
+    com.luyun.easyway95.shared.TSSProtos.LYCronTime getGohome();
+    com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGohomeOrBuilder();
     
     // optional int32 dom = 4;
     boolean hasDom();
@@ -5245,24 +5736,30 @@ public final class TSSProtos {
       return cronType_;
     }
     
-    // optional int64 minute = 2;
-    public static final int MINUTE_FIELD_NUMBER = 2;
-    private long minute_;
-    public boolean hasMinute() {
+    // optional .tss.LYCronTime gowork = 2;
+    public static final int GOWORK_FIELD_NUMBER = 2;
+    private com.luyun.easyway95.shared.TSSProtos.LYCronTime gowork_;
+    public boolean hasGowork() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public long getMinute() {
-      return minute_;
+    public com.luyun.easyway95.shared.TSSProtos.LYCronTime getGowork() {
+      return gowork_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGoworkOrBuilder() {
+      return gowork_;
     }
     
-    // optional int64 hour = 3;
-    public static final int HOUR_FIELD_NUMBER = 3;
-    private long hour_;
-    public boolean hasHour() {
+    // optional .tss.LYCronTime gohome = 3;
+    public static final int GOHOME_FIELD_NUMBER = 3;
+    private com.luyun.easyway95.shared.TSSProtos.LYCronTime gohome_;
+    public boolean hasGohome() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public long getHour() {
-      return hour_;
+    public com.luyun.easyway95.shared.TSSProtos.LYCronTime getGohome() {
+      return gohome_;
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGohomeOrBuilder() {
+      return gohome_;
     }
     
     // optional int32 dom = 4;
@@ -5297,8 +5794,8 @@ public final class TSSProtos {
     
     private void initFields() {
       cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
-      minute_ = 0L;
-      hour_ = 0L;
+      gowork_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+      gohome_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
       dom_ = 0;
       month_ = 0;
       dow_ = 0;
@@ -5323,10 +5820,10 @@ public final class TSSProtos {
         output.writeEnum(1, cronType_.getNumber());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt64(2, minute_);
+        output.writeMessage(2, gowork_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt64(3, hour_);
+        output.writeMessage(3, gohome_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt32(4, dom_);
@@ -5352,11 +5849,11 @@ public final class TSSProtos {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, minute_);
+          .computeMessageSize(2, gowork_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, hour_);
+          .computeMessageSize(3, gohome_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
@@ -5486,6 +5983,8 @@ public final class TSSProtos {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getGoworkFieldBuilder();
+          getGohomeFieldBuilder();
         }
       }
       private static Builder create() {
@@ -5496,9 +5995,17 @@ public final class TSSProtos {
         super.clear();
         cronType_ = com.luyun.easyway95.shared.TSSProtos.LYCrontab.LYCronType.LY_REP_MINUTE;
         bitField0_ = (bitField0_ & ~0x00000001);
-        minute_ = 0L;
+        if (goworkBuilder_ == null) {
+          gowork_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+        } else {
+          goworkBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000002);
-        hour_ = 0L;
+        if (gohomeBuilder_ == null) {
+          gohome_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+        } else {
+          gohomeBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000004);
         dom_ = 0;
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -5551,11 +6058,19 @@ public final class TSSProtos {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.minute_ = minute_;
+        if (goworkBuilder_ == null) {
+          result.gowork_ = gowork_;
+        } else {
+          result.gowork_ = goworkBuilder_.build();
+        }
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.hour_ = hour_;
+        if (gohomeBuilder_ == null) {
+          result.gohome_ = gohome_;
+        } else {
+          result.gohome_ = gohomeBuilder_.build();
+        }
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
@@ -5587,11 +6102,11 @@ public final class TSSProtos {
         if (other.hasCronType()) {
           setCronType(other.getCronType());
         }
-        if (other.hasMinute()) {
-          setMinute(other.getMinute());
+        if (other.hasGowork()) {
+          mergeGowork(other.getGowork());
         }
-        if (other.hasHour()) {
-          setHour(other.getHour());
+        if (other.hasGohome()) {
+          mergeGohome(other.getGohome());
         }
         if (other.hasDom()) {
           setDom(other.getDom());
@@ -5648,14 +6163,22 @@ public final class TSSProtos {
               }
               break;
             }
-            case 16: {
-              bitField0_ |= 0x00000002;
-              minute_ = input.readInt64();
+            case 18: {
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCronTime.newBuilder();
+              if (hasGowork()) {
+                subBuilder.mergeFrom(getGowork());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setGowork(subBuilder.buildPartial());
               break;
             }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              hour_ = input.readInt64();
+            case 26: {
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder subBuilder = com.luyun.easyway95.shared.TSSProtos.LYCronTime.newBuilder();
+              if (hasGohome()) {
+                subBuilder.mergeFrom(getGohome());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setGohome(subBuilder.buildPartial());
               break;
             }
             case 32: {
@@ -5703,46 +6226,184 @@ public final class TSSProtos {
         return this;
       }
       
-      // optional int64 minute = 2;
-      private long minute_ ;
-      public boolean hasMinute() {
+      // optional .tss.LYCronTime gowork = 2;
+      private com.luyun.easyway95.shared.TSSProtos.LYCronTime gowork_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder> goworkBuilder_;
+      public boolean hasGowork() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public long getMinute() {
-        return minute_;
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime getGowork() {
+        if (goworkBuilder_ == null) {
+          return gowork_;
+        } else {
+          return goworkBuilder_.getMessage();
+        }
       }
-      public Builder setMinute(long value) {
+      public Builder setGowork(com.luyun.easyway95.shared.TSSProtos.LYCronTime value) {
+        if (goworkBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          gowork_ = value;
+          onChanged();
+        } else {
+          goworkBuilder_.setMessage(value);
+        }
         bitField0_ |= 0x00000002;
-        minute_ = value;
-        onChanged();
         return this;
       }
-      public Builder clearMinute() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        minute_ = 0L;
-        onChanged();
+      public Builder setGowork(
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder builderForValue) {
+        if (goworkBuilder_ == null) {
+          gowork_ = builderForValue.build();
+          onChanged();
+        } else {
+          goworkBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
         return this;
+      }
+      public Builder mergeGowork(com.luyun.easyway95.shared.TSSProtos.LYCronTime value) {
+        if (goworkBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              gowork_ != com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance()) {
+            gowork_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.newBuilder(gowork_).mergeFrom(value).buildPartial();
+          } else {
+            gowork_ = value;
+          }
+          onChanged();
+        } else {
+          goworkBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder clearGowork() {
+        if (goworkBuilder_ == null) {
+          gowork_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+          onChanged();
+        } else {
+          goworkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder getGoworkBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getGoworkFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGoworkOrBuilder() {
+        if (goworkBuilder_ != null) {
+          return goworkBuilder_.getMessageOrBuilder();
+        } else {
+          return gowork_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder> 
+          getGoworkFieldBuilder() {
+        if (goworkBuilder_ == null) {
+          goworkBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder>(
+                  gowork_,
+                  getParentForChildren(),
+                  isClean());
+          gowork_ = null;
+        }
+        return goworkBuilder_;
       }
       
-      // optional int64 hour = 3;
-      private long hour_ ;
-      public boolean hasHour() {
+      // optional .tss.LYCronTime gohome = 3;
+      private com.luyun.easyway95.shared.TSSProtos.LYCronTime gohome_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder> gohomeBuilder_;
+      public boolean hasGohome() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public long getHour() {
-        return hour_;
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime getGohome() {
+        if (gohomeBuilder_ == null) {
+          return gohome_;
+        } else {
+          return gohomeBuilder_.getMessage();
+        }
       }
-      public Builder setHour(long value) {
+      public Builder setGohome(com.luyun.easyway95.shared.TSSProtos.LYCronTime value) {
+        if (gohomeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          gohome_ = value;
+          onChanged();
+        } else {
+          gohomeBuilder_.setMessage(value);
+        }
         bitField0_ |= 0x00000004;
-        hour_ = value;
-        onChanged();
         return this;
       }
-      public Builder clearHour() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        hour_ = 0L;
-        onChanged();
+      public Builder setGohome(
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder builderForValue) {
+        if (gohomeBuilder_ == null) {
+          gohome_ = builderForValue.build();
+          onChanged();
+        } else {
+          gohomeBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
         return this;
+      }
+      public Builder mergeGohome(com.luyun.easyway95.shared.TSSProtos.LYCronTime value) {
+        if (gohomeBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              gohome_ != com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance()) {
+            gohome_ =
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.newBuilder(gohome_).mergeFrom(value).buildPartial();
+          } else {
+            gohome_ = value;
+          }
+          onChanged();
+        } else {
+          gohomeBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      public Builder clearGohome() {
+        if (gohomeBuilder_ == null) {
+          gohome_ = com.luyun.easyway95.shared.TSSProtos.LYCronTime.getDefaultInstance();
+          onChanged();
+        } else {
+          gohomeBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder getGohomeBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getGohomeFieldBuilder().getBuilder();
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder getGohomeOrBuilder() {
+        if (gohomeBuilder_ != null) {
+          return gohomeBuilder_.getMessageOrBuilder();
+        } else {
+          return gohome_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder> 
+          getGohomeFieldBuilder() {
+        if (gohomeBuilder_ == null) {
+          gohomeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime, com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder, com.luyun.easyway95.shared.TSSProtos.LYCronTimeOrBuilder>(
+                  gohome_,
+                  getParentForChildren(),
+                  isClean());
+          gohome_ = null;
+        }
+        return gohomeBuilder_;
       }
       
       // optional int32 dom = 4;
@@ -6876,6 +7537,10 @@ public final class TSSProtos {
     boolean hasCityTraffic();
     com.luyun.easyway95.shared.TSSProtos.LYCityTraffic getCityTraffic();
     com.luyun.easyway95.shared.TSSProtos.LYCityTrafficOrBuilder getCityTrafficOrBuilder();
+    
+    // optional .tss.LYTrafficPub.LYPubType pub_type = 4;
+    boolean hasPubType();
+    com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType getPubType();
   }
   public static final class LYTrafficPub extends
       com.google.protobuf.GeneratedMessage
@@ -6905,6 +7570,78 @@ public final class TSSProtos {
       return com.luyun.easyway95.shared.TSSProtos.internal_static_tss_LYTrafficPub_fieldAccessorTable;
     }
     
+    public enum LYPubType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      LY_PUB_ADHOC(0, 1),
+      LY_PUB_EVENT(1, 2),
+      LY_PUB_CRON(2, 3),
+      ;
+      
+      public static final int LY_PUB_ADHOC_VALUE = 1;
+      public static final int LY_PUB_EVENT_VALUE = 2;
+      public static final int LY_PUB_CRON_VALUE = 3;
+      
+      
+      public final int getNumber() { return value; }
+      
+      public static LYPubType valueOf(int value) {
+        switch (value) {
+          case 1: return LY_PUB_ADHOC;
+          case 2: return LY_PUB_EVENT;
+          case 3: return LY_PUB_CRON;
+          default: return null;
+        }
+      }
+      
+      public static com.google.protobuf.Internal.EnumLiteMap<LYPubType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<LYPubType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<LYPubType>() {
+              public LYPubType findValueByNumber(int number) {
+                return LYPubType.valueOf(number);
+              }
+            };
+      
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.getDescriptor().getEnumTypes().get(0);
+      }
+      
+      private static final LYPubType[] VALUES = {
+        LY_PUB_ADHOC, LY_PUB_EVENT, LY_PUB_CRON, 
+      };
+      
+      public static LYPubType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+      
+      private final int index;
+      private final int value;
+      
+      private LYPubType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+      
+      // @@protoc_insertion_point(enum_scope:tss.LYTrafficPub.LYPubType)
+    }
+    
     private int bitField0_;
     // required int32 route_id = 1;
     public static final int ROUTE_ID_FIELD_NUMBER = 1;
@@ -6929,9 +7666,20 @@ public final class TSSProtos {
       return cityTraffic_;
     }
     
+    // optional .tss.LYTrafficPub.LYPubType pub_type = 4;
+    public static final int PUB_TYPE_FIELD_NUMBER = 4;
+    private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType pubType_;
+    public boolean hasPubType() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType getPubType() {
+      return pubType_;
+    }
+    
     private void initFields() {
       routeId_ = 0;
       cityTraffic_ = com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.getDefaultInstance();
+      pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType.LY_PUB_ADHOC;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -6963,6 +7711,9 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeMessage(2, cityTraffic_);
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeEnum(4, pubType_.getNumber());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -6979,6 +7730,10 @@ public final class TSSProtos {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, cityTraffic_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(4, pubType_.getNumber());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -7113,6 +7868,8 @@ public final class TSSProtos {
           cityTrafficBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
+        pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType.LY_PUB_ADHOC;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       
@@ -7163,6 +7920,10 @@ public final class TSSProtos {
         } else {
           result.cityTraffic_ = cityTrafficBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.pubType_ = pubType_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7184,6 +7945,9 @@ public final class TSSProtos {
         }
         if (other.hasCityTraffic()) {
           mergeCityTraffic(other.getCityTraffic());
+        }
+        if (other.hasPubType()) {
+          setPubType(other.getPubType());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -7240,6 +8004,17 @@ public final class TSSProtos {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setCityTraffic(subBuilder.buildPartial());
+              break;
+            }
+            case 32: {
+              int rawValue = input.readEnum();
+              com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType value = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(4, rawValue);
+              } else {
+                bitField0_ |= 0x00000004;
+                pubType_ = value;
+              }
               break;
             }
           }
@@ -7357,6 +8132,30 @@ public final class TSSProtos {
           cityTraffic_ = null;
         }
         return cityTrafficBuilder_;
+      }
+      
+      // optional .tss.LYTrafficPub.LYPubType pub_type = 4;
+      private com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType.LY_PUB_ADHOC;
+      public boolean hasPubType() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType getPubType() {
+        return pubType_;
+      }
+      public Builder setPubType(com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
+        pubType_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearPubType() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        pubType_ = com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.LYPubType.LY_PUB_ADHOC;
+        onChanged();
+        return this;
       }
       
       // @@protoc_insertion_point(builder_scope:tss.LYTrafficPub)
@@ -12008,6 +12807,11 @@ public final class TSSProtos {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_tss_LYCityTraffic_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_tss_LYCronTime_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_tss_LYCronTime_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_tss_LYCrontab_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -12066,67 +12870,73 @@ public final class TSSProtos {
       "Segment\"\213\001\n\020LYSegmentTraffic\022\037\n\007segment\030" +
       "\001 \002(\0132\016.tss.LYSegment\022\021\n\ttimestamp\030\003 \001(\003" +
       "\022#\n\tdirection\030\004 \002(\0162\020.tss.LYDirection\022\r\n",
-      "\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"}\n\rLYRoadT" +
-      "raffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003\022" +
-      "/\n\020segment_traffics\030\003 \003(\0132\025.tss.LYSegmen" +
-      "tTraffic\022\014\n\004href\030\014 \001(\t\022\014\n\004desc\030\013 \001(\t\"[\n\r" +
-      "LYCityTraffic\022\014\n\004city\030\001 \001(\t\022\021\n\ttimestamp" +
-      "\030\002 \001(\003\022)\n\rroad_traffics\030\003 \003(\0132\022.tss.LYRo" +
-      "adTraffic\"\344\001\n\tLYCrontab\022,\n\tcron_type\030\001 \002" +
-      "(\0162\031.tss.LYCrontab.LYCronType\022\016\n\006minute\030" +
-      "\002 \001(\003\022\014\n\004hour\030\003 \001(\003\022\013\n\003dom\030\004 \001(\005\022\r\n\005mont" +
-      "h\030\005 \001(\005\022\013\n\003dow\030\006 \001(\005\"b\n\nLYCronType\022\021\n\rLY",
-      "_REP_MINUTE\020\001\022\017\n\013LY_REP_HOUR\020\002\022\016\n\nLY_REP" +
-      "_DOM\020\004\022\020\n\014LY_REP_MONTH\020\010\022\016\n\nLY_REP_DOW\020\020" +
-      "\"\326\002\n\014LYTrafficSub\022\014\n\004city\030\001 \002(\t\022\033\n\005route" +
-      "\030\002 \002(\0132\014.tss.LYRoute\022-\n\010opr_type\030\003 \002(\0162\033" +
-      ".tss.LYTrafficSub.LYOprType\022-\n\010pub_type\030" +
-      "\004 \002(\0162\033.tss.LYTrafficSub.LYPubType\022\023\n\007ex" +
-      "pires\030\005 \001(\005:\00230\022 \n\010cron_tab\030\006 \001(\0132\016.tss." +
-      "LYCrontab\"D\n\tLYOprType\022\021\n\rLY_SUB_CREATE\020" +
-      "\001\022\021\n\rLY_SUB_DELETE\020\002\022\021\n\rLY_SUB_UPDATE\020\003\"" +
-      "@\n\tLYPubType\022\020\n\014LY_PUB_ADHOC\020\001\022\020\n\014LY_PUB",
-      "_EVENT\020\002\022\017\n\013LY_PUB_CRON\020\003\"J\n\014LYTrafficPu" +
-      "b\022\020\n\010route_id\030\001 \002(\005\022(\n\014city_traffic\030\002 \002(" +
-      "\0132\022.tss.LYCityTraffic\"\177\n\016LYDeviceReport\022" +
-      "\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_token\030\002 \002(\014" +
-      "\022\023\n\013device_name\030\003 \002(\t\022\024\n\014device_model\030\004 " +
-      "\002(\t\022\031\n\021device_os_version\030\005 \002(\t\"\255\001\n\tLYChe" +
-      "ckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007os_type\030\002 " +
-      "\002(\0162\r.tss.LYOsType\022\022\n\nos_version\030\003 \001(\t\022\030" +
-      "\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly_minor_rel" +
-      "ease\030\005 \002(\005\022\024\n\014download_url\030\006 \001(\t\022\014\n\004desc",
-      "\030\007 \001(\t\"n\n\rLYSamplePoint\022(\n\rsp_coordinate" +
-      "\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\ttimestamp\030\002" +
-      " \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006course\030\004 \001(\001\"5" +
-      "\n\017LYTrafficReport\022\"\n\006points\030\001 \003(\0132\022.tss." +
-      "LYSamplePoint\"\314\003\n\nLYMsgOnAir\022\017\n\007version\030" +
-      "\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimestamp\030\006 \002(\003" +
-      "\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYParty\022\036\n\010to" +
-      "_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010msg_type\030\004" +
-      " \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id\030\007 \001(\t\022\016\n\006" +
-      "rcv_id\030\010 \001(\t\022\021\n\tsignature\030\t \001(\014\022 \n\010ret_c",
-      "ode\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007checkin\030\022 \001" +
-      "(\0132\016.tss.LYCheckin\022*\n\rdevice_report\030\023 \001(" +
-      "\0132\023.tss.LYDeviceReport\022&\n\013traffic_sub\030$ " +
-      "\001(\0132\021.tss.LYTrafficSub\022&\n\013traffic_pub\0303 " +
-      "\001(\0132\021.tss.LYTrafficPub\022,\n\016traffic_report" +
-      "\030A \001(\0132\024.tss.LYTrafficReport*\006\010\200\001\020\200\002*1\n\010" +
-      "LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY_IOS\020\001\022\t\n\005" +
-      "LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_UNKNOWN\020\000\022" +
-      "\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002\022\014\n\010LY_NOR" +
-      "TH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_WEST\020\005\022\020\n\014L",
-      "Y_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n\014LY_SOUTHE" +
-      "AST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCCESS\020\000\022\034\n\027L" +
-      "Y_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016LY_VERSION_" +
-      "LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n\021LY_MSG_TY" +
-      "PE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023\n\016LY_OTHER" +
-      "_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLIENT\020\001\022\n\n\006L" +
-      "Y_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgType\022\016\n\nLY_C" +
-      "HECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016LY_TRAFFIC_" +
-      "SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024\n\020LY_DEVIC" +
-      "E_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023B\'\n\032com.lu",
-      "yun.easyway95.sharedB\tTSSProtos"
+      "\005speed\030\005 \002(\005\022\017\n\007details\030\013 \001(\t\"\214\001\n\rLYRoad" +
+      "Traffic\022\014\n\004road\030\001 \002(\t\022\021\n\ttimestamp\030\002 \001(\003" +
+      "\022/\n\020segment_traffics\030\003 \003(\0132\025.tss.LYSegme" +
+      "ntTraffic\022\r\n\005alias\030\004 \001(\t\022\014\n\004href\030\014 \001(\t\022\014" +
+      "\n\004desc\030\013 \001(\t\"[\n\rLYCityTraffic\022\014\n\004city\030\001 " +
+      "\001(\t\022\021\n\ttimestamp\030\002 \001(\003\022)\n\rroad_traffics\030" +
+      "\003 \003(\0132\022.tss.LYRoadTraffic\"*\n\nLYCronTime\022" +
+      "\016\n\006minute\030\001 \001(\005\022\014\n\004hour\030\002 \001(\005\"\210\002\n\tLYCron" +
+      "tab\022,\n\tcron_type\030\001 \002(\0162\031.tss.LYCrontab.L" +
+      "YCronType\022\037\n\006gowork\030\002 \001(\0132\017.tss.LYCronTi",
+      "me\022\037\n\006gohome\030\003 \001(\0132\017.tss.LYCronTime\022\013\n\003d" +
+      "om\030\004 \001(\005\022\r\n\005month\030\005 \001(\005\022\013\n\003dow\030\006 \001(\005\"b\n\n" +
+      "LYCronType\022\021\n\rLY_REP_MINUTE\020\001\022\017\n\013LY_REP_" +
+      "HOUR\020\002\022\016\n\nLY_REP_DOM\020\004\022\020\n\014LY_REP_MONTH\020\010" +
+      "\022\016\n\nLY_REP_DOW\020\020\"\326\002\n\014LYTrafficSub\022\014\n\004cit" +
+      "y\030\001 \002(\t\022\033\n\005route\030\002 \002(\0132\014.tss.LYRoute\022-\n\010" +
+      "opr_type\030\003 \002(\0162\033.tss.LYTrafficSub.LYOprT" +
+      "ype\022-\n\010pub_type\030\004 \002(\0162\033.tss.LYTrafficSub" +
+      ".LYPubType\022\023\n\007expires\030\005 \001(\005:\00230\022 \n\010cron_" +
+      "tab\030\006 \001(\0132\016.tss.LYCrontab\"D\n\tLYOprType\022\021",
+      "\n\rLY_SUB_CREATE\020\001\022\021\n\rLY_SUB_DELETE\020\002\022\021\n\r" +
+      "LY_SUB_UPDATE\020\003\"@\n\tLYPubType\022\020\n\014LY_PUB_A" +
+      "DHOC\020\001\022\020\n\014LY_PUB_EVENT\020\002\022\017\n\013LY_PUB_CRON\020" +
+      "\003\"\273\001\n\014LYTrafficPub\022\020\n\010route_id\030\001 \002(\005\022(\n\014" +
+      "city_traffic\030\002 \002(\0132\022.tss.LYCityTraffic\022-" +
+      "\n\010pub_type\030\004 \001(\0162\033.tss.LYTrafficPub.LYPu" +
+      "bType\"@\n\tLYPubType\022\020\n\014LY_PUB_ADHOC\020\001\022\020\n\014" +
+      "LY_PUB_EVENT\020\002\022\017\n\013LY_PUB_CRON\020\003\"\177\n\016LYDev" +
+      "iceReport\022\021\n\tdevice_id\030\001 \002(\t\022\024\n\014device_t" +
+      "oken\030\002 \002(\014\022\023\n\013device_name\030\003 \002(\t\022\024\n\014devic",
+      "e_model\030\004 \002(\t\022\031\n\021device_os_version\030\005 \002(\t" +
+      "\"\255\001\n\tLYCheckin\022\024\n\014device_model\030\001 \001(\t\022\036\n\007" +
+      "os_type\030\002 \002(\0162\r.tss.LYOsType\022\022\n\nos_versi" +
+      "on\030\003 \001(\t\022\030\n\020ly_major_release\030\004 \002(\005\022\030\n\020ly" +
+      "_minor_release\030\005 \002(\005\022\024\n\014download_url\030\006 \001" +
+      "(\t\022\014\n\004desc\030\007 \001(\t\"n\n\rLYSamplePoint\022(\n\rsp_" +
+      "coordinate\030\001 \002(\0132\021.tss.LYCoordinate\022\021\n\tt" +
+      "imestamp\030\002 \002(\003\022\020\n\010altitude\030\003 \001(\001\022\016\n\006cour" +
+      "se\030\004 \001(\001\"5\n\017LYTrafficReport\022\"\n\006points\030\001 " +
+      "\003(\0132\022.tss.LYSamplePoint\"\314\003\n\nLYMsgOnAir\022\017",
+      "\n\007version\030\001 \002(\005\022\016\n\006msg_id\030\005 \002(\005\022\021\n\ttimes" +
+      "tamp\030\006 \002(\003\022 \n\nfrom_party\030\002 \002(\0162\014.tss.LYP" +
+      "arty\022\036\n\010to_party\030\003 \002(\0162\014.tss.LYParty\022 \n\010" +
+      "msg_type\030\004 \002(\0162\016.tss.LYMsgType\022\016\n\006snd_id" +
+      "\030\007 \001(\t\022\016\n\006rcv_id\030\010 \001(\t\022\021\n\tsignature\030\t \001(" +
+      "\014\022 \n\010ret_code\030\021 \001(\0162\016.tss.LYRetCode\022\037\n\007c" +
+      "heckin\030\022 \001(\0132\016.tss.LYCheckin\022*\n\rdevice_r" +
+      "eport\030\023 \001(\0132\023.tss.LYDeviceReport\022&\n\013traf" +
+      "fic_sub\030$ \001(\0132\021.tss.LYTrafficSub\022&\n\013traf" +
+      "fic_pub\0303 \001(\0132\021.tss.LYTrafficPub\022,\n\016traf",
+      "fic_report\030A \001(\0132\024.tss.LYTrafficReport*\006" +
+      "\010\200\001\020\200\002*1\n\010LYOsType\022\016\n\nLY_ANDROID\020\000\022\n\n\006LY" +
+      "_IOS\020\001\022\t\n\005LY_WP\020\002*\233\001\n\013LYDirection\022\016\n\nLY_" +
+      "UNKNOWN\020\000\022\013\n\007LY_EAST\020\001\022\020\n\014LY_NORTHEAST\020\002" +
+      "\022\014\n\010LY_NORTH\020\003\022\020\n\014LY_NORTHWEST\020\004\022\013\n\007LY_W" +
+      "EST\020\005\022\020\n\014LY_SOUTHWEST\020\006\022\014\n\010LY_SOUTH\020\007\022\020\n" +
+      "\014LY_SOUTHEAST\020\010*\241\001\n\tLYRetCode\022\016\n\nLY_SUCC" +
+      "ESS\020\000\022\034\n\027LY_VERSION_IMCOMPATIBLE\020\221\002\022\023\n\016L" +
+      "Y_VERSION_LOW\020\243\002\022\023\n\016LY_PARTY_ERROR\020\251\004\022\026\n" +
+      "\021LY_MSG_TYPE_ERROR\020\222\007\022\017\n\nLY_TIMEOUT\020\223\t\022\023",
+      "\n\016LY_OTHER_ERROR\020\231\023*/\n\007LYParty\022\r\n\tLY_CLI" +
+      "ENT\020\001\022\n\n\006LY_TSS\020\002\022\t\n\005LY_TC\020\003*\201\001\n\tLYMsgTy" +
+      "pe\022\016\n\nLY_CHECKIN\020\001\022\017\n\013LY_RET_CODE\020\002\022\022\n\016L" +
+      "Y_TRAFFIC_SUB\020\004\022\025\n\021LY_TRAFFIC_REPORT\020\005\022\024" +
+      "\n\020LY_DEVICE_REPORT\020\006\022\022\n\016LY_TRAFFIC_PUB\020\023" +
+      "B\'\n\032com.luyun.easyway95.sharedB\tTSSProto" +
+      "s"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -12178,7 +12988,7 @@ public final class TSSProtos {
           internal_static_tss_LYRoadTraffic_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYRoadTraffic_descriptor,
-              new java.lang.String[] { "Road", "Timestamp", "SegmentTraffics", "Href", "Desc", },
+              new java.lang.String[] { "Road", "Timestamp", "SegmentTraffics", "Alias", "Href", "Desc", },
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic.Builder.class);
           internal_static_tss_LYCityTraffic_descriptor =
@@ -12189,16 +12999,24 @@ public final class TSSProtos {
               new java.lang.String[] { "City", "Timestamp", "RoadTraffics", },
               com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.class,
               com.luyun.easyway95.shared.TSSProtos.LYCityTraffic.Builder.class);
-          internal_static_tss_LYCrontab_descriptor =
+          internal_static_tss_LYCronTime_descriptor =
             getDescriptor().getMessageTypes().get(7);
+          internal_static_tss_LYCronTime_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_tss_LYCronTime_descriptor,
+              new java.lang.String[] { "Minute", "Hour", },
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.class,
+              com.luyun.easyway95.shared.TSSProtos.LYCronTime.Builder.class);
+          internal_static_tss_LYCrontab_descriptor =
+            getDescriptor().getMessageTypes().get(8);
           internal_static_tss_LYCrontab_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCrontab_descriptor,
-              new java.lang.String[] { "CronType", "Minute", "Hour", "Dom", "Month", "Dow", },
+              new java.lang.String[] { "CronType", "Gowork", "Gohome", "Dom", "Month", "Dow", },
               com.luyun.easyway95.shared.TSSProtos.LYCrontab.class,
               com.luyun.easyway95.shared.TSSProtos.LYCrontab.Builder.class);
           internal_static_tss_LYTrafficSub_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_tss_LYTrafficSub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficSub_descriptor,
@@ -12206,15 +13024,15 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.Builder.class);
           internal_static_tss_LYTrafficPub_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_tss_LYTrafficPub_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficPub_descriptor,
-              new java.lang.String[] { "RouteId", "CityTraffic", },
+              new java.lang.String[] { "RouteId", "CityTraffic", "PubType", },
               com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficPub.Builder.class);
           internal_static_tss_LYDeviceReport_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_tss_LYDeviceReport_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYDeviceReport_descriptor,
@@ -12222,7 +13040,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.class,
               com.luyun.easyway95.shared.TSSProtos.LYDeviceReport.Builder.class);
           internal_static_tss_LYCheckin_descriptor =
-            getDescriptor().getMessageTypes().get(11);
+            getDescriptor().getMessageTypes().get(12);
           internal_static_tss_LYCheckin_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYCheckin_descriptor,
@@ -12230,7 +13048,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.class,
               com.luyun.easyway95.shared.TSSProtos.LYCheckin.Builder.class);
           internal_static_tss_LYSamplePoint_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_tss_LYSamplePoint_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYSamplePoint_descriptor,
@@ -12238,7 +13056,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.class,
               com.luyun.easyway95.shared.TSSProtos.LYSamplePoint.Builder.class);
           internal_static_tss_LYTrafficReport_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(14);
           internal_static_tss_LYTrafficReport_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYTrafficReport_descriptor,
@@ -12246,7 +13064,7 @@ public final class TSSProtos {
               com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.class,
               com.luyun.easyway95.shared.TSSProtos.LYTrafficReport.Builder.class);
           internal_static_tss_LYMsgOnAir_descriptor =
-            getDescriptor().getMessageTypes().get(14);
+            getDescriptor().getMessageTypes().get(15);
           internal_static_tss_LYMsgOnAir_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_tss_LYMsgOnAir_descriptor,

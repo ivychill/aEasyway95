@@ -1,22 +1,15 @@
 package com.luyun.easyway95;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import android.content.BroadcastReceiver;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.os.Bundle;
-import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
@@ -24,26 +17,24 @@ import com.baidu.mapapi.MKAddrInfo;
 import com.baidu.mapapi.MKBusLineResult;
 import com.baidu.mapapi.MKDrivingRouteResult;
 import com.baidu.mapapi.MKPlanNode;
+import com.baidu.mapapi.MKPoiInfo;
 import com.baidu.mapapi.MKPoiResult;
 import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MKSearch;
-import com.baidu.mapapi.MKPoiInfo;
 import com.baidu.mapapi.MKSearchListener;
-import com.baidu.mapapi.MKStep;
 import com.baidu.mapapi.MKSuggestionResult;
 import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
-import com.baidu.mapapi.PoiOverlay;
-import com.baidu.mapapi.RouteOverlay;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.support.v4.app.NotificationCompat;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
-import com.luyun.easyway95.MapUtils.STPointLineDistInfo;
+import com.luyun.easyway95.shared.TSSProtos;
 import com.luyun.easyway95.shared.TSSProtos.LYCheckin;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgType;
 import com.luyun.easyway95.shared.TSSProtos.LYOsType;
 import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
-import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
-import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficPub;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficReport;
 
@@ -58,6 +49,9 @@ public class MapHelper {
 	private ArrayList<MKPoiInfo> mRoadsAround;
 	//private SegmentTraffic mCurrentSegTraffic; //traffic received from tss, used to update view of traffic list and update "traffic line??"
 	private TrafficSubscriber mTrafficSubscriber;
+	
+	private boolean mSubaction; 
+	private MKRoute home2offc=null;
 	
 	private MKRouteHelper mDrivingRoutes;
 	private HotRoadsWithTraffic mHotRoadsWithTraffic;
@@ -166,6 +160,8 @@ public class MapHelper {
     		} else if (minor > mainActivity.getMinorRelease()) {
     			mainActivity.onSoftwareUpgrade(major, minor, strUrl, strDesc, false);
     		}
+    		
+    		mainActivity.onSubscription(mainActivity.getSubscript());
     		return;
     	case LY_TRAFFIC_PUB:
     		LYTrafficPub trafficPub = msg.getTrafficPub();
@@ -177,6 +173,15 @@ public class MapHelper {
     		if (routeId <= 255 && routeId >=128) {
     			Log.d(TAG, "processing hotroads");
     			mHotRoadsWithTraffic.onTraffic(trafficPub);
+    			return;
+    		}
+    		
+    		//cron type
+    		if (trafficPub.hasPubType()){
+    			Log.d(TAG, "recv cron info");
+    			if(trafficPub.getPubType() == TSSProtos.LYTrafficPub.LYPubType.LY_PUB_CRON){
+    				onCronpub(msg.getTrafficPub());
+    			}
     			return;
     		}
     		//与DrivingRoute进行拟合
@@ -362,7 +367,7 @@ public class MapHelper {
 				mDrivingRoutes = new MKRouteHelper(route, mainActivity.mMapUtils);
 			    mainActivity.resetMapView();
 			    
-			    //Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
+			    Log.d(TAG, "ArrayList<ArrayList<GeoPoint>> size..." + route.getArrayPoints().size());
 
 			    //Iterator<ArrayList<GeoPoint>> itr = route.getArrayPoints().iterator();
 		    	//int index = 0;
@@ -481,5 +486,133 @@ public class MapHelper {
     	mainActivity.sendMsgToSvr(data);
 	}
 	
+	private void onCronpub(LYTrafficPub trafficPub){
+		Log.d(TAG, "entry onCronpub");
+		
+	    String ns = Context.NOTIFICATION_SERVICE;
+	    NotificationManager mNotificationManager = (NotificationManager)mainActivity.getSystemService(ns);
+	  
+	    Intent notificationIntent = new Intent(mainActivity, ShowTraffics.class);
+	    PendingIntent pendIntent =  PendingIntent.getActivity(mainActivity, 0, notificationIntent,  PendingIntent.FLAG_ONE_SHOT);
+	  
+	    String title = "路云实时路况";
+	    String content = "";
+		  
+	    if(trafficPub.hasCityTraffic()){
+	    	for(int rd = 0; rd < trafficPub.getCityTraffic().getRoadTrafficsCount(); rd++){
+	    		TSSProtos.LYRoadTraffic tf = trafficPub.getCityTraffic().getRoadTraffics(rd);
+	    		content += tf.getRoad();
+	    		
+	    		Log.d(TAG, "segment count: " + tf.getDesc() + tf.getSegmentTrafficsCount());
+	    		
+	    		String seginf = "";
+	    		for(int seg = 0; seg < tf.getSegmentTrafficsCount(); seg++){
+	    			TSSProtos.LYSegmentTraffic segtraffic = tf.getSegmentTraffics(seg);
+
+	    			if(segtraffic.hasDetails()) seginf += segtraffic.getDetails();
+//	    			if(segtraffic.hasDirection()) seginf += segtraffic.getDirection();
+
+	    			int speed = segtraffic.getSpeed();
+	    			String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
+	    			if (speed >= Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
+	    			if (speed < Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD && speed >= Constants.TRAFFIC_JAM_LVL_HIGH_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
+
+	    			if(segtraffic.hasSpeed()) seginf += strSpeed;
+	    		}
+
+	    		if(content.length() + seginf.length() < Constants.MAX_PUSH_LEN)
+	    			content += seginf;
+	    		else
+	    			break;
+	    	}
+	    }
+
+	    NotificationCompat.Builder mBuilder =
+	    		new NotificationCompat.Builder(mainActivity)
+	    .setSmallIcon(R.drawable.icon95)
+	    .setContentTitle(title)
+	    .setContentText(content)
+	    .setAutoCancel(true);
+
+	    Notification notf =  mBuilder.getNotification();
+	    notf.setLatestEventInfo(mainActivity, title, content, pendIntent);
+	    
+	    Log.d(TAG, "content:" + content);
+
+	    //用mNotificationManager的notify方法通知用户生成标题栏消息通知
+	    mNotificationManager.notify(1, notf);
+	    Log.d(TAG, "begin notfier");
+	}
+	
+	public void subRoute(GeoPoint startPoint, GeoPoint endPoint, boolean subaction) {
+		Log.d(TAG, "subaction" + subaction + " :enter subRoute, start="+startPoint.toString()+",end="+endPoint.toString());
+		
+		if(home2offc != null && subaction == false){
+			mTrafficSubscriber.subCron(home2offc, subaction);
+			return;
+		}
+		
+		MKPlanNode start = new MKPlanNode();
+		start.pt = startPoint;
+		MKPlanNode end = new MKPlanNode();
+		end.pt = endPoint;
+		
+		// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+		MKSearch mMKSearch = new MKSearch();
+		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+		mMKSearch.drivingSearch(null, start, null, end);
+		mSubaction = subaction;
+	
+		mMKSearch.init(mBMapMan, new MKSearchListener(){
+			@Override
+			public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
+				Log.d(TAG, "subRoute enter onGetDrivingRouteResult");
+			    if (result == null) {
+			    	Log.d(TAG, "subRoute getroute fail :" + iError);
+			        return;
+			    }
+			    home2offc = result.getPlan(0).getRoute(0);
+			    mTrafficSubscriber.subCron(home2offc, mSubaction);
+			}
+
+			@Override
+			public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onGetPoiResult(MKPoiResult arg0, int arg1, int arg2) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onGetTransitRouteResult(MKTransitRouteResult arg0,
+					int arg1) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
+					int arg1) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onGetRGCShareUrlResult(String arg0, int arg1) {
+				// TODO Auto-generated method stub
+			}
+	    });
+	}
 }
 

@@ -41,6 +41,7 @@ public class UserProfile {
 	MKPoiInfoHelper mHomeAddr;
 	MKPoiInfoHelper mOfficeAddr;
 	MKPoiInfoHelper mLastDestination;
+	boolean mSubcript;
 	
 	LinkedList<String> mRecentQuery;
 	MKRouteHelper mRouteHome2Office;
@@ -87,6 +88,15 @@ public class UserProfile {
 	}
 	public void setLastDestination(MKPoiInfoHelper mpi) {
 		mLastDestination = mpi;
+	}
+	public void setAndCommitSubscript(SharedPreferences sp, boolean sub){
+		mSubcript = sub;
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putBoolean("subscript", sub);
+		ed.commit();
+	}
+	public boolean getSubscript(){
+		return mSubcript;
 	}
 	public void setAndCommitLastDestination(SharedPreferences sp, MKPoiInfoHelper mpi) {
 		mLastDestination = mpi;
@@ -150,6 +160,8 @@ public class UserProfile {
 			index++;
 		}
 		Log.d(TAG, "mRecentQuery: " + mRecentQuery);
+		
+		mSubcript = sp.getBoolean("subscript", true);
 	}
 	
 	public void commitPreferences(SharedPreferences sp) {
@@ -160,6 +172,7 @@ public class UserProfile {
 		ed.putString("homeaddr", mHomeAddr.toString());
 		ed.putString("officeaddr", mOfficeAddr.toString());
 		ed.putString("lastdest", mLastDestination.toString());
+		ed.putBoolean("subscript", mSubcript);
 		for (int index = 0; index < mRecentQuery.size(); index++) {
 			ed.putString("RecentQuery"+index, mRecentQuery.toArray(new String[0])[index]);
 		}
@@ -167,8 +180,8 @@ public class UserProfile {
 	}
 	
 	public String toString() {
-		String strResult = String.format("UserName=<%s>, Email=<%s>, Home=<%s>, Office=<%s>", msUserName, msEmail, 
-								mHomeAddr.toString(), mOfficeAddr.toString());
+		String strResult = String.format("UserName=<%s>, Email=<%s>, Home=<%s>, Office=<%s>, subscript<%s>", msUserName, msEmail, 
+								mHomeAddr.toString(), mOfficeAddr.toString(), mSubcript);
 		return strResult;
 	}
 	

@@ -189,6 +189,23 @@ public class LYSetting extends PreferenceActivity
 	    	intent.putExtra(strKey, Constants.FAQ_URL);
     		startActivity(intent);
 	    }
+	    else if(preference.getKey().equals("subscription_preference")){
+	    	final CheckBoxPreference pref = (CheckBoxPreference)this.findPreference("subscription_preference");
+//	    	Intent cronintent = new Intent(LYSetting.this, LYNavigator.class);
+//    		String strkey = "subscription";
+    		
+	    	if(pref.isChecked()){
+		    	Log.d(TAG, "subscription.");	
+//		    	intent.putExtra(strKey, true);
+		    	app.getMainActivity().onSubscription(true);
+	    	}
+	    	else {
+//	    		intent.putExtra(strKey, false);
+	    		app.getMainActivity().onSubscription(false);
+	    		Log.d(TAG, "de-subscription.");
+	    	}
+	    	
+	    }
 		return true;
 	}
 
