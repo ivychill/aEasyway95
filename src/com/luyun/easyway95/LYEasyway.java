@@ -36,7 +36,8 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 	final static String TAG = "LYEasyway";
 	private GestureDetector mGestureDetector; 
 	ImageView mImageView;
-	int mImageResource[] = {R.drawable.instro_1, R.drawable.instro_2, R.drawable.instro_3, R.drawable.instro_4};
+	Button mBtnStart;
+	int mImageResource[] = {R.drawable.intro_1, R.drawable.intro_2, R.drawable.intro_3, R.drawable.intro_4, R.drawable.intro_5};
 	int mImageCursor = 0;
 	String mRelease;
 	boolean showGuide = false;
@@ -66,8 +67,8 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 	    mImageView.setOnTouchListener(this);
 	    
 
-        Button btnStart = (Button)findViewById(R.id.start_use);
-        btnStart.setOnClickListener(new OnClickListener() {
+        mBtnStart = (Button)findViewById(R.id.start_use);
+        mBtnStart.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		//判断网络连接是否正常 
@@ -91,13 +92,11 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
         			    .show();
         		}
         		
-//        		if (willSetNetwork)
-//        		{
-//    	            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
-//    			    return;
-//        		}
-        		//start LYNavigator activity
-
+        		else
+        		{
+            		startActivity(new Intent(LYEasyway.this, LYNavigator.class));
+            		LYEasyway.this.finish();
+        		}
         	}
         });
 	}
@@ -163,14 +162,23 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 		  
 		    // Fling left   
 		    mImageCursor =  mImageCursor + 1;
-		    if (mImageCursor > 3) mImageCursor = 3;
-		     mImageView.setImageResource(mImageResource[mImageCursor]);
+		    if (mImageCursor >= Constants.INTRODUCTION_PAGE_NUMBER - 1)
+		    {
+		    	mImageCursor = Constants.INTRODUCTION_PAGE_NUMBER - 1;
+		    	mBtnStart.setVisibility(View.VISIBLE);
+		    }
+		    else
+		    {
+		    	mBtnStart.setVisibility(View.INVISIBLE);
+		    }
+		    mImageView.setImageResource(mImageResource[mImageCursor]);
 		} else if (e2.getX() - e1.getX() > 100      
 		             && Math.abs(velocityX) > 200) {      
 		     // Fling right   
 		    mImageCursor =  mImageCursor - 1;
+		    mBtnStart.setVisibility(View.INVISIBLE);
 		    if (mImageCursor < 0) mImageCursor = 0;
-		     mImageView.setImageResource(mImageResource[mImageCursor]);
+		    mImageView.setImageResource(mImageResource[mImageCursor]);
 		}      		
 		return false;
 	}

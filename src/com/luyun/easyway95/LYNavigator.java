@@ -991,10 +991,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
+			Log.d(TAG, "ConnectivityChangeReceiver");
 			if (isConnectedToInternet()) {
 				if (mzService == null) { //ZMQService not ready yet
 					return;
 				}
+				Log.d(TAG, "reconnect");
 				ZMQreconnect();
 				mMapHelper.checkIn();
 			}

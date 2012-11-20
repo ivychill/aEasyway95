@@ -139,6 +139,7 @@ public class ZMQService extends Service {
 							break; //break the loop 
 						} else if (cmd.equals(Constants.ZMQ_RECONNECT_CMD)) {
 							Log.d(TAG, "ZMQService reconnecting ...");
+							mzsProSvrEnd.close();
 							connectSVR();
 							continue;
 						}

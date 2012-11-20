@@ -160,7 +160,6 @@ public class UserProfile {
 			index++;
 		}
 		Log.d(TAG, "mRecentQuery: " + mRecentQuery);
-		
 		mSubcript = sp.getBoolean("subscript", true);
 	}
 	

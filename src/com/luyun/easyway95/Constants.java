@@ -11,6 +11,8 @@ public class Constants {
 	public static final String ZMQ_QUITTING_CMD = "QT";
 	public static final String ZMQ_RECONNECT_CMD = "RC";
 	
+	public static final int INTRODUCTION_PAGE_NUMBER = 5;
+	
 	public static final int ROUTE_START_SEARCH=2000;//路径规划起点搜索
 	public static final int ROUTE_END_SEARCH=2001;//路径规划起点搜索
 	public static final int ROUTE_SEARCH_RESULT=2002;//路径规划结果
@@ -73,8 +75,8 @@ public class Constants {
 	public static final int OFFICE_REQUEST_CODE = 1890;
 	public static final int MAX_RECENT_QUERY = 20;
 
-//	public static final int TSS_SERVER_PORT=7001; 
-	public static final int TSS_SERVER_PORT=6001; 
+	public static final int TSS_SERVER_PORT=7001; 
+//	public static final int TSS_SERVER_PORT=6001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
 	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
 //	public static final String TSS_PRO_HOST="172.16.0.100";	 
