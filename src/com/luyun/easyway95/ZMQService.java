@@ -131,7 +131,7 @@ public class ZMQService extends Service {
 				items.poll();
 				if (items.pollin(0)) {
 					data = mzsLifeCycleSvrEnd.recv(0);
-					//2×Ö½Ú°üÊÇÄÚ²¿ÃüÁî
+					//2ï¿½Ö½Ú°ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
 					if (data.length == 2) {
 						String cmd = new String(data);
 						if (cmd.equals(Constants.ZMQ_QUITTING_CMD)) {
@@ -159,13 +159,14 @@ public class ZMQService extends Service {
 				data = mzsDevSvrEnd.recv(0);
 				}*/
 		        Message msg = new Message();
+		        msg.what = Constants.TRAFFIC_UPDATE_CMD;
 		        Bundle bdl = new Bundle();
 		        bdl.putByteArray(Constants.TRAFFIC_UPDATE, data);
 		        msg.setData(bdl);
 		        // The PendingIntent to launch our activity
 		        //PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
 		        //        new Intent(getApplicationContext(), MainActivity.class), 0);
-		        //((MainActivity)getApplicationContext()).handler.sendMessage(msg);
+
 		        mTriggerHdl.sendMessage(msg);
 			}
 			

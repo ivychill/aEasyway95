@@ -13,21 +13,21 @@ public class Constants {
 	
 	public static final int INTRODUCTION_PAGE_NUMBER = 5;
 	
-	public static final int ROUTE_START_SEARCH=2000;//Â·¾¶¹æ»®ÆðµãËÑË÷
-	public static final int ROUTE_END_SEARCH=2001;//Â·¾¶¹æ»®ÆðµãËÑË÷
-	public static final int ROUTE_SEARCH_RESULT=2002;//Â·¾¶¹æ»®½á¹û
-	public static final int ROUTE_SEARCH_ERROR=2004;//Â·¾¶¹æ»®ÆðÆðÊ¼µãËÑË÷Òì³£	
+	public static final int ROUTE_START_SEARCH=2000;//Â·ï¿½ï¿½ï¿½æ»®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static final int ROUTE_END_SEARCH=2001;//Â·ï¿½ï¿½ï¿½æ»®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static final int ROUTE_SEARCH_RESULT=2002;//Â·ï¿½ï¿½ï¿½æ»®ï¿½ï¿½ï¿½
+	public static final int ROUTE_SEARCH_ERROR=2004;//Â·ï¿½ï¿½ï¿½æ»®ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£	
 	public static final String POI_START_SEARCH="2005";//POI
-	public static final String POI_SEARCH_RESULT="2006";//POI½á¹û
+	public static final String POI_SEARCH_RESULT="2006";//POIï¿½ï¿½ï¿½
 	
-	public static final int REOCODER_RESULT=3000;//µØÀí±àÂë½á¹û
+	public static final int REOCODER_RESULT=3000;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public static final int DIALOG_LAYER=4000;
 	public static final int POISEARCH_NEXT=5000;
 	
 	public static final int SYNTHESIZE_ONGOING=5500;	
 	public static final int SYNTHESIZE_DONE=5501;	
-	public static final int DLG_TIME_OUT=5601;	//ÏûÏ¢
-	public static final int DLG_LAST_DURATION=12000;	//¶Ô»°¿ò´æÔÚµÄÊ±¼ä
+	public static final int DLG_TIME_OUT=5601;	//ï¿½ï¿½Ï¢
+	public static final int DLG_LAST_DURATION=12000;	//ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ê±ï¿½ï¿½
 	public static final int RESET_MAP_TIME_OUT=5701;	
 	public static final int RESET_MAP_INTERVAL=60000;	
 	public static final int PROMPT_WATCH_DOG=5801;	
@@ -53,18 +53,18 @@ public class Constants {
 //	public static final String POST_WEIBO_URL="http://www.roadclouding.com/weibos/post";
 	public static final String GET_WEIBO_URL="http://www.roadclouding.com/weibos/get";
 	public static final String WEIBO_URL_OAUTH2="https://api.weibo.com";
-	//Â·ÔÆÖ÷Ò³
+	//Â·ï¿½ï¿½ï¿½ï¿½Ò³
 //	public static final String WEIBO_CONSUMER_KEY = "3480490775";
 //	public static final String WEIBO_CONSUMER_SECRET = "876dd843606f5d99d86e716cc1c69264";
-	//Â·ÔÆ
+	//Â·ï¿½ï¿½
 	public static final String WEIBO_CONSUMER_KEY = "1443429908";
 	public static final String WEIBO_CONSUMER_SECRET = "7c3e7ab52eaa67644b49d923a837c01c";
 	public static final String WEIBO_REDIRECT_URL = "http://www.roadclouding.com/users/auth/weibo/callback";
 	
 	//wexin by chenfeng
-//	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//²âÊÔ
-	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//·¢²¼
-	public static final String SHARE_MESSAGE = "·ÖÏí×ÔÂ·Ò×95 http://www.roadclouding.com";
+//	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//ï¿½ï¿½ï¿½ï¿½
+	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//ï¿½ï¿½ï¿½ï¿½
+	public static final String SHARE_MESSAGE = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½95 http://www.roadclouding.com";
 	
 	public static final String POI_RETURN_KEY = "poiInfo";
 //	public static final String HOME_RETURN_KEY = "homePoi";
@@ -79,34 +79,34 @@ public class Constants {
 	public static final int TSS_SERVER_PORT=6001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
 //	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
-	public static final String TSS_PRO_HOST="172.16.0.100";	 
+	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
 	//public static final String TSS_PRO_HOST="42.121.99.247";	
 	//public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;
 	
-	public static final int CHKPNT_OF_DISTANCE=10; //ÓÃÓÚÖØÐÂ·¢ÆðÖÜ±ßÂ·¿ö²éÑ¯£¬µ¥Î»KM
-	public static final int CHKPNT_OF_TRAFFIC=1; //ÓÃÓÚ¼ì²éÊÇ·ñ½Ó½üÏÂÒ»¸öÓµ¶Âµã£¬µ¥Î»KM
-	public static final double DISTANCE_OFF_ROAD=180.0; //±êÊ¶ÊÇ·ñÆ«Àëº½Ïß,µ¥Î»M
-	public static final double MIN_CHK_DISTANCE=20.0; //±êÊ¶ÊÇ·ñÆ«Àëº½Ïß,µ¥Î»M
-	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //ÓÃÓÚÇ¿ÖÆÎ»ÖÃ¸üÐÂ£¬µ¥Î»ºÁÃë£¬Éú²ú»·¾³½¨Òé5·ÖÖÓÒÔÉÏ
-	public static final int TRAFFIC_LAST_DURATION=6; //Â·¿ö±£»îµÄµÄÊ±¼ä£¬µ¥Î»·ÖÖÓ
+	public static final int CHKPNT_OF_DISTANCE=10; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ü±ï¿½Â·ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Î»KM
+	public static final int CHKPNT_OF_TRAFFIC=1; //ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ç·ï¿½Ó½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Óµï¿½Âµã£¬ï¿½ï¿½Î»KM
+	public static final double DISTANCE_OFF_ROAD=180.0; //ï¿½ï¿½Ê¶ï¿½Ç·ï¿½Æ«ï¿½ëº½ï¿½ï¿½,ï¿½ï¿½Î»M
+	public static final double MIN_CHK_DISTANCE=20.0; //ï¿½ï¿½Ê¶ï¿½Ç·ï¿½Æ«ï¿½ëº½ï¿½ï¿½,ï¿½ï¿½Î»M
+	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½Î»ï¿½Ã¸ï¿½ï¿½Â£ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static final int TRAFFIC_LAST_DURATION=6; //Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
 	
 	public static final double DOUBLE_1E6 = 1000000.0;
 	
-	public static final String ROAD_AHEAD="Ç°·½"; //
-	public static final String NO_TRAFFIC="ÎÞÓµ¶Â"; //
-	public static final String TRAFFIC_JAM_LVL_HIGH="ÑÏÖØÓµ¶Â"; //<6KM
+	public static final String ROAD_AHEAD="Ç°ï¿½ï¿½"; //
+	public static final String NO_TRAFFIC="ï¿½ï¿½Óµï¿½ï¿½"; //
+	public static final String TRAFFIC_JAM_LVL_HIGH="ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½"; //<6KM
 	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=6;
-	public static final String TRAFFIC_JAM_LVL_MIDDLE="Óµ¶Â"; //[6km, 20km)
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="Óµï¿½ï¿½"; //[6km, 20km)
 	public static final int TRAFFIC_JAM_LVL_MIDDLE_SPD=20;
-	public static final String TRAFFIC_JAM_LVL_LOW="¶à³µ»ºÐÐ"; //[20km, 
+	public static final String TRAFFIC_JAM_LVL_LOW="ï¿½à³µï¿½ï¿½ï¿½ï¿½"; //[20km, 
 	
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;
 	
-	public static final long INTERVAL_OF_TRAFFIC_REPORT = 5; //ÉÏ±¨Â·¿ö¼ä¸ôÊ±¼ä
-	public static final int SHENZHEN_CITY_ID = 340; //°Ù¶È¶¨ÒåÉîÛÚID
-	public static final int MAX_PUSH_LEN = 240; //°Ù¶È¶¨ÒåÉîÛÚID
+	public static final long INTERVAL_OF_TRAFFIC_REPORT = 5; //ï¿½Ï±ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	public static final int SHENZHEN_CITY_ID = 340; //ï¿½Ù¶È¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
+	public static final int MAX_PUSH_LEN = 240; //ï¿½Ù¶È¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
 }

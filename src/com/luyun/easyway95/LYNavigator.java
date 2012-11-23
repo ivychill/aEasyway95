@@ -481,37 +481,29 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     
 	public Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-//			if (msg.what == Constants.SYNTHESIZE_DONE) {
-//				//mMapController.animateTo(mLocationOverlay.getMyLocation());
-//				mbSynthetizeOngoing = false;
-//				return;
-//			}
-			if (msg.what == Constants.DLG_TIME_OUT) {
-				//mMapController.animateTo(mLocationOverlay.getMyLocation());
+			//refactored by chenfeng 2012-11-23
+			switch (msg.what) {
+			case Constants.DLG_TIME_OUT:
 				if (popupDlg != null) {
 					popupDlg.dismiss();
 				}
-				return;
-			}
-			if (msg.what == Constants.PROMPT_WATCH_DOG) {
+				break;
+			case Constants.PROMPT_WATCH_DOG:
 				promptTraffic();
-				return;
-			}
-			switch (msg.what) {
+				break;
 			case Constants.TRAFFIC_UPDATE_CMD:
-				Log.d(TAG, "got traffic update");
+	            try {
+	            	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
+	            	Log.d(TAG, "got traffic update" + msgOnAir.toString());
+	             	mMapHelper.onMsg(msgOnAir);
+	            	LYNavigator.this.resetMapView();
+				} catch (InvalidProtocolBufferException e) {
+					e.printStackTrace();
+				}
 				break;
 			default:
-					break;
-			}
-            try {
-            	//Log.i(TAG, "get message from server.");
-            	LYMsgOnAir msgOnAir  = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir.parseFrom(msg.getData().getByteArray(Constants.TRAFFIC_UPDATE));
-            	//Log.d(TAG, msgOnAir.toString());
-             	mMapHelper.onMsg(msgOnAir);
-            	LYNavigator.this.resetMapView();
-			} catch (InvalidProtocolBufferException e) {
-				e.printStackTrace();
+				Log.d(TAG, "unknow message, what: " + msg.what);
+				break;
 			}
 		}
     };
@@ -667,7 +659,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         mMsgToBeShown = tmsg;
         
     	showDialog(Constants.TRAFFIC_POPUP);
-		//创建一个20秒的timer
+		//创建一个12秒的timer
     	mDlgTimerTask = new LYDlgDismissTimerTask();
 		mTimer.schedule(mDlgTimerTask, Constants.DLG_LAST_DURATION);
     }
@@ -899,6 +891,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	}
 	
 	public String getDeviceID() {
+		Log.d(TAG, "device id: " + mDeviceID);
 		return mDeviceID;
 	}
 	

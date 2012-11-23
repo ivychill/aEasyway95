@@ -27,25 +27,22 @@ public class TrafficSubscriber {
 	static LYRoute RoadAnalyzer (MKRoute route) {
 		int mNumStep = route.getNumSteps();
 		//Log.d(TAG, "mNumStep..." + mNumStep);
-		com.luyun.easyway95.shared.TSSProtos.LYRoute.Builder mRouteBuilder = com.luyun.easyway95.shared.TSSProtos.LYRoute.newBuilder();
-		com.luyun.easyway95.shared.TSSProtos.LYCoordinate start = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
-				.setLat(0)
-				.setLng(0)
-				.build();
+		LYRoute.Builder mRouteBuilder = LYRoute.newBuilder();
+		LYCoordinate start = LYCoordinate.newBuilder().setLat(0).setLng(0).build();
+		LYCoordinate nextStart = LYCoordinate.newBuilder().setLat(0).setLng(0).build();
 		String road = "";
 		String nextRoad = "";
-		LYCoordinate nextStart = null;
 		MKStep step = null;
 		//boolean isNextRoad = false;
 		
 		for (int index = 0; index < mNumStep; index++){
 			//Log.d(TAG, "step index..." + index);
 			step = route.getStep(index);
-			//Log.d(TAG, "step point..." + step.getPoint().toString());
-			//Log.d(TAG, "step content..." + step.getContent());
+//			Log.d(TAG, "step point..." + step.getPoint().toString());
+//			Log.d(TAG, "step content..." + step.getContent());
 			Scanner scanner = new Scanner(step.getContent());
 			scanner.useDelimiter("\\s*-\\s*");
-			String pattern = ".*½øÈë(.*)";
+			String pattern = ".*è¿›å…¥(.*)";
 			if(scanner.hasNext(pattern)) {
 				scanner.next(pattern);
 				MatchResult match = scanner.match();
@@ -73,27 +70,29 @@ public class TrafficSubscriber {
 			}
 		}
 		
-		//×îºóÒ»¶Î
-		LYCoordinate end = com.luyun.easyway95.shared.TSSProtos.LYCoordinate.newBuilder()
-				.setLat(step.getPoint().getLatitudeE6()/1E6)
-				.setLng(step.getPoint().getLongitudeE6()/1E6)
-				.build();
-		LYSegment segment = com.luyun.easyway95.shared.TSSProtos.LYSegment.newBuilder()
-				.setRoad(nextRoad)
-				.setStart(nextStart)
-				.setEnd(end)
-				.build();
-		mRouteBuilder.addSegments(segment);
-		
+		//æœ€åŽä¸€æ®µ
+		if (null != step) {
+			LYCoordinate end = LYCoordinate.newBuilder()
+					.setLat(step.getPoint().getLatitudeE6()/1E6)
+					.setLng(step.getPoint().getLongitudeE6()/1E6)
+					.build();
+			LYSegment segment = LYSegment.newBuilder()
+					.setRoad(nextRoad)
+					.setStart(nextStart)
+					.setEnd(end)
+					.build();
+			mRouteBuilder.addSegments(segment);
+		}
+
 		return mRouteBuilder.setIdentity(1024).build();
 	}
 	
 	void SubTraffic (MKRoute route) {
 	    LYRoute mRoute = RoadAnalyzer (route);
-	    Log.d(TAG, "SubTraffic" + mRoute.toString());
+//	    Log.d(TAG, "SubTraffic, route:\n" + mRoute.toString());
 
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
-				.setCity("ÉîÛÚ")
+				.setCity("ï¿½ï¿½ï¿½ï¿½")
 				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
 				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.LY_PUB_CRON)
 				.setRoute(mRoute)
@@ -153,12 +152,12 @@ public class TrafficSubscriber {
 		
 		LYTrafficSub tsub;
 		if (subaction) {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("ÉîÛÚ")
+			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("ï¿½ï¿½ï¿½ï¿½")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
 					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();
 		} else {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("ÉîÛÚ")
+			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("ï¿½ï¿½ï¿½ï¿½")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_DELETE)
 					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();

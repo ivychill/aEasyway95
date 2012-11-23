@@ -23,11 +23,11 @@ public class ShowTraffics extends TabActivity {
         myTabhost.setBackgroundColor(Color.argb(150, 22, 70, 150));
         
         myTabhost.addTab(myTabhost.newTabSpec("TrafficsOfRoute")
-                .setIndicator("Í¾¾­Â·¿ö",
+                .setIndicator("é€”ç»è·¯å†µ",
                         getResources().getDrawable(R.drawable.slow_speed))
                         .setContent(new Intent(this, TrafficsOfRoute.class)));
         myTabhost.addTab(myTabhost.newTabSpec("TrafficsCaring")
-                .setIndicator("¿ÉÄÜ»¹¹Ø×¢",
+                .setIndicator("å¯èƒ½è¿˜å…³æ³¨",
                         getResources().getDrawable(R.drawable.slow_speed))
                         .setContent(new Intent(this, TrafficsCaring.class)));      
 		
