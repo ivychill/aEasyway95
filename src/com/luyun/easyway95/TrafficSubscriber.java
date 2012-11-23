@@ -119,12 +119,12 @@ public class TrafficSubscriber {
 		Log.d(TAG, "enter subCron. " + subaction + " gowork " + gowork);
 		
 		// TODO test
-		Calendar c = Calendar.getInstance();
-		int hour = c.get(Calendar.HOUR_OF_DAY);
-		int min = c.get(Calendar.MINUTE) + 2;
+//		Calendar c = Calendar.getInstance();
+//		int hour = c.get(Calendar.HOUR_OF_DAY);
+//		int min = c.get(Calendar.MINUTE) + 2;
 		
-//		int hour = 18;
-//		int min = 0;
+		int hour = 18;
+		int min = 0;
 	
 		LYRoute mRoute = RoadAnalyzer(route);
 		
