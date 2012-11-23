@@ -1,6 +1,9 @@
 package com.luyun.easyway95;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -49,10 +52,6 @@ public class MapHelper {
 	private ArrayList<MKPoiInfo> mRoadsAround;
 	//private SegmentTraffic mCurrentSegTraffic; //traffic received from tss, used to update view of traffic list and update "traffic line??"
 	private TrafficSubscriber mTrafficSubscriber;
-	
-	private boolean mSubaction; 
-	private MKRoute home2offc=null;
-	
 	private MKRouteHelper mDrivingRoutes;
 	private HotRoadsWithTraffic mHotRoadsWithTraffic;
 	
@@ -161,7 +160,25 @@ public class MapHelper {
     			mainActivity.onSoftwareUpgrade(major, minor, strUrl, strDesc, false);
     		}
     		
-    		mainActivity.onSubscription(mainActivity.getSubscript());
+    		//delay job
+    		TimerTask task = new TimerTask(){  
+    		    public void run(){  
+    				if(mainActivity.getSubscript())
+    					mainActivity.onSubscription(true);
+    				Log.d(TAG, "init suscription" + mainActivity.getSubscript());
+    		    }  
+    		};
+    		Timer timer = new Timer();
+    		java.util.Date delay = new Date();
+    		if(delay.getSeconds() < 55){
+    			delay.setSeconds(delay.getSeconds() + 5);
+    		}
+    		else{
+    			delay.setMinutes(delay.getMinutes() + 1);
+    			delay.setSeconds(0);
+    		}
+    		timer.schedule(task, delay); 
+    			
     		return;
     	case LY_TRAFFIC_PUB:
     		LYTrafficPub trafficPub = msg.getTrafficPub();
@@ -179,7 +196,7 @@ public class MapHelper {
     		//cron type
     		if (trafficPub.hasPubType()){
     			Log.d(TAG, "recv cron info");
-    			if(trafficPub.getPubType() == TSSProtos.LYTrafficPub.LYPubType.LY_PUB_CRON){
+    			if(trafficPub.getPubType() == TSSProtos.LYPubType.LY_PUB_CRON){
     				onCronpub(msg.getTrafficPub());
     			}
     			return;
@@ -544,75 +561,81 @@ public class MapHelper {
 	    Log.d(TAG, "begin notfier");
 	}
 	
-	public void subRoute(GeoPoint startPoint, GeoPoint endPoint, boolean subaction) {
-		Log.d(TAG, "subaction" + subaction + " :enter subRoute, start="+startPoint.toString()+",end="+endPoint.toString());
+	class MKSearchHelper implements MKSearchListener{
+		private MKRoute route=null;
+		private boolean isgowork;
+		private boolean issubaction;
 		
-		if(home2offc != null && subaction == false){
-			mTrafficSubscriber.subCron(home2offc, subaction);
-			return;
+		public MKSearchHelper(boolean isgowork, boolean issubaction){
+			this.isgowork = isgowork;
+			this.issubaction = issubaction;
 		}
 		
+		@Override
+		public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
+			Log.d(TAG, "subRoute enter onGetDrivingRouteResult");
+		    if (result == null) {
+		    	Log.d(TAG, "subRoute getroute fail :" + iError);
+		        return;
+		    }
+		    this.route = result.getPlan(0).getRoute(0);
+		    
+		    Log.d(TAG, "get route" + " issubaction " + issubaction + " isgowork "+isgowork + "route index:" + route.getIndex());
+		    mTrafficSubscriber.subCron(route, issubaction, isgowork);
+		}
+
+		@Override
+		public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetPoiResult(MKPoiResult arg0, int arg1, int arg2) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetTransitRouteResult(MKTransitRouteResult arg0,
+				int arg1) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
+				int arg1) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onGetRGCShareUrlResult(String arg0, int arg1) {
+			// TODO Auto-generated method stub
+		}
+	}
+	
+	public void subRoute(GeoPoint startPt, GeoPoint endPt, boolean isgowork, boolean issubaction) {
+		Log.d(TAG, "subaction" + issubaction + " isgowork:" + isgowork + " :enter subRoute, start="+startPt.toString()+",end="+endPt.toString());
+		
 		MKPlanNode start = new MKPlanNode();
-		start.pt = startPoint;
+		start.pt = startPt;
 		MKPlanNode end = new MKPlanNode();
-		end.pt = endPoint;
+		end.pt = endPt;
 		
 		// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 		MKSearch mMKSearch = new MKSearch();
 		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
 		mMKSearch.drivingSearch(null, start, null, end);
-		mSubaction = subaction;
 	
-		mMKSearch.init(mBMapMan, new MKSearchListener(){
-			@Override
-			public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
-				Log.d(TAG, "subRoute enter onGetDrivingRouteResult");
-			    if (result == null) {
-			    	Log.d(TAG, "subRoute getroute fail :" + iError);
-			        return;
-			    }
-			    home2offc = result.getPlan(0).getRoute(0);
-			    mTrafficSubscriber.subCron(home2offc, mSubaction);
-			}
-
-			@Override
-			public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onGetPoiResult(MKPoiResult arg0, int arg1, int arg2) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onGetTransitRouteResult(MKTransitRouteResult arg0,
-					int arg1) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
-					int arg1) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onGetRGCShareUrlResult(String arg0, int arg1) {
-				// TODO Auto-generated method stub
-			}
-	    });
+		mMKSearch.init(mBMapMan, new MKSearchHelper(isgowork, issubaction));
 	}
 }
 

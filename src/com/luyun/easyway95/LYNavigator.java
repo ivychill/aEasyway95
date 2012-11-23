@@ -2,6 +2,7 @@ package com.luyun.easyway95;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1008,10 +1009,27 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		UserProfile up = new UserProfile(sp);
 		up.setAndCommitSubscript(sp, sub);
 		mSubscript = sub;
+
+		mMapHelper.subRoute(mOfficeAddr.getPt(), mHomeAddr.getPt(), false, mSubscript);
 		
-//		Log.v(TAG, "mHomeAddr:" + mHomeAddr.toString());
-//		Log.v(TAG, "mOfficeAddr:" + mOfficeAddr.toString());
-		mMapHelper.subRoute(mHomeAddr.getPt(), mOfficeAddr.getPt(), sub);
+		//delay job
+		TimerTask task = new TimerTask(){  
+		    public void run(){  
+				mMapHelper.subRoute(mHomeAddr.getPt(), mOfficeAddr.getPt(), true, mSubscript);
+		    }  
+		};
+		
+		Timer timer = new Timer();
+		java.util.Date delay = new Date();
+		if(delay.getSeconds() < 55){
+			delay.setSeconds(delay.getSeconds() + 5);
+		}
+		else{
+			delay.setMinutes(delay.getMinutes() + 1);
+			delay.setSeconds(0);
+		}
+		
+		timer.schedule(task, delay); 
 	}
 }
 

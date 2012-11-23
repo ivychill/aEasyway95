@@ -9,7 +9,6 @@ import com.baidu.mapapi.MKRoute;
 import com.baidu.mapapi.MKStep;
 import com.google.protobuf.ByteString;
 import com.luyun.easyway95.shared.TSSProtos.LYCoordinate;
-import com.luyun.easyway95.shared.TSSProtos.LYCronTime;
 import com.luyun.easyway95.shared.TSSProtos.LYCrontab;
 import com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir;
 import com.luyun.easyway95.shared.TSSProtos.LYRoute;
@@ -96,7 +95,7 @@ public class TrafficSubscriber {
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("…Ó€⁄")
 				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
-				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYPubType.LY_PUB_EVENT)
+				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.LY_PUB_CRON)
 				.setRoute(mRoute)
 				.build();
 		
@@ -117,47 +116,56 @@ public class TrafficSubscriber {
     	mainActivity.sendMsgToSvr(data);
 	}
 	
-	public void subCron(MKRoute route, boolean subaction){
-		Log.d(TAG, "enter subCron. " + subaction);
+	public void subCron(MKRoute route, boolean subaction, boolean gowork){
+		Log.d(TAG, "enter subCron. " + subaction + " gowork " + gowork);
 		
 		// TODO test
-//		Calendar c = Calendar.getInstance();
-//		int hour = c.get(Calendar.HOUR_OF_DAY);
-//		int min = c.get(Calendar.MINUTE);
+		Calendar c = Calendar.getInstance();
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+		int min = c.get(Calendar.MINUTE) + 2;
 		
-		int hour = 18;
-		int min = 0;
+//		int hour = 18;
+//		int min = 0;
 	
 		LYRoute mRoute = RoadAnalyzer(route);
+		
+		Log.d(TAG, "route id: " + mRoute.getIdentity()); 
+		
 		Log.d(TAG, mRoute.toString()); 
 
-		LYCrontab tab = LYCrontab.newBuilder().setDow(0xff)
-				.setGohome(LYCronTime.newBuilder()
-						.setHour(hour)
-						.setMinute(min)
-						.build())
-				.setGowork(LYCronTime.newBuilder()
-						.setHour(8)
-						.setMinute(0)
-						.build())
-				.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW)
-				.build();
-
+		LYCrontab tab;
+		if(gowork){
+			tab = LYCrontab.newBuilder()
+					.setDow(62)
+					.setHour(0x1 << hour)
+					.setMinute(0x1L << min)
+					.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW)
+					.build();
+		}
+		else {
+			tab = LYCrontab.newBuilder()
+					.setDow(62)
+					.setHour(1 << 18)
+					.setMinute(0)
+					.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW)
+					.build();
+		}
+		
 		LYTrafficSub tsub;
 		if (subaction) {
 			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("…Ó€⁄")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
-					.setPubType(TSSProtos.LYTrafficSub.LYPubType.LY_PUB_CRON)
+					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();
 		} else {
 			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("…Ó€⁄")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_DELETE)
-					.setPubType(TSSProtos.LYTrafficSub.LYPubType.LY_PUB_CRON)
+					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();
 		}
 
 		Log.d(TAG, tab.toString());
-
+		
 		LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir
 				.newBuilder()
 				.setVersion(1)
