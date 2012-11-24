@@ -92,7 +92,7 @@ public class TrafficSubscriber {
 //	    Log.d(TAG, "SubTraffic, route:\n" + mRoute.toString());
 
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
-				.setCity("����")
+				.setCity("深圳")
 				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
 				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.LY_PUB_CRON)
 				.setRoute(mRoute)
@@ -152,12 +152,12 @@ public class TrafficSubscriber {
 		
 		LYTrafficSub tsub;
 		if (subaction) {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("����")
+			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("深圳")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
 					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();
 		} else {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("����")
+			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("深圳")
 					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_DELETE)
 					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
 					.setCronTab(tab).setRoute(mRoute).build();

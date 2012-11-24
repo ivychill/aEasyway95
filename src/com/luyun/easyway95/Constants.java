@@ -13,21 +13,21 @@ public class Constants {
 	
 	public static final int INTRODUCTION_PAGE_NUMBER = 5;
 	
-	public static final int ROUTE_START_SEARCH=2000;//·���滮�������
-	public static final int ROUTE_END_SEARCH=2001;//·���滮�������
-	public static final int ROUTE_SEARCH_RESULT=2002;//·���滮���
-	public static final int ROUTE_SEARCH_ERROR=2004;//·���滮����ʼ�������쳣	
+	public static final int ROUTE_START_SEARCH=2000;//路径规划起点搜索
+	public static final int ROUTE_END_SEARCH=2001;//路径规划起点搜索
+	public static final int ROUTE_SEARCH_RESULT=2002;//路径规划结果
+	public static final int ROUTE_SEARCH_ERROR=2004;//路径规划起起始点搜索异常	
 	public static final String POI_START_SEARCH="2005";//POI
-	public static final String POI_SEARCH_RESULT="2006";//POI���
+	public static final String POI_SEARCH_RESULT="2006";//POI结果
 	
-	public static final int REOCODER_RESULT=3000;//���������
+	public static final int REOCODER_RESULT=3000;//地理编码结果
 	public static final int DIALOG_LAYER=4000;
 	public static final int POISEARCH_NEXT=5000;
 	
 	public static final int SYNTHESIZE_ONGOING=5500;	
 	public static final int SYNTHESIZE_DONE=5501;	
-	public static final int DLG_TIME_OUT=5601;	//��Ϣ
-	public static final int DLG_LAST_DURATION=12000;	//�Ի�����ڵ�ʱ��
+	public static final int DLG_TIME_OUT=5601;	//消息
+	public static final int DLG_LAST_DURATION=12000;	//对话框存在的时间
 	public static final int RESET_MAP_TIME_OUT=5701;	
 	public static final int RESET_MAP_INTERVAL=60000;	
 	public static final int PROMPT_WATCH_DOG=5801;	
@@ -53,18 +53,18 @@ public class Constants {
 //	public static final String POST_WEIBO_URL="http://www.roadclouding.com/weibos/post";
 	public static final String GET_WEIBO_URL="http://www.roadclouding.com/weibos/get";
 	public static final String WEIBO_URL_OAUTH2="https://api.weibo.com";
-	//·����ҳ
+	//路云主页
 //	public static final String WEIBO_CONSUMER_KEY = "3480490775";
 //	public static final String WEIBO_CONSUMER_SECRET = "876dd843606f5d99d86e716cc1c69264";
-	//·��
+	//路云
 	public static final String WEIBO_CONSUMER_KEY = "1443429908";
 	public static final String WEIBO_CONSUMER_SECRET = "7c3e7ab52eaa67644b49d923a837c01c";
 	public static final String WEIBO_REDIRECT_URL = "http://www.roadclouding.com/users/auth/weibo/callback";
 	
 	//wexin by chenfeng
-//	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//����
-	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//����
-	public static final String SHARE_MESSAGE = "������·��95 http://www.roadclouding.com";
+//	public static final String WEIXIN_APP_ID = "wx9facda03786fc8af";	//测试
+	public static final String WEIXIN_APP_ID = "wxd69fbd18ca12e5f3";	//发布
+	public static final String SHARE_MESSAGE = "分享自路易95 http://www.roadclouding.com";
 	
 	public static final String POI_RETURN_KEY = "poiInfo";
 //	public static final String HOME_RETURN_KEY = "homePoi";
@@ -86,27 +86,27 @@ public class Constants {
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;
 	
-	public static final int CHKPNT_OF_DISTANCE=10; //�������·����ܱ�·����ѯ����λKM
-	public static final int CHKPNT_OF_TRAFFIC=1; //���ڼ���Ƿ�ӽ���һ��ӵ�µ㣬��λKM
-	public static final double DISTANCE_OFF_ROAD=180.0; //��ʶ�Ƿ�ƫ�뺽��,��λM
-	public static final double MIN_CHK_DISTANCE=20.0; //��ʶ�Ƿ�ƫ�뺽��,��λM
-	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //����ǿ��λ�ø��£���λ���룬�������5��������
-	public static final int TRAFFIC_LAST_DURATION=6; //·������ĵ�ʱ�䣬��λ����
+	public static final int CHKPNT_OF_DISTANCE=10; //用于重新发起周边路况查询，单位KM
+	public static final int CHKPNT_OF_TRAFFIC=1; //用于检查是否接近下一个拥堵点，单位KM
+	public static final double DISTANCE_OFF_ROAD=180.0; //标识是否偏离航线,单位M
+	public static final double MIN_CHK_DISTANCE=20.0; //标识是否偏离航线,单位M
+	public static final int INTERVAL_FORCE_UPDATE_LOCATION=120000; //用于强制位置更新，单位毫秒，生产环境建议5分钟以上
+	public static final int TRAFFIC_LAST_DURATION=6; //路况保活的的时间，单位分钟
 	
 	public static final double DOUBLE_1E6 = 1000000.0;
 	
-	public static final String ROAD_AHEAD="ǰ��"; //
-	public static final String NO_TRAFFIC="��ӵ��"; //
-	public static final String TRAFFIC_JAM_LVL_HIGH="����ӵ��"; //<6KM
+	public static final String ROAD_AHEAD="前方"; //
+	public static final String NO_TRAFFIC="无拥堵"; //
+	public static final String TRAFFIC_JAM_LVL_HIGH="严重拥堵"; //<6KM
 	public static final int TRAFFIC_JAM_LVL_HIGH_SPD=6;
-	public static final String TRAFFIC_JAM_LVL_MIDDLE="ӵ��"; //[6km, 20km)
+	public static final String TRAFFIC_JAM_LVL_MIDDLE="拥堵"; //[6km, 20km)
 	public static final int TRAFFIC_JAM_LVL_MIDDLE_SPD=20;
-	public static final String TRAFFIC_JAM_LVL_LOW="�೵����"; //[20km, 
+	public static final String TRAFFIC_JAM_LVL_LOW="多车缓行"; //[20km, 
 	
 	public static final int TRAFFIC_POPUP=0x555;
 	public static final int INTERNET_CONNECTION=0x666;
 	
-	public static final long INTERVAL_OF_TRAFFIC_REPORT = 5; //�ϱ�·�����ʱ��
-	public static final int SHENZHEN_CITY_ID = 340; //�ٶȶ�������ID
-	public static final int MAX_PUSH_LEN = 240; //�ٶȶ�������ID
+	public static final long INTERVAL_OF_TRAFFIC_REPORT = 5; //上报路况间隔时间
+	public static final int SHENZHEN_CITY_ID = 340; //百度定义深圳ID
+	public static final int MAX_PUSH_LEN = 240; //百度定义深圳ID
 }
