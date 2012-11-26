@@ -2,6 +2,7 @@ package com.luyun.easyway95;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -168,17 +169,13 @@ public class MapHelper {
     				Log.d(TAG, "init suscription" + mainActivity.getSubscript());
     		    }  
     		};
-    		Timer timer = new Timer();
-    		java.util.Date delay = new Date();
-    		if(delay.getSeconds() < 55){
-    			delay.setSeconds(delay.getSeconds() + 5);
-    		}
-    		else{
-    			delay.setMinutes(delay.getMinutes() + 1);
-    			delay.setSeconds(0);
-    		}
-    		timer.schedule(task, delay); 
-    			
+    		
+			Timer timer = new Timer();
+			GregorianCalendar gca = new GregorianCalendar();
+			gca.add(GregorianCalendar.SECOND, 1);
+			java.util.Date delay = gca.getTime();
+			timer.schedule(task, delay); 
+	    			
     		return;
     	case LY_TRAFFIC_PUB:
     		LYTrafficPub trafficPub = msg.getTrafficPub();
@@ -559,86 +556,5 @@ public class MapHelper {
 	    //用mNotificationManager的notify方法通知用户生成标题栏消息通知
 	    mNotificationManager.notify(1, notf);
 	    Log.d(TAG, "begin notfier");
-	}
-
-	class RouteWorkThread extends Thread{
-		public RouteWorkThread(MKRoute route){
-			
-		}
-		
-		public void run(){
-			
-		}
-	}
-	
-	class MKSearchHelper implements MKSearchListener{
-		private MKRoute route;
-		
-		@Override
-		public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
-			Log.d(TAG, "subRoute enter onGetDrivingRouteResult");
-		    if (result == null) {
-		    	Log.d(TAG, "subRoute getroute fail :" + iError);
-		        return;
-		    }
-		    
-		    route = result.getPlan(0).getRoute(0);
-		    Thread work = new RouteWorkThread(route);
-		    work.start();
-		}
-
-		@Override
-		public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetPoiResult(MKPoiResult arg0, int arg1, int arg2) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetTransitRouteResult(MKTransitRouteResult arg0,
-				int arg1) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetWalkingRouteResult(MKWalkingRouteResult arg0,
-				int arg1) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onGetRGCShareUrlResult(String arg0, int arg1) {
-			// TODO Auto-generated method stub
-		}
-	}
-	
-	public void subRoute(GeoPoint startPt, GeoPoint endPt, boolean isgowork, boolean issubaction) {
-		Log.d(TAG, "subaction" + issubaction + " isgowork:" + isgowork + " :enter subRoute, start="+startPt.toString()+",end="+endPt.toString());
-		
-		MKPlanNode start = new MKPlanNode();
-		start.pt = startPt;
-		MKPlanNode end = new MKPlanNode();
-		end.pt = endPt;
-		
-		// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
-		MKSearch mMKSearch = new MKSearch();
-		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
-		mMKSearch.drivingSearch(null, start, null, end);
-
-		MKSearchHelper helper = new MKSearchHelper();
-		mMKSearch.init(mBMapMan, helper);
 	}
 }

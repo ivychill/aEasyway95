@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.GregorianCalendar;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.GeoPoint;
@@ -102,6 +103,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     private MKPoiInfoHelper mLastDestination;
     private ProgressDialog popupDlg;
     private boolean mSubscript=false;
+    
+    private LYCronSub mCronSub;
     
     private MapView mMapView;
     private TextView mHeading;
@@ -248,6 +251,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mLastDestination = up.getLastDestination();
 		mMapHelper = new MapHelper(this);
 		mSubscript = up.getSubscript();
+		Log.d(TAG, "mSubscript " + mSubscript);
+		mCronSub = new LYCronSub(this);
 		
 		setContentView(R.layout.ly_navigator);
          
@@ -1003,25 +1008,43 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		up.setAndCommitSubscript(sp, sub);
 		mSubscript = sub;
 
-		mMapHelper.subRoute(mOfficeAddr.getPt(), mHomeAddr.getPt(), false, mSubscript);
-		
-		//delay job
-		TimerTask task = new TimerTask(){  
-		    public void run(){  
-				mMapHelper.subRoute(mHomeAddr.getPt(), mOfficeAddr.getPt(), true, mSubscript);
-		    }  
-		};
-		
-		Timer timer = new Timer();
-		java.util.Date delay = new Date();
-		if(delay.getSeconds() < 55){
-			delay.setSeconds(delay.getSeconds() + 5);
+		if(sub){
+			mCronSub.subRouteCron(mOfficeAddr.getPt(), mHomeAddr.getPt(), true);
+			
+			//delay job
+			TimerTask task = new TimerTask(){  
+			    public void run(){  
+			    	mCronSub.subRouteCron(mHomeAddr.getPt(), mOfficeAddr.getPt(), false);
+			    }  
+			};
+			
+			Timer timer = new Timer();
+			GregorianCalendar gca = new GregorianCalendar();
+			gca.add(GregorianCalendar.SECOND, 1);
+			java.util.Date delay = gca.getTime();
+			
+			timer.schedule(task, delay); 
 		}
-		else{
-			delay.setMinutes(delay.getMinutes() + 1);
-			delay.setSeconds(0);
+		else
+		{
+			mCronSub.deSubCron();
 		}
+	}
+	
+	//home work address change
+	public void onAddressUpdate(){
+		Log.d(TAG, "onAddressUpdate");
 		
-		timer.schedule(task, delay); 
+		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+		UserProfile up = new UserProfile(sp);
+		mHomeAddr = up.getHomeAddr();
+		mOfficeAddr = up.getOfficeAddr();
+		
+		if(mSubscript){
+			this.onSubscription(false);
+			this.onSubscription(true);
+		}
+		sp=null;
+		up=null;
 	}
 }

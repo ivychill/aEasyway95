@@ -142,6 +142,7 @@ public class LYSetting extends PreferenceActivity
 				mUserProfile.setHomeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPHome.setSummary(poiInfo.getName());
+				app.getMainActivity().onAddressUpdate();
 			} else if (requestCode == Constants.OFFICE_REQUEST_CODE) {
 				Bundle bundle = intent.getExtras(); 
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
@@ -149,6 +150,8 @@ public class LYSetting extends PreferenceActivity
 				mUserProfile.setOfficeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPOffice.setSummary(poiInfo.getName());
+				app.getMainActivity().onAddressUpdate();
+				
 			} else {
 				Log.d(TAG, "unknown requestCode: " + requestCode);
 			}
