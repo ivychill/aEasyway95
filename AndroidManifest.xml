@@ -2,7 +2,7 @@
     package="com.luyun.easyway95"
     android:versionCode="2"
     android:installLocation="preferExternal"
-    android:versionName="2.0" >
+    android:versionName="2.1" >
 
     <supports-screens android:largeScreens="true"
         android:normalScreens="true" android:smallScreens="true"
