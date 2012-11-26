@@ -10,9 +10,9 @@ import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
 /*
- * 用于接收从TSS发过来的RoadTraffic
- * 本类的实例用于接收HotRoad、FavoriteRoad
- * 本类有一个直接派生类：DrivingRoadWithTraffic：用于匹配DrivingRoute和RoadTraffic
+ * 鐢ㄤ簬鎺ユ敹浠嶵SS鍙戣繃鏉ョ殑RoadTraffic
+ * 鏈被鐨勫疄渚嬬敤浜庢帴鏀禜otRoad銆丗avoriteRoad
+ * 鏈被鏈変竴涓洿鎺ユ淳鐢熺被锛欴rivingRoadWithTraffic锛氱敤浜庡尮閰岲rivingRoute鍜孯oadTraffic
  */
 public class RoadWithTraffic {
 	private String road;

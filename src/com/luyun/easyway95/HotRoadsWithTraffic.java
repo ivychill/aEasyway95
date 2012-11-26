@@ -17,7 +17,7 @@ import com.luyun.easyway95.shared.TSSProtos.LYTrafficPub;
 
 public class HotRoadsWithTraffic {
 	private static final String TAG = "HotRoadsWithTraffic";
-    //用Map保存"路及路况"
+    //鐢∕ap淇濆瓨"璺強璺喌"
     private Map<String, RoadWithTraffic> mRoadsWithTraffic;
 
     public void onTraffic(LYTrafficPub trafficPub) {
@@ -25,7 +25,7 @@ public class HotRoadsWithTraffic {
 		if (mRoadsWithTraffic == null) {
 			mRoadsWithTraffic = new HashMap<String, RoadWithTraffic>();
 		}
-		//首先通过名字匹配，找到相应的路，然后在路上的折线点mPointsOfRoute中与RoadTraffic进行匹配
+		//棣栧厛閫氳繃鍚嶅瓧鍖归厤锛屾壘鍒扮浉搴旂殑璺紝鐒跺悗鍦ㄨ矾涓婄殑鎶樼嚎鐐筸PointsOfRoute涓笌RoadTraffic杩涜鍖归厤
 		for (int i=0; i<roadTraffics.size(); i++) {
 			String road = roadTraffics.get(i).getRoad();
 			Log.d(TAG, String.format("road=%s", road));
@@ -68,7 +68,7 @@ public class HotRoadsWithTraffic {
 	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
 	        	if (speed >= Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
 	        	if (speed < Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD && speed >= Constants.TRAFFIC_JAM_LVL_HIGH_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	String formatedStr = String.format("%d分钟前，%s", interval, strSpeed);
+	        	String formatedStr = String.format("%d鍒嗛挓鍓嶏紝%s", interval, strSpeed);
 	            map.put("timestamp", formatedStr);
 	        	list.add(map);
         	}

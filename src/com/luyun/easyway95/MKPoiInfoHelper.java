@@ -42,31 +42,31 @@ public class MKPoiInfoHelper implements Serializable{ // helper for MKPoiInfo to
 	}
 
 	MKPoiInfoHelper(MKAddrInfo mdi) {
-		//¶Ô·µ»ØµÄ½á¹û½øĞĞÕıÔò±í´ïÊ½µÄ´¦Àí
-		//·µ»ØµÄ½á¹ûĞÎÊ½Îª£º¹ã¶«Ê¡ÉîÛÚÊĞ±¦°²Çø¹«Ô°Â·1ºÅ
+		//å¯¹è¿”å›çš„ç»“æœè¿›è¡Œæ­£åˆ™è¡¨è¾¾å¼çš„å¤„ç†
+		//è¿”å›çš„ç»“æœå½¢å¼ä¸ºï¼šå¹¿ä¸œçœæ·±åœ³å¸‚å®å®‰åŒºå…¬å›­è·¯1å·
 		String addr = mdi.strAddr;
-		//Ê×ÏÈ»ñÈ¡Ê¡µÄĞÅÏ¢
-		String tmpStrings[] = addr.split("Ê¡");
+		//é¦–å…ˆè·å–çœçš„ä¿¡æ¯
+		String tmpStrings[] = addr.split("çœ");
 		String province = "";
 		String addrWithCity = addr;
 		if (tmpStrings.length >= 2) {
-			province = tmpStrings[0]+"Ê¡";
+			province = tmpStrings[0]+"çœ";
 			addrWithCity = addr.replaceAll(province, "");
 		}
-		//È»ºó»ñÈ¡ÊĞµÄĞÅÏ¢
-		tmpStrings = addrWithCity.split("ÊĞ");
+		//ç„¶åè·å–å¸‚çš„ä¿¡æ¯
+		tmpStrings = addrWithCity.split("å¸‚");
 		String city = "";
 		String addrWithDist = addrWithCity;
 		if (tmpStrings.length >= 2) {
-			city = tmpStrings[0]+"ÊĞ";
+			city = tmpStrings[0]+"å¸‚";
 			addrWithDist = addrWithCity.replaceAll(city, "");
 		}
-		//È»ºó»ñÈ¡ÇøµÄĞÅÏ¢
-		tmpStrings = addrWithDist.split("Çø");
+		//ç„¶åè·å–åŒºçš„ä¿¡æ¯
+		tmpStrings = addrWithDist.split("åŒº");
 		String dist = "";
 		String addrWithStreet = addrWithDist;
 		if (tmpStrings.length >= 2) {
-			dist = tmpStrings[0]+"Çø";
+			dist = tmpStrings[0]+"åŒº";
 			addrWithStreet = addrWithStreet.replaceAll(dist, "");
 		}
 		
@@ -108,7 +108,7 @@ public class MKPoiInfoHelper implements Serializable{ // helper for MKPoiInfo to
 		this.searchPlace = "";
 		
 		if (strMPI == null) return;
-		//ÕıÔò±í´ïÊ½µÄ·ÇÌ°À·Æ¥Åä http://www.wasw100.com/java/java.util.regex/Greedy.html
+		//æ­£åˆ™è¡¨è¾¾å¼çš„éè´ªå©ªåŒ¹é… http://www.wasw100.com/java/java.util.regex/Greedy.html
 		Pattern p = Pattern.compile("name=\\((.*?)\\)", Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
 		Matcher m = p.matcher(strMPI);
 		if (m.find()) {

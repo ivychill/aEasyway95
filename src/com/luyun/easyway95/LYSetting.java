@@ -46,9 +46,9 @@ public class LYSetting extends PreferenceActivity
 //		Preference pref = this.findPreference("map_mgr_preference");
 //		if (pref != null) {
 //			if (currentAction != null && currentAction.equals("download")) {
-//				pref.setSummary(String.format("ÕıÔÚÏÂÔØÉîÛÚµØÍ¼£¬´óĞ¡%.2fmb£¬Íê³É½ø¶È%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//				pref.setSummary(String.format("æ­£åœ¨ä¸‹è½½æ·±åœ³åœ°å›¾ï¼Œå¤§å°%.2fmbï¼Œå®Œæˆè¿›åº¦%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
 //			} else if (currentAction != null && currentAction.equals("pause")){
-//				pref.setSummary(String.format("ÔİÍ£ÏÂÔØÉîÛÚµØÍ¼£¬´óĞ¡%.2fmb£¬Íê³É½ø¶È%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//				pref.setSummary(String.format("æš‚åœä¸‹è½½æ·±åœ³åœ°å›¾ï¼Œå¤§å°%.2fmbï¼Œå®Œæˆè¿›åº¦%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
 //			}
 //			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {  
 //				@Override
@@ -57,13 +57,13 @@ public class LYSetting extends PreferenceActivity
 //					// TODO Auto-generated method stub
 //					Log.d(TAG, "in setOnPreferenceChangeListener!"+newValue.toString());
 //					if (((String)newValue).equals("download")) {
-//						preference.setSummary(String.format("ÕıÔÚÏÂÔØÉîÛÚµØÍ¼£¬´óĞ¡%.2fmb£¬Íê³É½ø¶È%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//						preference.setSummary(String.format("æ­£åœ¨ä¸‹è½½æ·±åœ³åœ°å›¾ï¼Œå¤§å°%.2fmbï¼Œå®Œæˆè¿›åº¦%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
 //						app.getMainActivity().downloadMap();
 //					} else if (((String)newValue).equals("pause")) {
-//						preference.setSummary(String.format("ÔİÍ£ÏÂÔØÉîÛÚµØÍ¼£¬´óĞ¡%.2fmb£¬Íê³É½ø¶È%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
+//						preference.setSummary(String.format("æš‚åœä¸‹è½½æ·±åœ³åœ°å›¾ï¼Œå¤§å°%.2fmbï¼Œå®Œæˆè¿›åº¦%d%%", app.getMainActivity().getMapSize(), app.getMainActivity().downloadProgress()));
 //						app.getMainActivity().pauseMap();
 //					} else if (((String)newValue).equals("delete")) {
-//						preference.setSummary(String.format("µ±Ç°½öÖ§³ÖÉîÛÚµØÍ¼£¬½¨ÒéÔÚWiFiÍøÂçÏÂÏÂÔØ"));
+//						preference.setSummary(String.format("å½“å‰ä»…æ”¯æŒæ·±åœ³åœ°å›¾ï¼Œå»ºè®®åœ¨WiFiç½‘ç»œä¸‹ä¸‹è½½"));
 //						app.getMainActivity().removeMap();
 //					}
 //					return true;

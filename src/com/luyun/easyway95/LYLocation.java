@@ -10,7 +10,7 @@ import android.location.Location;
 import android.util.Log;
 
 /*
- * ±¾Àà´¦ÀíÎ»ÖÃÉÏ±¨
+ * æœ¬ç±»å¤„ç†ä½ç½®ä¸ŠæŠ¥
  */
 public class LYLocation {
 	private static String TAG = "LYLocation";
@@ -18,11 +18,11 @@ public class LYLocation {
 	private LYLine mAnchorLine;
 	private long lastCommit = 0;
 	/*
-	 * ´¦ÀíËÙ¶È¡¢Ğ±ÂÊµÄ±ä»¯
-	 * Èç¹ûËÙ¶ÈÓëÉÏ´Î±£³Ö²»±ä£¨Îó²îÔÚ+-5%£©¡¢Ğ±ÂÊ±£³ÖÒ»ÖÂ£¬¿ÉÖ±½ÓÌæ´úÉÏ´Îµã
-	 * ·ñÔòÔö¼ÓÒ»¸öĞÂµÄµã
-	 * Èç¹ûÍøÂçÊÇÁ¬Í¨µÄ£¬ÔòÃ¿¸ô5·ÖÖÓ·¢Ò»´ÎÎ»ÖÃĞÅÏ¢
-	 * ·ñÔò±£´æÆğÀ´£¬Ö±µ½ÏÂ´ÎÍøÂçÁ¬½Ó³É¹¦£¬Ò»´ÎĞÔ·¢ËÍ»ıÑ¹µÄÎ»ÖÃĞÅÏ¢¸ø·şÎñÆ÷
+	 * å¤„ç†é€Ÿåº¦ã€æ–œç‡çš„å˜åŒ–
+	 * å¦‚æœé€Ÿåº¦ä¸ä¸Šæ¬¡ä¿æŒä¸å˜ï¼ˆè¯¯å·®åœ¨+-5%ï¼‰ã€æ–œç‡ä¿æŒä¸€è‡´ï¼Œå¯ç›´æ¥æ›¿ä»£ä¸Šæ¬¡ç‚¹
+	 * å¦åˆ™å¢åŠ ä¸€ä¸ªæ–°çš„ç‚¹
+	 * å¦‚æœç½‘ç»œæ˜¯è¿é€šçš„ï¼Œåˆ™æ¯éš”5åˆ†é’Ÿå‘ä¸€æ¬¡ä½ç½®ä¿¡æ¯
+	 * å¦åˆ™ä¿å­˜èµ·æ¥ï¼Œç›´åˆ°ä¸‹æ¬¡ç½‘ç»œè¿æ¥æˆåŠŸï¼Œä¸€æ¬¡æ€§å‘é€ç§¯å‹çš„ä½ç½®ä¿¡æ¯ç»™æœåŠ¡å™¨
 	 */
 	public void onLocationChanged(Location loc) {
 		Log.d(TAG, "in LYLocation::onLocationChanged");
@@ -32,7 +32,7 @@ public class LYLocation {
 				.setLng(loc.getLongitude())
 				.build();
 		LYSamplePoint sp = LYSamplePoint.newBuilder()
-//				.setTimestamp(loc.getTime()) //Location.getTime·µ»ØµÄÈ«¶¼ÊÇ0
+//				.setTimestamp(loc.getTime()) //Location.getTimeè¿”å›çš„å…¨éƒ½æ˜¯0
 				.setTimestamp(timeNow)
 				.setCourse(loc.getBearing())
 				.setSpCoordinate(coor)
@@ -58,8 +58,8 @@ public class LYLocation {
 	}
 	
 	/*
-	 * ²úÉúÂ·¿öÉÏ±¨
-	 * ½«AnchorLineÖ®Ç°µÄËùÓĞµã¶¼±¨ÉÏÈ¥
+	 * äº§ç”Ÿè·¯å†µä¸ŠæŠ¥
+	 * å°†AnchorLineä¹‹å‰çš„æ‰€æœ‰ç‚¹éƒ½æŠ¥ä¸Šå»
 	 */
 	public LYTrafficReport genTraffic() {
 		Log.d(TAG, "in genTraffic");
@@ -83,9 +83,9 @@ public class LYLocation {
 	
 	public class LYLine {
 		private Location start=null;
-		private long startTime; //ÓÉÓÚÎŞ·¨±£Ö¤»ñµÃLocationµÄtimeStamp£¬¸ÄÎª»ñÈ¡ÏµÍ³µÄTimeStamp
+		private long startTime; //ç”±äºæ— æ³•ä¿è¯è·å¾—Locationçš„timeStampï¼Œæ”¹ä¸ºè·å–ç³»ç»Ÿçš„TimeStamp
 		private Location end=null;
-		private long endTime; //ÓÉÓÚÎŞ·¨±£Ö¤»ñµÃLocationµÄtimeStamp£¬¸ÄÎª»ñÈ¡ÏµÍ³µÄTimeStamp
+		private long endTime; //ç”±äºæ— æ³•ä¿è¯è·å¾—Locationçš„timeStampï¼Œæ”¹ä¸ºè·å–ç³»ç»Ÿçš„TimeStamp
 		private double slope=0.0;
 		private double avg_speed=0.0; 
 		private double length=0.0;
@@ -119,21 +119,21 @@ public class LYLocation {
 		}
 		
 		/*
-		 * ºÏ²¢Ğ±ÂÊÏàÍ¬¡¢ËÙ¶ÈÏàÍ¬µÄÁ½ÌõÏß£¬ÒÔ¼õÉÙ²É¼¯Á¿
-		 * ·µ»Øtrue£¬µ±ĞèÒªºÏ²¢Ê±
-		 * ·µ»Øfalse£¬µ±²»ºÏ²¢Ê±
+		 * åˆå¹¶æ–œç‡ç›¸åŒã€é€Ÿåº¦ç›¸åŒçš„ä¸¤æ¡çº¿ï¼Œä»¥å‡å°‘é‡‡é›†é‡
+		 * è¿”å›trueï¼Œå½“éœ€è¦åˆå¹¶æ—¶
+		 * è¿”å›falseï¼Œå½“ä¸åˆå¹¶æ—¶
 		 */
 		public boolean mergeWithLine(LYLine line) {
 			if (line == null) return false;
-			//ÅĞ¶ÏÊÇ·ñÊ×Î²ÏàÁ¬
+			//åˆ¤æ–­æ˜¯å¦é¦–å°¾ç›¸è¿
 			if (!isNextToMe(line)) return false;
 			if (this.end != null) { 
-				//·ÀÖ¹±»0³ı
+				//é˜²æ­¢è¢«0é™¤
 				if (Math.abs(this.slope - line.slope)>(double)(this.slope)*0.05) return false;
 				if (Math.abs(this.avg_speed - line.avg_speed)>(double)(this.avg_speed)*0.05) {
 					return false;
 				} else {
-					//µ±¾ø¶ÔÔÈËÙ£¨°üÀ¨ËÙ¶ÈÊÇ0£©µÄÊ±ºò£¬Òª±£Ö¤ÖÁÉÙÃ¿¸ô5·ÖÖÓ²É¼¯Ò»¸öµã£¬Òò´Ë³¬¹ı5·ÖÖÓ£¬¾Í²»ºÏ²¢ÁË¡£
+					//å½“ç»å¯¹åŒ€é€Ÿï¼ˆåŒ…æ‹¬é€Ÿåº¦æ˜¯0ï¼‰çš„æ—¶å€™ï¼Œè¦ä¿è¯è‡³å°‘æ¯éš”5åˆ†é’Ÿé‡‡é›†ä¸€ä¸ªç‚¹ï¼Œå› æ­¤è¶…è¿‡5åˆ†é’Ÿï¼Œå°±ä¸åˆå¹¶äº†ã€‚
 					if (Math.abs(line.endTime-this.startTime)>300000) return false;
 				}
 			}

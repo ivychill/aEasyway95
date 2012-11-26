@@ -24,13 +24,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 /*
- * ³ÌĞòµÄµÚÒ»¸öÈë¿Ú£¬ÊµÏÖ£º
- * 0¡¢¼ì²éAndroid°æ±¾£¬Èç¹ûOS>4.0£¬ÔòÉèÖÃhardwareAcceleratedÎªfalse
- * 1¡¢¼ì²éÍøÂç×´Ì¬
- * 2¡¢ÏÔÊ¾¹¦ÄÜ½éÉÜµÄ¶¯»­Í¼Æ¬£º±£´æÊ¹ÓÃ×´Ì¬ÔÚSharedPreferencesÀï£¨¸úProfileÎŞ¹Ø£©£¬¼ì²é×Ô¼ºµÄ°æ±¾£¬Èç¹ûÊÇ±¾°æ±¾µÚÒ»´ÎÊ¹ÓÃ£¬ÔòÏÔÊ¾ÕâĞ©¹¦ÄÜ½éÉÜ¶¯»­
- * 		·ñÔò£¬Ö±½Ó»¬¶¯µ½×îºóÒ»ÆÁ£¬ÏÔÊ¾ÍøÂçÁ¬½Ó×´Ì¬
- * 3¡¢Æô¶¯LYNavigator
- * 4¡¢×¢Ïú×Ô¼º
+ * ç¨‹åºçš„ç¬¬ä¸€ä¸ªå…¥å£ï¼Œå®ç°ï¼š
+ * 0ã€æ£€æŸ¥Androidç‰ˆæœ¬ï¼Œå¦‚æœOS>4.0ï¼Œåˆ™è®¾ç½®hardwareAcceleratedä¸ºfalse
+ * 1ã€æ£€æŸ¥ç½‘ç»œçŠ¶æ€
+ * 2ã€æ˜¾ç¤ºåŠŸèƒ½ä»‹ç»çš„åŠ¨ç”»å›¾ç‰‡ï¼šä¿å­˜ä½¿ç”¨çŠ¶æ€åœ¨SharedPreferencesé‡Œï¼ˆè·ŸProfileæ— å…³ï¼‰ï¼Œæ£€æŸ¥è‡ªå·±çš„ç‰ˆæœ¬ï¼Œå¦‚æœæ˜¯æœ¬ç‰ˆæœ¬ç¬¬ä¸€æ¬¡ä½¿ç”¨ï¼Œåˆ™æ˜¾ç¤ºè¿™äº›åŠŸèƒ½ä»‹ç»åŠ¨ç”»
+ * 		å¦åˆ™ï¼Œç›´æ¥æ»‘åŠ¨åˆ°æœ€åä¸€å±ï¼Œæ˜¾ç¤ºç½‘ç»œè¿æ¥çŠ¶æ€
+ * 3ã€å¯åŠ¨LYNavigator
+ * 4ã€æ³¨é”€è‡ªå·±
  */
 public class LYEasyway extends Activity implements OnTouchListener, OnGestureListener{
 	final static String TAG = "LYEasyway";
@@ -51,7 +51,7 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 		mGestureDetector  = new GestureDetector(this,(android.view.GestureDetector.OnGestureListener) this);
 	    
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//²éÑ¯°æ±¾
+		//æŸ¥è¯¢ç‰ˆæœ¬
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		mRelease = sp.getString("ReleaseVersion", null);
 		if (mRelease == null || !mRelease.equals(Constants.RELEASE_VERSION)) {
@@ -71,24 +71,24 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
         mBtnStart.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		//ÅĞ¶ÏÍøÂçÁ¬½ÓÊÇ·ñÕı³£ 
-        		//ÏÔÊ¾Á¬½ÓÍøÂç£¬Èç¹ûÍøÂçÁ¬½ÓÎ´³É¹¦£¬ÔòÒ»Ö±²»½øĞĞÏÂÒ»²½
+        		//åˆ¤æ–­ç½‘ç»œè¿æ¥æ˜¯å¦æ­£å¸¸ 
+        		//æ˜¾ç¤ºè¿æ¥ç½‘ç»œï¼Œå¦‚æœç½‘ç»œè¿æ¥æœªæˆåŠŸï¼Œåˆ™ä¸€ç›´ä¸è¿›è¡Œä¸‹ä¸€æ­¥
         		boolean isNetworked = isConnectedToInternet();
 
         		if (isNetworked == false) {
         			new AlertDialog.Builder(LYEasyway.this) 
-        			    .setTitle("Çë´ò¿ªÍøÂçÁ¬½Ó")
-        			    .setMessage("Äãµ±Ç°Ã»ÓĞÍøÂçÁ¬½Ó¡£Òª½ÓÊÕÊµÊ±Â·¿ö£¬ĞèÒª´ò¿ªÍøÂçÁ¬½Ó¡£")
-        			    .setPositiveButton("ÉèÖÃ", 
+        			    .setTitle("è¯·æ‰“å¼€ç½‘ç»œè¿æ¥")
+        			    .setMessage("ä½ å½“å‰æ²¡æœ‰ç½‘ç»œè¿æ¥ã€‚è¦æ¥æ”¶å®æ—¶è·¯å†µï¼Œéœ€è¦æ‰“å¼€ç½‘ç»œè¿æ¥ã€‚")
+        			    .setPositiveButton("è®¾ç½®", 
         			    	new DialogInterface.OnClickListener() {
         			        public void onClick(DialogInterface dialog, int which) {
-//        			        	startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), which);//½øÈëÎŞÏßÍøÂçÅäÖÃ½çÃæ
+//        			        	startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), which);//è¿›å…¥æ— çº¿ç½‘ç»œé…ç½®ç•Œé¢
         		    			final Intent settingIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
         		    			startActivityForResult(settingIntent, Constants.SETTING_REQUEST_CODE);
         			        	return;
         			        }
         			     })
-        			    .setNegativeButton("È¡Ïû", null)
+        			    .setNegativeButton("å–æ¶ˆ", null)
         			    .show();
         		}
         		
@@ -149,13 +149,13 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		// TODO Auto-generated method stub
-		// ²ÎÊı½âÊÍ£º  
-		// e1£ºµÚ1¸öACTION_DOWN MotionEvent   
-		// e2£º×îºóÒ»¸öACTION_MOVE MotionEvent   
-		// velocityX£ºXÖáÉÏµÄÒÆ¶¯ËÙ¶È£¬ÏñËØ/Ãë   
-		// velocityY£ºYÖáÉÏµÄÒÆ¶¯ËÙ¶È£¬ÏñËØ/Ãë   
-		// ´¥·¢Ìõ¼ş £º   
-		// XÖáµÄ×ø±êÎ»ÒÆ´óÓÚFLING_MIN_DISTANCE£¬ÇÒÒÆ¶¯ËÙ¶È´óÓÚFLING_MIN_VELOCITY¸öÏñËØ/Ãë   
+		// å‚æ•°è§£é‡Šï¼š  
+		// e1ï¼šç¬¬1ä¸ªACTION_DOWN MotionEvent   
+		// e2ï¼šæœ€åä¸€ä¸ªACTION_MOVE MotionEvent   
+		// velocityXï¼šXè½´ä¸Šçš„ç§»åŠ¨é€Ÿåº¦ï¼Œåƒç´ /ç§’   
+		// velocityYï¼šYè½´ä¸Šçš„ç§»åŠ¨é€Ÿåº¦ï¼Œåƒç´ /ç§’   
+		// è§¦å‘æ¡ä»¶ ï¼š   
+		// Xè½´çš„åæ ‡ä½ç§»å¤§äºFLING_MIN_DISTANCEï¼Œä¸”ç§»åŠ¨é€Ÿåº¦å¤§äºFLING_MIN_VELOCITYä¸ªåƒç´ /ç§’   
 		Log.d(TAG, "onFling ");
 		if (e1.getX() - e2.getX() > 100      
 		             && Math.abs(velocityX) > 200) {      
@@ -222,7 +222,7 @@ public class LYEasyway extends Activity implements OnTouchListener, OnGestureLis
         //wifi
         State wifi = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         
-        //Èç¹û3GÍøÂçºÍwifiÍøÂç¶¼Î´Á¬½Ó£¬ÇÒ²»ÊÇ´¦ÓÚÕıÔÚÁ¬½Ó×´Ì¬ Ôò½øÈëNetwork Setting½çÃæ ÓÉÓÃ»§ÅäÖÃÍøÂçÁ¬½Ó
+        //å¦‚æœ3Gç½‘ç»œå’Œwifiç½‘ç»œéƒ½æœªè¿æ¥ï¼Œä¸”ä¸æ˜¯å¤„äºæ­£åœ¨è¿æ¥çŠ¶æ€ åˆ™è¿›å…¥Network Settingç•Œé¢ ç”±ç”¨æˆ·é…ç½®ç½‘ç»œè¿æ¥
         if(mobile==State.CONNECTED||mobile==State.CONNECTING)
             return true;
         if(wifi==State.CONNECTED||wifi==State.CONNECTING)

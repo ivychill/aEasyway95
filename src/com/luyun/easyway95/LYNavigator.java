@@ -84,7 +84,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /*
- * ÕâÊÇ³ÌĞòµÄÖ÷Òª¹¦ÄÜÊµÏÖ£¬¸ºÔğµ÷ÓÃBaiduMapµÄ¸÷ÖÖAPI
+ * è¿™æ˜¯ç¨‹åºçš„ä¸»è¦åŠŸèƒ½å®ç°ï¼Œè´Ÿè´£è°ƒç”¨BaiduMapçš„å„ç§API
  */
 public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	//BMapManager mBMapMan = null; 
@@ -116,21 +116,21 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	private MsgReceiver mReceiver;
 	private ConnectivityChangeReceiver mConnectivityChangeReceiver;
     
-    //ÌáÊ¾²¥·ÅÉùÒô¡¢µ¯³ö¶Ô»°¿òÊ±¼ä¼ä¸ô
+    //æç¤ºæ’­æ”¾å£°éŸ³ã€å¼¹å‡ºå¯¹è¯æ¡†æ—¶é—´é—´éš”
     private long mlLastPrompt = 0;
     private PromptTrafficMsg mPromptTrafficMsg = null;
     private TrafficMsg mMsgToBeShown = null;
 
-	MyLocationOverlay mLocationOverlay = null;	//¶¨Î»Í¼²ã
+	MyLocationOverlay mLocationOverlay = null;	//å®šä½å›¾å±‚
 	RouteOverlay mRouteOverlay = null; //Driving route overlay
-	LocationListener mLocationListener = null;//createÊ±×¢²á´Ëlistener£¬DestroyÊ±ĞèÒªRemove
+	LocationListener mLocationListener = null;//createæ—¶æ³¨å†Œæ­¤listenerï¼ŒDestroyæ—¶éœ€è¦Remove
 
     private static boolean mbSynthetizeOngoing = false;
     private boolean isRunning = true;
     
-    //Éè±¸ID
+    //è®¾å¤‡ID
 	private String mDeviceID;
-	//ÏµÍ³°æ±¾
+	//ç³»ç»Ÿç‰ˆæœ¬
 	private int majorRelease;
 	private int minorRelease;
     
@@ -215,10 +215,10 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 		
         
-		//»ñÈ¡DeviceID
+		//è·å–DeviceID
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         mDeviceID = tm.getDeviceId();
-        //»ñÈ¡°æ±¾ĞÅÏ¢
+        //è·å–ç‰ˆæœ¬ä¿¡æ¯
         try {
         	PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
         	String versionName = info.versionName;
@@ -233,13 +233,13 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	e.printStackTrace();
         }
         
-        //2012.11.07 ²ÌÇì·áÔö¼Ó£¬¶ÔÍøÂçÁ¬½ÓµÄ¼à¿Ø
+        //2012.11.07 è”¡åº†ä¸°å¢åŠ ï¼Œå¯¹ç½‘ç»œè¿æ¥çš„ç›‘æ§
         mConnectivityChangeReceiver = new ConnectivityChangeReceiver();
         registerReceiver(mConnectivityChangeReceiver,
         	      new IntentFilter(
         	            ConnectivityManager.CONNECTIVITY_ACTION));
 
-		//³õÊ¼»¯¼ÒÍ¥ºÍ°ì¹«ÊÒµØÖ·£¬ÔÚresumeÀïÒ²Òª×öÒ»´Î
+		//åˆå§‹åŒ–å®¶åº­å’ŒåŠå…¬å®¤åœ°å€ï¼Œåœ¨resumeé‡Œä¹Ÿè¦åšä¸€æ¬¡
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		//Log.d(TAG, up.toString());
@@ -252,7 +252,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		setContentView(R.layout.ly_navigator);
          
 		app = (Easyway95App)this.getApplication();
-		//×¢²ámainActivity
+		//æ³¨å†ŒmainActivity
 		app.setMainActivity(this);
 		if (app.mBMapMan == null) {
 			app.mBMapMan = new BMapManager(getApplication());
@@ -263,15 +263,15 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         mMapUtils = app.getMapUtils();
 
 		mMapView = (MapView)findViewById(R.id.bmapsView);
-        //mMapView.setBuiltInZoomControls(true);  //ÉèÖÃÆôÓÃÄÚÖÃµÄËõ·Å¿Ø¼ş
-        //ÉèÖÃÔÚËõ·Å¶¯»­¹ı³ÌÖĞÒ²ÏÔÊ¾overlay,Ä¬ÈÏÎª²»»æÖÆ
+        //mMapView.setBuiltInZoomControls(true);  //è®¾ç½®å¯ç”¨å†…ç½®çš„ç¼©æ”¾æ§ä»¶
+        //è®¾ç½®åœ¨ç¼©æ”¾åŠ¨ç”»è¿‡ç¨‹ä¸­ä¹Ÿæ˜¾ç¤ºoverlay,é»˜è®¤ä¸ºä¸ç»˜åˆ¶
         //mMapView.setDrawOverlayWhenZooming(true);
-		//Æô¶¯Ê±¹Ø±ÕÁ÷Á¿Í¼²ã
+		//å¯åŠ¨æ—¶å…³é—­æµé‡å›¾å±‚
 		toggleTrafficLayer(false);
 		app.setTrafficLayerFlag(false);
          
-        MapController mMapController = mMapView.getController();  // µÃµ½mMapViewµÄ¿ØÖÆÈ¨,¿ÉÒÔÓÃËü¿ØÖÆºÍÇı¶¯Æ½ÒÆºÍËõ·Å
-        //Ö§³ÖÀëÏßµØÍ¼, 20121105 ÒòBaidu APIÀëÏßµØÍ¼¹¦ÄÜÓĞÎÊÌâ¡£Èç¹û·Å¿ª¿ÉÒÔ°Ñpreference¼Óµ½preferences.xmlÖĞ
+        MapController mMapController = mMapView.getController();  // å¾—åˆ°mMapViewçš„æ§åˆ¶æƒ,å¯ä»¥ç”¨å®ƒæ§åˆ¶å’Œé©±åŠ¨å¹³ç§»å’Œç¼©æ”¾
+        //æ”¯æŒç¦»çº¿åœ°å›¾, 20121105 å› Baidu APIç¦»çº¿åœ°å›¾åŠŸèƒ½æœ‰é—®é¢˜ã€‚å¦‚æœæ”¾å¼€å¯ä»¥æŠŠpreferenceåŠ åˆ°preferences.xmlä¸­
 //
 //        mOffline = new MKOfflineMap();
 //        mOffline.init(app.mBMapMan, this);
@@ -298,7 +298,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         
         
         //GeoPoint point = new GeoPoint((int) (22.551541 * 1E6),
-        //        (int) (113.94750 * 1E6));  //ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìÒ»¸öGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
+        //        (int) (113.94750 * 1E6));  //ç”¨ç»™å®šçš„ç»çº¬åº¦æ„é€ ä¸€ä¸ªGeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
         GeoPoint point = null;
         Calendar rightNow = Calendar.getInstance();
         
@@ -310,15 +310,15 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         }
         if (point == null) {
         	point = new GeoPoint((int) (22.551541 * 1E6),
-        	        (int) (113.94750 * 1E6));  //ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìÒ»¸öGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
+        	        (int) (113.94750 * 1E6));  //ç”¨ç»™å®šçš„ç»çº¬åº¦æ„é€ ä¸€ä¸ªGeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
         }
-        mMapController.setCenter(point);  //ÉèÖÃµØÍ¼ÖĞĞÄµã
-        mMapController.setZoom(15);    //ÉèÖÃµØÍ¼zoom¼¶±ğ
-		// Ìí¼Ó¶¨Î»Í¼²ã
+        mMapController.setCenter(point);  //è®¾ç½®åœ°å›¾ä¸­å¿ƒç‚¹
+        mMapController.setZoom(15);    //è®¾ç½®åœ°å›¾zoomçº§åˆ«
+		// æ·»åŠ å®šä½å›¾å±‚
         mLocationOverlay = new MyLocationOverlay(this, mMapView);
 		mMapView.getOverlays().add(mLocationOverlay);
         
-        // ×¢²á¶¨Î»ÊÂ¼ş
+        // æ³¨å†Œå®šä½äº‹ä»¶
         mLocationListener = new LocationListener(){
 			@Override
 			public void onLocationChanged(Location location) {
@@ -330,9 +330,9 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 			}
         };
 
-        //Æô¶¯ZMQService¡¢Ïß³Ì
+        //å¯åŠ¨ZMQServiceã€çº¿ç¨‹
         bindZMQService();
-        //Æô¶¯TTSService£¬·Ç¶ÀÁ¢Ïß³Ì
+        //å¯åŠ¨TTSServiceï¼Œéç‹¬ç«‹çº¿ç¨‹
         bindTTSService();
 
         ImageButton btnReset = (ImageButton)findViewById(R.id.resetbtn);
@@ -408,7 +408,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
 				Log.d(TAG, "poi: " + poiInfo.toString());
 				mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), poiInfo);
-				mHeading.setText("ÖÁ" + poiInfo.getName() + "µÄÂ·¿ö");
+				mHeading.setText("è‡³" + poiInfo.getName() + "çš„è·¯å†µ");
 				mMapView.getController().animateTo(poiInfo.getPt());
 //				mHeading.setTextSize(16);
 			} else {
@@ -448,14 +448,14 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		Easyway95App app = (Easyway95App)this.getApplication();
 		app.mBMapMan.getLocationManager().removeUpdates(mLocationListener);
 		mLocationOverlay.disableMyLocation();
-        mLocationOverlay.disableCompass(); // ¹Ø±ÕÖ¸ÄÏÕë
+        mLocationOverlay.disableCompass(); // å…³é—­æŒ‡å—é’ˆ
 	    app.mBMapMan.stop();
 	    super.onPause();
 	}
 	@Override
 	protected void onResume() {
 		isRunning = true;
-		//³õÊ¼»¯¼ÒÍ¥ºÍ°ì¹«ÊÒµØÖ·£¬ÔÚresumeÀïÒ²Òª×öÒ»´Î
+		//åˆå§‹åŒ–å®¶åº­å’ŒåŠå…¬å®¤åœ°å€ï¼Œåœ¨resumeé‡Œä¹Ÿè¦åšä¸€æ¬¡
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		//Log.d(TAG, up.toString());
@@ -463,13 +463,13 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mOfficeAddr = up.getOfficeAddr();
 		
 		Easyway95App app = (Easyway95App)this.getApplication();
-		// ×¢²áListener
+		// æ³¨å†ŒListener
         app.mBMapMan.getLocationManager().requestLocationUpdates(mLocationListener);
         mLocationOverlay.enableMyLocation();
-        mLocationOverlay.enableCompass(); // ´ò¿ªÖ¸ÄÏÕë
+        mLocationOverlay.enableCompass(); // æ‰“å¼€æŒ‡å—é’ˆ
 	    app.mBMapMan.start();
 	    
-	    //×¢²áÒ»¸ö¶¨Ê±Æ÷
+	    //æ³¨å†Œä¸€ä¸ªå®šæ—¶å™¨
 	    if (mTimer == null) {
 	    	mTimer = new Timer();
 	    }
@@ -538,13 +538,13 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     }
     public void resetMapView() {
     	resetMapViewByRoute();
-    	//Ë¢ĞÂÖÜ±ßÂ·¿öÌáÊ¾
-//		TrafficMsg trafficMsg = mPromptTrafficMsg.new TrafficMsg("ÖÜ±ß", "ÎŞÂ·¿ö", "");
+    	//åˆ·æ–°å‘¨è¾¹è·¯å†µæç¤º
+//		TrafficMsg trafficMsg = mPromptTrafficMsg.new TrafficMsg("å‘¨è¾¹", "æ— è·¯å†µ", "");
 //		mPromptTrafficMsg.pushMsg(trafficMsg);
     	
-    	//Ë¢ĞÂÇ°·½Â·¿öÌáÊ¾
+    	//åˆ·æ–°å‰æ–¹è·¯å†µæç¤º
     	updateNextTrafficPoint();
-    	//¸üĞÂTrafficView
+    	//æ›´æ–°TrafficView
     	updateTrafficView();
 		
 		promptTraffic();
@@ -561,7 +561,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     	    mRouteOverlay.setData(route);
     		mMapView.getOverlays().add(mRouteOverlay);
     	}
-		mMapView.invalidate();  //Ë¢ĞÂµØÍ¼
+		mMapView.invalidate();  //åˆ·æ–°åœ°å›¾
     }
     
     private void updateTrafficView() {
@@ -581,18 +581,18 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         	ArrayList<GeoPoint> matchedPoints = rt.getMatchedPointsByList();
         	if (matchedPoints == null || matchedPoints.size() == 0) continue;
     		
-        	Drawable marker = getResources().getDrawable(R.drawable.slow_speed);  //µÃµ½ĞèÒª±êÔÚµØÍ¼ÉÏµÄ×ÊÔ´
+        	Drawable marker = getResources().getDrawable(R.drawable.slow_speed);  //å¾—åˆ°éœ€è¦æ ‡åœ¨åœ°å›¾ä¸Šçš„èµ„æº
     		marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker
-    				.getIntrinsicHeight());   //Îªmaker¶¨ÒåÎ»ÖÃºÍ±ß½ç
+    				.getIntrinsicHeight());   //ä¸ºmakerå®šä¹‰ä½ç½®å’Œè¾¹ç•Œ
     		LineOverlay lines = new LineOverlay(marker, LYNavigator.this, matchedPoints);
-    		mMapView.getOverlays().add(lines); //Ìí¼ÓItemizedOverlayÊµÀıµ½mMapView
+    		mMapView.getOverlays().add(lines); //æ·»åŠ ItemizedOverlayå®ä¾‹åˆ°mMapView
         }
-		mMapView.invalidate();  //Ë¢ĞÂµØÍ¼
-		//popupTrafficDialg("´Ó¶«ÏşÂ·µ½µÂ±´ÒøÊÎÅú·¢ÖĞĞÄ£¬Î÷Ïò"); //µ¯³öÄ£Ì¬´°¿Ú
+		mMapView.invalidate();  //åˆ·æ–°åœ°å›¾
+		//popupTrafficDialg("ä»ä¸œæ™“è·¯åˆ°å¾·è´é“¶é¥°æ‰¹å‘ä¸­å¿ƒï¼Œè¥¿å‘"); //å¼¹å‡ºæ¨¡æ€çª—å£
     }
     
     /*
-     * ±¾º¯ÊıÓ¦¸Ã·µ»ØÍ¾¾¶×îĞÂµÄÈıÌõÂ·¿ö
+     * æœ¬å‡½æ•°åº”è¯¥è¿”å›é€”å¾„æœ€æ–°çš„ä¸‰æ¡è·¯å†µ
      */
     private void updateNextTrafficPoint() {
     	Log.d(TAG, "in updateNextTrafficPoint");
@@ -606,12 +606,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     }
       
     public void promptTraffic() {
-    	//Ê×ÏÈ±£Ö¤Ã¿Á½´ÎÌáÊ¾Ö®¼ä¸ôÖÁÉÙÓĞ30Ãë
+    	//é¦–å…ˆä¿è¯æ¯ä¸¤æ¬¡æç¤ºä¹‹é—´éš”è‡³å°‘æœ‰30ç§’
 		long timenow = System.currentTimeMillis();
     	if (timenow-mlLastPrompt<30*1000) {
     		return;
     	}    	
-    	//ÉèÖÃ¶¨Ê±Æ÷£¬±£Ö¤1·ÖÖÓºó»áÖ´ĞĞÒ»´Î
+    	//è®¾ç½®å®šæ—¶å™¨ï¼Œä¿è¯1åˆ†é’Ÿåä¼šæ‰§è¡Œä¸€æ¬¡
     	mPromptWatchDogTask = new LYPromptWatchDogTask();
 		mTimer.schedule(mPromptWatchDogTask, Constants.PROMPT_WATCH_DOG_INTERVAL);
     	
@@ -627,7 +627,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     
     public TrafficMsg genTrafficMsg(TrafficPoint tp) {
         Log.d(TAG, "in genTrafficMsg");
-        //²»²¥·Å¡°Ç°·½ÎŞÓµ¶Â¡±£¬20121105£¬²ÌÇì·áĞŞ¸Ä
+        //ä¸æ’­æ”¾â€œå‰æ–¹æ— æ‹¥å µâ€ï¼Œ20121105ï¼Œè”¡åº†ä¸°ä¿®æ”¹
         if (tp == null) return null;
         
 		TrafficMsg trafficMsg = mPromptTrafficMsg.new TrafficMsg(Constants.ROAD_AHEAD, Constants.NO_TRAFFIC, null);
@@ -659,7 +659,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         mMsgToBeShown = tmsg;
         
     	showDialog(Constants.TRAFFIC_POPUP);
-		//´´½¨Ò»¸ö12ÃëµÄtimer
+		//åˆ›å»ºä¸€ä¸ª12ç§’çš„timer
     	mDlgTimerTask = new LYDlgDismissTimerTask();
 		mTimer.schedule(mDlgTimerTask, Constants.DLG_LAST_DURATION);
     }
@@ -670,7 +670,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             case Constants.TRAFFIC_POPUP: {
                 popupDlg = new ProgressDialog(this);
                 Log.d(TAG, "onCreateDialog");
-                String title = "Ç°·½ÎŞÓµ¶Â";
+                String title = "å‰æ–¹æ— æ‹¥å µ";
                 String msg = "";
                 popupDlg.setTitle(title);
                 popupDlg.setMessage(msg);
@@ -688,7 +688,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         switch (id) {
             case Constants.TRAFFIC_POPUP: {
                 Log.d(TAG, "onPrepareDialog");
-                String title = "Ç°·½ÎŞÓµ¶Â";
+                String title = "å‰æ–¹æ— æ‹¥å µ";
                 String msg = "";
                if (mMsgToBeShown != null) {
                 	title = mMsgToBeShown.getPaintedRoad();
@@ -736,12 +736,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 
             case R.id.go_home:
 //            	promptDlg = new ProgressDialog(this);
-//                promptDlg.setTitle("Â·¿ö»ñÈ¡ÖĞ...");
+//                promptDlg.setTitle("è·¯å†µè·å–ä¸­...");
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mHomeAddr);
-    			mHeading.setText("ÖÁ" + mHomeAddr.getName() + "µÄÂ·¿ö");
+    			mHeading.setText("è‡³" + mHomeAddr.getName() + "çš„è·¯å†µ");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
@@ -750,12 +750,12 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             //               nongrouped menu items
             case R.id.go_office:
 //            	promptDlg = new ProgressDialog(this);
-//                promptDlg.setTitle("Â·¿ö»ñÈ¡ÖĞ...");
+//                promptDlg.setTitle("è·¯å†µè·å–ä¸­...");
 //                promptDlg.setMessage("");
 //                promptDlg.setIndeterminate(true);
 //                promptDlg.setCancelable(true);
         		mMapHelper.requestDrivingRoutes(mMapHelper.getCurrentPoint(), mOfficeAddr);
-    			mHeading.setText("ÖÁ" + mOfficeAddr.getName() + "µÄÂ·¿ö");
+    			mHeading.setText("è‡³" + mOfficeAddr.getName() + "çš„è·¯å†µ");
     			mHeading.setTextSize(16);
 //        		promptDlg.dismiss();
                 return true;
@@ -900,7 +900,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	}
     
 	public void setLastDestination(MKPoiInfoHelper mpi) {
-		//³õÊ¼»¯¼ÒÍ¥ºÍ°ì¹«ÊÒµØÖ·£¬ÔÚresumeÀïÒ²Òª×öÒ»´Î
+		//åˆå§‹åŒ–å®¶åº­å’ŒåŠå…¬å®¤åœ°å€ï¼Œåœ¨resumeé‡Œä¹Ÿè¦åšä¸€æ¬¡
 		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
 		UserProfile up = new UserProfile(sp);
 		up.setAndCommitLastDestination(sp, mpi);
@@ -919,19 +919,19 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	}
 	
 	/*
-	 * Èç¹ûforce£¬ÔòÇ¿ÖÆÉı¼¶£¬·ñÔòÌáÊ¾ÓÃ»§ÓĞĞÂ°æ±¾£¬µ«µ±Ç°°æ±¾»¹¿É¼ÌĞøÔËĞĞ£¬µãÉı¼¶¿ÉÈ¥Éı¼¶£¬·ñÔò¹Ø±Õ¶Ô»°¿ò¼ÌĞøÔËĞĞ
-	 * 1¡¢µ¯³ö¶Ô»°¿ò
-	 * 2¡¢µã»÷ÏÂÔØ£¬×Ô¶¯Éı¼¶
+	 * å¦‚æœforceï¼Œåˆ™å¼ºåˆ¶å‡çº§ï¼Œå¦åˆ™æç¤ºç”¨æˆ·æœ‰æ–°ç‰ˆæœ¬ï¼Œä½†å½“å‰ç‰ˆæœ¬è¿˜å¯ç»§ç»­è¿è¡Œï¼Œç‚¹å‡çº§å¯å»å‡çº§ï¼Œå¦åˆ™å…³é—­å¯¹è¯æ¡†ç»§ç»­è¿è¡Œ
+	 * 1ã€å¼¹å‡ºå¯¹è¯æ¡†
+	 * 2ã€ç‚¹å‡»ä¸‹è½½ï¼Œè‡ªåŠ¨å‡çº§
 	 * 
 	 */
 	public void onSoftwareUpgrade(int major, int minor, String url, String desc, boolean force) {
 		final String upgradeUrl = url;
-		String msg = String.format("ÄúµÄµ±Ç°°æ±¾: %d.%d, ×îĞÂ°æ±¾: %d.%d\n%s\n", majorRelease, minorRelease, major, minor, desc);
+		String msg = String.format("æ‚¨çš„å½“å‰ç‰ˆæœ¬: %d.%d, æœ€æ–°ç‰ˆæœ¬: %d.%d\n%s\n", majorRelease, minorRelease, major, minor, desc);
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(LYNavigator.this)
-		.setTitle("Éı¼¶ÌáÊ¾")
+		.setTitle("å‡çº§æç¤º")
 		.setMessage(msg)
-		.setPositiveButton("Á¢¼´Éı¼¶", new DialogInterface.OnClickListener() {
+		.setPositiveButton("ç«‹å³å‡çº§", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				/* User clicked OK so do some stuff */
 //				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.luyun.easyway95"));
@@ -943,7 +943,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		});
 		
 		if (!force) {
-			alert.setNegativeButton("ÒÔºóÔÙËµ", new DialogInterface.OnClickListener() {
+			alert.setNegativeButton("ä»¥åå†è¯´", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					/* User clicked Cancel */
 				}
@@ -969,7 +969,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         //wifi
         State wifi = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         
-        //Èç¹û3GÍøÂçºÍwifiÍøÂç¶¼Î´Á¬½Ó£¬ÇÒ²»ÊÇ´¦ÓÚÕıÔÚÁ¬½Ó×´Ì¬ Ôò½øÈëNetwork Setting½çÃæ ÓÉÓÃ»§ÅäÖÃÍøÂçÁ¬½Ó
+        //å¦‚æœ3Gç½‘ç»œå’Œwifiç½‘ç»œéƒ½æœªè¿æ¥ï¼Œä¸”ä¸æ˜¯å¤„äºæ­£åœ¨è¿æ¥çŠ¶æ€ åˆ™è¿›å…¥Network Settingç•Œé¢ ç”±ç”¨æˆ·é…ç½®ç½‘ç»œè¿æ¥
         if(mobile==State.CONNECTED||mobile==State.CONNECTING)
             return true;
         if(wifi==State.CONNECTED||wifi==State.CONNECTING)
@@ -978,7 +978,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	}
 	
 	/*
-	 * ¼à¿ØÍøÂçÁ¬½Ó·¢Éú±ä»¯
+	 * ç›‘æ§ç½‘ç»œè¿æ¥å‘ç”Ÿå˜åŒ–
 	 */
 	public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
@@ -1025,4 +1025,3 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		timer.schedule(task, delay); 
 	}
 }
-

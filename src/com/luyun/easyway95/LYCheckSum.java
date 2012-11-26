@@ -30,7 +30,7 @@ public class LYCheckSum {
 		}
 		return checkSum;
 		//Log.d(TAG, new String(checkSum));
-		//ĞŞ¸ÄÁË·µ»ØÖµ£¬Ô­À´·µ»ØÒ»¸öÕûĞÎÏÖÔÚ·µ»Ø4¸ö×Ö½Ú
+		//ä¿®æ”¹äº†è¿”å›å€¼ï¼ŒåŸæ¥è¿”å›ä¸€ä¸ªæ•´å½¢ç°åœ¨è¿”å›4ä¸ªå­—èŠ‚
 		
 //		int value = 0;
 //		int mask = 0xff;

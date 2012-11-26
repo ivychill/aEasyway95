@@ -15,9 +15,9 @@ import com.luyun.easyway95.shared.TSSProtos.LYRoadTraffic;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 import com.luyun.easyway95.shared.TSSProtos.LYSegmentTraffic;
 
-//²»Ö±½ÓÓÃprotoÉú³ÉµÄLYRoadTrafficµÄÀíÓÉ£º1.Õâ¸öÓÃ×÷ÈİÆ÷£¬ÊÕÄÉLYRoadTrafficĞÅÏ¢£¬ĞèÒª±È½Ï·½±ãµÄset/get£¬Èç¹ûÓÃLYRoadTraffic£¬»á±È½ÏÂé·³
-//ÁíÍâ£¬ÈİÆ÷ĞèÒª¸úĞ­ÒéµÄñîºÏ¶È½µµÍ£¬Ö»ÔÚÕâ¸öÈİÆ÷Àï´¦Àí²»Í¬µÄĞ­Òé¡£
-//Í¬Ê±½«Ô­À´Ğ­Òé´«ËÍµÄList»»³ÉMapµÄĞÎÊ½£¬±ãÓÚ³ÌĞò´¦ÀíºÍĞ§ÂÊµÄ¿¼ÂÇ
+//ä¸ç›´æ¥ç”¨protoç”Ÿæˆçš„LYRoadTrafficçš„ç†ç”±ï¼š1.è¿™ä¸ªç”¨ä½œå®¹å™¨ï¼Œæ”¶çº³LYRoadTrafficä¿¡æ¯ï¼Œéœ€è¦æ¯”è¾ƒæ–¹ä¾¿çš„set/getï¼Œå¦‚æœç”¨LYRoadTrafficï¼Œä¼šæ¯”è¾ƒéº»çƒ¦
+//å¦å¤–ï¼Œå®¹å™¨éœ€è¦è·Ÿåè®®çš„è€¦åˆåº¦é™ä½ï¼Œåªåœ¨è¿™ä¸ªå®¹å™¨é‡Œå¤„ç†ä¸åŒçš„åè®®ã€‚
+//åŒæ—¶å°†åŸæ¥åè®®ä¼ é€çš„Listæ¢æˆMapçš„å½¢å¼ï¼Œä¾¿äºç¨‹åºå¤„ç†å’Œæ•ˆç‡çš„è€ƒè™‘
 public class DrivingRoadWithTraffic extends RoadWithTraffic {
 	private static final String TAG = "DrivingRoadWithTraffic";
 	private MapUtils mMapUtils = null;
@@ -48,7 +48,7 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
 	}
 	
 	/*
-	 * »ñÈ¡MatchedPointsÁĞ±í£¬µ÷ÓÃÕßÓÃÓÚ¿ìËÙ²éÑ¯ÏÂÒ»¸öÆ¥ÅäµÄTrafficPointµÈ¹¦ÄÜ
+	 * è·å–MatchedPointsåˆ—è¡¨ï¼Œè°ƒç”¨è€…ç”¨äºå¿«é€ŸæŸ¥è¯¢ä¸‹ä¸€ä¸ªåŒ¹é…çš„TrafficPointç­‰åŠŸèƒ½
 	 */
 	ArrayList<GeoPoint> getMatchedPointsByList() {
 		if (matchedPoints == null) return null;
@@ -58,15 +58,15 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
     	if (segments == null) return null;
     	long nowTime = System.currentTimeMillis()/1000;
     	for (int i=0; i<segments.size(); i++) {
-        	//¼ì²éÊÇ·ñÔÚmatchedPointsµÄmapÀï
+        	//æ£€æŸ¥æ˜¯å¦åœ¨matchedPointsçš„mapé‡Œ
         	ArrayList<GeoPoint> tmpPoints = matchedPoints.get(i);
-        	if (tmpPoints == null) continue; //²»ÔÚMapÀï£¬ËµÃ÷¸Ã¶ÎÎŞÄâºÏ£¬¿ÉÄÜÊÇ·´·½Ïò£¬Ò²¿ÉÄÜÊÇÆäËüÂ·¿ö
+        	if (tmpPoints == null) continue; //ä¸åœ¨Mapé‡Œï¼Œè¯´æ˜è¯¥æ®µæ— æ‹Ÿåˆï¼Œå¯èƒ½æ˜¯åæ–¹å‘ï¼Œä¹Ÿå¯èƒ½æ˜¯å…¶å®ƒè·¯å†µ
         	listPoints.addAll(tmpPoints);
     	}
 		return listPoints;
 	}
 	/*
-	 * Æ¥ÅäºóµÃµ½ÈçÏÂĞÅÏ¢£ºÓĞÄÄĞ©ÄâºÏºóµÄµã£º±£´æÔÚmatchedPointsËù¶ÔÓ¦µÄvaluesÀï£¬Æä¼üÖµÎªsegmentµÄË÷Òı
+	 * åŒ¹é…åå¾—åˆ°å¦‚ä¸‹ä¿¡æ¯ï¼šæœ‰å“ªäº›æ‹Ÿåˆåçš„ç‚¹ï¼šä¿å­˜åœ¨matchedPointsæ‰€å¯¹åº”çš„valuesé‡Œï¼Œå…¶é”®å€¼ä¸ºsegmentçš„ç´¢å¼•
 	 */
 	void matchRoute(LYRoadTraffic rt) {
 		this.buildSegmentsFromAir(rt);
@@ -85,8 +85,8 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
 	}
 
 	/*
-	 * ±éÀúmSegmentTraffic£¬ÒòÖ®Ç°ÒÑ½«ÄâºÏºóµÄÍ¶Ó°µã±£´æÔÚmatchedPoints
-	 * µ÷ÓÃfindNextPoint(pt, tmpPoints)
+	 * éå†mSegmentTrafficï¼Œå› ä¹‹å‰å·²å°†æ‹Ÿåˆåçš„æŠ•å½±ç‚¹ä¿å­˜åœ¨matchedPoints
+	 * è°ƒç”¨findNextPoint(pt, tmpPoints)
 	 */
 	public TrafficPoint getNextTrafficPoint(GeoPoint pt) {
 		//Log.d(TAG, "in getNextTrafficPoint, point="+pt.toString());
@@ -99,11 +99,11 @@ public class DrivingRoadWithTraffic extends RoadWithTraffic {
 		for (int i=0; i<segments.size(); i++) {
 			ArrayList<GeoPoint> tmpPoints = matchedPoints.get(new Integer(i));
 			if (tmpPoints == null) continue;
-    		//µ÷ÓÃÒ»´ÎgetNearestDistanceOfRoad£¬ÓÃÓÚÅĞ¶Ï
+    		//è°ƒç”¨ä¸€æ¬¡getNearestDistanceOfRoadï¼Œç”¨äºåˆ¤æ–­
         	double distanceOffRoad = 0.0;
     		GeoPointHelper tmpPoint = null;
     		tmpPoint = mMapUtils.findClosestPoint(pt, tmpPoints);
-    		if (tmpPoint == null) continue; //ÓÀÔ¶²»»á·µ»Ønull
+    		if (tmpPoint == null) continue; //æ°¸è¿œä¸ä¼šè¿”å›null
     		if (nextPoint == null || tmpPoint.getDistance() < nextPoint.getDistance()) {
     			nextPoint = tmpPoint;
     			indexOfSegment = i;

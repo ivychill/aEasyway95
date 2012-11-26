@@ -8,32 +8,32 @@ import com.baidu.mapapi.GeoPoint;
 import com.luyun.easyway95.shared.TSSProtos.LYSegment;
 
 public class MapUtils {
-    //#Begin.....//Â·¾¶ÄâºÏÒÔ¼°µãºÍÂ·¾¶Ïà¹ØµÄÅĞ¶ÏËã·¨
-    //»¡¶È¼ÆËã
+    //#Begin.....//è·¯å¾„æ‹Ÿåˆä»¥åŠç‚¹å’Œè·¯å¾„ç›¸å…³çš„åˆ¤æ–­ç®—æ³•
+    //å¼§åº¦è®¡ç®—
     private static double rad(double d)  
     {  
         return d * Math.PI / 180.0;  
     } 
 
-    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë£¬µ¥Î»ÎªÃ×
+    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»ï¼Œå•ä½ä¸ºç±³
     public static double getDistance(Location loc1, Location loc2) {
     	return GetDistance(loc1.getLatitude(), loc1.getLongitude(), 
     			loc2.getLatitude(), loc2.getLongitude());
     }
     
-    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë£¬µ¥Î»ÎªÃ×
+    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»ï¼Œå•ä½ä¸ºç±³
     public static double getDistance(Location loc1, GeoPoint p2) {
     	return GetDistance(loc1.getLatitude(), loc1.getLongitude(), p2.getLatitudeE6()/Constants.DOUBLE_1E6, 
     			p2.getLongitudeE6()/Constants.DOUBLE_1E6);
     }
     
-    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë£¬µ¥Î»ÎªÃ×
+    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»ï¼Œå•ä½ä¸ºç±³
     public static double getDistance(GeoPoint p1, Location loc2) {
     	return GetDistance(p1.getLatitudeE6()/Constants.DOUBLE_1E6, p1.getLongitudeE6()/Constants.DOUBLE_1E6, 
     			loc2.getLatitude(), loc2.getLongitude());
     }
     
-    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë£¬µ¥Î»ÎªÃ×
+    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»ï¼Œå•ä½ä¸ºç±³
     public static double getDistance(GeoPoint p1, GeoPoint p2) {
     	return GetDistance(p1.getLatitudeE6()/Constants.DOUBLE_1E6, p1.getLongitudeE6()/Constants.DOUBLE_1E6, 
     			p2.getLatitudeE6()/Constants.DOUBLE_1E6, p2.getLongitudeE6()/Constants.DOUBLE_1E6);
@@ -49,12 +49,12 @@ public class MapUtils {
         double b = rad(lng1) - rad(lng2);  
         double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +   
             Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));  
-        s = s * EARTH_RADIUS * 1000.0;  //µ¥Î»:M
+        s = s * EARTH_RADIUS * 1000.0;  //å•ä½:M
         s = Math.round(s * 10000) / 10000;  
         return s;  
     }  
 
-    //·µ»ØÁ½µãÖ®¼äµÄ¾àÀë£¬ÊäÈëÊÇ°Ù¶ÈµÄÎ¢¶È !~_~
+    //è¿”å›ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»ï¼Œè¾“å…¥æ˜¯ç™¾åº¦çš„å¾®åº¦ !~_~
     public static double MetersBetweenGeoPoints(GeoPoint geoPoint1, GeoPoint geoPoint2)  
     {  
     	double lat1 = geoPoint1.getLatitudeE6()/Constants.DOUBLE_1E6;
@@ -64,17 +64,17 @@ public class MapUtils {
     	return GetDistance(lat1, lng1, lat2, lng2);
     }  
 
-    //ÕâÀï¶¨ÒåÒ»¸öÖ±½ÓÊ¹ÓÃ¾­Î³¶ÈµÄ£¬ÊÇÎªÁË¼Ì³ĞIOSµÄº¯ÊıÓÃ·¨²»ÓÃ¸Ä¶¯Ì«´ó
+    //è¿™é‡Œå®šä¹‰ä¸€ä¸ªç›´æ¥ä½¿ç”¨ç»çº¬åº¦çš„ï¼Œæ˜¯ä¸ºäº†ç»§æ‰¿IOSçš„å‡½æ•°ç”¨æ³•ä¸ç”¨æ”¹åŠ¨å¤ªå¤§
     private class RTTGeoPoint
     {
     	public double lat;
     	public double lng;
     }
 
-    //ÅĞ¶ÏpntÊÇ·ñÔÚÓÉ£¨p1, p2£©Á½µã×é³ÉµÄÏß¶Î·¶Î§ÄÚ
-    //·½·¨£º¼ÆËãÍ¶Ó°µã£¬È»ºóÅĞ¶ÏÍ¶Ó°µãÊÇ·ñÔÚÏß¶ÎÄÚ£»Èç¹ûÊÇ£¬Ôò·µ»Ø¾àÀë£¬·ñÔò·µ»Ø£­1.0£»
-    //Note: ÔÊĞíÍ¶Ó°µãÔÚÏß¶ÎÁ½¶ËµÄÎó²î£¬Ä¿Ç°±¾º¯Êı»¹Ã»¼ÓÈëÕâ¸öÎó²î£»
-    //retproj ±ØĞëÔÚÍâÃæÊµÀı»¯£¬ÊÇ·µ»ØµÄÍ¶Ó°µã
+    //åˆ¤æ–­pntæ˜¯å¦åœ¨ç”±ï¼ˆp1, p2ï¼‰ä¸¤ç‚¹ç»„æˆçš„çº¿æ®µèŒƒå›´å†…
+    //æ–¹æ³•ï¼šè®¡ç®—æŠ•å½±ç‚¹ï¼Œç„¶ååˆ¤æ–­æŠ•å½±ç‚¹æ˜¯å¦åœ¨çº¿æ®µå†…ï¼›å¦‚æœæ˜¯ï¼Œåˆ™è¿”å›è·ç¦»ï¼Œå¦åˆ™è¿”å›ï¼1.0ï¼›
+    //Note: å…è®¸æŠ•å½±ç‚¹åœ¨çº¿æ®µä¸¤ç«¯çš„è¯¯å·®ï¼Œç›®å‰æœ¬å‡½æ•°è¿˜æ²¡åŠ å…¥è¿™ä¸ªè¯¯å·®ï¼›
+    //retproj å¿…é¡»åœ¨å¤–é¢å®ä¾‹åŒ–ï¼Œæ˜¯è¿”å›çš„æŠ•å½±ç‚¹
     public double GetNearLineDistance(GeoPoint locPoint,  GeoPoint lineP1, GeoPoint lineP2, GeoPoint retproj)
     {
       double a;    
@@ -107,32 +107,32 @@ public class MapUtils {
       }
       
       
-      //Í¶Ó°µãÊÇ·ñÔÚÏß¶ÎÄÚ£»Ö®ËùÒÔÕâÃ´Ğ´ÊÇÎªÁË±ÜÃâ¸´ÔÓ¸¡µãÔËËã£»
-      if (p1.lng < p2.lng)//ºá×ø±êÅĞ¶Ï
+      //æŠ•å½±ç‚¹æ˜¯å¦åœ¨çº¿æ®µå†…ï¼›ä¹‹æ‰€ä»¥è¿™ä¹ˆå†™æ˜¯ä¸ºäº†é¿å…å¤æ‚æµ®ç‚¹è¿ç®—ï¼›
+      if (p1.lng < p2.lng)//æ¨ªåæ ‡åˆ¤æ–­
       {
-          if ((dSPtX < p1.lng) || (dSPtX > p2.lng)) //²»ÔÚÏß¶ÎÄÚ£¬»¹Ã»¼ÓÈëÎó²î
+          if ((dSPtX < p1.lng) || (dSPtX > p2.lng)) //ä¸åœ¨çº¿æ®µå†…ï¼Œè¿˜æ²¡åŠ å…¥è¯¯å·®
           {
               return -1.0;
           }
       }
       else 
       {
-          if ((dSPtX > p1.lng) || (dSPtX < p2.lng)) //²»ÔÚÏß¶ÎÄÚ£¬»¹Ã»¼ÓÈëÎó²î
+          if ((dSPtX > p1.lng) || (dSPtX < p2.lng)) //ä¸åœ¨çº¿æ®µå†…ï¼Œè¿˜æ²¡åŠ å…¥è¯¯å·®
           {
               return -1.0;
           }
       }
       
-      if (p1.lat < p2.lat) //×İ×ø±êÅĞ¶Ï
+      if (p1.lat < p2.lat) //çºµåæ ‡åˆ¤æ–­
       {
-          if ((dSPtY < p1.lat) || (dSPtY > p2.lat)) //²»ÔÚÏß¶ÎÄÚ£¬»¹Ã»¼ÓÈëÎó²î
+          if ((dSPtY < p1.lat) || (dSPtY > p2.lat)) //ä¸åœ¨çº¿æ®µå†…ï¼Œè¿˜æ²¡åŠ å…¥è¯¯å·®
           {
               return -1.0;
           }
       }
       else 
       {
-          if ((dSPtY > p1.lat) || (dSPtY < p2.lat)) //²»ÔÚÏß¶ÎÄÚ£¬»¹Ã»¼ÓÈëÎó²î
+          if ((dSPtY > p1.lat) || (dSPtY < p2.lat)) //ä¸åœ¨çº¿æ®µå†…ï¼Œè¿˜æ²¡åŠ å…¥è¯¯å·®
           {
               return -1.0;
           }
@@ -142,7 +142,7 @@ public class MapUtils {
       return distance;
     };
 
-    //¸Ã½á¹¹ÓÃÓÚÔÚÅĞ¶ÏÒ»¸öµãºÍÂ·¾¶ÉÏµÄ¹ØÏµµÄÊ±ºò£¬·µ»Ø×î¶Ì¾àÀë¡¢Í¶Ó°µã¡¢ÒÔ¼°Í¶Ó°µãÔÚÂ·¾¶µãÊı×éÖĞ¶ÔÓ¦IndexµÈ£»
+    //è¯¥ç»“æ„ç”¨äºåœ¨åˆ¤æ–­ä¸€ä¸ªç‚¹å’Œè·¯å¾„ä¸Šçš„å…³ç³»çš„æ—¶å€™ï¼Œè¿”å›æœ€çŸ­è·ç¦»ã€æŠ•å½±ç‚¹ã€ä»¥åŠæŠ•å½±ç‚¹åœ¨è·¯å¾„ç‚¹æ•°ç»„ä¸­å¯¹åº”Indexç­‰ï¼›
     public class STPointLineDistInfo
     {
 	    private double distance;
@@ -173,7 +173,7 @@ public class MapUtils {
 		}
     }
     
-    //°Ù¶ÈµÄÎ¢¶Èµ½¶ÈÖ®¼äµÄ×ª»»......
+    //ç™¾åº¦çš„å¾®åº¦åˆ°åº¦ä¹‹é—´çš„è½¬æ¢......
     private RTTGeoPoint GeoPoint2RttGeoPoint(GeoPoint point)
     {
     	RTTGeoPoint retPoint = new RTTGeoPoint();
@@ -212,8 +212,8 @@ public class MapUtils {
     }
     
     /*
-     * ·µ»ØGeoPointHelper
-     * 2012.09.26 ²ÌÇì·áÔö¼Ó
+     * è¿”å›GeoPointHelper
+     * 2012.09.26 è”¡åº†ä¸°å¢åŠ 
      */
     public GeoPointHelper findClosestPoint(GeoPoint pt, java.util.ArrayList<GeoPoint> listPoints) {
     	GeoPointHelper pointHelper = null;
@@ -228,9 +228,9 @@ public class MapUtils {
     	}
     	return pointHelper;
     }
-    //¸Ã·½·¨»ñÈ¡LocationPointºÍÂ·¾¶£¨Êı×éroadPoints¸ø³ö£©µÄ×î¶Ì¾àÀë£»ÊäÈë²ÎÊıpointCountÊÇÊı×éµÄsize£¨JavaÖĞÆäÊµ¿ÉÒÔ²»ÓÃ£¬»¹Ã»¸Ä£©£»
-    //·µ»Ø½á¹¹¸Ã½á¹¹ÓÃÓÚÔÚÅĞ¶ÏÒ»¸öµãºÍÂ·¾¶ÉÏµÄ¹ØÏµµÄÊ±ºò£¬·µ»Ø×î¶Ì¾àÀë¡¢Í¶Ó°µã¡¢ÒÔ¼°Í¶Ó°µãÔÚÂ·¾¶µãÊı×éÖĞ¶ÔÓ¦IndexµÈ£»±ØĞëÔÚµ÷ÓÃµÄº¯ÊıÖĞÊµÀı»¯
-    //¸ÃIndexÌØÖ¸£ºÍ¶Ó°µãÔÚÂ·¾¶ÖĞµÄIndexÒÔ¼°Index+1Ö®¼ä£»
+    //è¯¥æ–¹æ³•è·å–LocationPointå’Œè·¯å¾„ï¼ˆæ•°ç»„roadPointsç»™å‡ºï¼‰çš„æœ€çŸ­è·ç¦»ï¼›è¾“å…¥å‚æ•°pointCountæ˜¯æ•°ç»„çš„sizeï¼ˆJavaä¸­å…¶å®å¯ä»¥ä¸ç”¨ï¼Œè¿˜æ²¡æ”¹ï¼‰ï¼›
+    //è¿”å›ç»“æ„è¯¥ç»“æ„ç”¨äºåœ¨åˆ¤æ–­ä¸€ä¸ªç‚¹å’Œè·¯å¾„ä¸Šçš„å…³ç³»çš„æ—¶å€™ï¼Œè¿”å›æœ€çŸ­è·ç¦»ã€æŠ•å½±ç‚¹ã€ä»¥åŠæŠ•å½±ç‚¹åœ¨è·¯å¾„ç‚¹æ•°ç»„ä¸­å¯¹åº”Indexç­‰ï¼›å¿…é¡»åœ¨è°ƒç”¨çš„å‡½æ•°ä¸­å®ä¾‹åŒ–
+    //è¯¥Indexç‰¹æŒ‡ï¼šæŠ•å½±ç‚¹åœ¨è·¯å¾„ä¸­çš„Indexä»¥åŠIndex+1ä¹‹é—´ï¼›
     public double getNearestDistanceOfRoad(GeoPoint LoctionPoint, java.util.ArrayList<GeoPoint> roadPoints, STPointLineDistInfo retPLDInfo)
     {
       int pointCount = roadPoints.size();
@@ -257,7 +257,7 @@ public class MapUtils {
                   retPLDInfo.setProjection(GeoPoint2RttGeoPoint(projPoint));
               }
           }
-          dist = MetersBetweenGeoPoints(LoctionPoint, roadPoints.get(i+1)); //±ÜÃâÂäÔÚÍ¶Ó°ÍâµÄÇé¿ö£¬Æ©ÈçÍ¹ÕÛÏÖÁ¬½ÓÍâµÄµã
+          dist = MetersBetweenGeoPoints(LoctionPoint, roadPoints.get(i+1)); //é¿å…è½åœ¨æŠ•å½±å¤–çš„æƒ…å†µï¼Œè­¬å¦‚å‡¸æŠ˜ç°è¿æ¥å¤–çš„ç‚¹
           if ((dist>=0.0) && (dist <= nearestDistance))
           {
               nearestDistance = dist;
@@ -278,7 +278,7 @@ public class MapUtils {
       return nearestDistance;
     }
     
-   //Â·¾¶ÄâºÏÅĞ¶Ï£»Èç¹ûÓµ¶ÂÂ·¶Î£¨segTraffic£©ÔÚroadPoints×é³ÉµÄÂ·¾¶ÖĞ£¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+   //è·¯å¾„æ‹Ÿåˆåˆ¤æ–­ï¼›å¦‚æœæ‹¥å µè·¯æ®µï¼ˆsegTrafficï¼‰åœ¨roadPointsç»„æˆçš„è·¯å¾„ä¸­ï¼Œåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
    public Boolean MatchRoadAndTraffic(LYSegment trfSeg, java.util.ArrayList<GeoPoint> roadPoints, java.util.ArrayList<GeoPoint> retMatchedPoints)
    {
 	   int roadPoincnt = roadPoints.size();
@@ -306,7 +306,7 @@ public class MapUtils {
            }
        }
        
-       //ÅĞ¶Ï¾ØĞÎÊÇ·ñÖØºÏ
+       //åˆ¤æ–­çŸ©å½¢æ˜¯å¦é‡åˆ
        GeoPoint trafficRectPoint1 = new GeoPoint(0,0);
        GeoPoint trafficRectPoint2 = new GeoPoint(0,0);
        trafficRectPoint1.setLatitudeE6((int) (trfSeg.getStart().getLat()*1000000));
@@ -340,7 +340,7 @@ public class MapUtils {
        }
        
        //YSH_MODIFIED 2012-10-09 11:00
-       //ÎªÁË±ÜÃâÂ·¾¶ºÍÓµ¶ÂÏß¶Î¶¼ÊÇµØÍ¼ÉÏµÄÆ½ĞĞ»òÕß´¹Ö±µÄÊ±ºò£¬Î¢Ğ¡µÄÆ«²î¶¼»á´øÀ´²»ÄÜÕıÈ·ÄâºÏµÄÇé¿ö£¬ÕâÀïÈËÎªÔö¼ÓÓµ¶ÂÂ·¶ÎµÄÎ¢Ğ¡Æ«²î
+       //ä¸ºäº†é¿å…è·¯å¾„å’Œæ‹¥å µçº¿æ®µéƒ½æ˜¯åœ°å›¾ä¸Šçš„å¹³è¡Œæˆ–è€…å‚ç›´çš„æ—¶å€™ï¼Œå¾®å°çš„åå·®éƒ½ä¼šå¸¦æ¥ä¸èƒ½æ­£ç¡®æ‹Ÿåˆçš„æƒ…å†µï¼Œè¿™é‡Œäººä¸ºå¢åŠ æ‹¥å µè·¯æ®µçš„å¾®å°åå·®
        if ( (maxTrfRect.getLatitudeE6()-minTrfRect.getLatitudeE6()) <= 200)
        {
     	   int tmpCoor = minTrfRect.getLatitudeE6();
@@ -362,7 +362,7 @@ public class MapUtils {
        if ( (maxRectPoint.getLatitudeE6() < minTrfRect.getLatitudeE6()) || (minRectPoint.getLatitudeE6() > maxTrfRect.getLatitudeE6()) 
     		  || (maxRectPoint.getLongitudeE6() < minTrfRect.getLongitudeE6()) || (minRectPoint.getLongitudeE6() > maxTrfRect.getLongitudeE6()) )
        {
-//           Log.d(TAG, "Ã»ÓĞÄâºÏµÄ¾ØĞÎ");
+//           Log.d(TAG, "æ²¡æœ‰æ‹Ÿåˆçš„çŸ©å½¢");
 //           String strrectinfo = String.format("RectRd P1=%f,%f, P2=%f,%f; Traffic P1=%f,%f, P1=%f,%f", 
 //        		   minRectPoint.getLatitudeE6()/Constants.DOUBLE_1E6, minRectPoint.getLongitudeE6()/Constants.DOUBLE_1E6, 
 //        		   maxRectPoint.getLatitudeE6()/Constants.DOUBLE_1E6, maxRectPoint.getLongitudeE6()/Constants.DOUBLE_1E6,
@@ -373,7 +373,7 @@ public class MapUtils {
        }
        else
        {   
-    	   //ÉÏÃæÒÑ¾­ÅÅ³ı·ÇÖØºÏµÄÇé¿ö£¬ÕâÀïÏÈ¶ÔÁ½¸ö¾ØĞÎµÄXY·Ö±ğ½øĞĞÅÅĞò£¬È»ºóÈ¡ÖĞ¼äÇø¼ä×÷ÎªÖØºÏ£¨½»¼¯£©ÇøÓò
+    	   //ä¸Šé¢å·²ç»æ’é™¤éé‡åˆçš„æƒ…å†µï¼Œè¿™é‡Œå…ˆå¯¹ä¸¤ä¸ªçŸ©å½¢çš„XYåˆ†åˆ«è¿›è¡Œæ’åºï¼Œç„¶åå–ä¸­é—´åŒºé—´ä½œä¸ºé‡åˆï¼ˆäº¤é›†ï¼‰åŒºåŸŸ
     	   int[] lat = new int[4];
     	   int[] lng = new int[4];
     	
@@ -395,7 +395,7 @@ public class MapUtils {
     	   CommRectP2.setLatitudeE6(lat[2]);
     	   CommRectP2.setLongitudeE6(lng[2]);
     	   
-//    	   String strLog = String.format("ÄâºÏ¾ØĞÎ P1=%f,%f; P2=%f,%f", 
+//    	   String strLog = String.format("æ‹ŸåˆçŸ©å½¢ P1=%f,%f; P2=%f,%f", 
 //    			   CommRectP1.getLongitudeE6()/Constants.DOUBLE_1E6, CommRectP1.getLatitudeE6()/Constants.DOUBLE_1E6,
 //    			   CommRectP2.getLongitudeE6()/Constants.DOUBLE_1E6, CommRectP2.getLatitudeE6()/Constants.DOUBLE_1E6);
 //    	   Log.d(TAG,strLog);
@@ -405,11 +405,11 @@ public class MapUtils {
     	   
            
       	 //YSH_MODIFIED 2012-10-09 11:00
-           //¼ÓÈëÇ¿ÖÆÀàĞÍ×ª»»
+           //åŠ å…¥å¼ºåˆ¶ç±»å‹è½¬æ¢
            double slope =  ((double)(trafficRectPoint2.getLatitudeE6() - trafficRectPoint1.getLatitudeE6()))
         		   /((double)(trafficRectPoint2.getLongitudeE6() - trafficRectPoint1.getLongitudeE6()));
            
-           if (slope > 0.0) //ÕıµÄĞ±ÂÊ£¬È¡½»¼¯¾ØĞÎ×î¿¿½ü×ø±ê(0,0)µÄµãºÍ¶Ô½Çµã; µØÍ¼×ø±êÖáÊÇÒÔ×óÉÏ½ÇÎªÔ­µã; ×¢Òâ¾­Î³¶ÈºÍÖ±½Ç×ø±êµÄÇø±ğ;
+           if (slope > 0.0) //æ­£çš„æ–œç‡ï¼Œå–äº¤é›†çŸ©å½¢æœ€é è¿‘åæ ‡(0,0)çš„ç‚¹å’Œå¯¹è§’ç‚¹; åœ°å›¾åæ ‡è½´æ˜¯ä»¥å·¦ä¸Šè§’ä¸ºåŸç‚¹; æ³¨æ„ç»çº¬åº¦å’Œç›´è§’åæ ‡çš„åŒºåˆ«;
            {
                if (trafficRectPoint2.getLatitudeE6() > trafficRectPoint1.getLatitudeE6())
                {
@@ -427,30 +427,30 @@ public class MapUtils {
            {
                if (trafficRectPoint2.getLatitudeE6() < trafficRectPoint1.getLatitudeE6())
                {
-            	   //×óÉÏ½Ç
+            	   //å·¦ä¸Šè§’
             	   comPoint1.setLatitudeE6(CommRectP2.getLatitudeE6());
             	   comPoint1.setLongitudeE6(CommRectP1.getLongitudeE6());
             	   
-            	   //ÓÒÏÂ½Ç
+            	   //å³ä¸‹è§’
             	   comPoint2.setLatitudeE6(CommRectP1.getLatitudeE6());
             	   comPoint2.setLongitudeE6(CommRectP2.getLongitudeE6());
                }
                else 
                {
-            	   //ÓÒÏÂ½Ç
+            	   //å³ä¸‹è§’
             	   comPoint1.setLatitudeE6(CommRectP1.getLatitudeE6());
             	   comPoint1.setLongitudeE6(CommRectP2.getLongitudeE6());
             	   
-            	   //×óÉÏ½Ç
+            	   //å·¦ä¸Šè§’
             	   comPoint2.setLatitudeE6(CommRectP2.getLatitudeE6());
             	   comPoint2.setLongitudeE6(CommRectP1.getLongitudeE6());
                }
            }
            
            double cmbRange = MetersBetweenGeoPoints(comPoint1, comPoint2);
-           if (cmbRange < 50.0) //±ÜÃâ×ªÍäÊ±Â·¿Ú×ø±êÆ«²îµ¼ÖÂµÄĞ¡¶ÎÓµ¶ÂÎó±¨
+           if (cmbRange < 50.0) //é¿å…è½¬å¼¯æ—¶è·¯å£åæ ‡åå·®å¯¼è‡´çš„å°æ®µæ‹¥å µè¯¯æŠ¥
            {
-//        	   strLog = String.format("¾àÀëÌ«¶Ì£¬¶ªÆú£»¾ØĞÎ¾àÀë=%f\r\n P1=%f,%f; P2=%f,%f", 
+//        	   strLog = String.format("è·ç¦»å¤ªçŸ­ï¼Œä¸¢å¼ƒï¼›çŸ©å½¢è·ç¦»=%f\r\n P1=%f,%f; P2=%f,%f", 
 //        			   cmbRange,
 //        			   comPoint1.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint1.getLatitudeE6()/Constants.DOUBLE_1E6,
 //        			   comPoint2.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint2.getLatitudeE6()/Constants.DOUBLE_1E6);
@@ -460,12 +460,12 @@ public class MapUtils {
            else
            {
         	   
-//        	   strLog = String.format("·½ÏòÅĞ¶Ï£¬¾ØĞÎ P1=%f,%f; P2=%f,%f", 
+//        	   strLog = String.format("æ–¹å‘åˆ¤æ–­ï¼ŒçŸ©å½¢ P1=%f,%f; P2=%f,%f", 
 //        			   comPoint1.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint1.getLatitudeE6()/Constants.DOUBLE_1E6,
 //        			   comPoint2.getLongitudeE6()/Constants.DOUBLE_1E6, comPoint2.getLatitudeE6()/Constants.DOUBLE_1E6);
 //        	   Log.d(TAG,strLog);
         	   
-		        //ÅĞ¶Ï·½Ïò
+		        //åˆ¤æ–­æ–¹å‘
 		        STPointLineDistInfo stPLDinfoC1 = new STPointLineDistInfo();
 		        double distCP1 = getNearestDistanceOfRoad(comPoint1, roadPoints, stPLDinfoC1);
 		         
@@ -476,13 +476,13 @@ public class MapUtils {
 		        {
 		            if (stPLDinfoC1.pointindex > stPLDinfoC2.pointindex) 
 		            {
-//		            	Log.d(TAG,"·½ÏòÏà·´");
+//		            	Log.d(TAG,"æ–¹å‘ç›¸å");
 //			        	strLog = String.format("CP1, IDX=%d, Dist=%f; CP1, IDX=%d, Dist=%f", stPLDinfoC1.pointindex, distCP1, stPLDinfoC2.pointindex, distCP2);
 //			        	Log.d(TAG,strLog);
 		            	return false;
 		            }
 		            
-	                //Èç¹ûÓµ¶ÂÂ·¶Î±È½Ï¶Ì£¬ÔÚÁ½¸öÖ±ÏßµÄ¶ËµãÖ®¼ä£»ÔòĞèÒªÅĞ¶ÏÁ½¸öÍ¶Ó°µãºÍÆğÊ¼¶ËµãµÄ¾àÀë£¬Í¨¹ıÕâ¸ö¾àÀëÀ´ÅĞ¶ÏÏÈºóË³Ğò£¨·½Ïò£©
+	                //å¦‚æœæ‹¥å µè·¯æ®µæ¯”è¾ƒçŸ­ï¼Œåœ¨ä¸¤ä¸ªç›´çº¿çš„ç«¯ç‚¹ä¹‹é—´ï¼›åˆ™éœ€è¦åˆ¤æ–­ä¸¤ä¸ªæŠ•å½±ç‚¹å’Œèµ·å§‹ç«¯ç‚¹çš„è·ç¦»ï¼Œé€šè¿‡è¿™ä¸ªè·ç¦»æ¥åˆ¤æ–­å…ˆåé¡ºåºï¼ˆæ–¹å‘ï¼‰
 	                if (stPLDinfoC1.pointindex == stPLDinfoC2.pointindex) 
 	                {
 	                    GeoPoint machedProjPoint1 = new GeoPoint(0, 0);
@@ -502,7 +502,7 @@ public class MapUtils {
 	                    }
 	                }
 		            
-		            //ÕıÈ·ÄâºÏ£¬Ìí¼ÓÄâºÏÂ·¶ÎµÄ×ø±êµã£¨ÓĞĞò£©
+		            //æ­£ç¡®æ‹Ÿåˆï¼Œæ·»åŠ æ‹Ÿåˆè·¯æ®µçš„åæ ‡ç‚¹ï¼ˆæœ‰åºï¼‰
 		            GeoPoint firstPrjPoint = new GeoPoint(0,0);
 		            GeoPoint endPrjPoint = new GeoPoint(0,0);
 		            firstPrjPoint.setLatitudeE6((int) (stPLDinfoC1.getProjection().lat*1E6));
@@ -520,7 +520,7 @@ public class MapUtils {
 		        }
 		        else
 		        {
-//		            strLog = String.format("ÄâºÏ¾àÀëÖĞÓµ¶Âµãµ½Â·¾¶µÄ¾àÀëÌ«´ó£¬¶ªÆú£»¾àÀë P1=%f  P2=%f", distCP1, distCP2); 
+//		            strLog = String.format("æ‹Ÿåˆè·ç¦»ä¸­æ‹¥å µç‚¹åˆ°è·¯å¾„çš„è·ç¦»å¤ªå¤§ï¼Œä¸¢å¼ƒï¼›è·ç¦» P1=%f  P2=%f", distCP1, distCP2); 
 //		        	Log.d(TAG,strLog);
 //		        	strLog = String.format("CP1, IDX=%d, Dist=%f; CP1, IDX=%d, Dist=%f", stPLDinfoC1.pointindex, distCP1, stPLDinfoC2.pointindex, distCP2);
 //		        	Log.d(TAG,strLog);
@@ -531,5 +531,5 @@ public class MapUtils {
        }
        return true;
    }
- //#End.....//Â·¾¶ÄâºÏÒÔ¼°µãºÍÂ·¾¶Ïà¹ØµÄÅĞ¶ÏËã·¨
+ //#End.....//è·¯å¾„æ‹Ÿåˆä»¥åŠç‚¹å’Œè·¯å¾„ç›¸å…³çš„åˆ¤æ–­ç®—æ³•
 }

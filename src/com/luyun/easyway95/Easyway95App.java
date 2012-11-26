@@ -22,24 +22,24 @@ public class Easyway95App extends Application {
 	private long lastChecked = 0;
 	private boolean trafficLayerOn = false;
 	
-	//Map¹¤¾ßÀà£¬Ìá¹©¾àÀë¡¢Â·¾¶ÄâºÏµÈËã·¨Ö§³Ö
+	//Mapå·¥å…·ç±»ï¼Œæä¾›è·ç¦»ã€è·¯å¾„æ‹Ÿåˆç­‰ç®—æ³•æ”¯æŒ
 	private MapUtils mMapUtils = null;
 	
-	//°Ù¶ÈMapAPIµÄ¹ÜÀíÀà
+	//ç™¾åº¦MapAPIçš„ç®¡ç†ç±»
 	BMapManager mBMapMan = null;
 	
-	// ÊÚÈ¨Key
-	// TODO: ÇëÊäÈëÄúµÄKey,
-	// ÉêÇëµØÖ·£ºhttp://dev.baidu.com/wiki/static/imap/key/
+	// æˆæƒKey
+	// TODO: è¯·è¾“å…¥æ‚¨çš„Key,
+	// ç”³è¯·åœ°å€ï¼šhttp://dev.baidu.com/wiki/static/imap/key/
 	String mStrKey = "513CBE299AB953DDFAEBC4A608F1F6557C30D685";
-	boolean m_bKeyRight = true;	// ÊÚÈ¨KeyÕıÈ·£¬ÑéÖ¤Í¨¹ı
+	boolean m_bKeyRight = true;	// æˆæƒKeyæ­£ç¡®ï¼ŒéªŒè¯é€šè¿‡
 	
-	// ³£ÓÃÊÂ¼ş¼àÌı£¬ÓÃÀ´´¦ÀíÍ¨³£µÄÍøÂç´íÎó£¬ÊÚÈ¨ÑéÖ¤´íÎóµÈ
+	// å¸¸ç”¨äº‹ä»¶ç›‘å¬ï¼Œç”¨æ¥å¤„ç†é€šå¸¸çš„ç½‘ç»œé”™è¯¯ï¼ŒæˆæƒéªŒè¯é”™è¯¯ç­‰
 	static class MyGeneralListener implements MKGeneralListener {
 		@Override
 		public void onGetNetworkState(int iError) {
 			Log.d("MyGeneralListener", "onGetNetworkState error is "+ iError);
-			Toast.makeText(Easyway95App.mApp.getApplicationContext(), "ÄúµÄÍøÂç³ö´íÀ²£¡",
+			Toast.makeText(Easyway95App.mApp.getApplicationContext(), "æ‚¨çš„ç½‘ç»œå‡ºé”™å•¦ï¼",
 					Toast.LENGTH_LONG).show();
 		}
 
@@ -47,9 +47,9 @@ public class Easyway95App extends Application {
 		public void onGetPermissionState(int iError) {
 			Log.d("MyGeneralListener", "onGetPermissionState error is "+ iError);
 			if (iError ==  MKEvent.ERROR_PERMISSION_DENIED) {
-				// ÊÚÈ¨Key´íÎó£º
+				// æˆæƒKeyé”™è¯¯ï¼š
 				Toast.makeText(Easyway95App.mApp.getApplicationContext(), 
-						"ÇëÔÚEasyway95App.javaÎÄ¼şÊäÈëÕıÈ·µÄÊÚÈ¨Key£¡",
+						"è¯·åœ¨Easyway95App.javaæ–‡ä»¶è¾“å…¥æ­£ç¡®çš„æˆæƒKeyï¼",
 						Toast.LENGTH_LONG).show();
 				Easyway95App.mApp.m_bKeyRight = false;
 			}
@@ -74,7 +74,7 @@ public class Easyway95App extends Application {
 	}
 
 	@Override
-	//½¨ÒéÔÚÄúappµÄÍË³öÖ®Ç°µ÷ÓÃmapadpiµÄdestroy()º¯Êı£¬±ÜÃâÖØ¸´³õÊ¼»¯´øÀ´µÄÊ±¼äÏûºÄ
+	//å»ºè®®åœ¨æ‚¨appçš„é€€å‡ºä¹‹å‰è°ƒç”¨mapadpiçš„destroy()å‡½æ•°ï¼Œé¿å…é‡å¤åˆå§‹åŒ–å¸¦æ¥çš„æ—¶é—´æ¶ˆè€—
 	public void onTerminate() {
 		// TODO Auto-generated method stub
 		if (mBMapMan != null) {

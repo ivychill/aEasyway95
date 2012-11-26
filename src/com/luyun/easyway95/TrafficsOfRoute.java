@@ -101,9 +101,9 @@ public class TrafficsOfRoute extends ListActivity {
 	        		rt.clearSegment(i);
 	        		continue;
 	        	}
-	        	//¼ì²éÊÇ·ñÔÚmatchedPointsµÄmapÀï
+	        	//æ£€æŸ¥æ˜¯å¦åœ¨matchedPointsçš„mapé‡Œ
 	        	ArrayList<GeoPoint> tmpPoints = matchedPoints.get(i);
-	        	if (tmpPoints == null) continue; //²»ÔÚMapÀï£¬ËµÃ÷¸Ã¶ÎÎŞÄâºÏ£¬¿ÉÄÜÊÇ·´·½Ïò£¬Ò²¿ÉÄÜÊÇÆäËüÂ·¿ö
+	        	if (tmpPoints == null) continue; //ä¸åœ¨Mapé‡Œï¼Œè¯´æ˜è¯¥æ®µæ— æ‹Ÿåˆï¼Œå¯èƒ½æ˜¯åæ–¹å‘ï¼Œä¹Ÿå¯èƒ½æ˜¯å…¶å®ƒè·¯å†µ
         		map = new HashMap<String, Object>();
 	        	map.put("road", entry.getKey());
 	        	map.put("desc", segments.get(i).getDetails());
@@ -111,7 +111,7 @@ public class TrafficsOfRoute extends ListActivity {
 	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
 	        	if (speed >= Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
 	        	if (speed < Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD && speed >= Constants.TRAFFIC_JAM_LVL_HIGH_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	String formatedStr = String.format("%d·ÖÖÓÇ°£¬%s", interval, strSpeed);
+	        	String formatedStr = String.format("%dåˆ†é’Ÿå‰ï¼Œ%s", interval, strSpeed);
 	            map.put("timestamp", formatedStr);
 	        	list.add(map);
         	}

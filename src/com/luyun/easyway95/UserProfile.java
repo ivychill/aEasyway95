@@ -144,12 +144,12 @@ public class UserProfile {
 		msEmail = sp.getString("Email", null);
 		msSessionId = sp.getString("SessionId", null);
 		String poiShekou = String.format(
-				"name=(Éß¿Ú¸Û), address=(¹ã¶«Ê¡ÉîÛÚÊĞÄÏÉ½Çø), city=(ÉîÛÚ), phoneNum=(), postCode=(), pt.lat=(22481722), pt.lng=(113919781), ePoiType=(0), searchPlace=()");
+				"name=(è›‡å£æ¸¯), address=(å¹¿ä¸œçœæ·±åœ³å¸‚å—å±±åŒº), city=(æ·±åœ³), phoneNum=(), postCode=(), pt.lat=(22481722), pt.lng=(113919781), ePoiType=(0), searchPlace=()");
 		mHomeAddr = new MKPoiInfoHelper(sp.getString("homeaddr", poiShekou));
 		//mHomeAddr = new MKPoiInfoHelper("name=(aaaa), address=(bbbb), city=(cccc), phoneNum=(dddd), postCode=(ffff), pt.lat=(22.11), pt.lng=(130.11), ePoiType=(0), searchPlace=(ffff)");
-		//ÉèÖÃÈ±Ê¡officeµØÖ·Îª»ªÎª×Ü²¿
+		//è®¾ç½®ç¼ºçœofficeåœ°å€ä¸ºåä¸ºæ€»éƒ¨
 		String poiHuawei = String.format(
-				"name=(»ªÎª×Ü²¿), address=(b654Â·;b666Â·;b667Â·;m342Â·¿Õµ÷;»ú³¡7Ïß¿Õµ÷), city=(ÉîÛÚ), phoneNum=(), postCode=(), pt.lat=(22661034), pt.lng=(114064093), ePoiType=(1), searchPlace=()");
+				"name=(åä¸ºæ€»éƒ¨), address=(b654è·¯;b666è·¯;b667è·¯;m342è·¯ç©ºè°ƒ;æœºåœº7çº¿ç©ºè°ƒ), city=(æ·±åœ³), phoneNum=(), postCode=(), pt.lat=(22661034), pt.lng=(114064093), ePoiType=(1), searchPlace=()");
 		mOfficeAddr = new MKPoiInfoHelper(sp.getString("officeaddr", poiHuawei));
 		mLastDestination = new MKPoiInfoHelper(sp.getString("lastdest", poiHuawei));
 		mRecentQuery = new LinkedList();
@@ -191,7 +191,7 @@ public class UserProfile {
 	}
 	
 	public void setSessionId(String id) {
-		if (mbTokenLogon == true) return; //·ÀÖ¹³åÍ»ÖØ¸´
+		if (mbTokenLogon == true) return; //é˜²æ­¢å†²çªé‡å¤
 		msSessionId = id;
 		mbSessionLogon = true;
 		msProfileURL = Constants.USERS_PROFILE_URL;

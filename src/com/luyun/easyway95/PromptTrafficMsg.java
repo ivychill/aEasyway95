@@ -6,7 +6,7 @@ public class PromptTrafficMsg {
 	private ArrayList<TrafficMsg> messages = null;
 	
 	/*
-	 * ×î¶àÖ»±£ÁôÈıÌõ
+	 * æœ€å¤šåªä¿ç•™ä¸‰æ¡
 	 */
 	void pushMsg(TrafficMsg msg) {
 		if (messages == null) {
@@ -19,7 +19,7 @@ public class PromptTrafficMsg {
 	}
 	
 	/*
-	 * ½«×îºóÌõĞÅÏ¢Pop³öÀ´
+	 * å°†æœ€åæ¡ä¿¡æ¯Popå‡ºæ¥
 	 */
 	TrafficMsg popMsg() {
 		if (messages == null || messages.size() == 0) {
@@ -30,12 +30,12 @@ public class PromptTrafficMsg {
 	}
 	
 	/*
-	 * Õâ¸öÀàÆäÊµÊÇTrafficPointµÄÒ»¸ö×Ö·û´®°éÉúÀà£¬¿ªÊ¼ÊÇÉè¼Æ³ÉÒ»¸öÀà£¬ºóÀ´·¢ÏÖ²»Ö±¹Û£¬¸Ä³ÉÁ½¸öÀà
-	 * ²ÌÇì·á 20121025
+	 * è¿™ä¸ªç±»å…¶å®æ˜¯TrafficPointçš„ä¸€ä¸ªå­—ç¬¦ä¸²ä¼´ç”Ÿç±»ï¼Œå¼€å§‹æ˜¯è®¾è®¡æˆä¸€ä¸ªç±»ï¼Œåæ¥å‘ç°ä¸ç›´è§‚ï¼Œæ”¹æˆä¸¤ä¸ªç±»
+	 * è”¡åº†ä¸° 20121025
 	 */
 	public class TrafficMsg {
 		private String road;
-		private String level; //"Óµ¶Â,ÑÏÖØÓµ¶Â,»ºĞĞ"
+		private String level; //"æ‹¥å µ,ä¸¥é‡æ‹¥å µ,ç¼“è¡Œ"
 		private String traffic; //
 		
 		TrafficMsg(String rd, String lvl, String trf) {

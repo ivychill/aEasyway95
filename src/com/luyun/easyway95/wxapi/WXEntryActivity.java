@@ -38,7 +38,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //        setContentView(R.layout.activity_wx_entry);
         Log.d(TAG, "in onCreate");
 		bundle = getIntent().getExtras();
-		// ×¢²áÎ¢ĞÅ
+		// æ³¨å†Œå¾®ä¿¡
 		wxApi = WXAPIFactory.createWXAPI(this, Constants.WEIXIN_APP_ID, true);
 		wxApi.registerApp(Constants.WEIXIN_APP_ID);
         wxApi.handleIntent(getIntent(), this);
@@ -75,7 +75,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //    }
 
 //    public void sendMessage(View view) {
-//        // ·¢ËÍĞÅÏ¢µ½Î¢ĞÅ
+//        // å‘é€ä¿¡æ¯åˆ°å¾®ä¿¡
 //        WXTextObject textObj = new WXTextObject();
 //        textObj.text = Constants.SHARE_MESSAGE;
 //        WXMediaMessage msg = new WXMediaMessage();
@@ -144,22 +144,22 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 		editor.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		editor.setText(Constants.SHARE_MESSAGE);
 		
-		// ³õÊ¼»¯Ò»¸öWXTextObject¶ÔÏó
+		// åˆå§‹åŒ–ä¸€ä¸ªWXTextObjectå¯¹è±¡
 		WXTextObject textObj = new WXTextObject();
 		textObj.text = Constants.SHARE_MESSAGE;
 
-		// ÓÃWXTextObject¶ÔÏó³õÊ¼»¯Ò»¸öWXMediaMessage¶ÔÏó
+		// ç”¨WXTextObjectå¯¹è±¡åˆå§‹åŒ–ä¸€ä¸ªWXMediaMessageå¯¹è±¡
 		WXMediaMessage msg = new WXMediaMessage(textObj);
 		msg.description = Constants.SHARE_MESSAGE;
 		
-		// ¹¹ÔìÒ»¸öResp
+		// æ„é€ ä¸€ä¸ªResp
 		GetMessageFromWX.Resp resp = new GetMessageFromWX.Resp();
-		// ½«reqµÄtransactionÉèÖÃµ½resp¶ÔÏóÖĞ£¬ÆäÖĞbundleÎªÎ¢ĞÅ´«µİ¹ıÀ´µÄintentËù´øµÄÄÚÈİ£¬Í¨¹ıgetExtras·½·¨»ñÈ¡
+		// å°†reqçš„transactionè®¾ç½®åˆ°respå¯¹è±¡ä¸­ï¼Œå…¶ä¸­bundleä¸ºå¾®ä¿¡ä¼ é€’è¿‡æ¥çš„intentæ‰€å¸¦çš„å†…å®¹ï¼Œé€šè¿‡getExtrasæ–¹æ³•è·å–
 		final GetMessageFromWX.Req req = new GetMessageFromWX.Req(bundle);
 		resp.transaction = req.transaction;
 		resp.message = msg;
 		
-		// µ÷ÓÃapi½Ó¿ÚÏìÓ¦Êı¾İµ½Î¢ĞÅ
+		// è°ƒç”¨apiæ¥å£å“åº”æ•°æ®åˆ°å¾®ä¿¡
 		wxApi.sendResp(resp);
 		finish();
 	}

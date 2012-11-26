@@ -29,12 +29,12 @@ public class LineOverlay extends ItemizedOverlay<OverlayItem> {
 		this.marker = marker;
 		this.mContext = context;
 
-		// ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
+		// ç”¨ç»™å®šçš„ç»çº¬åº¦æ„é€ GeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
 		for (int i=0; i<GeoPoints.size(); i++) {
 			GeoPoint gp = GeoPoints.get(i);
 			mGeoList.add(new OverlayItem(gp, "matchedPoint", "matchedPoint"));
 		}
-		populate();  //createItem(int)·½·¨¹¹Ôìitem¡£Ò»µ©ÓĞÁËÊı¾İ£¬ÔÚµ÷ÓÃÆäËü·½·¨Ç°£¬Ê×ÏÈµ÷ÓÃÕâ¸ö·½·¨
+		populate();  //createItem(int)æ–¹æ³•æ„é€ itemã€‚ä¸€æ—¦æœ‰äº†æ•°æ®ï¼Œåœ¨è°ƒç”¨å…¶å®ƒæ–¹æ³•å‰ï¼Œé¦–å…ˆè°ƒç”¨è¿™ä¸ªæ–¹æ³•
 	}
 
 	public void updateOverlay()
@@ -45,21 +45,21 @@ public class LineOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 
-		// Projection½Ó¿ÚÓÃÓÚÆÁÄ»ÏñËØ×ø±êºÍ¾­Î³¶È×ø±êÖ®¼äµÄ±ä»»
+		// Projectionæ¥å£ç”¨äºå±å¹•åƒç´ åæ ‡å’Œç»çº¬åº¦åæ ‡ä¹‹é—´çš„å˜æ¢
 		Projection projection = mapView.getProjection(); 
 		Point startPoint = null;
-		for (int index = size() - 1; index >= 0; index--) { // ±éÀúmGeoList
-			OverlayItem overLayItem = getItem(index); // µÃµ½¸ø¶¨Ë÷ÒıµÄitem
+		for (int index = size() - 1; index >= 0; index--) { // éå†mGeoList
+			OverlayItem overLayItem = getItem(index); // å¾—åˆ°ç»™å®šç´¢å¼•çš„item
 
 			String title = overLayItem.getTitle();
-			// °Ñ¾­Î³¶È±ä»»µ½Ïà¶ÔÓÚMapView×óÉÏ½ÇµÄÆÁÄ»ÏñËØ×ø±ê
+			// æŠŠç»çº¬åº¦å˜æ¢åˆ°ç›¸å¯¹äºMapViewå·¦ä¸Šè§’çš„å±å¹•åƒç´ åæ ‡
 			Point point = projection.toPixels(overLayItem.getPoint(), null); 
 
-			// ¿ÉÔÚ´Ë´¦Ìí¼ÓÄúµÄ»æÖÆ´úÂë
+			// å¯åœ¨æ­¤å¤„æ·»åŠ æ‚¨çš„ç»˜åˆ¶ä»£ç 
 			Paint paint = new Paint();
 			paint.setColor(Color.RED);
 			paint.setStrokeWidth(5);
-			//canvas.drawText(title, point.x-30, point.y, paintText); // »æÖÆÎÄ±¾
+			//canvas.drawText(title, point.x-30, point.y, paintText); // ç»˜åˆ¶æ–‡æœ¬
 			if (startPoint != null) {
 				canvas.drawLine(startPoint.x, startPoint.y, point.x, point.y, paint);
 			}
@@ -67,7 +67,7 @@ public class LineOverlay extends ItemizedOverlay<OverlayItem> {
 		}
 
 		super.draw(canvas, mapView, shadow);
-		//µ÷ÕûÒ»¸ödrawable±ß½ç£¬Ê¹µÃ£¨0£¬0£©ÊÇÕâ¸ödrawableµ×²¿×îºóÒ»ĞĞÖĞĞÄµÄÒ»¸öÏñËØ
+		//è°ƒæ•´ä¸€ä¸ªdrawableè¾¹ç•Œï¼Œä½¿å¾—ï¼ˆ0ï¼Œ0ï¼‰æ˜¯è¿™ä¸ªdrawableåº•éƒ¨æœ€åä¸€è¡Œä¸­å¿ƒçš„ä¸€ä¸ªåƒç´ 
 		boundCenterBottom(marker);
 	}
 
@@ -83,10 +83,10 @@ public class LineOverlay extends ItemizedOverlay<OverlayItem> {
 		return mGeoList.size();
 	}
 	@Override
-	// ´¦Àíµ±µã»÷ÊÂ¼ş
+	// å¤„ç†å½“ç‚¹å‡»äº‹ä»¶
 	protected boolean onTap(int i) {
 		setFocus(mGeoList.get(i));
-		// ¸üĞÂÆøÅİÎ»ÖÃ,²¢Ê¹Ö®ÏÔÊ¾
+		// æ›´æ–°æ°”æ³¡ä½ç½®,å¹¶ä½¿ä¹‹æ˜¾ç¤º
 //		GeoPoint pt = mGeoList.get(i).getPoint();
 //		LineOverlay.mMapView.updateViewLayout( LineOverlay.mPopView,
 //                new MapView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,
@@ -100,7 +100,7 @@ public class LineOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	public boolean onTap(GeoPoint arg0, MapView arg1) {
 		// TODO Auto-generated method stub
-		// ÏûÈ¥µ¯³öµÄÆøÅİ
+		// æ¶ˆå»å¼¹å‡ºçš„æ°”æ³¡
 		//LineOverlay.mPopView.setVisibility(View.GONE);
 		return super.onTap(arg0, arg1);
 	}

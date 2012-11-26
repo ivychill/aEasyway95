@@ -63,7 +63,7 @@ public class TTSService extends Service implements SynthesizerPlayerListener{
 	}
 
 	/*
-	 * handleIntentÕâ¸öº¯ÊıÓÃÓÚ´¦ÀíÔÚstartServiceÊ±´«µİµÄ²ÎÊı
+	 * handleIntentè¿™ä¸ªå‡½æ•°ç”¨äºå¤„ç†åœ¨startServiceæ—¶ä¼ é€’çš„å‚æ•°
 	 */
 //	@Override
 //	protected void onHandleIntent(Intent intent) {
@@ -121,7 +121,7 @@ public class TTSService extends Service implements SynthesizerPlayerListener{
 		//((MainActivity)mainActivity).handler.sendMessage(Message.obtain(((MainActivity)mainActivity).handler, Constants.SYNTHESIZE_DONE));
 	}
 	/*
-	 * Ò²¿ÉÒÔÓÃµãµ½µãµÄ·½Ê½ÊµÏÖActivityºÍServiceÍ¨ĞÅ£¬µ«ÓÃBroadcastÏÔµÃ¸ü¼ò½à
+	 * ä¹Ÿå¯ä»¥ç”¨ç‚¹åˆ°ç‚¹çš„æ–¹å¼å®ç°Activityå’ŒServiceé€šä¿¡ï¼Œä½†ç”¨Broadcastæ˜¾å¾—æ›´ç®€æ´
 	 */
 //	public Handler handler = new Handler() {
 //		public void handleMessage(Message msg) {
@@ -160,7 +160,7 @@ public class TTSService extends Service implements SynthesizerPlayerListener{
 	        Log.d(TAG, "In TTSThead::running"); 
 	        int waitingTimes = 0; //waiting upto 10 seconds
 	        while (mbSynthetizeOngoing && waitingTimes < 20) {
-		        Log.d(TAG, "In TTSThead::running£¬waiting upto 10 seconds"); 
+		        Log.d(TAG, "In TTSThead::runningï¼Œwaiting upto 10 seconds"); 
 	        	waitingTimes ++;
 	        	try {
 	        		Thread.sleep(500);

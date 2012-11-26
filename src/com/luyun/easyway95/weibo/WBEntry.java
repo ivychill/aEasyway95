@@ -95,11 +95,11 @@ public class WBEntry {
 	{
 	    File file = Environment.getExternalStorageDirectory();
 	    String sdPath = file.getAbsolutePath();
-	    // 请保证SD卡根目录下有这张图片文件
+	    // 璇蜂繚璇丼D鍗℃牴鐩綍涓嬫湁杩欏紶鍥剧墖鏂囦欢
 	    String picPath = sdPath + "/" + "logo.jpg";
 	    File picFile = new File(picPath);
 	    if (!picFile.exists()) {
-	        //Toast.makeText(WBEntryActivity.this, "图片" + picPath + "不存在！", Toast.LENGTH_SHORT).show();
+	        //Toast.makeText(WBEntryActivity.this, "鍥剧墖" + picPath + "涓嶅瓨鍦紒", Toast.LENGTH_SHORT).show();
 	        picPath = null;
 	    }
 

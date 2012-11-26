@@ -43,7 +43,7 @@ import com.luyun.easyway95.shared.TSSProtos.LYTrafficReport;
 
 public class MapHelper {
 	private static String TAG = "MapHelper";
-	//°Ù¶ÈMapAPIµÄ¹ÜÀíÀà, ÓëEasyway95AppÏàÍ¬
+	//ç™¾åº¦MapAPIçš„ç®¡ç†ç±», ä¸Easyway95Appç›¸åŒ
 	BMapManager mBMapMan;
 	
 	private LYNavigator mainActivity;
@@ -55,15 +55,15 @@ public class MapHelper {
 	private MKRouteHelper mDrivingRoutes;
 	private HotRoadsWithTraffic mHotRoadsWithTraffic;
 	
-	//ÖÕ¶ËÉÏ±¨
+	//ç»ˆç«¯ä¸ŠæŠ¥
 	private LYLocation mLocationSet;
 	
 	public MapHelper(LYNavigator act) {
 		mainActivity = act;
 		mBMapMan = ((Easyway95App)mainActivity.getApplication()).mBMapMan;
-		//mCurrentLocation = new Location("ÉîÛÚ");
+		//mCurrentLocation = new Location("æ·±åœ³");
 		mCurrentPoint = new GeoPoint((int) (22.551541 * 1E6),
-                (int) (113.94750 * 1E6));  //ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìÒ»¸öGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
+                (int) (113.94750 * 1E6));  //ç”¨ç»™å®šçš„ç»çº¬åº¦æ„é€ ä¸€ä¸ªGeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
 		mTrafficSubscriber = new TrafficSubscriber(mainActivity);
 //		Date now = new Date();
 //		if (now.getHours()<=12) {
@@ -99,27 +99,27 @@ public class MapHelper {
 	
 
     /*
-     * ºËĞÄ¹¦ÄÜ£ºÊÕµ½TSS·¢µÄÂ·¿öĞÅÏ¢£¬½øĞĞ´¦Àí¡£
+     * æ ¸å¿ƒåŠŸèƒ½ï¼šæ”¶åˆ°TSSå‘çš„è·¯å†µä¿¡æ¯ï¼Œè¿›è¡Œå¤„ç†ã€‚
      * pacakge:msg, msg=[{name:r1, segments:[{startPoi:{lat, lng}, endPoi:{lat, lng}}, ...]}, ...]
-     * ¿Í»§¶ËÒªÓĞËÄ¸ö²»Í¬µÄÈİÆ÷£º
-     * DrivingRoutes: ÔË¶¯¹ı³ÌÖĞÈç¹ûÓĞÆ«Àëº½ÏßµÄÇé¿ö·¢ÉúÔò¸üĞÂ£¬·ñÔòÓÃÓÚ½ÓÊÕÂ·¿ö¡£¶ÔÓÚÃ¿ÌõÂ·£¬ĞÂµÄÊ±¼äµã½«¸²¸ÇÒÔÇ°µÄÂ·¿ö¡£
-     * RoadsInsight:ÖÜ±ßµÄÂ·¿ö£¬Ò²ÔÚÔË¶¯¹ı³ÌÖĞ²»¶Ï¸üĞÂ£¬Ã¿¸ô10·ÖÖÓË¢ĞÂÒ»´Î£¬»òÕß10KM¸üĞÂÒ»´Î
-     * HotRoadsWithTraffic£ºÓÉÏµÍ³ÉèÖÃ£¬Ò»°ãÒ»¸ö³ÇÊĞ¹²ÏíÏàÍ¬µÄĞÅÏ¢£¬²¢ÇÒ¿ÉÒÔ´Ó·şÎñÆ÷ÉÏÉú³ÉÍ¼Æ¬´«ÏÂÀ´£¬ÀàËÆÓÚ½»Í¨²¥±¨µÄ¸ÅÂÔÍ¼
-     * FavoriteRoads£º¸öĞÔ»¯ÉèÖÃ£¬ÔÚÓÃ»§ÉèÖÃÍê×Ô¼ºµÄ¼ÒÍ¥ºÍ°ì¹«ÊÒµØÖ·Ö®ºó£¬×Ô¶¯½«¹æ»®ºÃµÄÂ·¾¶´æµ½ÓÃ»§µÄpreferencesºÍprofileÀï£¬²¢ÇÒÉÏ±¨µ½·şÎñÆ÷
+     * å®¢æˆ·ç«¯è¦æœ‰å››ä¸ªä¸åŒçš„å®¹å™¨ï¼š
+     * DrivingRoutes: è¿åŠ¨è¿‡ç¨‹ä¸­å¦‚æœæœ‰åç¦»èˆªçº¿çš„æƒ…å†µå‘ç”Ÿåˆ™æ›´æ–°ï¼Œå¦åˆ™ç”¨äºæ¥æ”¶è·¯å†µã€‚å¯¹äºæ¯æ¡è·¯ï¼Œæ–°çš„æ—¶é—´ç‚¹å°†è¦†ç›–ä»¥å‰çš„è·¯å†µã€‚
+     * RoadsInsight:å‘¨è¾¹çš„è·¯å†µï¼Œä¹Ÿåœ¨è¿åŠ¨è¿‡ç¨‹ä¸­ä¸æ–­æ›´æ–°ï¼Œæ¯éš”10åˆ†é’Ÿåˆ·æ–°ä¸€æ¬¡ï¼Œæˆ–è€…10KMæ›´æ–°ä¸€æ¬¡
+     * HotRoadsWithTrafficï¼šç”±ç³»ç»Ÿè®¾ç½®ï¼Œä¸€èˆ¬ä¸€ä¸ªåŸå¸‚å…±äº«ç›¸åŒçš„ä¿¡æ¯ï¼Œå¹¶ä¸”å¯ä»¥ä»æœåŠ¡å™¨ä¸Šç”Ÿæˆå›¾ç‰‡ä¼ ä¸‹æ¥ï¼Œç±»ä¼¼äºäº¤é€šæ’­æŠ¥çš„æ¦‚ç•¥å›¾
+     * FavoriteRoadsï¼šä¸ªæ€§åŒ–è®¾ç½®ï¼Œåœ¨ç”¨æˆ·è®¾ç½®å®Œè‡ªå·±çš„å®¶åº­å’ŒåŠå…¬å®¤åœ°å€ä¹‹åï¼Œè‡ªåŠ¨å°†è§„åˆ’å¥½çš„è·¯å¾„å­˜åˆ°ç”¨æˆ·çš„preferenceså’Œprofileé‡Œï¼Œå¹¶ä¸”ä¸ŠæŠ¥åˆ°æœåŠ¡å™¨
      * 
-     * µÇÂ¼ÓÃ»§ºÍ·ÇµÇÂ¼ÓÃ»§µÄ´¦Àí£º
-     * ·ÇµÇÂ¼ÓÃ»§£ºÍ¨¹ıÓëTSSµÄÏûÏ¢½«ÕâËÄÕÅ±íÉÏ±¨£¬ÓÃ»§±êÊ¶ÊÇDEVICEID@deviceid.android.roadclouding£¬Õâ¸ö±êÊ¶Ò²½«ÓÃÀ´±êÊ¶ZMQµÄID
-     * µÇÂ¼ÓÃ»§£ºÓÃ»§±ê¼ÇÎªusername@deviceid.ios.roadclouding£¬Õâ¸ö±êÊ¶Ò²ÓÃÀ´±êÊ¶ZMQµÄID
-     * ÓëTSSÖ®¼äÊÇ·ñµÇÂ¼£¬Ã¿ÌõÃüÁî¶¼ÒªÍ¨¹ıĞ¯´øToken£¬±êÊ¶¿Í»§¶ËÊÇ·ñµÇÂ¼
-     * TSSĞèÒªÉú³ÉÒ»ÕÅ±í£¬±£´æµ±Ç°¼¤»îÓÃ»§µÄToken£¬2Ğ¡Ê±Ö®ÄÚÈç¹ûÃ»ÓĞÊÕµ½ÈÎºÎÏûÏ¢Ôò½«Õâ¸öTokenºÍÆä¶ÔÓ¦µÄProfileÉ¾³ı£¬ĞÂµÄTokenÀ´µÄÊ±ºò£¬TSSµ½·şÎñÆ÷ÉÏ²éÑ¯Profile
-     * RoadcloudingºÍTSSĞèÒªÒ»¸ö»úÖÆ£¬È·¶¨¸ÃTokenÊÇ·ñÓĞĞ§£¬ÒÔ¼°Ã÷È·TSSÊÇ·ñÖ±½Ó´æÈ¡Êı¾İ¿â£¿
-     * Èç¹ûµÇÂ¼µÄ»°£¬Òª½«ÓÃ»§ÃûÉÏ±¨£¬ÓÉ·şÎñÆ÷´ÓProfileÖĞ²éÑ¯ÆälistFavoriteRoads£¬ÆäÓÃ»§ÃûÒª×öÒ»¸ö±ä»»£ºusername@roadclouding.com
-     * ·ñÔòTSSµÈ´ı¿Í»§¶ËÉÏ±¨
+     * ç™»å½•ç”¨æˆ·å’Œéç™»å½•ç”¨æˆ·çš„å¤„ç†ï¼š
+     * éç™»å½•ç”¨æˆ·ï¼šé€šè¿‡ä¸TSSçš„æ¶ˆæ¯å°†è¿™å››å¼ è¡¨ä¸ŠæŠ¥ï¼Œç”¨æˆ·æ ‡è¯†æ˜¯DEVICEID@deviceid.android.roadcloudingï¼Œè¿™ä¸ªæ ‡è¯†ä¹Ÿå°†ç”¨æ¥æ ‡è¯†ZMQçš„ID
+     * ç™»å½•ç”¨æˆ·ï¼šç”¨æˆ·æ ‡è®°ä¸ºusername@deviceid.ios.roadcloudingï¼Œè¿™ä¸ªæ ‡è¯†ä¹Ÿç”¨æ¥æ ‡è¯†ZMQçš„ID
+     * ä¸TSSä¹‹é—´æ˜¯å¦ç™»å½•ï¼Œæ¯æ¡å‘½ä»¤éƒ½è¦é€šè¿‡æºå¸¦Tokenï¼Œæ ‡è¯†å®¢æˆ·ç«¯æ˜¯å¦ç™»å½•
+     * TSSéœ€è¦ç”Ÿæˆä¸€å¼ è¡¨ï¼Œä¿å­˜å½“å‰æ¿€æ´»ç”¨æˆ·çš„Tokenï¼Œ2å°æ—¶ä¹‹å†…å¦‚æœæ²¡æœ‰æ”¶åˆ°ä»»ä½•æ¶ˆæ¯åˆ™å°†è¿™ä¸ªTokenå’Œå…¶å¯¹åº”çš„Profileåˆ é™¤ï¼Œæ–°çš„Tokenæ¥çš„æ—¶å€™ï¼ŒTSSåˆ°æœåŠ¡å™¨ä¸ŠæŸ¥è¯¢Profile
+     * Roadcloudingå’ŒTSSéœ€è¦ä¸€ä¸ªæœºåˆ¶ï¼Œç¡®å®šè¯¥Tokenæ˜¯å¦æœ‰æ•ˆï¼Œä»¥åŠæ˜ç¡®TSSæ˜¯å¦ç›´æ¥å­˜å–æ•°æ®åº“ï¼Ÿ
+     * å¦‚æœç™»å½•çš„è¯ï¼Œè¦å°†ç”¨æˆ·åä¸ŠæŠ¥ï¼Œç”±æœåŠ¡å™¨ä»Profileä¸­æŸ¥è¯¢å…¶listFavoriteRoadsï¼Œå…¶ç”¨æˆ·åè¦åšä¸€ä¸ªå˜æ¢ï¼šusername@roadclouding.com
+     * å¦åˆ™TSSç­‰å¾…å®¢æˆ·ç«¯ä¸ŠæŠ¥
      * 
-     * ÊÓÍ¼¸üĞÂËµÃ÷£¨´Ó·şÎñÆ÷Æ÷ÊÕµ½µÄÂ·¿öÖ»ĞèÒªÁ½Àà£¬Ò»ÀàÊÇ¶©ÔÄ1¶Ô¶àµÄÂ·¿ö£¬Ò»ÀàÊÇÎÊ´ğÄ£Ê½Â·¿ö£¬ÊÊÓÃÓÚ¿Í»§¶ËÎÈ¶¨ºÍ·ÇÎÈ¶¨Á½ÖÖ×´Ì¬£©
-     * Ã¿ÊÕµ½Ò»´Î¶©ÔÄÂ·¿ö£¬Ê×ÏÈ½øĞĞ¹æ»®Â·¾¶ºÍÂ·¿öÄâºÏ´¦Àí£¬Æ¥ÅäµÄ½á¹û·¢µ½listDrivingRoutes£¬²¢¸üĞÂÆøÅİ
-     * È»ºó½øĞĞHotRoadsºÍFavoriteRoadsÆ¥Åä´¦Àí£¬·Ö·¢µ½²»Í¬µÄ±í£¨ÈİÆ÷£©ÖĞ£¬Ò»ÌõÂ·¿ÉÄÜÍ¬Ê±ÔÚÁ½¸öÒÔÉÏµÄÈİÆ÷Àï
-     * ÖÜ±ßÂ·¿öÊÇÒ»ÎÊÒ»´ğ£¬·Ç¶©ÔÄÄ£Ê½¡£ÊÕµ½ÖÜ±ßÂ·¿öÊ±£¬½«Ô­À´ÓÉÕâ¸ö±íËù¶ÔÓ¦µÄÆøÅİÈ«²¿¸üĞÂ
+     * è§†å›¾æ›´æ–°è¯´æ˜ï¼ˆä»æœåŠ¡å™¨å™¨æ”¶åˆ°çš„è·¯å†µåªéœ€è¦ä¸¤ç±»ï¼Œä¸€ç±»æ˜¯è®¢é˜…1å¯¹å¤šçš„è·¯å†µï¼Œä¸€ç±»æ˜¯é—®ç­”æ¨¡å¼è·¯å†µï¼Œé€‚ç”¨äºå®¢æˆ·ç«¯ç¨³å®šå’Œéç¨³å®šä¸¤ç§çŠ¶æ€ï¼‰
+     * æ¯æ”¶åˆ°ä¸€æ¬¡è®¢é˜…è·¯å†µï¼Œé¦–å…ˆè¿›è¡Œè§„åˆ’è·¯å¾„å’Œè·¯å†µæ‹Ÿåˆå¤„ç†ï¼ŒåŒ¹é…çš„ç»“æœå‘åˆ°listDrivingRoutesï¼Œå¹¶æ›´æ–°æ°”æ³¡
+     * ç„¶åè¿›è¡ŒHotRoadså’ŒFavoriteRoadsåŒ¹é…å¤„ç†ï¼Œåˆ†å‘åˆ°ä¸åŒçš„è¡¨ï¼ˆå®¹å™¨ï¼‰ä¸­ï¼Œä¸€æ¡è·¯å¯èƒ½åŒæ—¶åœ¨ä¸¤ä¸ªä»¥ä¸Šçš„å®¹å™¨é‡Œ
+     * å‘¨è¾¹è·¯å†µæ˜¯ä¸€é—®ä¸€ç­”ï¼Œéè®¢é˜…æ¨¡å¼ã€‚æ”¶åˆ°å‘¨è¾¹è·¯å†µæ—¶ï¼Œå°†åŸæ¥ç”±è¿™ä¸ªè¡¨æ‰€å¯¹åº”çš„æ°”æ³¡å…¨éƒ¨æ›´æ–°
      */
 	public void onMsg(LYMsgOnAir msg) {
     	Log.d(TAG, "in onMsg");
@@ -201,7 +201,7 @@ public class MapHelper {
     			}
     			return;
     		}
-    		//ÓëDrivingRoute½øĞĞÄâºÏ
+    		//ä¸DrivingRouteè¿›è¡Œæ‹Ÿåˆ
     		if (mDrivingRoutes == null) {
     			//the only situation happened when traffic_pub arrives prior to driving routes instantiated, i.e, app reboots
     			//just ignore it
@@ -217,9 +217,9 @@ public class MapHelper {
     }
     
 	/*
-	 * Î»ÖÃ¸üĞÂÊ±£¬Ê×ÏÈÅĞ¶ÏÊÇ·ñÆ«Àëº½Ïß£¿YESÔòÖØĞÂ¹æ»®Â·¾¶
-	 * ÓëÉÏ´ÎÎ»ÖÃÊÇ·ñÓĞ10KM£¿YESÔòÏò°Ù¶È·¢ÆğÖÜ±ßÂ·µÄPOI²éÑ¯£¬¹Ø¼ü×Ö£ºÂ·£¬¾àÀë10KM
-	 * Óë¼´½«Í¾¾¶µÄÂ·¿ö¾àÀëÊÇ·ñ<1KM£¬YESÔòµ¯³ö¾¯Ê¾£¬²»¶ÏË¢ĞÂ¾àÀë£¬ÄÜ·ñ½«ÖÜ±ß²»¶ÂµÄÂ·ÏÔÊ¾³öÀ´£¿
+	 * ä½ç½®æ›´æ–°æ—¶ï¼Œé¦–å…ˆåˆ¤æ–­æ˜¯å¦åç¦»èˆªçº¿ï¼ŸYESåˆ™é‡æ–°è§„åˆ’è·¯å¾„
+	 * ä¸ä¸Šæ¬¡ä½ç½®æ˜¯å¦æœ‰10KMï¼ŸYESåˆ™å‘ç™¾åº¦å‘èµ·å‘¨è¾¹è·¯çš„POIæŸ¥è¯¢ï¼Œå…³é”®å­—ï¼šè·¯ï¼Œè·ç¦»10KM
+	 * ä¸å³å°†é€”å¾„çš„è·¯å†µè·ç¦»æ˜¯å¦<1KMï¼ŒYESåˆ™å¼¹å‡ºè­¦ç¤ºï¼Œä¸æ–­åˆ·æ–°è·ç¦»ï¼Œèƒ½å¦å°†å‘¨è¾¹ä¸å µçš„è·¯æ˜¾ç¤ºå‡ºæ¥ï¼Ÿ
 	 */
     public void onLocationChanged(Location location) {
     	Log.d(TAG, "in MapHelper::onLocationChanged");
@@ -273,15 +273,15 @@ public class MapHelper {
 //    	}
 //    	if (Math.abs(distanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { 
 //    		//on road
-//    		//´ÓÆ¥ÅäºóµÄÓµ¶ÂµãÖĞÕÒ³öÏÂÒ»¸öÓëµ±Ç°¾àÀë
+//    		//ä»åŒ¹é…åçš„æ‹¥å µç‚¹ä¸­æ‰¾å‡ºä¸‹ä¸€ä¸ªä¸å½“å‰è·ç¦»
 //    		STPointLineDistInfo newSTPointLineDistInfo = mDrivingRoutes.new STPointLineDistInfo();
 //    		Log.d(TAG, stPointLineDistInfo.toString());
 //    		ArrayList<GeoPoint> allMatchedPoints = mDrivingRoutes.getMatchedPoints();
 //    		GeoPoint nextTrafficPoint = null;
 //    		double newDistanceOffRoad = mDrivingRoutes.getNearestDistanceOfRoad(mCurrentPoint, allMatchedPoints, newSTPointLineDistInfo);
-//    		if (Math.abs(newDistanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { //ËµÃ÷ÏÖÔÚÕıÔÚÄ³¶ÎÓµ¶ÂÂ·ÖĞ¼ä
+//    		if (Math.abs(newDistanceOffRoad) < Constants.DISTANCE_OFF_ROAD) { //è¯´æ˜ç°åœ¨æ­£åœ¨æŸæ®µæ‹¥å µè·¯ä¸­é—´
 //    			if (newSTPointLineDistInfo.getPointindex() < allMatchedPoints.size()) {
-//    				//ÕÒ³ö¸ÃµãËù¶ÔÓ¦µÄÂ·À´,Éú³ÉĞèÒªpopupµÄÏûÏ¢ÎÄ±¾
+//    				//æ‰¾å‡ºè¯¥ç‚¹æ‰€å¯¹åº”çš„è·¯æ¥,ç”Ÿæˆéœ€è¦popupçš„æ¶ˆæ¯æ–‡æœ¬
 //    				//mainActivity.popupTrafficDialg();
 //    			}
 //    		} else {
@@ -300,11 +300,11 @@ public class MapHelper {
     
     public void requestRoadsAround(GeoPoint currentPoint) {
     	Log.d(TAG, "in requestRoadsAround");
-        // ³õÊ¼»¯ËÑË÷Ä£¿é£¬×¢²áÊÂ¼ş¼àÌı
+        // åˆå§‹åŒ–æœç´¢æ¨¡å—ï¼Œæ³¨å†Œäº‹ä»¶ç›‘å¬
     	MKSearch mkSearch = new MKSearch();
     	mkSearch.init(mBMapMan, new MKSearchListener(){
 			public void onGetPoiResult(MKPoiResult res, int type, int error) {
-				// ´íÎóºÅ¿É²Î¿¼MKEventÖĞµÄ¶¨Òå
+				// é”™è¯¯å·å¯å‚è€ƒMKEventä¸­çš„å®šä¹‰
 				if (error != 0 || res == null) {
 					Log.d(TAG, "no result found.");
 					return;
@@ -341,7 +341,7 @@ public class MapHelper {
 			}
 			
         });
-    	mkSearch.poiSearchNearBy("Â·", currentPoint, Constants.CHKPNT_OF_DISTANCE*1000);
+    	mkSearch.poiSearchNearBy("è·¯", currentPoint, Constants.CHKPNT_OF_DISTANCE*1000);
     }
     
     public void requestDrivingRoutes(Location startLoc, Location endLoc) {
@@ -351,7 +351,7 @@ public class MapHelper {
     }
     
     /*
-     * 20121106 Ôö¼ÓÒ»¸ö·â×°£¬ÎªÁË±£´æÉÏ´ÎÄ¿µÄµØÖ·£¬²ÌÇì·á
+     * 20121106 å¢åŠ ä¸€ä¸ªå°è£…ï¼Œä¸ºäº†ä¿å­˜ä¸Šæ¬¡ç›®çš„åœ°å€ï¼Œè”¡åº†ä¸°
      */
     public void requestDrivingRoutes(GeoPoint startPoint, MKPoiInfoHelper endPoi) {
     	mainActivity.setLastDestination(endPoi);
@@ -367,7 +367,7 @@ public class MapHelper {
 		start.pt = startPoint;
 		MKPlanNode end = new MKPlanNode();
 		end.pt = endPoint;
-		// ÉèÖÃ¼İ³µÂ·ÏßËÑË÷²ßÂÔ£¬Ê±¼äÓÅÏÈ¡¢·ÑÓÃ×îÉÙ»ò¾àÀë×î¶Ì
+		// è®¾ç½®é©¾è½¦è·¯çº¿æœç´¢ç­–ç•¥ï¼Œæ—¶é—´ä¼˜å…ˆã€è´¹ç”¨æœ€å°‘æˆ–è·ç¦»æœ€çŸ­
 		MKSearch mMKSearch = new MKSearch();
 		mMKSearch.init(mBMapMan, new MKSearchListener(){
 			@Override
@@ -376,11 +376,11 @@ public class MapHelper {
 			    if (result == null) {
 			        return;
 			    }
-			    // ´Ë´¦½öÕ¹Ê¾Ò»¸ö·½°¸×÷ÎªÊ¾Àı
+			    // æ­¤å¤„ä»…å±•ç¤ºä¸€ä¸ªæ–¹æ¡ˆä½œä¸ºç¤ºä¾‹
 				//Log.d(TAG, "route plan number " + result.getNumPlan());
 				//Log.d(TAG, "route number " + result.getPlan(0).getNumRoutes());
 				MKRoute route = result.getPlan(0).getRoute(0);
-				//ÕâÀï½«Ô­À´µÄ¹æ»®Â·¾¶¸²¸Ç
+				//è¿™é‡Œå°†åŸæ¥çš„è§„åˆ’è·¯å¾„è¦†ç›–
 				mDrivingRoutes = new MKRouteHelper(route, mainActivity.mMapUtils);
 			    mainActivity.resetMapView();
 			    
@@ -470,9 +470,9 @@ public class MapHelper {
 	String formatDistanceMsg(double distance) {
 		String msg = null;
 		if (distance<1000) {
-			msg = String.format("¾àÀëÔ¼%dÃ×", (int)(distance/100)*100);
+			msg = String.format("è·ç¦»çº¦%dç±³", (int)(distance/100)*100);
 		} else {
-			msg = String.format("¾àÀëÔ¼%#.1fÇ§Ã×", (float)(distance/1000));			
+			msg = String.format("è·ç¦»çº¦%#.1fåƒç±³", (float)(distance/1000));			
 		}
 		return msg;
 	}
@@ -512,7 +512,7 @@ public class MapHelper {
 	    Intent notificationIntent = new Intent(mainActivity, ShowTraffics.class);
 	    PendingIntent pendIntent =  PendingIntent.getActivity(mainActivity, 0, notificationIntent,  PendingIntent.FLAG_ONE_SHOT);
 	  
-	    String title = "Â·ÔÆÊµÊ±Â·¿ö";
+	    String title = "è·¯äº‘å®æ—¶è·¯å†µ";
 	    String content = "";
 		  
 	    if(trafficPub.hasCityTraffic()){
@@ -556,20 +556,23 @@ public class MapHelper {
 	    
 	    Log.d(TAG, "content:" + content);
 
-	    //ÓÃmNotificationManagerµÄnotify·½·¨Í¨ÖªÓÃ»§Éú³É±êÌâÀ¸ÏûÏ¢Í¨Öª
+	    //ç”¨mNotificationManagerçš„notifyæ–¹æ³•é€šçŸ¥ç”¨æˆ·ç”Ÿæˆæ ‡é¢˜æ æ¶ˆæ¯é€šçŸ¥
 	    mNotificationManager.notify(1, notf);
 	    Log.d(TAG, "begin notfier");
 	}
+
+	class RouteWorkThread extends Thread{
+		public RouteWorkThread(MKRoute route){
+			
+		}
+		
+		public void run(){
+			
+		}
+	}
 	
 	class MKSearchHelper implements MKSearchListener{
-		private MKRoute route=null;
-		private boolean isgowork;
-		private boolean issubaction;
-		
-		public MKSearchHelper(boolean isgowork, boolean issubaction){
-			this.isgowork = isgowork;
-			this.issubaction = issubaction;
-		}
+		private MKRoute route;
 		
 		@Override
 		public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
@@ -578,10 +581,10 @@ public class MapHelper {
 		    	Log.d(TAG, "subRoute getroute fail :" + iError);
 		        return;
 		    }
-		    this.route = result.getPlan(0).getRoute(0);
 		    
-		    Log.d(TAG, "get route" + " issubaction " + issubaction + " isgowork "+isgowork + "route index:" + route.getIndex());
-		    mTrafficSubscriber.subCron(route, issubaction, isgowork);
+		    route = result.getPlan(0).getRoute(0);
+		    Thread work = new RouteWorkThread(route);
+		    work.start();
 		}
 
 		@Override
@@ -630,12 +633,12 @@ public class MapHelper {
 		MKPlanNode end = new MKPlanNode();
 		end.pt = endPt;
 		
-		// ÉèÖÃ¼İ³µÂ·ÏßËÑË÷²ßÂÔ£¬Ê±¼äÓÅÏÈ¡¢·ÑÓÃ×îÉÙ»ò¾àÀë×î¶Ì
+		// è®¾ç½®é©¾è½¦è·¯çº¿æœç´¢ç­–ç•¥ï¼Œæ—¶é—´ä¼˜å…ˆã€è´¹ç”¨æœ€å°‘æˆ–è·ç¦»æœ€çŸ­
 		MKSearch mMKSearch = new MKSearch();
 		mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
 		mMKSearch.drivingSearch(null, start, null, end);
-	
-		mMKSearch.init(mBMapMan, new MKSearchHelper(isgowork, issubaction));
+
+		MKSearchHelper helper = new MKSearchHelper();
+		mMKSearch.init(mBMapMan, helper);
 	}
 }
-

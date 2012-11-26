@@ -96,7 +96,7 @@ public class TrafficsCaring extends ListActivity {
         		}
         	}
         }
-        //删除重复的，如果一条路既是规划路径，又是热点路况，就会重复
+        //鍒犻櫎閲嶅鐨勶紝濡傛灉涓�鏉¤矾鏃㈡槸瑙勫垝璺緞锛屽張鏄儹鐐硅矾鍐碉紝灏变細閲嶅
         
     	return list;
     }
@@ -106,20 +106,20 @@ public class TrafficsCaring extends ListActivity {
     	Date now = new Date();
     	
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("road", "深南大道");
-        map.put("desc", "南山路口到滨海路口拥堵，东向");
+        map.put("road", "娣卞崡澶ч亾");
+        map.put("desc", "鍗楀北璺彛鍒版花娴疯矾鍙ｆ嫢鍫碉紝涓滃悜");
         map.put("timestamp", now.toLocaleString());
         list.add(map);
         
         map = new HashMap<String, Object>();
-        map.put("road", "南山大道");
-        map.put("desc", "南山路口到滨海路口拥堵，东向");
+        map.put("road", "鍗楀北澶ч亾");
+        map.put("desc", "鍗楀北璺彛鍒版花娴疯矾鍙ｆ嫢鍫碉紝涓滃悜");
         map.put("timestamp", now.toLocaleString());
         list.add(map);
         
         map = new HashMap<String, Object>();
-        map.put("road", "滨海大道");
-        map.put("desc", "南山路口到滨海路口拥堵，东向");
+        map.put("road", "婊ㄦ捣澶ч亾");
+        map.put("desc", "鍗楀北璺彛鍒版花娴疯矾鍙ｆ嫢鍫碉紝涓滃悜");
         map.put("timestamp", now.toLocaleString());
         list.add(map);
     	return list;

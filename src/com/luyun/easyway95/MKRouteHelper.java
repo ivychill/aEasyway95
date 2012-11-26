@@ -28,7 +28,7 @@ import com.luyun.easyway95.MapUtils.GeoPointHelper;
 import com.luyun.easyway95.MapUtils.STPointLineDistInfo;
 
 /*
- * MKRouteHelperÊÇÒ»¸öÈİÆ÷£¬´ÓBaiduµÄMKRouteÖĞÉú³É£¬ÎªÃ¿ÌõÂ·´´½¨Ò»¸öDrivingRoadWithTraffic
+ * MKRouteHelperæ˜¯ä¸€ä¸ªå®¹å™¨ï¼Œä»Baiduçš„MKRouteä¸­ç”Ÿæˆï¼Œä¸ºæ¯æ¡è·¯åˆ›å»ºä¸€ä¸ªDrivingRoadWithTraffic
  */
 public class MKRouteHelper implements Serializable{
 	private static final String TAG = "MKRouteHelper";
@@ -36,7 +36,7 @@ public class MKRouteHelper implements Serializable{
 	
     private ArrayList<ArrayList<GeoPoint>> mAllPoints; //from driving route
     private ArrayList<GeoPoint> mAllPoints2; //one by one
-    private ArrayList<GeoPoint> mMatchedPoints; //Ç°·½Óµ¶Âµã¼¯ºÏ£¬Ò»¸öÅÅĞòµÄÁĞ±í
+    private ArrayList<GeoPoint> mMatchedPoints; //å‰æ–¹æ‹¥å µç‚¹é›†åˆï¼Œä¸€ä¸ªæ’åºçš„åˆ—è¡¨
     
     private int mDistance;
     private GeoPoint mStart;
@@ -45,14 +45,14 @@ public class MKRouteHelper implements Serializable{
     private int mNumSteps;
     private int mRouteType;
     private ArrayList<MKStep> mAllSteps;
-    private int stepCursor = 0; //±ÜÃâÃ¿´ÎÈ«²¿É¨ÃèËùÓĞµÄÂ·
+    private int stepCursor = 0; //é¿å…æ¯æ¬¡å…¨éƒ¨æ‰«ææ‰€æœ‰çš„è·¯
     private MKRoute mRawRoute;
     
-    //ÓÃMap±£´æ"Â·¼°Â·¿ö"
+    //ç”¨Mapä¿å­˜"è·¯åŠè·¯å†µ"
     private Map<String, DrivingRoadWithTraffic> mRoadsWithTraffic;
-    //ÁíÍâÒ»¸öMap±£´æStep indexºÍRoad¶ÔÓ¦¹ØÏµ£¬±ãÓÚ¿ìËÙ²éÕÒ¸ÃStepºÍRoadµÄ¶ÔÓ¦¹ØÏµ
-    //Ö®ËùÒÔ²»ÔÚDrivingRoadWithTrafficÀï±£´æStepµÄÁĞ±í£¬ÀíÓÉÊÇÏÔÈ»µÄ£¬ÎÒÃÇ¹Ø¼üÊÇĞèÒª¿ìËÙ´Óstep indexÖĞÕÒµ½Â·
-    //»¹ÓĞÒ»ÖÖË¼Â·ÊÇ£¬´´½¨Ò»¸öMKStepHelper£¬×¨ÃÅÔö¼ÓÒ»¸ö³ÉÔ±Road£¬ÕâÖÖ·½·¨ÓĞµãÖØ
+    //å¦å¤–ä¸€ä¸ªMapä¿å­˜Step indexå’ŒRoadå¯¹åº”å…³ç³»ï¼Œä¾¿äºå¿«é€ŸæŸ¥æ‰¾è¯¥Stepå’ŒRoadçš„å¯¹åº”å…³ç³»
+    //ä¹‹æ‰€ä»¥ä¸åœ¨DrivingRoadWithTrafficé‡Œä¿å­˜Stepçš„åˆ—è¡¨ï¼Œç†ç”±æ˜¯æ˜¾ç„¶çš„ï¼Œæˆ‘ä»¬å…³é”®æ˜¯éœ€è¦å¿«é€Ÿä»step indexä¸­æ‰¾åˆ°è·¯
+    //è¿˜æœ‰ä¸€ç§æ€è·¯æ˜¯ï¼Œåˆ›å»ºä¸€ä¸ªMKStepHelperï¼Œä¸“é—¨å¢åŠ ä¸€ä¸ªæˆå‘˜Roadï¼Œè¿™ç§æ–¹æ³•æœ‰ç‚¹é‡
     private Map<Integer, String> mStepsOfRoad;
 	//private ArrayList<GeoPoint> matchedPoints;
     
@@ -97,8 +97,8 @@ public class MKRouteHelper implements Serializable{
     }
     
     /*
-     * ¸ù¾İstepCursorËù¶ÔÓ¦µÄstep£¬ÕÒ³öÂ·Ãû£¬È»ºóÕÒ³ö¸ÃÂ·Ëù°üÀ¨µÄmatchPoint
-     * Èç¹ûstep.getContent()°üÀ¨¡±½øÈë¡°£¬±íÊ¾ÊÇ´ÓÒ»ÌõÂ·ÇĞ»»µ½ÁíÒ»ÌõÂ·
+     * æ ¹æ®stepCursoræ‰€å¯¹åº”çš„stepï¼Œæ‰¾å‡ºè·¯åï¼Œç„¶åæ‰¾å‡ºè¯¥è·¯æ‰€åŒ…æ‹¬çš„matchPoint
+     * å¦‚æœstep.getContent()åŒ…æ‹¬â€è¿›å…¥â€œï¼Œè¡¨ç¤ºæ˜¯ä»ä¸€æ¡è·¯åˆ‡æ¢åˆ°å¦ä¸€æ¡è·¯
      */
     public TrafficPoint getNextTrafficPoint(GeoPoint currentPoint) {
     	Log.d(TAG, "in MKRouteHelper::getTrafficPoint, stepCursor="+stepCursor);
@@ -106,7 +106,7 @@ public class MKRouteHelper implements Serializable{
     		return null;
     	}
     	String roadName = null;
-    	//ÕÒÇ°·½µÄÂ·ÉÏÆ¥Åä×î½üµÄµã
+    	//æ‰¾å‰æ–¹çš„è·¯ä¸ŠåŒ¹é…æœ€è¿‘çš„ç‚¹
     	for (int i=stepCursor; i<mAllSteps.size();i++) {
     		roadName = mStepsOfRoad.get(new Integer(i));
     		if (roadName == null) continue;
@@ -121,8 +121,8 @@ public class MKRouteHelper implements Serializable{
     }
     
     /*
-     * ¸ù¾İstepCursorËù¶ÔÓ¦µÄstep£¬ÕÒ³öÂ·Ãû£¬È»ºóÕÒ³ö¸ÃÂ·Ëù°üÀ¨µÄmatchPoint
-     * Èç¹ûstep.getContent()°üÀ¨¡±½øÈë¡°£¬±íÊ¾ÊÇ´ÓÒ»ÌõÂ·ÇĞ»»µ½ÁíÒ»ÌõÂ·
+     * æ ¹æ®stepCursoræ‰€å¯¹åº”çš„stepï¼Œæ‰¾å‡ºè·¯åï¼Œç„¶åæ‰¾å‡ºè¯¥è·¯æ‰€åŒ…æ‹¬çš„matchPoint
+     * å¦‚æœstep.getContent()åŒ…æ‹¬â€è¿›å…¥â€œï¼Œè¡¨ç¤ºæ˜¯ä»ä¸€æ¡è·¯åˆ‡æ¢åˆ°å¦ä¸€æ¡è·¯
      */
     public ArrayList<TrafficPoint> getAllTrafficPointsAhead(GeoPoint currentPoint) {
     	Log.d(TAG, "in MKRouteHelper::getAllTrafficPointsAhead, stepCursor="+stepCursor);
@@ -131,7 +131,7 @@ public class MKRouteHelper implements Serializable{
     	}
     	String roadName = null;
     	ArrayList<TrafficPoint> allPointsAhead = new ArrayList<TrafficPoint>();
-    	//ÕÒÇ°·½µÄÂ·ÉÏÆ¥Åä×î½üµÄµã
+    	//æ‰¾å‰æ–¹çš„è·¯ä¸ŠåŒ¹é…æœ€è¿‘çš„ç‚¹
     	for (int i=stepCursor; i<mAllSteps.size();i++) {
     		roadName = mStepsOfRoad.get(new Integer(i));
     		if (roadName == null) continue;
@@ -147,15 +147,15 @@ public class MKRouteHelper implements Serializable{
     }
     
     /*
-     * ¸ù¾İstepCursor£¬Ñ°ÕÒµ±Ç°¡¢ºóÃæ¡¢Ç°ÃæÈı¸östepµÄpointsÈ¥Æ¥Åä£¬Í¬Ê±¸üĞÂstepCursor
-     * Èç¹û²»Æ¥Åä£¬Ôò´ÓÍ·Ñ­»·stepÕÒ³öÆ¥Åäµã£¬Í¬Ê±¸üĞÂ¸Ãcursor
-     * ´ÓÇ°·½µÄstepÖĞÕÒ³öÂ·Ãû£¬È»ºó´ÓÂ·ÀïÕÒ³ömatchedPoints
+     * æ ¹æ®stepCursorï¼Œå¯»æ‰¾å½“å‰ã€åé¢ã€å‰é¢ä¸‰ä¸ªstepçš„pointså»åŒ¹é…ï¼ŒåŒæ—¶æ›´æ–°stepCursor
+     * å¦‚æœä¸åŒ¹é…ï¼Œåˆ™ä»å¤´å¾ªç¯stepæ‰¾å‡ºåŒ¹é…ç‚¹ï¼ŒåŒæ—¶æ›´æ–°è¯¥cursor
+     * ä»å‰æ–¹çš„stepä¸­æ‰¾å‡ºè·¯åï¼Œç„¶åä»è·¯é‡Œæ‰¾å‡ºmatchedPoints
      */
     public boolean isOnRoute(GeoPoint currentPoint) {
     	int i = 0;
     	int startIndex = stepCursor>2?stepCursor-3:0;
     	int endIndex = stepCursor+3<mAllPoints.size()?stepCursor+3:mAllPoints.size();
-    	//Ê×ÏÈÕÒ×î¿ÉÄÜµÄnext 3¸östep
+    	//é¦–å…ˆæ‰¾æœ€å¯èƒ½çš„next 3ä¸ªstep
     	for (i=stepCursor>=0?stepCursor:0; i<endIndex; i++) {
         	STPointLineDistInfo stPointLineDistInfo = mMapUtils.new STPointLineDistInfo();
         	double distanceOffRoad = 0.0;
@@ -166,7 +166,7 @@ public class MKRouteHelper implements Serializable{
         		return true;
         	}
     	}
-    	//Æä´ÎÍù»ØÕÒ×î¿ÉÄÜµÄprevious 3¸östep
+    	//å…¶æ¬¡å¾€å›æ‰¾æœ€å¯èƒ½çš„previous 3ä¸ªstep
     	for (i=startIndex; i<stepCursor; i++) {
         	STPointLineDistInfo stPointLineDistInfo = mMapUtils.new STPointLineDistInfo();
         	double distanceOffRoad = 0.0;
@@ -177,7 +177,7 @@ public class MKRouteHelper implements Serializable{
         		return true;
         	}
     	}
-    	//²»ÄÜ¿ìËÙÆ¥ÅäÔò´ÓÍ·Ñ­»·²éÕÒ£¬ÊÇ·ñ¿ÉÒÔÈ¡getAllPoints2()£¬ÕÒ³öµ±Ç°µãÍ¶Ó°ÔÚÄÄÒ»¶Î£¬È»ºóÔÙ¼ÆËã³östepCursor£¬²»¹ı²»Ò»¶¨¼õÉÙÔËËãÁ¿¡£
+    	//ä¸èƒ½å¿«é€ŸåŒ¹é…åˆ™ä»å¤´å¾ªç¯æŸ¥æ‰¾ï¼Œæ˜¯å¦å¯ä»¥å–getAllPoints2()ï¼Œæ‰¾å‡ºå½“å‰ç‚¹æŠ•å½±åœ¨å“ªä¸€æ®µï¼Œç„¶åå†è®¡ç®—å‡ºstepCursorï¼Œä¸è¿‡ä¸ä¸€å®šå‡å°‘è¿ç®—é‡ã€‚
     	for (i=0; i<mAllPoints.size(); i++) {
         	STPointLineDistInfo stPointLineDistInfo = mMapUtils.new STPointLineDistInfo();
         	double distanceOffRoad = 0.0;
@@ -188,7 +188,7 @@ public class MKRouteHelper implements Serializable{
         		return true;
         	}
     	}
-    	stepCursor = -1; //²»ÔÚ±¾DrivingRouteÉÏ
+    	stepCursor = -1; //ä¸åœ¨æœ¬DrivingRouteä¸Š
     	return false;
     }
     
@@ -202,7 +202,7 @@ public class MKRouteHelper implements Serializable{
 			mRoadsWithTraffic = new HashMap<String, DrivingRoadWithTraffic>();
 			mMatchedPoints = new ArrayList<GeoPoint>();
 		}
-		//Ê×ÏÈÍ¨¹ıÃû×ÖÆ¥Åä£¬ÕÒµ½ÏàÓ¦µÄÂ·£¬È»ºóÔÚÂ·ÉÏµÄÕÛÏßµãmPointsOfRouteÖĞÓëRoadTraffic½øĞĞÆ¥Åä
+		//é¦–å…ˆé€šè¿‡åå­—åŒ¹é…ï¼Œæ‰¾åˆ°ç›¸åº”çš„è·¯ï¼Œç„¶ååœ¨è·¯ä¸Šçš„æŠ˜çº¿ç‚¹mPointsOfRouteä¸­ä¸RoadTrafficè¿›è¡ŒåŒ¹é…
 		for (int i=0; i<roadTraffics.size(); i++) {
 			String road = roadTraffics.get(i).getRoad();
 			Log.d(TAG, String.format("road=%s", road));
@@ -215,9 +215,9 @@ public class MKRouteHelper implements Serializable{
 				}
 				continue;
 			}
-			//µ÷ÓÃmatchRouteÓĞÁ½¸ö×÷ÓÃ£ºÊ×ÏÈ½«SegmentTraffic±£´æÆğÀ´£¬Æä´Î¼ÆËã³öÀ´Æ¥Åäµã
+			//è°ƒç”¨matchRouteæœ‰ä¸¤ä¸ªä½œç”¨ï¼šé¦–å…ˆå°†SegmentTrafficä¿å­˜èµ·æ¥ï¼Œå…¶æ¬¡è®¡ç®—å‡ºæ¥åŒ¹é…ç‚¹
 			rt.matchRoute(roadTraffics.get(i));
-			//ÕÒ³öËùÓĞµÄMatchedPoints
+			//æ‰¾å‡ºæ‰€æœ‰çš„MatchedPoints
 			ArrayList<GeoPoint> matchedPoints = rt.getMatchedPointsByList();
 	        if (matchedPoints == null || matchedPoints.size() == 0) continue;
 	        if (mMatchedPoints == null) mMatchedPoints = new ArrayList<GeoPoint>();
@@ -250,7 +250,7 @@ public class MKRouteHelper implements Serializable{
 	        	String strSpeed = Constants.TRAFFIC_JAM_LVL_HIGH;
 	        	if (speed >= Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_LOW;
 	        	if (speed < Constants.TRAFFIC_JAM_LVL_MIDDLE_SPD && speed >= Constants.TRAFFIC_JAM_LVL_HIGH_SPD) strSpeed = Constants.TRAFFIC_JAM_LVL_MIDDLE;
-	        	String formatedStr = String.format("%d·ÖÖÓÇ°£¬%s", interval, strSpeed);
+	        	String formatedStr = String.format("%dåˆ†é’Ÿå‰ï¼Œ%s", interval, strSpeed);
 	            map.put("timestamp", formatedStr);
 	        	list.add(map);
         	}
@@ -259,8 +259,8 @@ public class MKRouteHelper implements Serializable{
     }
     
     /*
-     * Õâ¸öº¯ÊıÖ»ÔÚ¹¹ÔìÊ±µ÷ÓÃÒ»´Î£¬´´½¨Â·×÷ÎªÈİÆ÷£¬ÊÕÄÉËùÓĞÂ·¿ö
-     * ²¢´´½¨Ò»¸öMap£¬ÓÃÓÚ¿ìËÙË÷Òıstepµ½Â·
+     * è¿™ä¸ªå‡½æ•°åªåœ¨æ„é€ æ—¶è°ƒç”¨ä¸€æ¬¡ï¼Œåˆ›å»ºè·¯ä½œä¸ºå®¹å™¨ï¼Œæ”¶çº³æ‰€æœ‰è·¯å†µ
+     * å¹¶åˆ›å»ºä¸€ä¸ªMapï¼Œç”¨äºå¿«é€Ÿç´¢å¼•stepåˆ°è·¯
      */
     private void buildRoadsFromRoute() {
 		String road = "";
@@ -270,7 +270,7 @@ public class MKRouteHelper implements Serializable{
 			//Log.d(TAG, "step content..." + step.getContent());
 			Scanner scanner = new Scanner(step.getContent());
 			scanner.useDelimiter("\\s*-\\s*");
-			String pattern = ".*½øÈë(.*)";
+			String pattern = ".*è¿›å…¥(.*)";
 			if(scanner.hasNext(pattern)) {
 				scanner.next(pattern);
 				MatchResult match = scanner.match();
@@ -285,12 +285,12 @@ public class MKRouteHelper implements Serializable{
 					rt = new DrivingRoadWithTraffic(mMapUtils);
 					mRoadsWithTraffic.put(road, rt);
 				}
-				//Baidu·µ»ØµÄmAllPointsÊÇArray of Array of GeoPoints
+				//Baiduè¿”å›çš„mAllPointsæ˜¯Array of Array of GeoPoints
 				if (index < mNumSteps-2) {
 					rt.addPointsToRoute(mAllPoints.get(index));
 				}
 			} 
-			if (road.equals("")) continue; //»¹Ã»ÓĞÕÒµ½µÚÒ»ÌõÂ·
+			if (road.equals("")) continue; //è¿˜æ²¡æœ‰æ‰¾åˆ°ç¬¬ä¸€æ¡è·¯
 			if (mStepsOfRoad == null) {
 				mStepsOfRoad = new HashMap<Integer, String>();
 			}

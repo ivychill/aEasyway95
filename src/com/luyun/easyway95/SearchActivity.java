@@ -95,11 +95,11 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         mMapMan.start();
         super.initMapActivity(mMapMan);
         mMapView = (MapView) findViewById(R.id.mapView);
-        mMapView.setBuiltInZoomControls(true);  //ÉèÖÃÆôÓÃÄÚÖÃµÄËõ·Å¿Ø¼þ
-        MapController mMapController = mMapView.getController();  // µÃµ½mMapViewµÄ¿ØÖÆÈ¨,¿ÉÒÔÓÃËü¿ØÖÆºÍÇý¶¯Æ½ÒÆºÍËõ·Å
+        mMapView.setBuiltInZoomControls(true);  //è®¾ç½®å¯ç”¨å†…ç½®çš„ç¼©æ”¾æŽ§ä»¶
+        MapController mMapController = mMapView.getController();  // å¾—åˆ°mMapViewçš„æŽ§åˆ¶æƒ,å¯ä»¥ç”¨å®ƒæŽ§åˆ¶å’Œé©±åŠ¨å¹³ç§»å’Œç¼©æ”¾
         GeoPoint point = new GeoPoint((int) (22.526292 * 1E6),
-                (int) (113.910416 * 1E6));  //ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìÒ»¸öGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
-        mMapController.setCenter(point);  //ÉèÖÃµØÍ¼ÖÐÐÄµã
+                (int) (113.910416 * 1E6));  //ç”¨ç»™å®šçš„ç»çº¬åº¦æž„é€ ä¸€ä¸ªGeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
+        mMapController.setCenter(point);  //è®¾ç½®åœ°å›¾ä¸­å¿ƒç‚¹
         mMapView.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -123,13 +123,13 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         loadMoreButton.setOnClickListener(new View.OnClickListener() {  
             @Override  
             public void onClick(View v) {  
-                loadMoreButton.setText("ÕýÔÚ¼ÓÔØÖÐ...");   //ÉèÖÃ°´Å¥ÎÄ×Ö  
+                loadMoreButton.setText("æ­£åœ¨åŠ è½½ä¸­...");   //è®¾ç½®æŒ‰é’®æ–‡å­—  
                 handler.postDelayed(new Runnable() {  
                     @Override
                     public void run() {  
                         loadMoreData();  
 //                        poiAdapter.notifyDataSetChanged();
-                        loadMoreButton.setText("²é¿´¸ü¶à...");  //»Ö¸´°´Å¥ÎÄ×Ö
+                        loadMoreButton.setText("æŸ¥çœ‹æ›´å¤š...");  //æ¢å¤æŒ‰é’®æ–‡å­—
                     }  
                 },2000);  
             }  
@@ -141,7 +141,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     			String query = mSearchKey.getText().toString();
         		Log.d(TAG, "query: " + query);
         		mUserProfile.addRecentQuery(query);
-        		mSearch.poiSearchInCity("ÉîÛÚ", query);
+        		mSearch.poiSearchInCity("æ·±åœ³", query);
             }  
         });
         
@@ -181,7 +181,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			    		Log.d(TAG, "query: " + query);
 			        	mSearchKey.setText(query);
 		        		mUserProfile.addRecentQuery(query);
-			    		mSearch.poiSearchInCity("ÉîÛÚ", query);
+			    		mSearch.poiSearchInCity("æ·±åœ³", query);
 					}
 				}); 
 			}
@@ -189,9 +189,9 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 
         mSearch.init(mMapMan, new MKSearchListener(){
     		public void onGetPoiResult(MKPoiResult res, int type, int error) {
-    			// ´íÎóºÅ¿É²Î¿¼MKEventÖÐµÄ¶¨Òå
+    			// é”™è¯¯å·å¯å‚è€ƒMKEventä¸­çš„å®šä¹‰
     			if (error != 0 || res == null) {
-    				Toast.makeText(SearchActivity.this, "±§Ç¸£¬Î´ÕÒµ½½á¹û", Toast.LENGTH_LONG).show();
+    				Toast.makeText(SearchActivity.this, "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æžœ", Toast.LENGTH_LONG).show();
     				return;
     			}
     			mNumPages = res.getNumPages();
@@ -199,7 +199,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     			int numPois = res.getCurrentNumPois();
 //    			Log.d (TAG, "numPois: " + numPois);
     		    if (numPois > 0) {
-        	        mListView.addFooterView(loadMoreView);    //ÉèÖÃÁÐ±íµ×²¿ÊÓÍ¼ 
+        	        mListView.addFooterView(loadMoreView);    //è®¾ç½®åˆ—è¡¨åº•éƒ¨è§†å›¾ 
     			    poiAdapter.add(res.getAllPoi());
     			    poiAdapter.notifyDataSetChanged();
         		    mListView.setAdapter(poiAdapter);
@@ -207,12 +207,12 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 //    			    Log.d (TAG, "all pois: " + res.getAllPoi());
     			    mPageIndex = res.getPageIndex();
     		    } else if (res.getCityListNum() > 0) {
-    		    	String strInfo = "ÔÚ";
+    		    	String strInfo = "åœ¨";
     		    	for (int i = 0; i < res.getCityListNum(); i++) {
     		    		strInfo += res.getCityListInfo(i).city;
     		    		strInfo += ",";
     		    	}
-    		    	strInfo += "ÕÒµ½½á¹û";
+    		    	strInfo += "æ‰¾åˆ°ç»“æžœ";
     				Toast.makeText(SearchActivity.this, strInfo, Toast.LENGTH_LONG).show();
     		    }
     		}
@@ -229,22 +229,22 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     			// TODO Auto-generated method stub
     			Log.d (TAG, "enter onGetAddrResult");
 				if (error != 0) {
-					String str = String.format("´íÎóºÅ£º%d", error);
+					String str = String.format("é”™è¯¯å·ï¼š%d", error);
 					Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
 					return;
 				}
 
 //				mMapView.getController().animateTo(res.geoPt);
-//				String strInfo = String.format("%s Î³¶È£º%f ¾­¶È£º%f\r\n", res.strAddr, res.geoPt.getLatitudeE6()/1e6, 
+//				String strInfo = String.format("%s çº¬åº¦ï¼š%f ç»åº¦ï¼š%f\r\n", res.strAddr, res.geoPt.getLatitudeE6()/1e6, 
 //							res.geoPt.getLongitudeE6()/1e6);
 //				Toast.makeText(SearchActivity.this, strInfo, Toast.LENGTH_LONG).show();
 //				Log.d(TAG, strInfo);
 		        final MKPoiInfoHelper mpi = new MKPoiInfoHelper(res);
 //		        mSearchKey.setText(res.strAddr);
     			new AlertDialog.Builder(SearchActivity.this) 
- 			       .setTitle("ÉèÖÃµØÖ·")
-			       .setMessage(String.format("ÉèÖÃÄ¿±êµØÖ·Îª%sÂð?", res.strAddr))
-			       .setPositiveButton("È·¶¨", 
+ 			       .setTitle("è®¾ç½®åœ°å€")
+			       .setMessage(String.format("è®¾ç½®ç›®æ ‡åœ°å€ä¸º%så—?", res.strAddr))
+			       .setPositiveButton("ç¡®å®š", 
 			    	    new DialogInterface.OnClickListener() {
 			                public void onClick(DialogInterface dialog, int which) {
 			                    Bundle bundle = new Bundle();
@@ -259,7 +259,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			                	finish();
 			                }
 			            })
-			        .setNegativeButton("È¡Ïû", null)
+			        .setNegativeButton("å–æ¶ˆ", null)
 			        .show();    			
     		}
     		public void onGetBusDetailResult(MKBusLineResult result, int iError) {
@@ -268,7 +268,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     		public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
     			// TODO Auto-generated method stub
 				if (arg1 != 0 || res == null) {
-					Toast.makeText(SearchActivity.this, "±§Ç¸£¬Î´ÕÒµ½½á¹û", Toast.LENGTH_LONG).show();
+					Toast.makeText(SearchActivity.this, "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æžœ", Toast.LENGTH_LONG).show();
 					return;
 				}
 				int nSize = res.getSuggestionNum();
@@ -310,12 +310,12 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 //    		Log.d(TAG, "query: " + query);
     		mUserProfile.addRecentQuery(query);
-    		mSearch.poiSearchInCity("ÉîÛÚ", query);
+    		mSearch.poiSearchInCity("æ·±åœ³", query);
         }
     }
 	
     /**  
-     * ¼ÓÔØ¸ü¶àÊý¾Ý  
+     * åŠ è½½æ›´å¤šæ•°æ®  
      */  
     private void loadMoreData(){
     	Log.d(TAG, "mPageIndex: " + mPageIndex + " mNumPages: " + mNumPages);
@@ -324,18 +324,18 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     	}
     	else {
     		mListView.removeFooterView(loadMoreView);  
-            Toast.makeText(this, "Êý¾ÝÈ«²¿¼ÓÔØÍê!", Toast.LENGTH_LONG).show();  
-//    		loadMoreButton.setText("ÒÑ´ï×îºó");
+            Toast.makeText(this, "æ•°æ®å…¨éƒ¨åŠ è½½å®Œ!", Toast.LENGTH_LONG).show();  
+//    		loadMoreButton.setText("å·²è¾¾æœ€åŽ");
     	}
     }
     
 //    @Override  
 //    public void onScrollStateChanged(AbsListView view, int scrollState) {  
-//        int itemsLastIndex = adapter.getCount()-1;  //Êý¾Ý¼¯×îºóÒ»ÏîµÄË÷Òý    
+//        int itemsLastIndex = adapter.getCount()-1;  //æ•°æ®é›†æœ€åŽä¸€é¡¹çš„ç´¢å¼•    
 //        int lastIndex = itemsLastIndex + 1;  
 //        if (scrollState == OnScrollListener.SCROLL_STATE_IDLE  
 //                && visibleLastIndex == lastIndex) {  
-//            // Èç¹ûÊÇ×Ô¶¯¼ÓÔØ,¿ÉÒÔÔÚÕâÀï·ÅÖÃÒì²½¼ÓÔØÊý¾ÝµÄ´úÂë  
+//            // å¦‚æžœæ˜¯è‡ªåŠ¨åŠ è½½,å¯ä»¥åœ¨è¿™é‡Œæ”¾ç½®å¼‚æ­¥åŠ è½½æ•°æ®çš„ä»£ç   
 //        }  
 //    }  
 //
@@ -351,10 +351,10 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 //        Log.e("totalItemCount = ",totalItemCount+"");  
 //        Log.e("========================= ","========================");  
 //          
-//        //Èç¹ûËùÓÐµÄ¼ÇÂ¼Ñ¡ÏîµÈÓÚÊý¾Ý¼¯µÄÌõÊý£¬ÔòÒÆ³ýÁÐ±íµ×²¿ÊÓÍ¼  
+//        //å¦‚æžœæ‰€æœ‰çš„è®°å½•é€‰é¡¹ç­‰äºŽæ•°æ®é›†çš„æ¡æ•°ï¼Œåˆ™ç§»é™¤åˆ—è¡¨åº•éƒ¨è§†å›¾  
 //        if(totalItemCount == datasize+1){  
 //            mListView.removeFooterView(loadMoreView);  
-//            Toast.makeText(this, "Êý¾ÝÈ«²¿¼ÓÔØÍê!", Toast.LENGTH_LONG).show();  
+//            Toast.makeText(this, "æ•°æ®å…¨éƒ¨åŠ è½½å®Œ!", Toast.LENGTH_LONG).show();  
 //        }  
 //    }
 	
@@ -435,7 +435,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
     		Log.d(TAG, "query: " + query);
         	mSearchKey.setText(query);
     		mUserProfile.addRecentQuery(query);
-    		mSearch.poiSearchInCity("ÉîÛÚ", query);
+    		mSearch.poiSearchInCity("æ·±åœ³", query);
         }
     }
 
@@ -445,7 +445,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 		return false;
 	}
 
-	//ÒÔÏÂÖØÔØOnGestureListener·½·¨
+	//ä»¥ä¸‹é‡è½½OnGestureListeneræ–¹æ³•
 	@Override
 	public boolean onDown(MotionEvent e) {
 		// TODO Auto-generated method stub
@@ -473,7 +473,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         GeoPoint pointTapped = pj.fromPixels((int) x, (int) y);
     	
 		Log.d(TAG, "in onLongPress");
-    	//µ÷ÓÃÒ»´Î·´ÏòµØÀí½âÂë£¬»ñÈ¡Î»ÖÃÃèÊöÐÅÏ¢
+    	//è°ƒç”¨ä¸€æ¬¡åå‘åœ°ç†è§£ç ï¼ŒèŽ·å–ä½ç½®æè¿°ä¿¡æ¯
     	mSearch.reverseGeocode(pointTapped);
 	}
 

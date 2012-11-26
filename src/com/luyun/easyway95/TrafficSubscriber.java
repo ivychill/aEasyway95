@@ -94,7 +94,7 @@ public class TrafficSubscriber {
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
 				.setCity("深圳")
 				.setOprType(com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
-				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.LY_PUB_CRON)
+				.setPubType(com.luyun.easyway95.shared.TSSProtos.LYPubType.LY_PUB_EVENT)
 				.setRoute(mRoute)
 				.build();
 		
