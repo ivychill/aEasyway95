@@ -24,7 +24,7 @@ public class TrafficSubscriber {
 		mainActivity = activity;
 	}
 	
-	static LYRoute RoadAnalyzer (MKRoute route) {
+	static LYRoute RoadAnalyzer (MKRoute route, int routeid) {
 		int mNumStep = route.getNumSteps();
 		//Log.d(TAG, "mNumStep..." + mNumStep);
 		LYRoute.Builder mRouteBuilder = LYRoute.newBuilder();
@@ -84,11 +84,11 @@ public class TrafficSubscriber {
 			mRouteBuilder.addSegments(segment);
 		}
 
-		return mRouteBuilder.setIdentity(1024).build();
+		return mRouteBuilder.setIdentity(routeid).build();
 	}
 	
 	void SubTraffic (MKRoute route) {
-	    LYRoute mRoute = RoadAnalyzer (route);
+	    LYRoute mRoute = RoadAnalyzer (route, 1024);
 //	    Log.d(TAG, "SubTraffic, route:\n" + mRoute.toString());
 
 		LYTrafficSub tsub = com.luyun.easyway95.shared.TSSProtos.LYTrafficSub.newBuilder()
@@ -113,69 +113,5 @@ public class TrafficSubscriber {
     	//Log.d(TAG, msg.toString());
     	byte[] data = msg.toByteArray();
     	mainActivity.sendMsgToSvr(data);
-	}
-	
-	public void subCron(MKRoute route, boolean subaction, boolean gowork){
-		Log.d(TAG, "enter subCron. " + subaction + " gowork " + gowork);
-		
-		// TODO test
-//		Calendar c = Calendar.getInstance();
-//		int hour = c.get(Calendar.HOUR_OF_DAY);
-//		int min = c.get(Calendar.MINUTE) + 2;
-		
-		int hour = 18;
-		int min = 0;
-	
-		LYRoute mRoute = RoadAnalyzer(route);
-		
-		Log.d(TAG, "route id: " + mRoute.getIdentity()); 
-		
-		Log.d(TAG, mRoute.toString()); 
-
-		LYCrontab tab;
-		if(gowork){
-			tab = LYCrontab.newBuilder()
-					.setDow(62)
-					.setHour(0x1 << hour)
-					.setMinute(0x1L << min)
-					.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW)
-					.build();
-		}
-		else {
-			tab = LYCrontab.newBuilder()
-					.setDow(62)
-					.setHour(1 << 18)
-					.setMinute(0)
-					.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW)
-					.build();
-		}
-		
-		LYTrafficSub tsub;
-		if (subaction) {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("深圳")
-					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_CREATE)
-					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
-					.setCronTab(tab).setRoute(mRoute).build();
-		} else {
-			tsub = TSSProtos.LYTrafficSub.newBuilder().setCity("深圳")
-					.setOprType(TSSProtos.LYTrafficSub.LYOprType.LY_SUB_DELETE)
-					.setPubType(TSSProtos.LYPubType.LY_PUB_CRON)
-					.setCronTab(tab).setRoute(mRoute).build();
-		}
-
-		Log.d(TAG, tab.toString());
-		
-		LYMsgOnAir msg = com.luyun.easyway95.shared.TSSProtos.LYMsgOnAir
-				.newBuilder()
-				.setVersion(1)
-				.setFromParty(TSSProtos.LYParty.LY_CLIENT)
-				.setToParty(TSSProtos.LYParty.LY_TSS)
-				.setSndId(mainActivity.getDeviceID())
-				.setMsgType(TSSProtos.LYMsgType.LY_TRAFFIC_SUB)
-				.setMsgId(1000).setTimestamp(System.currentTimeMillis() / 1000)
-				.setTrafficSub(tsub).build();
-		// Log.d(TAG, msg.toString());
-		byte[] data = msg.toByteArray();
-		mainActivity.sendMsgToSvr(data);
 	}
 }
