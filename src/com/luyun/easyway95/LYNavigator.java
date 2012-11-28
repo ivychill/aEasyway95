@@ -95,16 +95,15 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 	
 	private ZMQService mzService;
 	private TTSService mtService;
+	public LYCronService mcService;
     private boolean mIsBound;
     private boolean mIsTTSBound;
+    private boolean mIsLYCronBound;
     public MapHelper mMapHelper;
     private MKPoiInfoHelper mHomeAddr;
     private MKPoiInfoHelper mOfficeAddr;
     private MKPoiInfoHelper mLastDestination;
     private ProgressDialog popupDlg;
-    private boolean mSubscript=false;
-    
-    private LYCronSub mCronSub;
     
     private MapView mMapView;
     private TextView mHeading;
@@ -178,6 +177,26 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         }
     };
     
+    private ServiceConnection mConnectionCron = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+        	mcService = ((LYCronService.LocalBinder)service).getService();
+            //mzService.registerHandler(handler);
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+        	mcService = null;
+        }
+    };
+
     void bindZMQService() {
         // Establish a connection with the service.  We use an explicit
         // class name because we want a specific service implementation that
@@ -200,6 +219,17 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         mIsTTSBound = true;
     }
     
+    void bindLYCronService() {
+        // Establish a connection with the service.  We use an explicit
+        // class name because we want a specific service implementation that
+        // we know will be running in our own process (and thus won't be
+        // supporting component replacement by other applications).
+        Log.d(TAG, "in bindTTSService"); 
+    	bindService(new Intent(LYNavigator.this, 
+                LYCronService.class), mConnectionCron, Context.BIND_AUTO_CREATE);
+        mIsLYCronBound = true;
+    }
+    
     void unbindService() {
         if (mIsBound) {
             // Detach our existing connection.
@@ -209,6 +239,10 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         if (mIsTTSBound) {
             unbindService(mConnectionTTS);
             mIsTTSBound = false;
+        }
+        if (mIsLYCronBound) {
+        	unbindService(mConnectionCron);
+        	mIsLYCronBound = false;
         }
     }
     
@@ -250,9 +284,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		mOfficeAddr = up.getOfficeAddr();
 		mLastDestination = up.getLastDestination();
 		mMapHelper = new MapHelper(this);
-		mSubscript = up.getSubscript();
-		Log.d(TAG, "mSubscript " + mSubscript);
-		mCronSub = new LYCronSub(this);
 		
 		setContentView(R.layout.ly_navigator);
          
@@ -339,6 +370,8 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
         bindZMQService();
         //启动TTSService，非独立线程
         bindTTSService();
+        
+        bindLYCronService();
 
         ImageButton btnReset = (ImageButton)findViewById(R.id.resetbtn);
         btnReset.setOnClickListener(new OnClickListener() {
@@ -538,9 +571,6 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
     	return mHomeAddr.getPt();
     }
     
-    public boolean getSubscript(){
-    	return mSubscript;
-    }
     public void resetMapView() {
     	resetMapViewByRoute();
     	//刷新周边路况提示
@@ -1002,49 +1032,23 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
 		}
 	}
 	
-	public void onSubscription(Boolean sub){
-		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
-		UserProfile up = new UserProfile(sp);
-		up.setAndCommitSubscript(sp, sub);
-		mSubscript = sub;
-
-		if(sub){
-			mCronSub.subRouteCron(mOfficeAddr.getPt(), mHomeAddr.getPt(), true);
-			
-			//delay job
-			TimerTask task = new TimerTask(){  
-			    public void run(){  
-			    	mCronSub.subRouteCron(mHomeAddr.getPt(), mOfficeAddr.getPt(), false);
-			    }  
-			};
-			
-			Timer timer = new Timer();
-			GregorianCalendar gca = new GregorianCalendar();
-			gca.add(GregorianCalendar.SECOND, 1);
-			java.util.Date delay = gca.getTime();
-			
-			timer.schedule(task, delay); 
-		}
-		else
-		{
-			mCronSub.deSubCron();
-		}
-	}
-	
-	//home work address change
-	public void onAddressUpdate(){
-		Log.d(TAG, "onAddressUpdate");
+	public void initCronSub(){
+		Log.d(TAG, "init");
 		
-		SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
-		UserProfile up = new UserProfile(sp);
-		mHomeAddr = up.getHomeAddr();
-		mOfficeAddr = up.getOfficeAddr();
+		//delay job
+		TimerTask task = new TimerTask(){  
+		    public void run(){
+				SharedPreferences sp = getSharedPreferences("com.luyun.easyway95", MODE_PRIVATE);
+				UserProfile up = new UserProfile(sp);
+				mcService.onSubscription(up.getSubscript());
+		    }  
+		};
 		
-		if(mSubscript){
-			this.onSubscription(false);
-			this.onSubscription(true);
-		}
-		sp=null;
-		up=null;
+		Timer timer = new Timer();
+		GregorianCalendar gca = new GregorianCalendar();
+		gca.add(GregorianCalendar.SECOND, 1);
+		java.util.Date delay = gca.getTime();
+		
+		timer.schedule(task, delay); 
 	}
 }

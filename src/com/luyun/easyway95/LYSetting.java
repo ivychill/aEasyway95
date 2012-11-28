@@ -142,7 +142,6 @@ public class LYSetting extends PreferenceActivity
 				mUserProfile.setHomeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPHome.setSummary(poiInfo.getName());
-				app.getMainActivity().onAddressUpdate();
 			} else if (requestCode == Constants.OFFICE_REQUEST_CODE) {
 				Bundle bundle = intent.getExtras(); 
 				MKPoiInfoHelper poiInfo = (MKPoiInfoHelper)bundle.getSerializable(Constants.POI_RETURN_KEY);
@@ -150,10 +149,17 @@ public class LYSetting extends PreferenceActivity
 				mUserProfile.setOfficeAddr(poiInfo);
 				mUserProfile.commitPreferences(mSP);
 				mLPOffice.setSummary(poiInfo.getName());
-				app.getMainActivity().onAddressUpdate();
-				
+
+				Intent cronintent = new Intent(this, LYCronService.class);
+				String key = "subscription";
+
 			} else {
 				Log.d(TAG, "unknown requestCode: " + requestCode);
+			}
+			CheckBoxPreference pref = (CheckBoxPreference) this
+					.findPreference("subscription_preference");
+			if (pref.isChecked()) {
+				app.getMainActivity().mcService.onAddressUpdate();
 			}
 		} else {
 			Log.d(TAG, "unknown resultCode: " + resultCode);
@@ -194,20 +200,8 @@ public class LYSetting extends PreferenceActivity
 	    }
 	    else if(preference.getKey().equals("subscription_preference")){
 	    	final CheckBoxPreference pref = (CheckBoxPreference)this.findPreference("subscription_preference");
-//	    	Intent cronintent = new Intent(LYSetting.this, LYNavigator.class);
-//    		String strkey = "subscription";
-    		
-	    	if(pref.isChecked()){
-		    	Log.d(TAG, "subscription.");	
-//		    	intent.putExtra(strKey, true);
-		    	app.getMainActivity().onSubscription(true);
-	    	}
-	    	else {
-//	    		intent.putExtra(strKey, false);
-	    		app.getMainActivity().onSubscription(false);
-	    		Log.d(TAG, "de-subscription.");
-	    	}
-	    	
+	    	Log.d(TAG, "is checked : " + pref.isChecked());
+    		app.getMainActivity().mcService.onSubscription(pref.isChecked());
 	    }
 		return true;
 	}

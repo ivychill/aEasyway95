@@ -11,7 +11,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.CheckBoxPreference;
+import android.sax.StartElementListener;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -29,7 +32,6 @@ import com.baidu.mapapi.MKSearchListener;
 import com.baidu.mapapi.MKSuggestionResult;
 import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.support.v4.app.NotificationCompat;
 import com.luyun.easyway95.MapUtils.GeoPointHelper;
@@ -41,6 +43,7 @@ import com.luyun.easyway95.shared.TSSProtos.LYOsType;
 import com.luyun.easyway95.shared.TSSProtos.LYRetCode;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficPub;
 import com.luyun.easyway95.shared.TSSProtos.LYTrafficReport;
+import com.luyun.easyway95.LYCronService;
 
 public class MapHelper {
 	private static String TAG = "MapHelper";
@@ -161,22 +164,8 @@ public class MapHelper {
     			mainActivity.onSoftwareUpgrade(major, minor, strUrl, strDesc, false);
     		}
     		
-    		//delay job
-    		TimerTask task = new TimerTask(){  
-    		    public void run(){  
-    				if(mainActivity.getSubscript())
-    					mainActivity.onSubscription(true);
-    				Log.d(TAG, "init suscription" + mainActivity.getSubscript());
-    		    }  
-    		};
-    		
-			Timer timer = new Timer();
-			GregorianCalendar gca = new GregorianCalendar();
-			gca.add(GregorianCalendar.SECOND, 1);
-			java.util.Date delay = gca.getTime();
-			timer.schedule(task, delay); 
-	    			
-    		return;
+    		mainActivity.initCronSub();
+    		break;
     	case LY_TRAFFIC_PUB:
     		LYTrafficPub trafficPub = msg.getTrafficPub();
     		if (trafficPub == null) {

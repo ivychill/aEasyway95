@@ -92,6 +92,7 @@
 		
         <service android:name="com.luyun.easyway95.ZMQService" />
 	    <service android:name="com.luyun.easyway95.TTSService" />
+	    <service android:enabled="true" android:name="com.luyun.easyway95.LYCronService" />
 	</application>
 	
 	<!-- ************************************* -->
