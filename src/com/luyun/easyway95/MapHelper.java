@@ -495,8 +495,9 @@ public class MapHelper {
 	    String ns = Context.NOTIFICATION_SERVICE;
 	    NotificationManager mNotificationManager = (NotificationManager)mainActivity.getSystemService(ns);
 	  
-	    Intent notificationIntent = new Intent(mainActivity, ShowTraffics.class);
-	    PendingIntent pendIntent =  PendingIntent.getActivity(mainActivity, 0, notificationIntent,  PendingIntent.FLAG_ONE_SHOT);
+	    Intent intent = new Intent(mainActivity, ShowTraffics.class);
+	    intent.putExtra("cronpub", true);
+	    PendingIntent pendIntent =  PendingIntent.getActivity(mainActivity, 0, intent,  PendingIntent.FLAG_ONE_SHOT);
 	  
 	    String title = "路云实时路况";
 	    String content = "";
@@ -534,10 +535,11 @@ public class MapHelper {
 	    		new NotificationCompat.Builder(mainActivity)
 	    .setSmallIcon(R.drawable.icon95)
 	    .setContentTitle(title)
-	    .setContentText(content)
+	    .setTicker(content)
 	    .setAutoCancel(true);
 
 	    Notification notf =  mBuilder.getNotification();
+	    notf.defaults = Notification.DEFAULT_SOUND;
 	    notf.setLatestEventInfo(mainActivity, title, content, pendIntent);
 	    
 	    Log.d(TAG, "content:" + content);

@@ -1,5 +1,6 @@
 package com.luyun.easyway95;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Timer;
@@ -263,11 +264,11 @@ public class LYCronService extends Service {
 				// Log.d(TAG, msg.toString());
 				byte[] data = msg.toByteArray();
 				mApp.getMainActivity().sendMsgToSvr(data);
-				route_id--;
 			}
 
 //			mRouteCron.clear();
 			route_cnt = 0;
+			route_id = 2000;
 		}
 
 		private void reSendSubCron() {
@@ -306,8 +307,16 @@ public class LYCronService extends Service {
 	}
 
 	static public LYCrontab genGoworkTab() {
-		return LYCrontab.newBuilder().setDow(62).setHour(0x1 << 8)
-				.setMinute(0x1L << 0)
+//		java.util.Calendar c = Calendar.getInstance();
+//		c.add(Calendar.MINUTE, 2);
+//		int hour = c.get(Calendar.HOUR_OF_DAY);
+//		int minute = c.get(Calendar.MINUTE);
+	
+		int hour = 8;
+		int minute = 0;
+	
+		return LYCrontab.newBuilder().setDow(62).setHour(0x1 << hour)
+				.setMinute(0x1L << minute)
 				.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW).build();
 	}
 

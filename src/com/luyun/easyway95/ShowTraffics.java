@@ -29,7 +29,12 @@ public class ShowTraffics extends TabActivity {
         myTabhost.addTab(myTabhost.newTabSpec("TrafficsCaring")
                 .setIndicator("可能还关注",
                         getResources().getDrawable(R.drawable.slow_speed))
-                        .setContent(new Intent(this, TrafficsCaring.class)));      
+                        .setContent(new Intent(this, TrafficsCaring.class)));
+        
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("cronpub", false)){
+        	myTabhost.setCurrentTabByTag("TrafficsCaring");	
+        }
 		
 	}
 
