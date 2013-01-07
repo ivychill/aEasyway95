@@ -1,9 +1,15 @@
 package com.luyun.easyway95;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.waps.AppConnect;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -78,6 +84,17 @@ public class LYSetting extends PreferenceActivity
     	
 		mLPHome.setSummary(mUserProfile.getHomeAddr().getName());
 		mLPOffice.setSummary(mUserProfile.getOfficeAddr().getName());
+		
+        //获取版本信息
+		String versionName = null;
+        try {
+        	PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+        	versionName = info.versionName;
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+		Preference release_preference = findPreference("release_preference"); 
+		release_preference.setSummary(versionName);
 		 
 //		Preference pref = this.findPreference("homeaddr_preference");
 		if (mLPHome != null) {
@@ -197,6 +214,8 @@ public class LYSetting extends PreferenceActivity
 	    } else if (preference.getKey().equals("question_more")) {
 	    	intent.putExtra(strKey, Constants.FAQ_URL);
     		startActivity(intent);
+	    } else if (preference.getKey().equals("ad_preference")) {
+			AppConnect.getInstance(this).showOffers(this);
 	    }
 	    else if(preference.getKey().equals("subscription_preference")){
 	    	final CheckBoxPreference pref = (CheckBoxPreference)this.findPreference("subscription_preference");

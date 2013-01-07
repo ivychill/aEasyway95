@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="地址设置">
-        <ListPreference 
-            android:key="homeaddr_preference" 
-            android:title="家庭地址" 
-            android:summary="深圳市福田市民中心"
+    <PreferenceCategory android:title="地址设置" >
+        <ListPreference
+            android:dialogTitle="地址设置"
             android:entries="@array/set_addr"
             android:entryValues="@array/set_addr_action"
-            android:dialogTitle="地址设置" />
-        <ListPreference 
-            android:key="officeaddr_preference" 
-            android:title="办公室地址" 
+            android:key="homeaddr_preference"
             android:summary="深圳市福田市民中心"
+            android:title="家庭地址" />
+        <ListPreference
+            android:dialogTitle="地址设置"
             android:entries="@array/set_addr"
             android:entryValues="@array/set_addr_action"
-            android:dialogTitle="地址设置" />
-        
-    </PreferenceCategory><PreferenceCategory
-                android:title="功能设置" >
-        <CheckBoxPreference
-                android:key="voice_preference"
-                android:title="声音提示"
-                android:defaultValue="true"
-                android:summaryOff="关闭声音提示"
-                android:summaryOn="开启声音提示需要使用网络，将会导致流量增加" />
-        <CheckBoxPreference
-                android:key="traffic_layer_preference"
-                android:title="交通流量图层"
-                android:defaultValue="false"
-                android:summaryOff="关闭交通流量图层"
-                android:summaryOn="开启交通流量图层将会导致流量增加，为您节省流量考虑每次重新启动时会自动关闭流量图层" />
-        <CheckBoxPreference
-                android:key="subscription_preference"
-                android:title="上下班路况订阅"
-                android:defaultValue="true"
-                android:summary="周一至周五，分别于早九点晚五点，系统自动将上下班路况推送到手机上" />
-        <CheckBoxPreference
-                android:key="around_traffic_preference"
-                android:title="周边路况查询"
-                android:defaultValue="true"
-                android:summary="开启周边路况查询，将会导致流量增加" />
-    
+            android:key="officeaddr_preference"
+            android:summary="深圳市福田市民中心"
+            android:title="办公室地址" />
     </PreferenceCategory>
-        
-    <!-- PreferenceCategory
+    <PreferenceCategory android:title="功能设置" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="voice_preference"
+            android:summaryOff="关闭声音提示"
+            android:summaryOn="开启声音提示需要使用网络，将会导致流量增加"
+            android:title="声音提示" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="traffic_layer_preference"
+            android:summaryOff="关闭交通流量图层"
+            android:summaryOn="开启交通流量图层将会导致流量增加，为您节省流量考虑每次重新启动时会自动关闭流量图层"
+            android:title="交通流量图层" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="subscription_preference"
+            android:summary="周一至周五，分别于早八点晚六点，系统自动将上下班路况推送到手机上"
+            android:title="上下班路况订阅" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="around_traffic_preference"
+            android:summary="开启周边路况查询，将会导致流量增加"
+            android:title="周边路况查询" />
+    </PreferenceCategory>
+
+    <!--
+    PreferenceCategory
                 android:title="离线地图" >
         <ListPreference
                 android:key="map_mgr_preference"
@@ -58,56 +55,73 @@
                 
     </PreferenceCategory>
     -->
-    
-    <PreferenceCategory
-                android:title="系统信息">
+
+    <PreferenceCategory android:title="精品推荐" >
         <Preference
-                android:key="homepage_preference"
-                android:title="公司主页"
-                android:summary="http://www.roadclouding.com" />
-            
-        <Preference
-                android:key="release_preference"
-                android:title="版本号"
-                android:summary="2.0" />
-        <Preference
-                android:key="weibo_preference"
-                android:title="关注新浪官博"
-                android:summary="'@'路云信息科技有限公司" />
-        <Preference
-                android:key="wechat_preference"
-                android:title="关注腾讯官微"
-                android:summary="路云信息科技有限公司" />
-        
-        </PreferenceCategory>
-    <PreferenceCategory
-                android:title="用户" >
-        <Preference
-                android:key="user_preference"
-                android:title="登录"
-                android:summary="深圳市路云信息科技有限公司" />
-        <Preference
-                android:key="promotion_preference"
-                android:title="最新活动"
-                android:summary="担心流量超标？移动号码上网慢？来这里有达人秘招，还有最新的团购活动" />
-        
-        </PreferenceCategory>
-    
-     <PreferenceCategory
-                android:title="其它" >
-    	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-	        android:title="常见问题..."
-	        android:key="questions_preferences">
-	        <PreferenceCategory android:title="常见问题">
-	        <Preference android:key="question_data_source" android:title="实时路况的数据来源？" android:summary="我们的数据来自业界最领先的实时路况数据提供方，覆盖全市超过95％区域，同时还通过搜索互联网、交警微博及电台等收集更多的路况。" />
-	        <Preference android:key="question_data_interval" android:title="路况有多长时间延迟？" android:summary="一般不超过3分钟。" />
-	        <Preference android:key="question_city" android:title="我不在深圳，也能用吗？" android:summary="当前仅支持深圳，其它城市的支持敬请关注我们的网站最新进展。" />
-	        <Preference android:key="question_accuracy" android:title="有时等待很长时间，但显示无拥堵？" android:summary="如果因此带来困扰，我们深表抱歉。但我们正在努力让路况变得更实时和准确。" />
-	        <Preference android:key="question_voice" android:title="有时无声音播报？" android:summary="请检查打开声音开关，有时因为网络原因无法播报。" />
-	        <Preference android:key="question_more" android:title="更多..." android:summary="请访问我们的网站获取更多的信息。" />
-	        
-	        </PreferenceCategory>
-	        
-	</PreferenceScreen>
+            android:key="ad_preference"
+            android:summary="这里有最新的热门应用"
+            android:title="精品推荐" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="系统信息" >
+        <Preference
+            android:key="homepage_preference"
+            android:summary="http://www.roadclouding.com"
+            android:title="公司主页" />
+        <Preference
+            android:key="release_preference"
+            android:summary="2.0"
+            android:title="版本号" />
+        <Preference
+            android:key="weibo_preference"
+            android:summary="&apos;@&apos;路云信息科技有限公司"
+            android:title="关注新浪官博" />
+        <Preference
+            android:key="wechat_preference"
+            android:summary="路云信息科技有限公司"
+            android:title="关注腾讯官微" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="用户" >
+        <Preference
+            android:key="user_preference"
+            android:summary="深圳市路云信息科技有限公司"
+            android:title="登录" />
+        <Preference
+            android:key="promotion_preference"
+            android:summary="担心流量超标？移动号码上网慢？来这里有达人秘招，还有最新的团购活动"
+            android:title="最新活动" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="其它" >
+        <PreferenceScreen
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:key="questions_preferences"
+            android:title="常见问题..." >
+            <PreferenceCategory android:title="常见问题" >
+                <Preference
+                    android:key="question_data_source"
+                    android:summary="我们的数据来自业界最领先的实时路况数据提供方，覆盖全市超过95％区域，同时还通过搜索互联网、交警微博及电台等收集更多的路况。"
+                    android:title="实时路况的数据来源？" />
+                <Preference
+                    android:key="question_data_interval"
+                    android:summary="一般不超过3分钟。"
+                    android:title="路况有多长时间延迟？" />
+                <Preference
+                    android:key="question_city"
+                    android:summary="当前仅支持深圳，其它城市的支持敬请关注我们的网站最新进展。"
+                    android:title="我不在深圳，也能用吗？" />
+                <Preference
+                    android:key="question_accuracy"
+                    android:summary="如果因此带来困扰，我们深表抱歉。但我们正在努力让路况变得更实时和准确。"
+                    android:title="有时等待很长时间，但显示无拥堵？" />
+                <Preference
+                    android:key="question_voice"
+                    android:summary="请检查打开声音开关，有时因为网络原因无法播报。"
+                    android:title="有时无声音播报？" />
+                <Preference
+                    android:key="question_more"
+                    android:summary="请访问我们的网站获取更多的信息。"
+                    android:title="更多..." />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
 </PreferenceScreen>

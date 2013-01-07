@@ -307,20 +307,14 @@ public class LYCronService extends Service {
 	}
 
 	static public LYCrontab genGoworkTab() {
-//		java.util.Calendar c = Calendar.getInstance();
-//		c.add(Calendar.MINUTE, 2);
-//		int hour = c.get(Calendar.HOUR_OF_DAY);
-//		int minute = c.get(Calendar.MINUTE);
-	
-		int hour = 8;
-		int minute = 0;
-	
-		return LYCrontab.newBuilder().setDow(62).setHour(0x1 << hour)
-				.setMinute(0x1L << minute)
+		//订阅工作日上午8点的路况
+		return LYCrontab.newBuilder().setDow(62).setHour(0x1 << 8)
+				.setMinute(0x1L << 0)
 				.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW).build();
 	}
 
 	static public LYCrontab genGohomeTab() {
+		//订阅工作日下午18点的路况
 		return LYCrontab.newBuilder().setDow(62).setHour(0x1 << 18)
 				.setMinute(0x1L << 0)
 				.setCronType(TSSProtos.LYCrontab.LYCronType.LY_REP_DOW).build();

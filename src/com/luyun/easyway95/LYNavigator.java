@@ -143,6 +143,7 @@ public class LYNavigator extends MapActivity implements MKOfflineMapListener{
             // interact with the service.  Because we have bound to a explicit
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
+        	Log.d(TAG, "mzService onServiceConnected");
         	mzService = ((ZMQService.LocalBinder)service).getService();
         	mMapHelper.checkIn();
             //mzService.registerHandler(handler);

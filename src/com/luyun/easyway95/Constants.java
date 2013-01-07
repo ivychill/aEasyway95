@@ -47,7 +47,7 @@ public class Constants {
 	public static final String FAQ_URL="http://www.roadclouding.com/faq";
 	public static final String DOWNLOAD_URL="http://www.roadclouding.com/download/easyway.apk";	
 //	public static final String DOWNLOAD_URL="market://search?q=pname:com.luyun.easyway95";
-	//public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";
+//	public static final String USERS_PROFILE_URL="http://172.16.0.33:3000/users/profile";
 	
 	//weibo by chenfeng
 //	public static final String POST_WEIBO_URL="http://www.roadclouding.com/weibos/post";
@@ -76,12 +76,9 @@ public class Constants {
 	public static final int MAX_RECENT_QUERY = 20;
 
 	public static final int TSS_SERVER_PORT=6001; 
-//	public static final int TSS_SERVER_PORT=6001; 
 	public static final String TSS_DEV_HOST="172.16.0.100";	
-//	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
-	public static final String TSS_PRO_HOST="www.roadclouding.com";	 
-	//public static final String TSS_PRO_HOST="42.121.99.247";	
-	//public static final String TSS_PRO_HOST="172.16.0.100";	
+	public static final String TSS_PRO_HOST="www.roadclouding.com";
+//	public static final String TSS_PRO_HOST="172.16.0.100";	
 	
 	public static final String TRAFFIC_UPDATE="TrafficUpdate";	
 	public static final int TRAFFIC_UPDATE_CMD=9900;

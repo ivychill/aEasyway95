@@ -47,6 +47,7 @@ public class ZMQService extends Service {
 
 	@Override
 	public void onCreate() {
+		Log.d(TAG, "onCreate");
 		super.onCreate();
         TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         mDeviceID = tm.getDeviceId();
@@ -76,6 +77,7 @@ public class ZMQService extends Service {
     
 	@Override
 	public IBinder onBind(Intent arg0) {
+		Log.d(TAG, "onBind");
 		return mBinder;
 	}
     // RemoteService for a more complete example.

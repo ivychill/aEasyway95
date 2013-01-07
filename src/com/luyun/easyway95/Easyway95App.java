@@ -5,6 +5,7 @@ import com.baidu.mapapi.GeoPoint;
 import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.MKPoiResult;
+import com.waps.AppConnect;
 
 import android.app.Application;
 import android.location.Location;
@@ -70,6 +71,9 @@ public class Easyway95App extends Application {
 //			mBMapMan = null;
 //		}
 		
+    	//万普：通过AndroidManifest文件读取WAPS_ID和WAPS_PID
+    	AppConnect.getInstance(this); //必须确保AndroidManifest文件内配置了WAPS_ID 
+    	
 		super.onCreate();
 	}
 
@@ -81,6 +85,8 @@ public class Easyway95App extends Application {
 			mBMapMan.destroy();
 			mBMapMan = null;
 		}
+		
+		AppConnect.getInstance(this).finalize();
 		super.onTerminate();
 	}
 

@@ -95,7 +95,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
         mMapMan.start();
         super.initMapActivity(mMapMan);
         mMapView = (MapView) findViewById(R.id.mapView);
-        mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
+//        mMapView.setBuiltInZoomControls(true);  //设置启用内置的缩放控件
         MapController mMapController = mMapView.getController();  // 得到mMapView的控制权,可以用它控制和驱动平移和缩放
         GeoPoint point = new GeoPoint((int) (22.526292 * 1E6),
                 (int) (113.910416 * 1E6));  //用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
