@@ -82,7 +82,7 @@ public class SearchActivity extends MapActivity implements OnGestureListener {
 	private UserProfile mUserProfile;
     private static String mStrSuggestions[] = {};   
     private static LinkedList<String> mRecentQuery;
-    private MKSearch mSearch = new MKSearch();;
+    private MKSearch mSearch = new MKSearch();
     private Handler handler = new Handler(); 
 	
 	@Override
